@@ -1,0 +1,520 @@
+{
+  "chapters": [
+    {
+      "id": 0,
+      "title": "여행의 시작",
+      "events": [
+        {
+          "id": "prologue_01",
+          "location": "town_01",
+          "trigger": "game_start",
+          "scenes": [
+            {
+              "type": "dialog",
+              "speaker": "한별 박사",
+              "text": "어서 오거라! 나는 한별 박사, 이 세계의 몬스터를 연구하는 사람이란다."
+            },
+            {
+              "type": "dialog",
+              "speaker": "한별 박사",
+              "text": "이 세계에는 수많은 몬스터들이 살고 있지. 자네도 오늘부터 몬스터 트레이너가 되는 거야!"
+            },
+            {
+              "type": "choice",
+              "text": "어떤 파트너를 선택하겠나?",
+              "options": [
+                {
+                  "text": "불꽃냥 - 화염 타입",
+                  "result": {
+                    "give_monster": 1
+                  }
+                },
+                {
+                  "text": "물방울이 - 해류 타입",
+                  "result": {
+                    "give_monster": 4
+                  }
+                },
+                {
+                  "text": "새싹이 - 자연 타입",
+                  "result": {
+                    "give_monster": 7
+                  }
+                }
+              ]
+            },
+            {
+              "type": "dialog",
+              "speaker": "한별 박사",
+              "text": "좋은 선택이야! 이 몬스터도감도 가져가거라."
+            },
+            {
+              "type": "dialog",
+              "speaker": "라이벌 은하",
+              "text": "저도 오늘 여행을 시작해요! 어디 한번 실력을 겨뤄볼까?"
+            },
+            {
+              "type": "dialog",
+              "speaker": "시스템",
+              "text": "라이벌 은하와의 첫 배틀!"
+            }
+          ]
+        },
+        {
+          "id": "prologue_02",
+          "location": "town_01",
+          "trigger": "after_rival_battle_1",
+          "scenes": [
+            {
+              "type": "dialog",
+              "speaker": "라이벌 은하",
+              "text": "으으... 졌다니! 다음엔 반드시 이길 거야!"
+            },
+            {
+              "type": "dialog",
+              "speaker": "한별 박사",
+              "text": "8개의 체육관 배지를 모으면 포켓 왕국 리그에 도전할 자격을 얻는단다."
+            },
+            {
+              "type": "dialog",
+              "speaker": "한별 박사",
+              "text": "'그림자단'이라는 수상한 조직이 활동하고 있으니 조심하거라."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "title": "첫 번째 배지 - 화염의 시련",
+      "events": [
+        {
+          "id": "ch1_01",
+          "location": "town_02",
+          "trigger": "arrive_town_02",
+          "scenes": [
+            {
+              "type": "dialog",
+              "speaker": "시민",
+              "text": "여기는 화염도시야. 체육관장 불꽃은 화염 타입의 달인이야."
+            }
+          ]
+        },
+        {
+          "id": "ch1_02",
+          "location": "gym_01",
+          "trigger": "defeat_gym_01",
+          "scenes": [
+            {
+              "type": "dialog",
+              "speaker": "체육관장 불꽃",
+              "text": "대단해! 화염배지를 받아라."
+            },
+            {
+              "type": "dialog",
+              "speaker": "시스템",
+              "text": "화염배지를 획득했다!"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "두 번째 배지 - 해류의 시련",
+      "events": [
+        {
+          "id": "ch2_01",
+          "location": "town_03",
+          "trigger": "arrive_town_03",
+          "scenes": [
+            {
+              "type": "dialog",
+              "speaker": "라이벌 은하",
+              "text": "너도 여기까지 왔구나? 이번엔 내가 이길 거야!"
+            },
+            {
+              "type": "dialog",
+              "speaker": "시스템",
+              "text": "라이벌 은하와의 2차전!"
+            }
+          ]
+        },
+        {
+          "id": "ch2_02",
+          "location": "gym_02",
+          "trigger": "defeat_gym_02",
+          "scenes": [
+            {
+              "type": "dialog",
+              "speaker": "체육관장 파도",
+              "text": "멋진 배틀이었어! 해류배지를 받아."
+            },
+            {
+              "type": "dialog",
+              "speaker": "시스템",
+              "text": "해류배지를 획득했다!"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "세 번째 배지 - 전격의 시련",
+      "events": [
+        {
+          "id": "ch3_01",
+          "location": "route_03",
+          "trigger": "arrive_route_03",
+          "scenes": [
+            {
+              "type": "dialog",
+              "speaker": "그림자단원",
+              "text": "꼬마, 이 길은 우리 그림자단의 영역이야!"
+            },
+            {
+              "type": "dialog",
+              "speaker": "시스템",
+              "text": "그림자단원과의 배틀!"
+            },
+            {
+              "type": "dialog",
+              "speaker": "그림자단원",
+              "text": "크윽... 하지만 우리 수장님의 계획은 막을 수 없어!"
+            }
+          ]
+        },
+        {
+          "id": "ch3_02",
+          "location": "gym_03",
+          "trigger": "defeat_gym_03",
+          "scenes": [
+            {
+              "type": "dialog",
+              "speaker": "체육관장 썬더",
+              "text": "번개 같은 스피드! 전격배지를 받아라!"
+            },
+            {
+              "type": "dialog",
+              "speaker": "시스템",
+              "text": "전격배지를 획득했다!"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "title": "네 번째 배지 - 자연의 시련",
+      "events": [
+        {
+          "id": "ch4_01",
+          "location": "forest_01",
+          "trigger": "arrive_forest_01",
+          "scenes": [
+            {
+              "type": "dialog",
+              "speaker": "영매사 유리",
+              "text": "이 숲에 수상한 기운이 느껴져..."
+            },
+            {
+              "type": "dialog",
+              "speaker": "그림자단원",
+              "text": "이 숲의 몬스터들을 포획해서 수장님께 바치는 거야!"
+            },
+            {
+              "type": "dialog",
+              "speaker": "시스템",
+              "text": "그림자단원과의 배틀!"
+            }
+          ]
+        },
+        {
+          "id": "ch4_02",
+          "location": "gym_04",
+          "trigger": "defeat_gym_04",
+          "scenes": [
+            {
+              "type": "dialog",
+              "speaker": "체육관장 수풀",
+              "text": "자연의 힘은 위대하지만, 네 실력은 더 위대하구나."
+            },
+            {
+              "type": "dialog",
+              "speaker": "시스템",
+              "text": "자연배지를 획득했다!"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "title": "다섯 번째 배지 - 투지의 시련",
+      "events": [
+        {
+          "id": "ch5_01",
+          "location": "route_05",
+          "trigger": "arrive_route_05",
+          "scenes": [
+            {
+              "type": "dialog",
+              "speaker": "그림자단 간부 검은달",
+              "text": "우리 수장님은 전설의 암흑용 '암룡'을 깨울 계획이야!"
+            },
+            {
+              "type": "dialog",
+              "speaker": "시스템",
+              "text": "그림자단 간부 검은달과의 배틀!"
+            }
+          ]
+        },
+        {
+          "id": "ch5_02",
+          "location": "gym_05",
+          "trigger": "defeat_gym_05",
+          "scenes": [
+            {
+              "type": "dialog",
+              "speaker": "체육관장 권왕",
+              "text": "굳건한 의지! 투지배지는 네 것이다!"
+            },
+            {
+              "type": "dialog",
+              "speaker": "시스템",
+              "text": "투지배지를 획득했다!"
+            },
+            {
+              "type": "dialog",
+              "speaker": "라이벌 은하",
+              "text": "나도 여기 있어! 이번엔 절대 안 질 거야!"
+            },
+            {
+              "type": "dialog",
+              "speaker": "시스템",
+              "text": "라이벌 은하와의 3차전!"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "title": "여섯 번째, 일곱 번째 배지",
+      "events": [
+        {
+          "id": "ch6_01",
+          "location": "gym_06",
+          "trigger": "defeat_gym_06",
+          "scenes": [
+            {
+              "type": "dialog",
+              "speaker": "체육관장 빙하",
+              "text": "얼음처럼 차갑지만 네 마음은 뜨겁구나. 빙결배지를 받아라."
+            },
+            {
+              "type": "dialog",
+              "speaker": "시스템",
+              "text": "빙결배지를 획득했다!"
+            }
+          ]
+        },
+        {
+          "id": "ch6_02",
+          "location": "route_07",
+          "trigger": "arrive_route_07",
+          "scenes": [
+            {
+              "type": "dialog",
+              "speaker": "그림자단 간부 흑사",
+              "text": "수장님은 암흑의 열쇠를 찾았어!"
+            },
+            {
+              "type": "dialog",
+              "speaker": "시스템",
+              "text": "그림자단 간부 흑사와의 배틀!"
+            }
+          ]
+        },
+        {
+          "id": "ch6_03",
+          "location": "gym_07",
+          "trigger": "defeat_gym_07",
+          "scenes": [
+            {
+              "type": "dialog",
+              "speaker": "체육관장 용왕",
+              "text": "용의 기운을 느꼈다! 용린배지를 수여한다!"
+            },
+            {
+              "type": "dialog",
+              "speaker": "시스템",
+              "text": "용린배지를 획득했다!"
+            },
+            {
+              "type": "dialog",
+              "speaker": "체육관장 용왕",
+              "text": "그림자단이 암흑용을 깨우려 한다. 서둘러야 해!"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "title": "그림자단의 야망",
+      "events": [
+        {
+          "id": "ch7_01",
+          "location": "shadow_base",
+          "trigger": "arrive_shadow_base",
+          "scenes": [
+            {
+              "type": "dialog",
+              "speaker": "라이벌 은하",
+              "text": "나도 같이 갈게! 그림자단은 나도 용서 못 해!"
+            },
+            {
+              "type": "dialog",
+              "speaker": "그림자단 수장 다크니스",
+              "text": "전설의 암흑용이 곧 깨어난다! 세계를 영원한 어둠에 빠뜨리겠다!"
+            }
+          ]
+        },
+        {
+          "id": "ch7_02",
+          "location": "shadow_base",
+          "trigger": "defeat_shadow_boss",
+          "scenes": [
+            {
+              "type": "dialog",
+              "speaker": "그림자단 수장 다크니스",
+              "text": "불가능해... 내가 패배하다니!"
+            },
+            {
+              "type": "dialog",
+              "speaker": "시스템",
+              "text": "의식은 이미 완료되었다! 암룡이 깨어난다!"
+            },
+            {
+              "type": "dialog",
+              "speaker": "한별 박사",
+              "text": "전설의 피리를 사용해! 그것만이 암룡을 진정시킬 수 있어!"
+            },
+            {
+              "type": "dialog",
+              "speaker": "시스템",
+              "text": "전설의 암룡과의 배틀! 포획할 수 있다!"
+            },
+            {
+              "type": "dialog",
+              "speaker": "라이벌 은하",
+              "text": "이제 남은 건 마지막 체육관과 포켓 왕국 리그뿐이야!"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "title": "마지막 배지와 리그 도전",
+      "events": [
+        {
+          "id": "ch8_01",
+          "location": "gym_08",
+          "trigger": "defeat_gym_08",
+          "scenes": [
+            {
+              "type": "dialog",
+              "speaker": "체육관장 흑야",
+              "text": "어둠을 두려워하지 않는 자... 암흑배지를 받아라."
+            },
+            {
+              "type": "dialog",
+              "speaker": "시스템",
+              "text": "암흑배지를 획득했다! 8개의 배지를 모두 모았다!"
+            }
+          ]
+        },
+        {
+          "id": "ch8_02",
+          "location": "elite_four",
+          "trigger": "arrive_elite_four",
+          "scenes": [
+            {
+              "type": "dialog",
+              "speaker": "라이벌 은하",
+              "text": "리그에 들어가기 전에, 한 번 더 승부하자!"
+            },
+            {
+              "type": "dialog",
+              "speaker": "시스템",
+              "text": "라이벌 은하와의 최종 배틀!"
+            },
+            {
+              "type": "dialog",
+              "speaker": "라이벌 은하",
+              "text": "...졌어. 넌 반드시 챔피언이 될 거야. 힘내!"
+            }
+          ]
+        },
+        {
+          "id": "ch8_03",
+          "location": "elite_four",
+          "trigger": "before_elite_four",
+          "scenes": [
+            {
+              "type": "dialog",
+              "speaker": "안내원",
+              "text": "사천왕 네 명을 연속으로 이기고 챔피언을 꺾으면 새로운 챔피언이 됩니다. 행운을 빕니다!"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "title": "에필로그 - 새로운 전설",
+      "events": [
+        {
+          "id": "epilogue_01",
+          "location": "elite_four",
+          "trigger": "defeat_champion",
+          "scenes": [
+            {
+              "type": "dialog",
+              "speaker": "챔피언 하늘",
+              "text": "축하해. 오늘부터 네가 포켓 왕국의 새로운 챔피언이다!"
+            },
+            {
+              "type": "dialog",
+              "speaker": "시스템",
+              "text": "포켓 왕국 리그 챔피언이 되었다!"
+            },
+            {
+              "type": "dialog",
+              "speaker": "한별 박사",
+              "text": "아직 만나지 못한 전설의 몬스터들이 어딘가에서 기다리고 있을 거야."
+            },
+            {
+              "type": "dialog",
+              "speaker": "한별 박사",
+              "text": "100마리의 몬스터를 모두 도감에 기록하는 것이 진정한 마스터의 길이란다."
+            },
+            {
+              "type": "dialog",
+              "speaker": "시스템",
+              "text": "클리어 후 콘텐츠 해금! 전설의 몬스터 출현, 빙하동굴 최심부, 챔피언 방어전"
+            },
+            {
+              "type": "dialog",
+              "speaker": "시스템",
+              "text": "포켓 왕국의 모험은 계속된다...!"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

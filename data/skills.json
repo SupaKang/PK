@@ -1,0 +1,3981 @@
+{
+  "skills": [
+    {
+      "id": "tackle",
+      "name": "돌진",
+      "type": "normal",
+      "category": "physical",
+      "power": 40,
+      "accuracy": 100,
+      "pp": 35,
+      "effect": null,
+      "description": "몸을 부딪쳐 공격한다."
+    },
+    {
+      "id": "scratch",
+      "name": "할퀴기",
+      "type": "normal",
+      "category": "physical",
+      "power": 40,
+      "accuracy": 100,
+      "pp": 35,
+      "effect": null,
+      "description": "날카로운 발톱으로 할퀸다."
+    },
+    {
+      "id": "pound",
+      "name": "두드리기",
+      "type": "normal",
+      "category": "physical",
+      "power": 40,
+      "accuracy": 100,
+      "pp": 35,
+      "effect": null,
+      "description": "단단한 주먹으로 내려친다."
+    },
+    {
+      "id": "bite",
+      "name": "물기",
+      "type": "normal",
+      "category": "physical",
+      "power": 60,
+      "accuracy": 100,
+      "pp": 25,
+      "effect": {
+        "type": "flinch",
+        "chance": 30,
+        "target": "enemy"
+      },
+      "description": "날카로운 이빨로 물어 풀죽게 만든다."
+    },
+    {
+      "id": "quick_strike",
+      "name": "속공",
+      "type": "normal",
+      "category": "physical",
+      "power": 40,
+      "accuracy": 100,
+      "pp": 30,
+      "effect": null,
+      "description": "항상 먼저 공격하는 재빠른 일격."
+    },
+    {
+      "id": "body_slam",
+      "name": "몸통박치기",
+      "type": "normal",
+      "category": "physical",
+      "power": 85,
+      "accuracy": 100,
+      "pp": 15,
+      "effect": {
+        "type": "paralyze",
+        "chance": 30,
+        "target": "enemy"
+      },
+      "description": "온몸으로 내리눌러 마비시킬 수 있다."
+    },
+    {
+      "id": "fury_swipes",
+      "name": "연속할퀴기",
+      "type": "normal",
+      "category": "physical",
+      "power": 18,
+      "accuracy": 80,
+      "pp": 15,
+      "effect": null,
+      "description": "2~5회 연속으로 할퀸다."
+    },
+    {
+      "id": "hyper_beam",
+      "name": "초강력빔",
+      "type": "normal",
+      "category": "special",
+      "power": 150,
+      "accuracy": 90,
+      "pp": 5,
+      "effect": null,
+      "description": "강렬한 빔을 발사한다. 다음 턴 행동불능."
+    },
+    {
+      "id": "protect",
+      "name": "방어자세",
+      "type": "normal",
+      "category": "status",
+      "power": 0,
+      "accuracy": 100,
+      "pp": 10,
+      "effect": {
+        "type": "stat_up",
+        "chance": 100,
+        "target": "self",
+        "stat": "def",
+        "amount": 2
+      },
+      "description": "방어 태세를 취해 방어력을 크게 올린다."
+    },
+    {
+      "id": "growl",
+      "name": "위협",
+      "type": "normal",
+      "category": "status",
+      "power": 0,
+      "accuracy": 100,
+      "pp": 40,
+      "effect": {
+        "type": "stat_down",
+        "chance": 100,
+        "target": "enemy",
+        "stat": "atk",
+        "amount": -1
+      },
+      "description": "위협적인 울음소리로 공격력을 낮춘다."
+    },
+    {
+      "id": "ember",
+      "name": "불씨",
+      "type": "fire",
+      "category": "special",
+      "power": 40,
+      "accuracy": 100,
+      "pp": 25,
+      "effect": {
+        "type": "burn",
+        "chance": 10,
+        "target": "enemy"
+      },
+      "description": "작은 불꽃을 날린다."
+    },
+    {
+      "id": "flame_claw",
+      "name": "화염발톱",
+      "type": "fire",
+      "category": "physical",
+      "power": 65,
+      "accuracy": 95,
+      "pp": 20,
+      "effect": {
+        "type": "burn",
+        "chance": 15,
+        "target": "enemy"
+      },
+      "description": "불타는 발톱으로 베어낸다."
+    },
+    {
+      "id": "fire_breath",
+      "name": "화염숨결",
+      "type": "fire",
+      "category": "special",
+      "power": 75,
+      "accuracy": 95,
+      "pp": 15,
+      "effect": {
+        "type": "burn",
+        "chance": 20,
+        "target": "enemy"
+      },
+      "description": "뜨거운 숨결을 내뿜는다."
+    },
+    {
+      "id": "inferno",
+      "name": "업화",
+      "type": "fire",
+      "category": "special",
+      "power": 110,
+      "accuracy": 85,
+      "pp": 5,
+      "effect": {
+        "type": "burn",
+        "chance": 50,
+        "target": "enemy"
+      },
+      "description": "맹렬한 화염으로 태워버린다."
+    },
+    {
+      "id": "flame_charge",
+      "name": "화염돌진",
+      "type": "fire",
+      "category": "physical",
+      "power": 50,
+      "accuracy": 100,
+      "pp": 20,
+      "effect": {
+        "type": "stat_up",
+        "chance": 100,
+        "target": "self",
+        "stat": "speed",
+        "amount": 1
+      },
+      "description": "불꽃을 두른 채 돌진하여 속도가 오른다."
+    },
+    {
+      "id": "fire_wall",
+      "name": "화염벽",
+      "type": "fire",
+      "category": "status",
+      "power": 0,
+      "accuracy": 100,
+      "pp": 10,
+      "effect": {
+        "type": "stat_up",
+        "chance": 100,
+        "target": "self",
+        "stat": "spDef",
+        "amount": 2
+      },
+      "description": "화염의 벽을 세워 특수방어를 올린다."
+    },
+    {
+      "id": "eruption",
+      "name": "분화",
+      "type": "fire",
+      "category": "special",
+      "power": 130,
+      "accuracy": 90,
+      "pp": 5,
+      "effect": {
+        "type": "burn",
+        "chance": 30,
+        "target": "enemy"
+      },
+      "description": "화산 폭발처럼 불기둥을 일으킨다."
+    },
+    {
+      "id": "heat_fang",
+      "name": "열기송곳니",
+      "type": "fire",
+      "category": "physical",
+      "power": 80,
+      "accuracy": 95,
+      "pp": 15,
+      "effect": {
+        "type": "burn",
+        "chance": 20,
+        "target": "enemy"
+      },
+      "description": "이글거리는 송곳니로 물어뜯는다."
+    },
+    {
+      "id": "fire_spin",
+      "name": "화염소용돌이",
+      "type": "fire",
+      "category": "special",
+      "power": 55,
+      "accuracy": 90,
+      "pp": 15,
+      "effect": null,
+      "description": "불의 소용돌이로 감싸 공격한다."
+    },
+    {
+      "id": "will_o_wisp",
+      "name": "도깨비불",
+      "type": "fire",
+      "category": "status",
+      "power": 0,
+      "accuracy": 85,
+      "pp": 15,
+      "effect": {
+        "type": "burn",
+        "chance": 100,
+        "target": "enemy"
+      },
+      "description": "불길한 불꽃으로 화상을 입힌다."
+    },
+    {
+      "id": "water_gun",
+      "name": "물대포",
+      "type": "water",
+      "category": "special",
+      "power": 40,
+      "accuracy": 100,
+      "pp": 25,
+      "effect": null,
+      "description": "물줄기를 발사하여 공격한다."
+    },
+    {
+      "id": "aqua_jet",
+      "name": "아쿠아제트",
+      "type": "water",
+      "category": "physical",
+      "power": 40,
+      "accuracy": 100,
+      "pp": 20,
+      "effect": null,
+      "description": "물을 두른 채 빠르게 돌진한다."
+    },
+    {
+      "id": "bubble_beam",
+      "name": "거품광선",
+      "type": "water",
+      "category": "special",
+      "power": 65,
+      "accuracy": 100,
+      "pp": 20,
+      "effect": {
+        "type": "stat_down",
+        "chance": 30,
+        "target": "enemy",
+        "stat": "speed",
+        "amount": -1
+      },
+      "description": "거품 광선으로 속도를 낮출 수 있다."
+    },
+    {
+      "id": "water_pulse",
+      "name": "수류파동",
+      "type": "water",
+      "category": "special",
+      "power": 75,
+      "accuracy": 95,
+      "pp": 15,
+      "effect": {
+        "type": "confuse",
+        "chance": 20,
+        "target": "enemy"
+      },
+      "description": "파동을 일으켜 혼란에 빠뜨릴 수 있다."
+    },
+    {
+      "id": "hydro_pump",
+      "name": "하이드로펌프",
+      "type": "water",
+      "category": "special",
+      "power": 120,
+      "accuracy": 80,
+      "pp": 5,
+      "effect": null,
+      "description": "강력한 물줄기를 발사한다."
+    },
+    {
+      "id": "waterfall",
+      "name": "폭포오르기",
+      "type": "water",
+      "category": "physical",
+      "power": 80,
+      "accuracy": 100,
+      "pp": 15,
+      "effect": {
+        "type": "flinch",
+        "chance": 20,
+        "target": "enemy"
+      },
+      "description": "폭포처럼 내리치며 풀죽게 만든다."
+    },
+    {
+      "id": "rain_dance",
+      "name": "비바라기",
+      "type": "water",
+      "category": "status",
+      "power": 0,
+      "accuracy": 100,
+      "pp": 5,
+      "effect": {
+        "type": "stat_up",
+        "chance": 100,
+        "target": "self",
+        "stat": "spAtk",
+        "amount": 2
+      },
+      "description": "비를 불러내어 물 기술의 위력을 올린다."
+    },
+    {
+      "id": "tidal_wave",
+      "name": "해일",
+      "type": "water",
+      "category": "special",
+      "power": 100,
+      "accuracy": 85,
+      "pp": 10,
+      "effect": null,
+      "description": "거대한 파도로 적을 덮친다."
+    },
+    {
+      "id": "aqua_shield",
+      "name": "수류방패",
+      "type": "water",
+      "category": "status",
+      "power": 0,
+      "accuracy": 100,
+      "pp": 15,
+      "effect": {
+        "type": "stat_up",
+        "chance": 100,
+        "target": "self",
+        "stat": "def",
+        "amount": 1
+      },
+      "description": "물의 방패를 만들어 방어력을 올린다."
+    },
+    {
+      "id": "torrent_bite",
+      "name": "급류이빨",
+      "type": "water",
+      "category": "physical",
+      "power": 70,
+      "accuracy": 95,
+      "pp": 15,
+      "effect": {
+        "type": "flinch",
+        "chance": 15,
+        "target": "enemy"
+      },
+      "description": "급류의 힘을 담아 물어뜯는다."
+    },
+    {
+      "id": "vine_whip",
+      "name": "덩굴채찍",
+      "type": "grass",
+      "category": "physical",
+      "power": 45,
+      "accuracy": 100,
+      "pp": 25,
+      "effect": null,
+      "description": "덩굴로 채찍질한다."
+    },
+    {
+      "id": "razor_leaf",
+      "name": "잎날가르기",
+      "type": "grass",
+      "category": "physical",
+      "power": 55,
+      "accuracy": 95,
+      "pp": 25,
+      "effect": null,
+      "description": "날카로운 잎으로 베어낸다."
+    },
+    {
+      "id": "seed_bomb",
+      "name": "씨앗폭탄",
+      "type": "grass",
+      "category": "physical",
+      "power": 80,
+      "accuracy": 100,
+      "pp": 15,
+      "effect": null,
+      "description": "폭발하는 씨앗을 던진다."
+    },
+    {
+      "id": "solar_beam",
+      "name": "태양광선",
+      "type": "grass",
+      "category": "special",
+      "power": 120,
+      "accuracy": 100,
+      "pp": 10,
+      "effect": null,
+      "description": "태양빛을 모아 강력한 광선을 쏜다."
+    },
+    {
+      "id": "leaf_storm",
+      "name": "잎사귀폭풍",
+      "type": "grass",
+      "category": "special",
+      "power": 130,
+      "accuracy": 90,
+      "pp": 5,
+      "effect": {
+        "type": "stat_down",
+        "chance": 100,
+        "target": "self",
+        "stat": "spAtk",
+        "amount": -2
+      },
+      "description": "잎사귀 폭풍 후 특수공격이 크게 떨어진다."
+    },
+    {
+      "id": "absorb",
+      "name": "흡수",
+      "type": "grass",
+      "category": "special",
+      "power": 40,
+      "accuracy": 100,
+      "pp": 25,
+      "effect": {
+        "type": "drain",
+        "chance": 100,
+        "target": "self"
+      },
+      "description": "생명력을 흡수하여 회복한다."
+    },
+    {
+      "id": "mega_drain",
+      "name": "메가흡수",
+      "type": "grass",
+      "category": "special",
+      "power": 75,
+      "accuracy": 100,
+      "pp": 15,
+      "effect": {
+        "type": "drain",
+        "chance": 100,
+        "target": "self"
+      },
+      "description": "대량의 생명력을 흡수한다."
+    },
+    {
+      "id": "sleep_powder",
+      "name": "수면가루",
+      "type": "grass",
+      "category": "status",
+      "power": 0,
+      "accuracy": 75,
+      "pp": 15,
+      "effect": {
+        "type": "sleep",
+        "chance": 100,
+        "target": "enemy"
+      },
+      "description": "수면 가루를 뿌려 잠재운다."
+    },
+    {
+      "id": "growth",
+      "name": "성장",
+      "type": "grass",
+      "category": "status",
+      "power": 0,
+      "accuracy": 100,
+      "pp": 20,
+      "effect": {
+        "type": "stat_up",
+        "chance": 100,
+        "target": "self",
+        "stat": "spAtk",
+        "amount": 1
+      },
+      "description": "성장하여 특수공격을 올린다."
+    },
+    {
+      "id": "thorn_whip",
+      "name": "가시채찍",
+      "type": "grass",
+      "category": "physical",
+      "power": 65,
+      "accuracy": 95,
+      "pp": 20,
+      "effect": null,
+      "description": "가시 돋은 채찍으로 때린다."
+    },
+    {
+      "id": "thunder_shock",
+      "name": "전격충격",
+      "type": "electric",
+      "category": "special",
+      "power": 40,
+      "accuracy": 100,
+      "pp": 30,
+      "effect": {
+        "type": "paralyze",
+        "chance": 10,
+        "target": "enemy"
+      },
+      "description": "전기 충격을 날린다."
+    },
+    {
+      "id": "spark",
+      "name": "전기불꽃",
+      "type": "electric",
+      "category": "physical",
+      "power": 65,
+      "accuracy": 100,
+      "pp": 20,
+      "effect": {
+        "type": "paralyze",
+        "chance": 30,
+        "target": "enemy"
+      },
+      "description": "전기를 띤 채 부딪힌다."
+    },
+    {
+      "id": "thunderbolt",
+      "name": "십만볼트",
+      "type": "electric",
+      "category": "special",
+      "power": 90,
+      "accuracy": 100,
+      "pp": 15,
+      "effect": {
+        "type": "paralyze",
+        "chance": 10,
+        "target": "enemy"
+      },
+      "description": "강력한 전기로 공격한다."
+    },
+    {
+      "id": "thunder",
+      "name": "번개",
+      "type": "electric",
+      "category": "special",
+      "power": 120,
+      "accuracy": 70,
+      "pp": 10,
+      "effect": {
+        "type": "paralyze",
+        "chance": 30,
+        "target": "enemy"
+      },
+      "description": "거대한 번개를 떨어뜨린다."
+    },
+    {
+      "id": "volt_tackle",
+      "name": "볼트태클",
+      "type": "electric",
+      "category": "physical",
+      "power": 120,
+      "accuracy": 100,
+      "pp": 10,
+      "effect": {
+        "type": "recoil",
+        "chance": 100,
+        "target": "self"
+      },
+      "description": "전신에 전기를 두르고 돌진한다. 반동이 있다."
+    },
+    {
+      "id": "thunder_wave",
+      "name": "전자파",
+      "type": "electric",
+      "category": "status",
+      "power": 0,
+      "accuracy": 90,
+      "pp": 20,
+      "effect": {
+        "type": "paralyze",
+        "chance": 100,
+        "target": "enemy"
+      },
+      "description": "전자파를 쏘아 마비시킨다."
+    },
+    {
+      "id": "charge",
+      "name": "충전",
+      "type": "electric",
+      "category": "status",
+      "power": 0,
+      "accuracy": 100,
+      "pp": 20,
+      "effect": {
+        "type": "stat_up",
+        "chance": 100,
+        "target": "self",
+        "stat": "spAtk",
+        "amount": 1
+      },
+      "description": "전기를 충전하여 다음 공격을 강화한다."
+    },
+    {
+      "id": "lightning_fang",
+      "name": "번개송곳니",
+      "type": "electric",
+      "category": "physical",
+      "power": 80,
+      "accuracy": 95,
+      "pp": 15,
+      "effect": {
+        "type": "paralyze",
+        "chance": 20,
+        "target": "enemy"
+      },
+      "description": "번개를 담은 이빨로 물어뜯는다."
+    },
+    {
+      "id": "discharge",
+      "name": "방전",
+      "type": "electric",
+      "category": "special",
+      "power": 80,
+      "accuracy": 100,
+      "pp": 15,
+      "effect": {
+        "type": "paralyze",
+        "chance": 30,
+        "target": "enemy"
+      },
+      "description": "전기를 방출하여 공격한다."
+    },
+    {
+      "id": "mud_slap",
+      "name": "진흙던지기",
+      "type": "earth",
+      "category": "special",
+      "power": 40,
+      "accuracy": 100,
+      "pp": 25,
+      "effect": {
+        "type": "stat_down",
+        "chance": 100,
+        "target": "enemy",
+        "stat": "speed",
+        "amount": -1
+      },
+      "description": "진흙을 던져 속도를 낮춘다."
+    },
+    {
+      "id": "earthquake",
+      "name": "지진",
+      "type": "earth",
+      "category": "physical",
+      "power": 100,
+      "accuracy": 100,
+      "pp": 10,
+      "effect": null,
+      "description": "대지를 흔들어 공격한다."
+    },
+    {
+      "id": "dig",
+      "name": "땅파기",
+      "type": "earth",
+      "category": "physical",
+      "power": 80,
+      "accuracy": 100,
+      "pp": 10,
+      "effect": null,
+      "description": "땅속으로 숨었다가 공격한다."
+    },
+    {
+      "id": "earth_power",
+      "name": "대지의힘",
+      "type": "earth",
+      "category": "special",
+      "power": 90,
+      "accuracy": 100,
+      "pp": 10,
+      "effect": {
+        "type": "stat_down",
+        "chance": 20,
+        "target": "enemy",
+        "stat": "spDef",
+        "amount": -1
+      },
+      "description": "대지의 힘으로 공격하여 특방을 낮출 수 있다."
+    },
+    {
+      "id": "sand_tomb",
+      "name": "모래무덤",
+      "type": "earth",
+      "category": "physical",
+      "power": 55,
+      "accuracy": 85,
+      "pp": 15,
+      "effect": null,
+      "description": "모래로 감싸 서서히 데미지를 준다."
+    },
+    {
+      "id": "mud_bomb",
+      "name": "진흙폭탄",
+      "type": "earth",
+      "category": "special",
+      "power": 65,
+      "accuracy": 85,
+      "pp": 10,
+      "effect": null,
+      "description": "진흙 폭탄을 던져 공격한다."
+    },
+    {
+      "id": "fissure",
+      "name": "균열",
+      "type": "earth",
+      "category": "physical",
+      "power": 130,
+      "accuracy": 75,
+      "pp": 5,
+      "effect": null,
+      "description": "대지를 가르는 강력한 일격."
+    },
+    {
+      "id": "sand_armor",
+      "name": "모래갑옷",
+      "type": "earth",
+      "category": "status",
+      "power": 0,
+      "accuracy": 100,
+      "pp": 15,
+      "effect": {
+        "type": "stat_up",
+        "chance": 100,
+        "target": "self",
+        "stat": "def",
+        "amount": 2
+      },
+      "description": "모래로 갑옷을 만들어 방어를 올린다."
+    },
+    {
+      "id": "ground_slam",
+      "name": "대지강타",
+      "type": "earth",
+      "category": "physical",
+      "power": 75,
+      "accuracy": 95,
+      "pp": 15,
+      "effect": null,
+      "description": "대지의 힘을 담아 내려친다."
+    },
+    {
+      "id": "ice_shard",
+      "name": "얼음조각",
+      "type": "ice",
+      "category": "physical",
+      "power": 40,
+      "accuracy": 100,
+      "pp": 30,
+      "effect": null,
+      "description": "얼음 조각을 던진다. 항상 선공."
+    },
+    {
+      "id": "frost_breath",
+      "name": "냉기숨결",
+      "type": "ice",
+      "category": "special",
+      "power": 60,
+      "accuracy": 90,
+      "pp": 20,
+      "effect": null,
+      "description": "차가운 숨결로 공격한다."
+    },
+    {
+      "id": "ice_beam",
+      "name": "냉동빔",
+      "type": "ice",
+      "category": "special",
+      "power": 90,
+      "accuracy": 100,
+      "pp": 10,
+      "effect": {
+        "type": "paralyze",
+        "chance": 10,
+        "target": "enemy"
+      },
+      "description": "강력한 냉기 광선으로 공격한다."
+    },
+    {
+      "id": "blizzard",
+      "name": "눈보라",
+      "type": "ice",
+      "category": "special",
+      "power": 120,
+      "accuracy": 70,
+      "pp": 5,
+      "effect": {
+        "type": "paralyze",
+        "chance": 30,
+        "target": "enemy"
+      },
+      "description": "맹렬한 눈보라를 일으킨다."
+    },
+    {
+      "id": "ice_fang",
+      "name": "얼음송곳니",
+      "type": "ice",
+      "category": "physical",
+      "power": 75,
+      "accuracy": 95,
+      "pp": 15,
+      "effect": {
+        "type": "flinch",
+        "chance": 20,
+        "target": "enemy"
+      },
+      "description": "얼음 이빨로 물어 풀죽게 만든다."
+    },
+    {
+      "id": "hail",
+      "name": "싸락눈",
+      "type": "ice",
+      "category": "status",
+      "power": 0,
+      "accuracy": 100,
+      "pp": 10,
+      "effect": {
+        "type": "stat_up",
+        "chance": 100,
+        "target": "self",
+        "stat": "spDef",
+        "amount": 1
+      },
+      "description": "싸락눈을 내려 특수방어를 올린다."
+    },
+    {
+      "id": "glacial_lance",
+      "name": "빙하창",
+      "type": "ice",
+      "category": "physical",
+      "power": 110,
+      "accuracy": 90,
+      "pp": 5,
+      "effect": null,
+      "description": "거대한 얼음 창으로 찌른다."
+    },
+    {
+      "id": "freeze_ray",
+      "name": "동결광선",
+      "type": "ice",
+      "category": "special",
+      "power": 75,
+      "accuracy": 95,
+      "pp": 15,
+      "effect": {
+        "type": "paralyze",
+        "chance": 15,
+        "target": "enemy"
+      },
+      "description": "동결 광선을 쏘아 공격한다."
+    },
+    {
+      "id": "ice_wall",
+      "name": "빙벽",
+      "type": "ice",
+      "category": "status",
+      "power": 0,
+      "accuracy": 100,
+      "pp": 15,
+      "effect": {
+        "type": "stat_up",
+        "chance": 100,
+        "target": "self",
+        "stat": "def",
+        "amount": 2
+      },
+      "description": "얼음 벽을 만들어 방어력을 올린다."
+    },
+    {
+      "id": "gust",
+      "name": "돌풍",
+      "type": "wind",
+      "category": "special",
+      "power": 40,
+      "accuracy": 100,
+      "pp": 35,
+      "effect": null,
+      "description": "바람을 일으켜 공격한다."
+    },
+    {
+      "id": "air_slash",
+      "name": "에어슬래시",
+      "type": "wind",
+      "category": "special",
+      "power": 75,
+      "accuracy": 95,
+      "pp": 15,
+      "effect": {
+        "type": "flinch",
+        "chance": 30,
+        "target": "enemy"
+      },
+      "description": "날카로운 바람으로 베어 풀죽게 만든다."
+    },
+    {
+      "id": "hurricane",
+      "name": "태풍",
+      "type": "wind",
+      "category": "special",
+      "power": 120,
+      "accuracy": 70,
+      "pp": 5,
+      "effect": {
+        "type": "confuse",
+        "chance": 30,
+        "target": "enemy"
+      },
+      "description": "태풍을 일으켜 혼란에 빠뜨린다."
+    },
+    {
+      "id": "wing_attack",
+      "name": "날개치기",
+      "type": "wind",
+      "category": "physical",
+      "power": 60,
+      "accuracy": 100,
+      "pp": 25,
+      "effect": null,
+      "description": "날개로 강하게 친다."
+    },
+    {
+      "id": "aerial_ace",
+      "name": "공중베기",
+      "type": "wind",
+      "category": "physical",
+      "power": 60,
+      "accuracy": 100,
+      "pp": 20,
+      "effect": null,
+      "description": "빠르게 다가가 베어낸다."
+    },
+    {
+      "id": "tailwind",
+      "name": "순풍",
+      "type": "wind",
+      "category": "status",
+      "power": 0,
+      "accuracy": 100,
+      "pp": 15,
+      "effect": {
+        "type": "stat_up",
+        "chance": 100,
+        "target": "self",
+        "stat": "speed",
+        "amount": 2
+      },
+      "description": "순풍을 일으켜 속도를 크게 올린다."
+    },
+    {
+      "id": "sky_dive",
+      "name": "급강하",
+      "type": "wind",
+      "category": "physical",
+      "power": 90,
+      "accuracy": 95,
+      "pp": 10,
+      "effect": null,
+      "description": "높이 날아올라 급강하 공격한다."
+    },
+    {
+      "id": "tornado",
+      "name": "회오리",
+      "type": "wind",
+      "category": "special",
+      "power": 95,
+      "accuracy": 85,
+      "pp": 10,
+      "effect": {
+        "type": "confuse",
+        "chance": 20,
+        "target": "enemy"
+      },
+      "description": "거대한 회오리를 일으킨다."
+    },
+    {
+      "id": "feather_dance",
+      "name": "깃털춤",
+      "type": "wind",
+      "category": "status",
+      "power": 0,
+      "accuracy": 100,
+      "pp": 15,
+      "effect": {
+        "type": "stat_down",
+        "chance": 100,
+        "target": "enemy",
+        "stat": "atk",
+        "amount": -2
+      },
+      "description": "깃털을 흩날려 공격력을 크게 낮춘다."
+    },
+    {
+      "id": "poison_sting",
+      "name": "독침",
+      "type": "poison",
+      "category": "physical",
+      "power": 40,
+      "accuracy": 100,
+      "pp": 30,
+      "effect": {
+        "type": "poison",
+        "chance": 30,
+        "target": "enemy"
+      },
+      "description": "독침으로 찔러 중독시킨다."
+    },
+    {
+      "id": "acid_spray",
+      "name": "산성액",
+      "type": "poison",
+      "category": "special",
+      "power": 55,
+      "accuracy": 95,
+      "pp": 20,
+      "effect": {
+        "type": "stat_down",
+        "chance": 100,
+        "target": "enemy",
+        "stat": "spDef",
+        "amount": -1
+      },
+      "description": "산성 액체를 뿌려 특방을 낮춘다."
+    },
+    {
+      "id": "sludge_bomb",
+      "name": "오물폭탄",
+      "type": "poison",
+      "category": "special",
+      "power": 90,
+      "accuracy": 100,
+      "pp": 10,
+      "effect": {
+        "type": "poison",
+        "chance": 30,
+        "target": "enemy"
+      },
+      "description": "오물 폭탄으로 공격한다."
+    },
+    {
+      "id": "toxic",
+      "name": "맹독",
+      "type": "poison",
+      "category": "status",
+      "power": 0,
+      "accuracy": 90,
+      "pp": 10,
+      "effect": {
+        "type": "poison",
+        "chance": 100,
+        "target": "enemy"
+      },
+      "description": "강한 독을 주입한다."
+    },
+    {
+      "id": "venom_fang",
+      "name": "독송곳니",
+      "type": "poison",
+      "category": "physical",
+      "power": 75,
+      "accuracy": 100,
+      "pp": 15,
+      "effect": {
+        "type": "poison",
+        "chance": 50,
+        "target": "enemy"
+      },
+      "description": "독이 든 송곳니로 물어뜯는다."
+    },
+    {
+      "id": "poison_gas",
+      "name": "독안개",
+      "type": "poison",
+      "category": "status",
+      "power": 0,
+      "accuracy": 80,
+      "pp": 20,
+      "effect": {
+        "type": "poison",
+        "chance": 100,
+        "target": "enemy"
+      },
+      "description": "독가스를 뿜어 중독시킨다."
+    },
+    {
+      "id": "venoshock",
+      "name": "독충격",
+      "type": "poison",
+      "category": "special",
+      "power": 65,
+      "accuracy": 100,
+      "pp": 15,
+      "effect": null,
+      "description": "독에 걸린 상대에게 큰 데미지를 준다."
+    },
+    {
+      "id": "plague_claw",
+      "name": "역병발톱",
+      "type": "poison",
+      "category": "physical",
+      "power": 85,
+      "accuracy": 90,
+      "pp": 10,
+      "effect": {
+        "type": "poison",
+        "chance": 40,
+        "target": "enemy"
+      },
+      "description": "역병의 발톱으로 할퀸다."
+    },
+    {
+      "id": "corrosion",
+      "name": "부식",
+      "type": "poison",
+      "category": "special",
+      "power": 100,
+      "accuracy": 85,
+      "pp": 5,
+      "effect": {
+        "type": "stat_down",
+        "chance": 50,
+        "target": "enemy",
+        "stat": "def",
+        "amount": -1
+      },
+      "description": "강한 부식액으로 녹여 방어를 낮춘다."
+    },
+    {
+      "id": "metal_claw",
+      "name": "강철발톱",
+      "type": "metal",
+      "category": "physical",
+      "power": 50,
+      "accuracy": 95,
+      "pp": 25,
+      "effect": {
+        "type": "stat_up",
+        "chance": 10,
+        "target": "self",
+        "stat": "atk",
+        "amount": 1
+      },
+      "description": "강철 발톱으로 베어낸다."
+    },
+    {
+      "id": "iron_head",
+      "name": "아이언헤드",
+      "type": "metal",
+      "category": "physical",
+      "power": 80,
+      "accuracy": 100,
+      "pp": 15,
+      "effect": {
+        "type": "flinch",
+        "chance": 30,
+        "target": "enemy"
+      },
+      "description": "강철 머리로 들이받아 풀죽게 만든다."
+    },
+    {
+      "id": "steel_beam",
+      "name": "강철광선",
+      "type": "metal",
+      "category": "special",
+      "power": 110,
+      "accuracy": 90,
+      "pp": 5,
+      "effect": {
+        "type": "recoil",
+        "chance": 100,
+        "target": "self"
+      },
+      "description": "강철 광선을 발사한다. 반동이 있다."
+    },
+    {
+      "id": "iron_defense",
+      "name": "철벽",
+      "type": "metal",
+      "category": "status",
+      "power": 0,
+      "accuracy": 100,
+      "pp": 15,
+      "effect": {
+        "type": "stat_up",
+        "chance": 100,
+        "target": "self",
+        "stat": "def",
+        "amount": 2
+      },
+      "description": "몸을 강철처럼 굳혀 방어를 올린다."
+    },
+    {
+      "id": "metal_sound",
+      "name": "쇳소리",
+      "type": "metal",
+      "category": "status",
+      "power": 0,
+      "accuracy": 85,
+      "pp": 15,
+      "effect": {
+        "type": "stat_down",
+        "chance": 100,
+        "target": "enemy",
+        "stat": "spDef",
+        "amount": -2
+      },
+      "description": "끔찍한 쇳소리로 특방을 크게 낮춘다."
+    },
+    {
+      "id": "bullet_punch",
+      "name": "총알펀치",
+      "type": "metal",
+      "category": "physical",
+      "power": 40,
+      "accuracy": 100,
+      "pp": 30,
+      "effect": null,
+      "description": "총알처럼 빠른 펀치. 항상 선공."
+    },
+    {
+      "id": "gear_grind",
+      "name": "기어분쇄",
+      "type": "metal",
+      "category": "physical",
+      "power": 90,
+      "accuracy": 90,
+      "pp": 10,
+      "effect": null,
+      "description": "회전하는 기어로 분쇄한다."
+    },
+    {
+      "id": "chrome_shield",
+      "name": "크롬방패",
+      "type": "metal",
+      "category": "status",
+      "power": 0,
+      "accuracy": 100,
+      "pp": 10,
+      "effect": {
+        "type": "stat_up",
+        "chance": 100,
+        "target": "self",
+        "stat": "spDef",
+        "amount": 1
+      },
+      "description": "빛나는 방패로 특수방어를 올린다."
+    },
+    {
+      "id": "steel_lance",
+      "name": "강철창",
+      "type": "metal",
+      "category": "physical",
+      "power": 85,
+      "accuracy": 95,
+      "pp": 10,
+      "effect": null,
+      "description": "날카로운 강철 창으로 찌른다."
+    },
+    {
+      "id": "flash",
+      "name": "섬광",
+      "type": "light",
+      "category": "special",
+      "power": 40,
+      "accuracy": 100,
+      "pp": 30,
+      "effect": {
+        "type": "stat_down",
+        "chance": 20,
+        "target": "enemy",
+        "stat": "speed",
+        "amount": -1
+      },
+      "description": "눈부신 빛으로 공격한다."
+    },
+    {
+      "id": "holy_beam",
+      "name": "성스러운빔",
+      "type": "light",
+      "category": "special",
+      "power": 80,
+      "accuracy": 95,
+      "pp": 15,
+      "effect": null,
+      "description": "성스러운 빛의 광선을 발사한다."
+    },
+    {
+      "id": "radiance",
+      "name": "찬란한빛",
+      "type": "light",
+      "category": "special",
+      "power": 110,
+      "accuracy": 90,
+      "pp": 5,
+      "effect": {
+        "type": "stat_down",
+        "chance": 30,
+        "target": "enemy",
+        "stat": "spAtk",
+        "amount": -1
+      },
+      "description": "찬란한 빛으로 적의 특공을 낮춘다."
+    },
+    {
+      "id": "purify",
+      "name": "정화",
+      "type": "light",
+      "category": "status",
+      "power": 0,
+      "accuracy": 100,
+      "pp": 20,
+      "effect": {
+        "type": "heal",
+        "chance": 100,
+        "target": "self"
+      },
+      "description": "빛의 힘으로 HP를 회복한다."
+    },
+    {
+      "id": "solar_flare",
+      "name": "태양섬광",
+      "type": "light",
+      "category": "special",
+      "power": 95,
+      "accuracy": 95,
+      "pp": 10,
+      "effect": null,
+      "description": "태양의 빛을 모아 섬광을 내뿜는다."
+    },
+    {
+      "id": "blessing",
+      "name": "축복",
+      "type": "light",
+      "category": "status",
+      "power": 0,
+      "accuracy": 100,
+      "pp": 10,
+      "effect": {
+        "type": "stat_up",
+        "chance": 100,
+        "target": "self",
+        "stat": "spAtk",
+        "amount": 1
+      },
+      "description": "빛의 축복으로 특수공격을 올린다."
+    },
+    {
+      "id": "aurora_ray",
+      "name": "오로라광선",
+      "type": "light",
+      "category": "special",
+      "power": 70,
+      "accuracy": 100,
+      "pp": 15,
+      "effect": null,
+      "description": "오로라 빛의 광선으로 공격한다."
+    },
+    {
+      "id": "divine_light",
+      "name": "신성한빛",
+      "type": "light",
+      "category": "special",
+      "power": 90,
+      "accuracy": 100,
+      "pp": 10,
+      "effect": null,
+      "description": "신성한 빛으로 내려친다."
+    },
+    {
+      "id": "light_screen",
+      "name": "빛의장막",
+      "type": "light",
+      "category": "status",
+      "power": 0,
+      "accuracy": 100,
+      "pp": 10,
+      "effect": {
+        "type": "stat_up",
+        "chance": 100,
+        "target": "self",
+        "stat": "spDef",
+        "amount": 2
+      },
+      "description": "빛의 장막을 펼쳐 특방을 올린다."
+    },
+    {
+      "id": "shadow_claw",
+      "name": "그림자발톱",
+      "type": "dark",
+      "category": "physical",
+      "power": 70,
+      "accuracy": 100,
+      "pp": 15,
+      "effect": null,
+      "description": "어둠의 발톱으로 베어낸다."
+    },
+    {
+      "id": "dark_pulse",
+      "name": "암흑파동",
+      "type": "dark",
+      "category": "special",
+      "power": 80,
+      "accuracy": 100,
+      "pp": 15,
+      "effect": {
+        "type": "flinch",
+        "chance": 20,
+        "target": "enemy"
+      },
+      "description": "사악한 파동으로 공격한다."
+    },
+    {
+      "id": "night_slash",
+      "name": "야습",
+      "type": "dark",
+      "category": "physical",
+      "power": 70,
+      "accuracy": 100,
+      "pp": 15,
+      "effect": null,
+      "description": "어둠 속에서 급소를 노린다."
+    },
+    {
+      "id": "shadow_ball",
+      "name": "암흑구",
+      "type": "dark",
+      "category": "special",
+      "power": 90,
+      "accuracy": 100,
+      "pp": 15,
+      "effect": {
+        "type": "stat_down",
+        "chance": 20,
+        "target": "enemy",
+        "stat": "spDef",
+        "amount": -1
+      },
+      "description": "어둠의 구체를 발사한다."
+    },
+    {
+      "id": "dark_void",
+      "name": "암흑공간",
+      "type": "dark",
+      "category": "status",
+      "power": 0,
+      "accuracy": 80,
+      "pp": 10,
+      "effect": {
+        "type": "sleep",
+        "chance": 100,
+        "target": "enemy"
+      },
+      "description": "어둠에 빠뜨려 잠재운다."
+    },
+    {
+      "id": "crunch",
+      "name": "깨물기",
+      "type": "dark",
+      "category": "physical",
+      "power": 80,
+      "accuracy": 100,
+      "pp": 15,
+      "effect": {
+        "type": "stat_down",
+        "chance": 20,
+        "target": "enemy",
+        "stat": "def",
+        "amount": -1
+      },
+      "description": "강하게 깨물어 방어를 낮출 수 있다."
+    },
+    {
+      "id": "shadow_sneak",
+      "name": "그림자숨기",
+      "type": "dark",
+      "category": "physical",
+      "power": 40,
+      "accuracy": 100,
+      "pp": 30,
+      "effect": null,
+      "description": "그림자를 통해 기습한다. 항상 선공."
+    },
+    {
+      "id": "abyss_gaze",
+      "name": "심연의시선",
+      "type": "dark",
+      "category": "special",
+      "power": 100,
+      "accuracy": 85,
+      "pp": 5,
+      "effect": {
+        "type": "flinch",
+        "chance": 30,
+        "target": "enemy"
+      },
+      "description": "심연의 눈빛으로 적을 꿰뚫는다."
+    },
+    {
+      "id": "dark_shroud",
+      "name": "암막",
+      "type": "dark",
+      "category": "status",
+      "power": 0,
+      "accuracy": 100,
+      "pp": 15,
+      "effect": {
+        "type": "stat_up",
+        "chance": 100,
+        "target": "self",
+        "stat": "speed",
+        "amount": 1
+      },
+      "description": "어둠에 숨어 속도를 올린다."
+    },
+    {
+      "id": "spirit_flame",
+      "name": "혼불",
+      "type": "spirit",
+      "category": "special",
+      "power": 45,
+      "accuracy": 100,
+      "pp": 25,
+      "effect": {
+        "type": "burn",
+        "chance": 15,
+        "target": "enemy"
+      },
+      "description": "영혼의 불꽃으로 공격한다."
+    },
+    {
+      "id": "phantom_force",
+      "name": "유령의힘",
+      "type": "spirit",
+      "category": "physical",
+      "power": 90,
+      "accuracy": 100,
+      "pp": 10,
+      "effect": null,
+      "description": "유령의 힘으로 사라졌다 공격한다."
+    },
+    {
+      "id": "soul_drain",
+      "name": "영혼흡수",
+      "type": "spirit",
+      "category": "special",
+      "power": 75,
+      "accuracy": 100,
+      "pp": 15,
+      "effect": {
+        "type": "drain",
+        "chance": 100,
+        "target": "self"
+      },
+      "description": "영혼의 힘을 빨아들인다."
+    },
+    {
+      "id": "curse",
+      "name": "저주",
+      "type": "spirit",
+      "category": "status",
+      "power": 0,
+      "accuracy": 90,
+      "pp": 10,
+      "effect": {
+        "type": "stat_down",
+        "chance": 100,
+        "target": "enemy",
+        "stat": "speed",
+        "amount": -2
+      },
+      "description": "저주를 걸어 속도를 크게 낮춘다."
+    },
+    {
+      "id": "ghost_wind",
+      "name": "유령바람",
+      "type": "spirit",
+      "category": "special",
+      "power": 60,
+      "accuracy": 95,
+      "pp": 20,
+      "effect": {
+        "type": "confuse",
+        "chance": 15,
+        "target": "enemy"
+      },
+      "description": "유령의 바람으로 혼란을 일으킨다."
+    },
+    {
+      "id": "spectral_chain",
+      "name": "영쇄",
+      "type": "spirit",
+      "category": "special",
+      "power": 85,
+      "accuracy": 90,
+      "pp": 10,
+      "effect": null,
+      "description": "영적 사슬로 속박하여 공격한다."
+    },
+    {
+      "id": "haunt",
+      "name": "빙의",
+      "type": "spirit",
+      "category": "status",
+      "power": 0,
+      "accuracy": 85,
+      "pp": 15,
+      "effect": {
+        "type": "confuse",
+        "chance": 100,
+        "target": "enemy"
+      },
+      "description": "빙의하여 혼란에 빠뜨린다."
+    },
+    {
+      "id": "ectoplasm",
+      "name": "에테르탄",
+      "type": "spirit",
+      "category": "special",
+      "power": 100,
+      "accuracy": 90,
+      "pp": 5,
+      "effect": null,
+      "description": "영적 에너지를 응축하여 발사한다."
+    },
+    {
+      "id": "life_steal",
+      "name": "생명탈취",
+      "type": "spirit",
+      "category": "special",
+      "power": 55,
+      "accuracy": 95,
+      "pp": 20,
+      "effect": {
+        "type": "drain",
+        "chance": 100,
+        "target": "self"
+      },
+      "description": "적의 생명력을 빼앗는다."
+    },
+    {
+      "id": "dragon_claw",
+      "name": "용의발톱",
+      "type": "dragon",
+      "category": "physical",
+      "power": 80,
+      "accuracy": 100,
+      "pp": 15,
+      "effect": null,
+      "description": "용의 발톱으로 베어낸다."
+    },
+    {
+      "id": "dragon_breath",
+      "name": "용의숨결",
+      "type": "dragon",
+      "category": "special",
+      "power": 60,
+      "accuracy": 100,
+      "pp": 20,
+      "effect": {
+        "type": "paralyze",
+        "chance": 30,
+        "target": "enemy"
+      },
+      "description": "용의 숨결로 마비시킬 수 있다."
+    },
+    {
+      "id": "dragon_pulse",
+      "name": "용의파동",
+      "type": "dragon",
+      "category": "special",
+      "power": 85,
+      "accuracy": 100,
+      "pp": 10,
+      "effect": null,
+      "description": "용의 파동을 발사한다."
+    },
+    {
+      "id": "outrage",
+      "name": "역린",
+      "type": "dragon",
+      "category": "physical",
+      "power": 120,
+      "accuracy": 100,
+      "pp": 10,
+      "effect": {
+        "type": "confuse",
+        "chance": 100,
+        "target": "self"
+      },
+      "description": "난폭하게 공격 후 혼란에 빠진다."
+    },
+    {
+      "id": "dragon_dance",
+      "name": "용의춤",
+      "type": "dragon",
+      "category": "status",
+      "power": 0,
+      "accuracy": 100,
+      "pp": 20,
+      "effect": {
+        "type": "stat_up",
+        "chance": 100,
+        "target": "self",
+        "stat": "atk",
+        "amount": 1
+      },
+      "description": "신비한 춤으로 공격과 속도를 올린다."
+    },
+    {
+      "id": "dragon_rush",
+      "name": "용의돌진",
+      "type": "dragon",
+      "category": "physical",
+      "power": 100,
+      "accuracy": 75,
+      "pp": 10,
+      "effect": {
+        "type": "flinch",
+        "chance": 20,
+        "target": "enemy"
+      },
+      "description": "거대한 용의 기운으로 돌진한다."
+    },
+    {
+      "id": "draco_meteor",
+      "name": "유성군",
+      "type": "dragon",
+      "category": "special",
+      "power": 140,
+      "accuracy": 90,
+      "pp": 5,
+      "effect": {
+        "type": "stat_down",
+        "chance": 100,
+        "target": "self",
+        "stat": "spAtk",
+        "amount": -2
+      },
+      "description": "유성을 떨어뜨린다. 특공이 크게 떨어진다."
+    },
+    {
+      "id": "scale_armor",
+      "name": "비늘갑옷",
+      "type": "dragon",
+      "category": "status",
+      "power": 0,
+      "accuracy": 100,
+      "pp": 15,
+      "effect": {
+        "type": "stat_up",
+        "chance": 100,
+        "target": "self",
+        "stat": "def",
+        "amount": 1
+      },
+      "description": "비늘을 세워 방어력을 올린다."
+    },
+    {
+      "id": "twin_fang",
+      "name": "쌍아",
+      "type": "dragon",
+      "category": "physical",
+      "power": 70,
+      "accuracy": 90,
+      "pp": 15,
+      "effect": null,
+      "description": "용의 쌍아로 두 번 물어뜯는다."
+    },
+    {
+      "id": "karate_chop",
+      "name": "태권격파",
+      "type": "fighting",
+      "category": "physical",
+      "power": 50,
+      "accuracy": 100,
+      "pp": 25,
+      "effect": null,
+      "description": "손날로 내려친다."
+    },
+    {
+      "id": "brick_break",
+      "name": "깨트리기",
+      "type": "fighting",
+      "category": "physical",
+      "power": 75,
+      "accuracy": 100,
+      "pp": 15,
+      "effect": null,
+      "description": "단단한 것도 깨는 주먹."
+    },
+    {
+      "id": "close_combat",
+      "name": "인파이팅",
+      "type": "fighting",
+      "category": "physical",
+      "power": 120,
+      "accuracy": 100,
+      "pp": 5,
+      "effect": {
+        "type": "stat_down",
+        "chance": 100,
+        "target": "self",
+        "stat": "def",
+        "amount": -1
+      },
+      "description": "전력으로 싸운다. 방어가 떨어진다."
+    },
+    {
+      "id": "focus_punch",
+      "name": "집중펀치",
+      "type": "fighting",
+      "category": "physical",
+      "power": 150,
+      "accuracy": 100,
+      "pp": 5,
+      "effect": null,
+      "description": "집중하여 날리는 최강의 주먹."
+    },
+    {
+      "id": "bulk_up",
+      "name": "벌크업",
+      "type": "fighting",
+      "category": "status",
+      "power": 0,
+      "accuracy": 100,
+      "pp": 20,
+      "effect": {
+        "type": "stat_up",
+        "chance": 100,
+        "target": "self",
+        "stat": "atk",
+        "amount": 1
+      },
+      "description": "몸을 단련하여 공격과 방어를 올린다."
+    },
+    {
+      "id": "low_kick",
+      "name": "발차기",
+      "type": "fighting",
+      "category": "physical",
+      "power": 60,
+      "accuracy": 95,
+      "pp": 20,
+      "effect": null,
+      "description": "낮게 차서 넘어뜨린다."
+    },
+    {
+      "id": "drain_punch",
+      "name": "흡수펀치",
+      "type": "fighting",
+      "category": "physical",
+      "power": 75,
+      "accuracy": 100,
+      "pp": 10,
+      "effect": {
+        "type": "drain",
+        "chance": 100,
+        "target": "self"
+      },
+      "description": "펀치를 날려 체력을 흡수한다."
+    },
+    {
+      "id": "counter",
+      "name": "반격",
+      "type": "fighting",
+      "category": "physical",
+      "power": 65,
+      "accuracy": 100,
+      "pp": 20,
+      "effect": null,
+      "description": "받은 물리 공격을 되돌려준다."
+    },
+    {
+      "id": "dynamic_kick",
+      "name": "질풍각",
+      "type": "fighting",
+      "category": "physical",
+      "power": 90,
+      "accuracy": 85,
+      "pp": 10,
+      "effect": {
+        "type": "flinch",
+        "chance": 25,
+        "target": "enemy"
+      },
+      "description": "강력한 발차기로 풀죽게 만든다."
+    },
+    {
+      "id": "rock_throw",
+      "name": "돌던지기",
+      "type": "rock",
+      "category": "physical",
+      "power": 50,
+      "accuracy": 90,
+      "pp": 25,
+      "effect": null,
+      "description": "돌을 던져 공격한다."
+    },
+    {
+      "id": "rock_slide",
+      "name": "암석낙하",
+      "type": "rock",
+      "category": "physical",
+      "power": 75,
+      "accuracy": 90,
+      "pp": 10,
+      "effect": {
+        "type": "flinch",
+        "chance": 30,
+        "target": "enemy"
+      },
+      "description": "바위를 떨어뜨려 풀죽게 만든다."
+    },
+    {
+      "id": "stone_edge",
+      "name": "스톤에지",
+      "type": "rock",
+      "category": "physical",
+      "power": 100,
+      "accuracy": 80,
+      "pp": 5,
+      "effect": null,
+      "description": "날카로운 암석으로 찌른다."
+    },
+    {
+      "id": "sandstorm",
+      "name": "모래폭풍",
+      "type": "rock",
+      "category": "status",
+      "power": 0,
+      "accuracy": 100,
+      "pp": 10,
+      "effect": {
+        "type": "stat_up",
+        "chance": 100,
+        "target": "self",
+        "stat": "spDef",
+        "amount": 1
+      },
+      "description": "모래폭풍을 일으켜 특방을 올린다."
+    },
+    {
+      "id": "rock_polish",
+      "name": "돌갈기",
+      "type": "rock",
+      "category": "status",
+      "power": 0,
+      "accuracy": 100,
+      "pp": 20,
+      "effect": {
+        "type": "stat_up",
+        "chance": 100,
+        "target": "self",
+        "stat": "speed",
+        "amount": 2
+      },
+      "description": "몸을 갈아 속도를 크게 올린다."
+    },
+    {
+      "id": "boulder_crush",
+      "name": "거암분쇄",
+      "type": "rock",
+      "category": "physical",
+      "power": 90,
+      "accuracy": 85,
+      "pp": 10,
+      "effect": null,
+      "description": "거대한 바위로 짓뭉갠다."
+    },
+    {
+      "id": "crystal_shot",
+      "name": "수정탄",
+      "type": "rock",
+      "category": "special",
+      "power": 70,
+      "accuracy": 95,
+      "pp": 15,
+      "effect": null,
+      "description": "날카로운 수정을 발사한다."
+    },
+    {
+      "id": "fossil_impact",
+      "name": "화석충격",
+      "type": "rock",
+      "category": "physical",
+      "power": 85,
+      "accuracy": 90,
+      "pp": 10,
+      "effect": null,
+      "description": "고대의 힘으로 충격을 가한다."
+    },
+    {
+      "id": "petrify",
+      "name": "석화",
+      "type": "rock",
+      "category": "status",
+      "power": 0,
+      "accuracy": 75,
+      "pp": 10,
+      "effect": {
+        "type": "paralyze",
+        "chance": 100,
+        "target": "enemy"
+      },
+      "description": "적을 돌로 굳게 만든다."
+    },
+    {
+      "id": "echo",
+      "name": "메아리",
+      "type": "sound",
+      "category": "special",
+      "power": 40,
+      "accuracy": 100,
+      "pp": 30,
+      "effect": null,
+      "description": "울려퍼지는 메아리로 공격한다."
+    },
+    {
+      "id": "screech",
+      "name": "귀찢는소리",
+      "type": "sound",
+      "category": "status",
+      "power": 0,
+      "accuracy": 85,
+      "pp": 20,
+      "effect": {
+        "type": "stat_down",
+        "chance": 100,
+        "target": "enemy",
+        "stat": "def",
+        "amount": -2
+      },
+      "description": "귀찢는 소리로 방어를 크게 낮춘다."
+    },
+    {
+      "id": "sonic_boom",
+      "name": "음파폭발",
+      "type": "sound",
+      "category": "special",
+      "power": 75,
+      "accuracy": 95,
+      "pp": 15,
+      "effect": null,
+      "description": "음파의 폭발로 공격한다."
+    },
+    {
+      "id": "hyper_voice",
+      "name": "하이퍼보이스",
+      "type": "sound",
+      "category": "special",
+      "power": 90,
+      "accuracy": 100,
+      "pp": 10,
+      "effect": null,
+      "description": "거대한 음파로 공격한다."
+    },
+    {
+      "id": "discord",
+      "name": "불협화음",
+      "type": "sound",
+      "category": "special",
+      "power": 60,
+      "accuracy": 100,
+      "pp": 15,
+      "effect": {
+        "type": "confuse",
+        "chance": 40,
+        "target": "enemy"
+      },
+      "description": "불협화음으로 혼란에 빠뜨린다."
+    },
+    {
+      "id": "war_cry",
+      "name": "전투함성",
+      "type": "sound",
+      "category": "status",
+      "power": 0,
+      "accuracy": 100,
+      "pp": 15,
+      "effect": {
+        "type": "stat_up",
+        "chance": 100,
+        "target": "self",
+        "stat": "atk",
+        "amount": 2
+      },
+      "description": "전투 함성으로 공격력을 크게 올린다."
+    },
+    {
+      "id": "shatter_note",
+      "name": "파쇄음",
+      "type": "sound",
+      "category": "special",
+      "power": 100,
+      "accuracy": 90,
+      "pp": 5,
+      "effect": null,
+      "description": "모든 것을 파괴하는 음파."
+    },
+    {
+      "id": "lullaby",
+      "name": "자장가",
+      "type": "sound",
+      "category": "status",
+      "power": 0,
+      "accuracy": 80,
+      "pp": 15,
+      "effect": {
+        "type": "sleep",
+        "chance": 100,
+        "target": "enemy"
+      },
+      "description": "아름다운 노래로 잠재운다."
+    },
+    {
+      "id": "resonance",
+      "name": "공명",
+      "type": "sound",
+      "category": "special",
+      "power": 80,
+      "accuracy": 100,
+      "pp": 15,
+      "effect": null,
+      "description": "공명하는 음파로 공격한다."
+    },
+    {
+      "id": "cosmic_ray",
+      "name": "우주광선",
+      "type": "cosmic",
+      "category": "special",
+      "power": 50,
+      "accuracy": 95,
+      "pp": 20,
+      "effect": null,
+      "description": "우주의 에너지를 발사한다."
+    },
+    {
+      "id": "gravity_well",
+      "name": "중력장",
+      "type": "cosmic",
+      "category": "special",
+      "power": 80,
+      "accuracy": 90,
+      "pp": 10,
+      "effect": {
+        "type": "stat_down",
+        "chance": 30,
+        "target": "enemy",
+        "stat": "speed",
+        "amount": -1
+      },
+      "description": "중력장으로 속도를 낮출 수 있다."
+    },
+    {
+      "id": "nebula_burst",
+      "name": "성운폭발",
+      "type": "cosmic",
+      "category": "special",
+      "power": 110,
+      "accuracy": 85,
+      "pp": 5,
+      "effect": null,
+      "description": "성운의 에너지를 폭발시킨다."
+    },
+    {
+      "id": "warp",
+      "name": "워프",
+      "type": "cosmic",
+      "category": "status",
+      "power": 0,
+      "accuracy": 100,
+      "pp": 15,
+      "effect": {
+        "type": "stat_up",
+        "chance": 100,
+        "target": "self",
+        "stat": "speed",
+        "amount": 2
+      },
+      "description": "공간을 왜곡하여 속도를 크게 올린다."
+    },
+    {
+      "id": "star_fall",
+      "name": "별똥비",
+      "type": "cosmic",
+      "category": "special",
+      "power": 90,
+      "accuracy": 95,
+      "pp": 10,
+      "effect": null,
+      "description": "별똥별을 떨어뜨려 공격한다."
+    },
+    {
+      "id": "dark_matter",
+      "name": "암흑물질",
+      "type": "cosmic",
+      "category": "special",
+      "power": 95,
+      "accuracy": 90,
+      "pp": 10,
+      "effect": {
+        "type": "stat_down",
+        "chance": 20,
+        "target": "enemy",
+        "stat": "spAtk",
+        "amount": -1
+      },
+      "description": "암흑물질로 공격한다."
+    },
+    {
+      "id": "singularity",
+      "name": "특이점",
+      "type": "cosmic",
+      "category": "special",
+      "power": 130,
+      "accuracy": 80,
+      "pp": 5,
+      "effect": null,
+      "description": "블랙홀의 힘으로 모든 것을 빨아들인다."
+    },
+    {
+      "id": "cosmic_armor",
+      "name": "우주갑옷",
+      "type": "cosmic",
+      "category": "status",
+      "power": 0,
+      "accuracy": 100,
+      "pp": 10,
+      "effect": {
+        "type": "stat_up",
+        "chance": 100,
+        "target": "self",
+        "stat": "spDef",
+        "amount": 2
+      },
+      "description": "우주의 힘으로 특방을 크게 올린다."
+    },
+    {
+      "id": "void_ray",
+      "name": "공허광선",
+      "type": "cosmic",
+      "category": "special",
+      "power": 70,
+      "accuracy": 100,
+      "pp": 15,
+      "effect": null,
+      "description": "공허한 에너지의 광선을 발사한다."
+    },
+    {
+      "id": "unique_fire_puppy",
+      "name": "뜨거운 발걸음",
+      "type": "fire",
+      "category": "physical",
+      "power": 100,
+      "accuracy": 95,
+      "pp": 10,
+      "effect": {
+        "type": "stat_up",
+        "chance": 100,
+        "target": "self",
+        "stat": "speed",
+        "amount": 1
+      },
+      "description": "뜨거운 발걸음으로 적을 밟아 속도가 오른다."
+    },
+    {
+      "id": "unique_flame_lion",
+      "name": "사자왕의 화염",
+      "type": "fire",
+      "category": "special",
+      "power": 115,
+      "accuracy": 90,
+      "pp": 5,
+      "effect": {
+        "type": "burn",
+        "chance": 40,
+        "target": "enemy"
+      },
+      "description": "사자왕이 화염의 갈기를 휘두른다."
+    },
+    {
+      "id": "unique_inferno_emperor",
+      "name": "제왕의 업화",
+      "type": "fire",
+      "category": "special",
+      "power": 130,
+      "accuracy": 90,
+      "pp": 5,
+      "effect": {
+        "type": "burn",
+        "chance": 50,
+        "target": "enemy"
+      },
+      "description": "모든 것을 태우는 제왕의 화염."
+    },
+    {
+      "id": "unique_water_sprite",
+      "name": "물방울 세례",
+      "type": "water",
+      "category": "special",
+      "power": 100,
+      "accuracy": 95,
+      "pp": 10,
+      "effect": {
+        "type": "stat_up",
+        "chance": 100,
+        "target": "self",
+        "stat": "spDef",
+        "amount": 1
+      },
+      "description": "무수한 물방울이 적을 감싸며 특방이 오른다."
+    },
+    {
+      "id": "unique_tidal_beast",
+      "name": "해류의 역류",
+      "type": "water",
+      "category": "special",
+      "power": 120,
+      "accuracy": 90,
+      "pp": 5,
+      "effect": null,
+      "description": "바다의 모든 흐름을 역류시킨다."
+    },
+    {
+      "id": "unique_ocean_emperor",
+      "name": "심해의 군림",
+      "type": "water",
+      "category": "special",
+      "power": 130,
+      "accuracy": 90,
+      "pp": 5,
+      "effect": {
+        "type": "stat_down",
+        "chance": 50,
+        "target": "enemy",
+        "stat": "spDef",
+        "amount": -1
+      },
+      "description": "심해의 제왕이 바다를 지배한다."
+    },
+    {
+      "id": "unique_leaf_spirit",
+      "name": "생명의 잎",
+      "type": "grass",
+      "category": "special",
+      "power": 100,
+      "accuracy": 95,
+      "pp": 10,
+      "effect": {
+        "type": "heal",
+        "chance": 100,
+        "target": "self"
+      },
+      "description": "생명의 잎으로 HP를 회복한다."
+    },
+    {
+      "id": "unique_jungle_beast",
+      "name": "원시림의 포효",
+      "type": "grass",
+      "category": "physical",
+      "power": 120,
+      "accuracy": 90,
+      "pp": 5,
+      "effect": {
+        "type": "stat_up",
+        "chance": 100,
+        "target": "self",
+        "stat": "atk",
+        "amount": 1
+      },
+      "description": "원시림의 포효로 공격력이 상승한다."
+    },
+    {
+      "id": "unique_forest_emperor",
+      "name": "만목의 왕",
+      "type": "grass",
+      "category": "special",
+      "power": 130,
+      "accuracy": 90,
+      "pp": 5,
+      "effect": {
+        "type": "drain",
+        "chance": 100,
+        "target": "self"
+      },
+      "description": "모든 나무의 힘을 모아 공격하며 체력을 회복한다."
+    },
+    {
+      "id": "unique_spark_mouse",
+      "name": "정전기 폭풍",
+      "type": "electric",
+      "category": "special",
+      "power": 100,
+      "accuracy": 95,
+      "pp": 10,
+      "effect": {
+        "type": "paralyze",
+        "chance": 30,
+        "target": "enemy"
+      },
+      "description": "전신에서 정전기 폭풍을 일으킨다."
+    },
+    {
+      "id": "unique_bolt_fox",
+      "name": "번개여우의 질주",
+      "type": "electric",
+      "category": "physical",
+      "power": 110,
+      "accuracy": 95,
+      "pp": 5,
+      "effect": {
+        "type": "stat_up",
+        "chance": 100,
+        "target": "self",
+        "stat": "speed",
+        "amount": 1
+      },
+      "description": "번개를 두른 채 질주한다."
+    },
+    {
+      "id": "unique_sand_worm",
+      "name": "모래폭풍 삼킴",
+      "type": "earth",
+      "category": "physical",
+      "power": 100,
+      "accuracy": 90,
+      "pp": 10,
+      "effect": null,
+      "description": "모래폭풍과 함께 적을 삼킨다."
+    },
+    {
+      "id": "unique_mole_king",
+      "name": "지하제왕의 일격",
+      "type": "earth",
+      "category": "physical",
+      "power": 110,
+      "accuracy": 90,
+      "pp": 5,
+      "effect": {
+        "type": "flinch",
+        "chance": 40,
+        "target": "enemy"
+      },
+      "description": "지하에서 솟아올라 강타한다."
+    },
+    {
+      "id": "unique_normal_bird",
+      "name": "창공의 비상",
+      "type": "wind",
+      "category": "physical",
+      "power": 100,
+      "accuracy": 95,
+      "pp": 10,
+      "effect": {
+        "type": "stat_up",
+        "chance": 100,
+        "target": "self",
+        "stat": "speed",
+        "amount": 1
+      },
+      "description": "창공으로 비상하며 공격한다."
+    },
+    {
+      "id": "unique_gale_bird",
+      "name": "질풍의 날갯짓",
+      "type": "wind",
+      "category": "special",
+      "power": 110,
+      "accuracy": 90,
+      "pp": 5,
+      "effect": {
+        "type": "stat_up",
+        "chance": 100,
+        "target": "self",
+        "stat": "speed",
+        "amount": 1
+      },
+      "description": "질풍의 날갯짓으로 모든 것을 날려버린다."
+    },
+    {
+      "id": "unique_storm_hawk",
+      "name": "폭풍제왕의 강하",
+      "type": "wind",
+      "category": "physical",
+      "power": 130,
+      "accuracy": 85,
+      "pp": 5,
+      "effect": {
+        "type": "flinch",
+        "chance": 40,
+        "target": "enemy"
+      },
+      "description": "폭풍을 두르고 급강하한다."
+    },
+    {
+      "id": "unique_poison_moth",
+      "name": "독분의 선율",
+      "type": "poison",
+      "category": "special",
+      "power": 100,
+      "accuracy": 95,
+      "pp": 10,
+      "effect": {
+        "type": "poison",
+        "chance": 50,
+        "target": "enemy"
+      },
+      "description": "독가루를 뿌리며 춤춘다."
+    },
+    {
+      "id": "unique_venom_hydra",
+      "name": "만독의 폭류",
+      "type": "poison",
+      "category": "special",
+      "power": 130,
+      "accuracy": 85,
+      "pp": 5,
+      "effect": {
+        "type": "poison",
+        "chance": 80,
+        "target": "enemy"
+      },
+      "description": "만 가지 독을 한꺼번에 쏟아낸다."
+    },
+    {
+      "id": "unique_ghost_lantern",
+      "name": "혼등의 빛",
+      "type": "spirit",
+      "category": "special",
+      "power": 100,
+      "accuracy": 95,
+      "pp": 10,
+      "effect": {
+        "type": "confuse",
+        "chance": 40,
+        "target": "enemy"
+      },
+      "description": "혼등의 빛이 적을 미혹시킨다."
+    },
+    {
+      "id": "unique_phantom_knight",
+      "name": "유령기사의 돌격",
+      "type": "spirit",
+      "category": "physical",
+      "power": 110,
+      "accuracy": 90,
+      "pp": 5,
+      "effect": null,
+      "description": "유령 기사가 저승에서 돌격한다."
+    },
+    {
+      "id": "unique_grass_mantis",
+      "name": "잎날의 무",
+      "type": "grass",
+      "category": "physical",
+      "power": 110,
+      "accuracy": 90,
+      "pp": 5,
+      "effect": null,
+      "description": "잎사귀 칼날의 춤으로 적을 벤다."
+    },
+    {
+      "id": "unique_fight_mantis",
+      "name": "사마귀의 연참",
+      "type": "fighting",
+      "category": "physical",
+      "power": 110,
+      "accuracy": 90,
+      "pp": 5,
+      "effect": null,
+      "description": "날카로운 낫으로 연속 참격한다."
+    },
+    {
+      "id": "unique_toxic_swamp",
+      "name": "독늪의 심연",
+      "type": "poison",
+      "category": "special",
+      "power": 110,
+      "accuracy": 85,
+      "pp": 5,
+      "effect": {
+        "type": "poison",
+        "chance": 60,
+        "target": "enemy"
+      },
+      "description": "독늪의 심연으로 적을 가라앉힌다."
+    },
+    {
+      "id": "unique_rock_turtle",
+      "name": "고대거북의 방벽",
+      "type": "rock",
+      "category": "physical",
+      "power": 100,
+      "accuracy": 90,
+      "pp": 5,
+      "effect": {
+        "type": "stat_up",
+        "chance": 100,
+        "target": "self",
+        "stat": "def",
+        "amount": 2
+      },
+      "description": "고대 거북이 방벽을 세운다."
+    },
+    {
+      "id": "unique_dragon_turtle",
+      "name": "현무의 수호",
+      "type": "dragon",
+      "category": "special",
+      "power": 100,
+      "accuracy": 95,
+      "pp": 10,
+      "effect": {
+        "type": "stat_up",
+        "chance": 100,
+        "target": "self",
+        "stat": "def",
+        "amount": 1
+      },
+      "description": "현무의 수호로 방어하며 공격한다."
+    },
+    {
+      "id": "unique_drake_pup",
+      "name": "아기용의 포효",
+      "type": "dragon",
+      "category": "special",
+      "power": 100,
+      "accuracy": 95,
+      "pp": 10,
+      "effect": null,
+      "description": "아기용이 온 힘을 다해 포효한다."
+    },
+    {
+      "id": "unique_wyrm_lord",
+      "name": "비룡의 강림",
+      "type": "dragon",
+      "category": "physical",
+      "power": 120,
+      "accuracy": 90,
+      "pp": 5,
+      "effect": {
+        "type": "flinch",
+        "chance": 30,
+        "target": "enemy"
+      },
+      "description": "하늘에서 비룡이 강림한다."
+    },
+    {
+      "id": "unique_dragon_emperor",
+      "name": "용제의 포효",
+      "type": "dragon",
+      "category": "special",
+      "power": 130,
+      "accuracy": 90,
+      "pp": 5,
+      "effect": {
+        "type": "stat_up",
+        "chance": 100,
+        "target": "self",
+        "stat": "spAtk",
+        "amount": 1
+      },
+      "description": "용의 제왕이 포효하며 특공이 오른다."
+    },
+    {
+      "id": "unique_light_butterfly",
+      "name": "빛나비의 인도",
+      "type": "light",
+      "category": "special",
+      "power": 100,
+      "accuracy": 95,
+      "pp": 10,
+      "effect": {
+        "type": "stat_up",
+        "chance": 100,
+        "target": "self",
+        "stat": "spAtk",
+        "amount": 1
+      },
+      "description": "빛나비의 인도로 특공이 오른다."
+    },
+    {
+      "id": "unique_holy_deer",
+      "name": "성스러운 치유",
+      "type": "light",
+      "category": "special",
+      "power": 100,
+      "accuracy": 100,
+      "pp": 5,
+      "effect": {
+        "type": "heal",
+        "chance": 100,
+        "target": "self"
+      },
+      "description": "성스러운 빛으로 아군을 치유한다."
+    },
+    {
+      "id": "unique_dark_cat",
+      "name": "암흑고양이의 저주",
+      "type": "dark",
+      "category": "special",
+      "power": 100,
+      "accuracy": 95,
+      "pp": 10,
+      "effect": {
+        "type": "stat_down",
+        "chance": 100,
+        "target": "enemy",
+        "stat": "speed",
+        "amount": -1
+      },
+      "description": "암흑 고양이의 저주로 속도를 낮춘다."
+    },
+    {
+      "id": "unique_dark_wolf",
+      "name": "검은 달의 울부짖음",
+      "type": "dark",
+      "category": "special",
+      "power": 110,
+      "accuracy": 90,
+      "pp": 5,
+      "effect": {
+        "type": "flinch",
+        "chance": 30,
+        "target": "enemy"
+      },
+      "description": "검은 달 아래 울부짖어 적을 공포에 빠뜨린다."
+    },
+    {
+      "id": "unique_gear_bot",
+      "name": "기어연동 폭발",
+      "type": "metal",
+      "category": "special",
+      "power": 100,
+      "accuracy": 95,
+      "pp": 10,
+      "effect": null,
+      "description": "모든 기어가 연동하여 폭발한다."
+    },
+    {
+      "id": "unique_steel_knight",
+      "name": "기사의 맹세",
+      "type": "metal",
+      "category": "physical",
+      "power": 110,
+      "accuracy": 95,
+      "pp": 5,
+      "effect": {
+        "type": "stat_up",
+        "chance": 100,
+        "target": "self",
+        "stat": "def",
+        "amount": 1
+      },
+      "description": "강철 기사의 맹세로 방어가 올라간다."
+    },
+    {
+      "id": "unique_echo_bat",
+      "name": "초음파 파괴",
+      "type": "sound",
+      "category": "special",
+      "power": 100,
+      "accuracy": 95,
+      "pp": 10,
+      "effect": {
+        "type": "confuse",
+        "chance": 30,
+        "target": "enemy"
+      },
+      "description": "초음파로 모든 것을 파괴한다."
+    },
+    {
+      "id": "unique_siren_song",
+      "name": "바다의 세이렌",
+      "type": "sound",
+      "category": "special",
+      "power": 115,
+      "accuracy": 85,
+      "pp": 5,
+      "effect": {
+        "type": "sleep",
+        "chance": 30,
+        "target": "enemy"
+      },
+      "description": "세이렌의 노래에 적이 잠든다."
+    },
+    {
+      "id": "unique_snow_fox",
+      "name": "설화의 춤",
+      "type": "ice",
+      "category": "special",
+      "power": 100,
+      "accuracy": 95,
+      "pp": 10,
+      "effect": {
+        "type": "stat_up",
+        "chance": 100,
+        "target": "self",
+        "stat": "speed",
+        "amount": 1
+      },
+      "description": "눈꽃과 함께 춤추며 속도가 오른다."
+    },
+    {
+      "id": "unique_ice_queen_domain",
+      "name": "빙결여왕의 영역",
+      "type": "ice",
+      "category": "special",
+      "power": 120,
+      "accuracy": 85,
+      "pp": 5,
+      "effect": {
+        "type": "paralyze",
+        "chance": 40,
+        "target": "enemy"
+      },
+      "description": "빙결여왕이 영역을 선포한다."
+    },
+    {
+      "id": "unique_fire_horse",
+      "name": "화염마의 질주",
+      "type": "fire",
+      "category": "physical",
+      "power": 110,
+      "accuracy": 95,
+      "pp": 5,
+      "effect": {
+        "type": "stat_up",
+        "chance": 100,
+        "target": "self",
+        "stat": "speed",
+        "amount": 1
+      },
+      "description": "화염을 두른 채 질주한다."
+    },
+    {
+      "id": "unique_fire_wind_horse",
+      "name": "질풍화염마",
+      "type": "fire",
+      "category": "physical",
+      "power": 115,
+      "accuracy": 90,
+      "pp": 5,
+      "effect": {
+        "type": "burn",
+        "chance": 20,
+        "target": "enemy"
+      },
+      "description": "바람과 불꽃을 두르고 초고속으로 달린다."
+    },
+    {
+      "id": "unique_normal_cat",
+      "name": "고양이의 변덕",
+      "type": "normal",
+      "category": "physical",
+      "power": 100,
+      "accuracy": 95,
+      "pp": 10,
+      "effect": {
+        "type": "confuse",
+        "chance": 30,
+        "target": "enemy"
+      },
+      "description": "변덕스러운 공격으로 혼란을 일으킨다."
+    },
+    {
+      "id": "unique_guardian_spirit",
+      "name": "수호정령의 빛",
+      "type": "light",
+      "category": "special",
+      "power": 100,
+      "accuracy": 100,
+      "pp": 5,
+      "effect": {
+        "type": "heal",
+        "chance": 100,
+        "target": "self"
+      },
+      "description": "수호 정령의 빛이 모두를 감싼다."
+    },
+    {
+      "id": "unique_boxer",
+      "name": "무한연타",
+      "type": "fighting",
+      "category": "physical",
+      "power": 100,
+      "accuracy": 95,
+      "pp": 10,
+      "effect": null,
+      "description": "무한으로 이어지는 연타 공격."
+    },
+    {
+      "id": "unique_wrestler",
+      "name": "파이널 슬램",
+      "type": "fighting",
+      "category": "physical",
+      "power": 120,
+      "accuracy": 90,
+      "pp": 5,
+      "effect": {
+        "type": "stat_down",
+        "chance": 100,
+        "target": "enemy",
+        "stat": "def",
+        "amount": -1
+      },
+      "description": "결정적인 슬램으로 방어를 무너뜨린다."
+    },
+    {
+      "id": "unique_martial_god",
+      "name": "무신의 일격",
+      "type": "fighting",
+      "category": "physical",
+      "power": 130,
+      "accuracy": 90,
+      "pp": 5,
+      "effect": null,
+      "description": "무신의 경지에서 내리는 일격."
+    },
+    {
+      "id": "unique_coral_barrier",
+      "name": "산호의 결계",
+      "type": "water",
+      "category": "special",
+      "power": 100,
+      "accuracy": 95,
+      "pp": 5,
+      "effect": {
+        "type": "stat_up",
+        "chance": 100,
+        "target": "self",
+        "stat": "spDef",
+        "amount": 1
+      },
+      "description": "산호의 결계로 보호하며 공격한다."
+    },
+    {
+      "id": "unique_crystal_coral",
+      "name": "수정산호의 빛",
+      "type": "rock",
+      "category": "special",
+      "power": 105,
+      "accuracy": 95,
+      "pp": 5,
+      "effect": {
+        "type": "stat_up",
+        "chance": 100,
+        "target": "self",
+        "stat": "spDef",
+        "amount": 1
+      },
+      "description": "수정산호가 빛을 발하며 공격한다."
+    },
+    {
+      "id": "unique_thunder_spider",
+      "name": "뇌전의 거미줄",
+      "type": "electric",
+      "category": "special",
+      "power": 105,
+      "accuracy": 90,
+      "pp": 5,
+      "effect": {
+        "type": "paralyze",
+        "chance": 50,
+        "target": "enemy"
+      },
+      "description": "전기 거미줄로 적을 감전시킨다."
+    },
+    {
+      "id": "unique_acid_spider",
+      "name": "용해의 거미줄",
+      "type": "poison",
+      "category": "special",
+      "power": 110,
+      "accuracy": 90,
+      "pp": 5,
+      "effect": {
+        "type": "stat_down",
+        "chance": 100,
+        "target": "enemy",
+        "stat": "def",
+        "amount": -1
+      },
+      "description": "모든 것을 녹이는 거미줄을 쏜다."
+    },
+    {
+      "id": "unique_moon_rabbit",
+      "name": "월광의 도약",
+      "type": "cosmic",
+      "category": "special",
+      "power": 100,
+      "accuracy": 95,
+      "pp": 10,
+      "effect": {
+        "type": "heal",
+        "chance": 100,
+        "target": "self"
+      },
+      "description": "달빛과 함께 도약하며 HP를 회복한다."
+    },
+    {
+      "id": "unique_star_fox",
+      "name": "유성의 꼬리",
+      "type": "cosmic",
+      "category": "special",
+      "power": 110,
+      "accuracy": 90,
+      "pp": 5,
+      "effect": null,
+      "description": "유성의 꼬리로 적을 휩쓴다."
+    },
+    {
+      "id": "unique_electric_eel",
+      "name": "전격장어의 방전",
+      "type": "electric",
+      "category": "special",
+      "power": 110,
+      "accuracy": 90,
+      "pp": 5,
+      "effect": {
+        "type": "paralyze",
+        "chance": 40,
+        "target": "enemy"
+      },
+      "description": "전신에서 강력한 전기를 방전한다."
+    },
+    {
+      "id": "unique_thunder_god",
+      "name": "뇌신의 심판",
+      "type": "electric",
+      "category": "special",
+      "power": 130,
+      "accuracy": 85,
+      "pp": 5,
+      "effect": {
+        "type": "paralyze",
+        "chance": 50,
+        "target": "enemy"
+      },
+      "description": "뇌신이 번개로 심판을 내린다."
+    },
+    {
+      "id": "unique_sand_cobra",
+      "name": "사막의 맹습",
+      "type": "earth",
+      "category": "physical",
+      "power": 115,
+      "accuracy": 85,
+      "pp": 5,
+      "effect": {
+        "type": "poison",
+        "chance": 40,
+        "target": "enemy"
+      },
+      "description": "모래 속에서 습격하여 독을 주입한다."
+    },
+    {
+      "id": "unique_earth_croc",
+      "name": "악어의 대지가르기",
+      "type": "earth",
+      "category": "physical",
+      "power": 110,
+      "accuracy": 90,
+      "pp": 5,
+      "effect": null,
+      "description": "대지를 갈라버리는 악어의 일격."
+    },
+    {
+      "id": "unique_frost_bear",
+      "name": "빙하의 포옹",
+      "type": "ice",
+      "category": "physical",
+      "power": 120,
+      "accuracy": 90,
+      "pp": 5,
+      "effect": {
+        "type": "stat_down",
+        "chance": 100,
+        "target": "enemy",
+        "stat": "speed",
+        "amount": -1
+      },
+      "description": "빙하의 힘으로 적을 끌어안아 얼린다."
+    },
+    {
+      "id": "unique_glacier_giant",
+      "name": "빙하의 분노",
+      "type": "ice",
+      "category": "physical",
+      "power": 115,
+      "accuracy": 90,
+      "pp": 5,
+      "effect": null,
+      "description": "빙하의 분노가 대지를 얼린다."
+    },
+    {
+      "id": "unique_prism_cat",
+      "name": "프리즘 분광",
+      "type": "light",
+      "category": "special",
+      "power": 110,
+      "accuracy": 90,
+      "pp": 5,
+      "effect": {
+        "type": "stat_down",
+        "chance": 50,
+        "target": "enemy",
+        "stat": "spDef",
+        "amount": -1
+      },
+      "description": "프리즘 빛을 분산시켜 공격한다."
+    },
+    {
+      "id": "unique_sun_guardian",
+      "name": "태양수호의 빛",
+      "type": "light",
+      "category": "special",
+      "power": 130,
+      "accuracy": 90,
+      "pp": 5,
+      "effect": {
+        "type": "heal",
+        "chance": 100,
+        "target": "self"
+      },
+      "description": "태양의 빛으로 공격하며 HP를 회복한다."
+    },
+    {
+      "id": "unique_rock_rhino",
+      "name": "뿔돌진",
+      "type": "rock",
+      "category": "physical",
+      "power": 120,
+      "accuracy": 85,
+      "pp": 5,
+      "effect": {
+        "type": "flinch",
+        "chance": 30,
+        "target": "enemy"
+      },
+      "description": "거대한 뿔로 돌진하여 풀죽게 만든다."
+    },
+    {
+      "id": "unique_earth_golem",
+      "name": "대지거신의 심판",
+      "type": "earth",
+      "category": "physical",
+      "power": 120,
+      "accuracy": 85,
+      "pp": 5,
+      "effect": null,
+      "description": "대지의 거신이 심판을 내린다."
+    },
+    {
+      "id": "unique_spirit_fox",
+      "name": "여우불의 미혹",
+      "type": "spirit",
+      "category": "special",
+      "power": 100,
+      "accuracy": 95,
+      "pp": 10,
+      "effect": {
+        "type": "confuse",
+        "chance": 50,
+        "target": "enemy"
+      },
+      "description": "여우불로 적을 미혹시킨다."
+    },
+    {
+      "id": "unique_nine_tail_fox",
+      "name": "구미호의 환술",
+      "type": "spirit",
+      "category": "special",
+      "power": 115,
+      "accuracy": 90,
+      "pp": 5,
+      "effect": {
+        "type": "confuse",
+        "chance": 50,
+        "target": "enemy"
+      },
+      "description": "구미호의 환술로 적을 미혹시킨다."
+    },
+    {
+      "id": "unique_metal_scorpion",
+      "name": "강철전갈의 독침",
+      "type": "metal",
+      "category": "physical",
+      "power": 110,
+      "accuracy": 90,
+      "pp": 5,
+      "effect": {
+        "type": "poison",
+        "chance": 50,
+        "target": "enemy"
+      },
+      "description": "강철 독침으로 찌른다."
+    },
+    {
+      "id": "unique_steel_scorpion_emperor",
+      "name": "강철황제의 독침",
+      "type": "metal",
+      "category": "physical",
+      "power": 115,
+      "accuracy": 90,
+      "pp": 5,
+      "effect": {
+        "type": "poison",
+        "chance": 50,
+        "target": "enemy"
+      },
+      "description": "강철 황제의 독침으로 관통한다."
+    },
+    {
+      "id": "unique_water_octopus",
+      "name": "팔완의 포위",
+      "type": "water",
+      "category": "physical",
+      "power": 110,
+      "accuracy": 90,
+      "pp": 5,
+      "effect": {
+        "type": "stat_down",
+        "chance": 100,
+        "target": "enemy",
+        "stat": "speed",
+        "amount": -1
+      },
+      "description": "여덟 팔로 적을 감싸 조인다."
+    },
+    {
+      "id": "unique_deep_octopus",
+      "name": "심해의 속박",
+      "type": "water",
+      "category": "physical",
+      "power": 110,
+      "accuracy": 90,
+      "pp": 5,
+      "effect": {
+        "type": "stat_down",
+        "chance": 100,
+        "target": "enemy",
+        "stat": "speed",
+        "amount": -2
+      },
+      "description": "심해 왕문어가 팔로 속박한다."
+    },
+    {
+      "id": "unique_wind_serpent",
+      "name": "비늘바람",
+      "type": "wind",
+      "category": "special",
+      "power": 110,
+      "accuracy": 90,
+      "pp": 5,
+      "effect": {
+        "type": "stat_down",
+        "chance": 50,
+        "target": "enemy",
+        "stat": "speed",
+        "amount": -1
+      },
+      "description": "비늘 바람으로 적을 휩쓴다."
+    },
+    {
+      "id": "unique_wind_viper",
+      "name": "독풍의 질주",
+      "type": "wind",
+      "category": "special",
+      "power": 110,
+      "accuracy": 90,
+      "pp": 5,
+      "effect": {
+        "type": "poison",
+        "chance": 30,
+        "target": "enemy"
+      },
+      "description": "독풍을 일으키며 질주한다."
+    },
+    {
+      "id": "unique_fossil_rex",
+      "name": "시대의 포효",
+      "type": "rock",
+      "category": "physical",
+      "power": 120,
+      "accuracy": 85,
+      "pp": 5,
+      "effect": {
+        "type": "flinch",
+        "chance": 30,
+        "target": "enemy"
+      },
+      "description": "고대 시대의 포효가 울려퍼진다."
+    },
+    {
+      "id": "unique_ancient_dragon",
+      "name": "태고의 포효",
+      "type": "rock",
+      "category": "physical",
+      "power": 115,
+      "accuracy": 85,
+      "pp": 5,
+      "effect": {
+        "type": "flinch",
+        "chance": 30,
+        "target": "enemy"
+      },
+      "description": "태고의 용이 포효하여 대지를 흔든다."
+    },
+    {
+      "id": "unique_ancient_golem",
+      "name": "고대의 심판",
+      "type": "rock",
+      "category": "physical",
+      "power": 130,
+      "accuracy": 85,
+      "pp": 5,
+      "effect": null,
+      "description": "고대의 힘으로 대지를 심판한다."
+    },
+    {
+      "id": "unique_sound_woodpecker",
+      "name": "천지진동의 드럼",
+      "type": "sound",
+      "category": "physical",
+      "power": 105,
+      "accuracy": 95,
+      "pp": 5,
+      "effect": {
+        "type": "flinch",
+        "chance": 25,
+        "target": "enemy"
+      },
+      "description": "나무를 두드려 천지를 진동시킨다."
+    },
+    {
+      "id": "unique_drum_beast",
+      "name": "천둥북 난타",
+      "type": "sound",
+      "category": "physical",
+      "power": 110,
+      "accuracy": 90,
+      "pp": 5,
+      "effect": {
+        "type": "flinch",
+        "chance": 30,
+        "target": "enemy"
+      },
+      "description": "천둥처럼 울리는 북소리."
+    },
+    {
+      "id": "unique_thunder_eel",
+      "name": "심해뇌전",
+      "type": "electric",
+      "category": "special",
+      "power": 115,
+      "accuracy": 85,
+      "pp": 5,
+      "effect": {
+        "type": "paralyze",
+        "chance": 40,
+        "target": "enemy"
+      },
+      "description": "심해에서 뇌전을 방출한다."
+    },
+    {
+      "id": "unique_ice_mammoth",
+      "name": "빙하시대의 돌진",
+      "type": "ice",
+      "category": "physical",
+      "power": 120,
+      "accuracy": 85,
+      "pp": 5,
+      "effect": null,
+      "description": "빙하시대의 힘으로 돌진한다."
+    },
+    {
+      "id": "unique_mammoth_charge",
+      "name": "매머드의 돌격",
+      "type": "ice",
+      "category": "physical",
+      "power": 120,
+      "accuracy": 85,
+      "pp": 5,
+      "effect": {
+        "type": "flinch",
+        "chance": 30,
+        "target": "enemy"
+      },
+      "description": "매머드가 전속력으로 돌격한다."
+    },
+    {
+      "id": "unique_cosmic_jelly",
+      "name": "우주해파리의 촉수",
+      "type": "cosmic",
+      "category": "special",
+      "power": 100,
+      "accuracy": 90,
+      "pp": 10,
+      "effect": {
+        "type": "paralyze",
+        "chance": 30,
+        "target": "enemy"
+      },
+      "description": "우주 해파리의 촉수로 감전시킨다."
+    },
+    {
+      "id": "unique_nebula_queen",
+      "name": "성운의 여왕",
+      "type": "cosmic",
+      "category": "special",
+      "power": 115,
+      "accuracy": 90,
+      "pp": 5,
+      "effect": {
+        "type": "stat_up",
+        "chance": 100,
+        "target": "self",
+        "stat": "spAtk",
+        "amount": 1
+      },
+      "description": "성운의 여왕이 별을 조종한다."
+    },
+    {
+      "id": "unique_spirit_owl",
+      "name": "현자의 통찰",
+      "type": "spirit",
+      "category": "special",
+      "power": 110,
+      "accuracy": 90,
+      "pp": 5,
+      "effect": {
+        "type": "stat_down",
+        "chance": 100,
+        "target": "enemy",
+        "stat": "spDef",
+        "amount": -1
+      },
+      "description": "현자의 눈으로 적의 약점을 꿰뚫는다."
+    },
+    {
+      "id": "unique_sage_sight",
+      "name": "현자의 천리안",
+      "type": "spirit",
+      "category": "special",
+      "power": 105,
+      "accuracy": 95,
+      "pp": 5,
+      "effect": {
+        "type": "stat_down",
+        "chance": 100,
+        "target": "enemy",
+        "stat": "spDef",
+        "amount": -1
+      },
+      "description": "천리안으로 적의 약점을 간파한다."
+    },
+    {
+      "id": "unique_seed_fortress",
+      "name": "씨앗요새",
+      "type": "grass",
+      "category": "special",
+      "power": 100,
+      "accuracy": 90,
+      "pp": 5,
+      "effect": {
+        "type": "stat_up",
+        "chance": 100,
+        "target": "self",
+        "stat": "def",
+        "amount": 2
+      },
+      "description": "거대한 씨앗 요새를 만들며 공격한다."
+    },
+    {
+      "id": "unique_forest_guardian",
+      "name": "숲의 수호",
+      "type": "grass",
+      "category": "special",
+      "power": 110,
+      "accuracy": 90,
+      "pp": 5,
+      "effect": {
+        "type": "heal",
+        "chance": 100,
+        "target": "self"
+      },
+      "description": "숲의 힘으로 치유하며 공격한다."
+    },
+    {
+      "id": "unique_toad_rain",
+      "name": "독비의 세례",
+      "type": "poison",
+      "category": "special",
+      "power": 105,
+      "accuracy": 85,
+      "pp": 5,
+      "effect": {
+        "type": "poison",
+        "chance": 70,
+        "target": "enemy"
+      },
+      "description": "하늘에서 독비를 내린다."
+    },
+    {
+      "id": "unique_poison_toad",
+      "name": "맹독의 비",
+      "type": "poison",
+      "category": "special",
+      "power": 110,
+      "accuracy": 85,
+      "pp": 5,
+      "effect": {
+        "type": "poison",
+        "chance": 80,
+        "target": "enemy"
+      },
+      "description": "하늘에서 맹독의 비를 내린다."
+    },
+    {
+      "id": "unique_shadow_bat",
+      "name": "박쥐의 야습",
+      "type": "dark",
+      "category": "physical",
+      "power": 100,
+      "accuracy": 95,
+      "pp": 10,
+      "effect": {
+        "type": "drain",
+        "chance": 100,
+        "target": "self"
+      },
+      "description": "어둠 속에서 급습하여 체력을 빨아먹는다."
+    },
+    {
+      "id": "unique_vampire_drain",
+      "name": "흡혈의 밤",
+      "type": "dark",
+      "category": "physical",
+      "power": 105,
+      "accuracy": 95,
+      "pp": 5,
+      "effect": {
+        "type": "drain",
+        "chance": 100,
+        "target": "self"
+      },
+      "description": "밤의 힘으로 적의 피를 빨아먹는다."
+    },
+    {
+      "id": "unique_lava_salamander",
+      "name": "용암의 숨결",
+      "type": "fire",
+      "category": "special",
+      "power": 110,
+      "accuracy": 90,
+      "pp": 5,
+      "effect": {
+        "type": "burn",
+        "chance": 30,
+        "target": "enemy"
+      },
+      "description": "용암의 숨결로 모든 것을 태운다."
+    },
+    {
+      "id": "unique_legend_phoenix",
+      "name": "불사조의 부활",
+      "type": "fire",
+      "category": "special",
+      "power": 120,
+      "accuracy": 90,
+      "pp": 5,
+      "effect": {
+        "type": "heal",
+        "chance": 100,
+        "target": "self"
+      },
+      "description": "불사조가 화염 속에서 부활한다."
+    },
+    {
+      "id": "unique_legend_leviathan",
+      "name": "심연의 포효",
+      "type": "water",
+      "category": "special",
+      "power": 120,
+      "accuracy": 90,
+      "pp": 5,
+      "effect": {
+        "type": "stat_down",
+        "chance": 100,
+        "target": "enemy",
+        "stat": "def",
+        "amount": -1
+      },
+      "description": "심연의 바다 괴물이 포효한다."
+    },
+    {
+      "id": "unique_legend_yggdrasil",
+      "name": "세계수의 은혜",
+      "type": "grass",
+      "category": "special",
+      "power": 120,
+      "accuracy": 90,
+      "pp": 5,
+      "effect": {
+        "type": "drain",
+        "chance": 100,
+        "target": "self"
+      },
+      "description": "세계수의 은혜로 적을 공격하며 회복한다."
+    },
+    {
+      "id": "unique_legend_thunder_dragon",
+      "name": "뇌룡의 천벌",
+      "type": "dragon",
+      "category": "special",
+      "power": 130,
+      "accuracy": 85,
+      "pp": 5,
+      "effect": {
+        "type": "paralyze",
+        "chance": 50,
+        "target": "enemy"
+      },
+      "description": "번개 용이 하늘에서 천벌을 내린다."
+    },
+    {
+      "id": "unique_legend_time_lord",
+      "name": "시간정지",
+      "type": "cosmic",
+      "category": "special",
+      "power": 120,
+      "accuracy": 85,
+      "pp": 5,
+      "effect": {
+        "type": "paralyze",
+        "chance": 60,
+        "target": "enemy"
+      },
+      "description": "시간을 멈추어 적을 가둔다."
+    },
+    {
+      "id": "unique_legend_space_lord",
+      "name": "공간붕괴",
+      "type": "cosmic",
+      "category": "special",
+      "power": 120,
+      "accuracy": 85,
+      "pp": 5,
+      "effect": {
+        "type": "stat_down",
+        "chance": 100,
+        "target": "enemy",
+        "stat": "spDef",
+        "amount": -2
+      },
+      "description": "공간을 붕괴시켜 적을 압축한다."
+    },
+    {
+      "id": "unique_legend_light_dragon",
+      "name": "빛의 용 심판",
+      "type": "light",
+      "category": "special",
+      "power": 130,
+      "accuracy": 90,
+      "pp": 5,
+      "effect": null,
+      "description": "빛의 용이 세상에 심판을 내린다."
+    },
+    {
+      "id": "unique_legend_dark_dragon",
+      "name": "암흑용의 멸망",
+      "type": "dark",
+      "category": "special",
+      "power": 130,
+      "accuracy": 90,
+      "pp": 5,
+      "effect": {
+        "type": "stat_down",
+        "chance": 100,
+        "target": "enemy",
+        "stat": "spAtk",
+        "amount": -1
+      },
+      "description": "암흑의 용이 세상에 멸망을 가져온다."
+    },
+    {
+      "id": "unique_legend_origin",
+      "name": "근원의 힘",
+      "type": "normal",
+      "category": "special",
+      "power": 130,
+      "accuracy": 90,
+      "pp": 5,
+      "effect": {
+        "type": "stat_up",
+        "chance": 100,
+        "target": "self",
+        "stat": "spAtk",
+        "amount": 1
+      },
+      "description": "모든 것의 근원이 되는 힘."
+    },
+    {
+      "id": "unique_legend_harmony",
+      "name": "조화의 선율",
+      "type": "sound",
+      "category": "special",
+      "power": 120,
+      "accuracy": 90,
+      "pp": 5,
+      "effect": {
+        "type": "heal",
+        "chance": 100,
+        "target": "self"
+      },
+      "description": "세계의 조화를 울리는 선율."
+    },
+    {
+      "id": "unique_fight_bear",
+      "name": "곰의 파쇄권",
+      "type": "fighting",
+      "category": "physical",
+      "power": 120,
+      "accuracy": 90,
+      "pp": 5,
+      "effect": {
+        "type": "stat_down",
+        "chance": 30,
+        "target": "enemy",
+        "stat": "def",
+        "amount": -1
+      },
+      "description": "거대한 주먹으로 모든 것을 부순다."
+    },
+    {
+      "id": "unique_normal_dog",
+      "name": "충견의 돌진",
+      "type": "normal",
+      "category": "physical",
+      "power": 110,
+      "accuracy": 95,
+      "pp": 5,
+      "effect": null,
+      "description": "주인을 위한 충성스러운 돌진."
+    },
+    {
+      "id": "unique_earth_titan",
+      "name": "대지의 분노",
+      "type": "earth",
+      "category": "physical",
+      "power": 130,
+      "accuracy": 85,
+      "pp": 5,
+      "effect": null,
+      "description": "대지의 분노로 모든 것을 매장한다."
+    },
+    {
+      "id": "unique_iron_colossus",
+      "name": "강철거신의 일격",
+      "type": "metal",
+      "category": "physical",
+      "power": 130,
+      "accuracy": 85,
+      "pp": 5,
+      "effect": {
+        "type": "stat_down",
+        "chance": 50,
+        "target": "enemy",
+        "stat": "def",
+        "amount": -1
+      },
+      "description": "강철 거신이 모든 것을 부순다."
+    },
+    {
+      "id": "unique_soul_reaper",
+      "name": "영혼수확",
+      "type": "spirit",
+      "category": "special",
+      "power": 130,
+      "accuracy": 85,
+      "pp": 5,
+      "effect": {
+        "type": "drain",
+        "chance": 100,
+        "target": "self"
+      },
+      "description": "적의 영혼을 수확하여 흡수한다."
+    },
+    {
+      "id": "unique_crystal_guardian",
+      "name": "수정의 결계",
+      "type": "rock",
+      "category": "special",
+      "power": 110,
+      "accuracy": 90,
+      "pp": 5,
+      "effect": {
+        "type": "stat_up",
+        "chance": 100,
+        "target": "self",
+        "stat": "spDef",
+        "amount": 1
+      },
+      "description": "수정 결계를 만들며 공격한다."
+    },
+    {
+      "id": "unique_siren_queen",
+      "name": "세이렌의 노래",
+      "type": "sound",
+      "category": "special",
+      "power": 130,
+      "accuracy": 85,
+      "pp": 5,
+      "effect": {
+        "type": "confuse",
+        "chance": 60,
+        "target": "enemy"
+      },
+      "description": "세이렌의 노래에 적이 매혹된다."
+    },
+    {
+      "id": "unique_nebula_god",
+      "name": "성운창조",
+      "type": "cosmic",
+      "category": "special",
+      "power": 130,
+      "accuracy": 85,
+      "pp": 5,
+      "effect": {
+        "type": "stat_up",
+        "chance": 100,
+        "target": "self",
+        "stat": "spAtk",
+        "amount": 1
+      },
+      "description": "새로운 성운을 창조하는 힘."
+    },
+    {
+      "id": "unique_breeze_fairy",
+      "name": "산들바람의 노래",
+      "type": "wind",
+      "category": "special",
+      "power": 100,
+      "accuracy": 95,
+      "pp": 10,
+      "effect": {
+        "type": "heal",
+        "chance": 100,
+        "target": "self"
+      },
+      "description": "산들바람의 노래로 HP를 회복한다."
+    },
+    {
+      "id": "unique_shadow_emperor",
+      "name": "절대영도의 암흑",
+      "type": "dark",
+      "category": "special",
+      "power": 130,
+      "accuracy": 85,
+      "pp": 5,
+      "effect": {
+        "type": "stat_down",
+        "chance": 50,
+        "target": "enemy",
+        "stat": "spAtk",
+        "amount": -1
+      },
+      "description": "절대적인 어둠이 모든 빛을 삼킨다."
+    },
+    {
+      "id": "unique_night_wolf",
+      "name": "어둠의 이빨",
+      "type": "dark",
+      "category": "physical",
+      "power": 110,
+      "accuracy": 95,
+      "pp": 5,
+      "effect": {
+        "type": "flinch",
+        "chance": 30,
+        "target": "enemy"
+      },
+      "description": "어둠의 이빨로 적을 찢어버린다."
+    },
+    {
+      "id": "unique_ice_queen",
+      "name": "영겁의 동토",
+      "type": "ice",
+      "category": "special",
+      "power": 130,
+      "accuracy": 85,
+      "pp": 5,
+      "effect": {
+        "type": "paralyze",
+        "chance": 40,
+        "target": "enemy"
+      },
+      "description": "영원한 동토의 냉기로 모든 것을 얼린다."
+    },
+    {
+      "id": "unique_sound_cricket",
+      "name": "귀뚜라미의 합창",
+      "type": "sound",
+      "category": "special",
+      "power": 100,
+      "accuracy": 100,
+      "pp": 10,
+      "effect": null,
+      "description": "수백 마리의 합창으로 공격한다."
+    }
+  ]
+}

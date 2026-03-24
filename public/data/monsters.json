@@ -1,0 +1,7742 @@
+{
+  "monsters": [
+    {
+      "id": 1,
+      "name": "염동이",
+      "type": [
+        "fire"
+      ],
+      "baseStats": {
+        "hp": 65,
+        "atk": 72,
+        "def": 35,
+        "spAtk": 37,
+        "spDef": 38,
+        "speed": 60
+      },
+      "growthRate": "fast",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "quick_strike"
+        },
+        {
+          "level": 5,
+          "skillId": "fire_spin"
+        },
+        {
+          "level": 15,
+          "skillId": "inferno"
+        },
+        {
+          "level": 19,
+          "skillId": "flame_charge"
+        },
+        {
+          "level": 21,
+          "skillId": "unique_fire_puppy"
+        },
+        {
+          "level": 25,
+          "skillId": "unique_flame_beast"
+        },
+        {
+          "level": 39,
+          "skillId": "will_o_wisp"
+        },
+        {
+          "level": 39,
+          "skillId": "ember"
+        },
+        {
+          "level": 50,
+          "skillId": "fire_breath"
+        },
+        {
+          "level": 50,
+          "skillId": "heat_fang"
+        },
+        {
+          "level": 55,
+          "skillId": "fire_wall"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 31,
+        "skillId": "unique_fire_horse"
+      },
+      "evolution": {
+        "to": 2,
+        "level": 16
+      },
+      "catchRate": 219,
+      "expYield": 78,
+      "description": "뜨거운 화염을 내뿜는 염동이은(는) 화염 타입 포켓몬스터.",
+      "spriteConfig": {
+        "baseColor": "#FF6600",
+        "accentColor": "#44DDFF",
+        "shape": "quadruped",
+        "features": [
+          "aura"
+        ]
+      }
+    },
+    {
+      "id": 2,
+      "name": "화르미",
+      "type": [
+        "fire"
+      ],
+      "baseStats": {
+        "hp": 58,
+        "atk": 95,
+        "def": 43,
+        "spAtk": 71,
+        "spDef": 88,
+        "speed": 56
+      },
+      "growthRate": "medium",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "flame_charge"
+        },
+        {
+          "level": 7,
+          "skillId": "inferno"
+        },
+        {
+          "level": 12,
+          "skillId": "unique_fire_horse"
+        },
+        {
+          "level": 21,
+          "skillId": "quick_strike"
+        },
+        {
+          "level": 28,
+          "skillId": "fire_spin"
+        },
+        {
+          "level": 31,
+          "skillId": "fire_breath"
+        },
+        {
+          "level": 31,
+          "skillId": "bite"
+        },
+        {
+          "level": 41,
+          "skillId": "flame_claw"
+        },
+        {
+          "level": 48,
+          "skillId": "heat_fang"
+        },
+        {
+          "level": 51,
+          "skillId": "eruption"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 28,
+        "skillId": "unique_legend_phoenix"
+      },
+      "evolution": {
+        "to": 3,
+        "level": 36
+      },
+      "catchRate": 82,
+      "expYield": 157,
+      "description": "뜨거운 화염을 내뿜는 화르미은(는) 화염 타입 크리처.",
+      "spriteConfig": {
+        "baseColor": "#CC3300",
+        "accentColor": "#44DDFF",
+        "shape": "insectoid",
+        "features": [
+          "tail",
+          "fangs",
+          "horns"
+        ]
+      }
+    },
+    {
+      "id": 3,
+      "name": "불꽃새",
+      "type": [
+        "fire"
+      ],
+      "baseStats": {
+        "hp": 107,
+        "atk": 107,
+        "def": 62,
+        "spAtk": 74,
+        "spDef": 72,
+        "speed": 81
+      },
+      "growthRate": "fast",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "fire_wall"
+        },
+        {
+          "level": 9,
+          "skillId": "heat_fang"
+        },
+        {
+          "level": 15,
+          "skillId": "tackle"
+        },
+        {
+          "level": 18,
+          "skillId": "fire_spin"
+        },
+        {
+          "level": 23,
+          "skillId": "ember"
+        },
+        {
+          "level": 26,
+          "skillId": "pound"
+        },
+        {
+          "level": 29,
+          "skillId": "will_o_wisp"
+        },
+        {
+          "level": 30,
+          "skillId": "eruption"
+        },
+        {
+          "level": 41,
+          "skillId": "unique_legend_phoenix"
+        },
+        {
+          "level": 48,
+          "skillId": "flame_charge"
+        },
+        {
+          "level": 52,
+          "skillId": "fire_breath"
+        },
+        {
+          "level": 57,
+          "skillId": "bite"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 48,
+        "skillId": "unique_flame_beast"
+      },
+      "evolution": null,
+      "catchRate": 55,
+      "expYield": 232,
+      "description": "뜨거운 화염을 내뿜는 불꽃새은(는) 화염 타입 몬스터.",
+      "spriteConfig": {
+        "baseColor": "#FF6600",
+        "accentColor": "#FF4444",
+        "shape": "bipedal",
+        "features": [
+          "crystals",
+          "aura"
+        ]
+      }
+    },
+    {
+      "id": 4,
+      "name": "물방울",
+      "type": [
+        "water"
+      ],
+      "baseStats": {
+        "hp": 39,
+        "atk": 34,
+        "def": 66,
+        "spAtk": 56,
+        "spDef": 35,
+        "speed": 54
+      },
+      "growthRate": "slow",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "rain_dance"
+        },
+        {
+          "level": 5,
+          "skillId": "aqua_jet"
+        },
+        {
+          "level": 13,
+          "skillId": "aqua_shield"
+        },
+        {
+          "level": 21,
+          "skillId": "unique_tidal_beast"
+        },
+        {
+          "level": 22,
+          "skillId": "water_pulse"
+        },
+        {
+          "level": 28,
+          "skillId": "tackle"
+        },
+        {
+          "level": 29,
+          "skillId": "tidal_wave"
+        },
+        {
+          "level": 39,
+          "skillId": "pound"
+        },
+        {
+          "level": 48,
+          "skillId": "quick_strike"
+        },
+        {
+          "level": 49,
+          "skillId": "torrent_bite"
+        },
+        {
+          "level": 61,
+          "skillId": "unique_legend_leviathan"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 28,
+        "skillId": "unique_water_octopus"
+      },
+      "evolution": {
+        "to": 5,
+        "level": 16
+      },
+      "catchRate": 220,
+      "expYield": 89,
+      "description": "깊은 바다를 지배하는 물방울은(는) 해류 타입 크리처.",
+      "spriteConfig": {
+        "baseColor": "#3399FF",
+        "accentColor": "#FFAA00",
+        "shape": "elemental",
+        "features": [
+          "wings"
+        ]
+      }
+    },
+    {
+      "id": 5,
+      "name": "파도리",
+      "type": [
+        "water"
+      ],
+      "baseStats": {
+        "hp": 74,
+        "atk": 76,
+        "def": 75,
+        "spAtk": 34,
+        "spDef": 68,
+        "speed": 56
+      },
+      "growthRate": "slow",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "unique_tidal_beast"
+        },
+        {
+          "level": 7,
+          "skillId": "tackle"
+        },
+        {
+          "level": 15,
+          "skillId": "water_pulse"
+        },
+        {
+          "level": 16,
+          "skillId": "unique_water_sprite"
+        },
+        {
+          "level": 28,
+          "skillId": "bubble_beam"
+        },
+        {
+          "level": 31,
+          "skillId": "rain_dance"
+        },
+        {
+          "level": 34,
+          "skillId": "pound"
+        },
+        {
+          "level": 39,
+          "skillId": "quick_strike"
+        },
+        {
+          "level": 44,
+          "skillId": "waterfall"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 35,
+        "skillId": "unique_legend_leviathan"
+      },
+      "evolution": {
+        "to": 6,
+        "level": 36
+      },
+      "catchRate": 76,
+      "expYield": 163,
+      "description": "깊은 바다를 지배하는 파도리은(는) 해류 타입 생명체.",
+      "spriteConfig": {
+        "baseColor": "#3399FF",
+        "accentColor": "#FFFF66",
+        "shape": "serpent",
+        "features": [
+          "spikes",
+          "fangs",
+          "tail"
+        ]
+      }
+    },
+    {
+      "id": 6,
+      "name": "해류왕",
+      "type": [
+        "water"
+      ],
+      "baseStats": {
+        "hp": 100,
+        "atk": 65,
+        "def": 102,
+        "spAtk": 79,
+        "spDef": 94,
+        "speed": 94
+      },
+      "growthRate": "medium",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "scratch"
+        },
+        {
+          "level": 5,
+          "skillId": "torrent_bite"
+        },
+        {
+          "level": 17,
+          "skillId": "unique_ocean_emperor"
+        },
+        {
+          "level": 19,
+          "skillId": "waterfall"
+        },
+        {
+          "level": 21,
+          "skillId": "bite"
+        },
+        {
+          "level": 27,
+          "skillId": "rain_dance"
+        },
+        {
+          "level": 28,
+          "skillId": "aqua_shield"
+        },
+        {
+          "level": 34,
+          "skillId": "hydro_pump"
+        },
+        {
+          "level": 39,
+          "skillId": "pound"
+        },
+        {
+          "level": 48,
+          "skillId": "unique_water_sprite"
+        },
+        {
+          "level": 58,
+          "skillId": "unique_water_octopus"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 42,
+        "skillId": "unique_tidal_beast"
+      },
+      "evolution": null,
+      "catchRate": 35,
+      "expYield": 203,
+      "description": "깊은 바다를 지배하는 해류왕은(는) 해류 타입 크리처.",
+      "spriteConfig": {
+        "baseColor": "#2266CC",
+        "accentColor": "#FF8844",
+        "shape": "humanoid",
+        "features": [
+          "tail",
+          "fangs"
+        ]
+      }
+    },
+    {
+      "id": 7,
+      "name": "새싹이",
+      "type": [
+        "grass"
+      ],
+      "baseStats": {
+        "hp": 73,
+        "atk": 36,
+        "def": 35,
+        "spAtk": 42,
+        "spDef": 70,
+        "speed": 51
+      },
+      "growthRate": "slow",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "tackle"
+        },
+        {
+          "level": 11,
+          "skillId": "unique_legend_yggdrasil"
+        },
+        {
+          "level": 14,
+          "skillId": "leaf_storm"
+        },
+        {
+          "level": 16,
+          "skillId": "scratch"
+        },
+        {
+          "level": 18,
+          "skillId": "razor_leaf"
+        },
+        {
+          "level": 28,
+          "skillId": "thorn_whip"
+        },
+        {
+          "level": 29,
+          "skillId": "unique_leaf_spirit"
+        },
+        {
+          "level": 47,
+          "skillId": "quick_strike"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 35,
+        "skillId": "unique_jungle_beast"
+      },
+      "evolution": {
+        "to": 8,
+        "level": 16
+      },
+      "catchRate": 221,
+      "expYield": 72,
+      "description": "식물의 힘을 가진 새싹이은(는) 자연 타입 포켓몬스터.",
+      "spriteConfig": {
+        "baseColor": "#66DD44",
+        "accentColor": "#FF8844",
+        "shape": "humanoid",
+        "features": [
+          "aura",
+          "crystals"
+        ]
+      }
+    },
+    {
+      "id": 8,
+      "name": "꽃나무",
+      "type": [
+        "grass"
+      ],
+      "baseStats": {
+        "hp": 48,
+        "atk": 71,
+        "def": 76,
+        "spAtk": 69,
+        "spDef": 43,
+        "speed": 77
+      },
+      "growthRate": "slow",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "growth"
+        },
+        {
+          "level": 6,
+          "skillId": "leaf_storm"
+        },
+        {
+          "level": 11,
+          "skillId": "unique_legend_yggdrasil"
+        },
+        {
+          "level": 16,
+          "skillId": "mega_drain"
+        },
+        {
+          "level": 21,
+          "skillId": "pound"
+        },
+        {
+          "level": 26,
+          "skillId": "unique_jungle_beast"
+        },
+        {
+          "level": 31,
+          "skillId": "sleep_powder"
+        },
+        {
+          "level": 37,
+          "skillId": "bite"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 36,
+        "skillId": "unique_forest_emperor"
+      },
+      "evolution": {
+        "to": 9,
+        "level": 36
+      },
+      "catchRate": 89,
+      "expYield": 167,
+      "description": "숲의 수호자인 꽃나무은(는) 자연 타입 생명체.",
+      "spriteConfig": {
+        "baseColor": "#44BB44",
+        "accentColor": "#44DDFF",
+        "shape": "serpent",
+        "features": [
+          "tail"
+        ]
+      }
+    },
+    {
+      "id": 9,
+      "name": "대수호",
+      "type": [
+        "grass"
+      ],
+      "baseStats": {
+        "hp": 72,
+        "atk": 93,
+        "def": 84,
+        "spAtk": 77,
+        "spDef": 78,
+        "speed": 92
+      },
+      "growthRate": "medium",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "solar_beam"
+        },
+        {
+          "level": 8,
+          "skillId": "unique_legend_yggdrasil"
+        },
+        {
+          "level": 10,
+          "skillId": "absorb"
+        },
+        {
+          "level": 19,
+          "skillId": "mega_drain"
+        },
+        {
+          "level": 23,
+          "skillId": "thorn_whip"
+        },
+        {
+          "level": 24,
+          "skillId": "leaf_storm"
+        },
+        {
+          "level": 36,
+          "skillId": "sleep_powder"
+        },
+        {
+          "level": 37,
+          "skillId": "pound"
+        },
+        {
+          "level": 41,
+          "skillId": "unique_grass_mantis"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 47,
+        "skillId": "unique_legend_yggdrasil"
+      },
+      "evolution": null,
+      "catchRate": 54,
+      "expYield": 266,
+      "description": "식물의 힘을 가진 대수호은(는) 자연 타입 크리처.",
+      "spriteConfig": {
+        "baseColor": "#66DD44",
+        "accentColor": "#FF4444",
+        "shape": "humanoid",
+        "features": [
+          "fangs"
+        ]
+      }
+    },
+    {
+      "id": 10,
+      "name": "번개쥐",
+      "type": [
+        "electric"
+      ],
+      "baseStats": {
+        "hp": 37,
+        "atk": 69,
+        "def": 56,
+        "spAtk": 51,
+        "spDef": 46,
+        "speed": 50
+      },
+      "growthRate": "medium",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "thunder_shock"
+        },
+        {
+          "level": 9,
+          "skillId": "unique_thunder_god"
+        },
+        {
+          "level": 15,
+          "skillId": "scratch"
+        },
+        {
+          "level": 17,
+          "skillId": "unique_electric_eel"
+        },
+        {
+          "level": 22,
+          "skillId": "thunder_wave"
+        },
+        {
+          "level": 23,
+          "skillId": "unique_bolt_fox"
+        },
+        {
+          "level": 25,
+          "skillId": "unique_spark_mouse"
+        },
+        {
+          "level": 43,
+          "skillId": "thunderbolt"
+        },
+        {
+          "level": 49,
+          "skillId": "tackle"
+        },
+        {
+          "level": 57,
+          "skillId": "spark"
+        },
+        {
+          "level": 57,
+          "skillId": "lightning_fang"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 31,
+        "skillId": "unique_thunder_god"
+      },
+      "evolution": {
+        "to": 11,
+        "level": 16
+      },
+      "catchRate": 223,
+      "expYield": 80,
+      "description": "번개를 조종하는 번개쥐은(는) 전격 타입 몬스터.",
+      "spriteConfig": {
+        "baseColor": "#DDAA00",
+        "accentColor": "#AADDFF",
+        "shape": "quadruped",
+        "features": [
+          "crystals"
+        ]
+      }
+    },
+    {
+      "id": 11,
+      "name": "전격서",
+      "type": [
+        "electric"
+      ],
+      "baseStats": {
+        "hp": 65,
+        "atk": 66,
+        "def": 58,
+        "spAtk": 76,
+        "spDef": 85,
+        "speed": 68
+      },
+      "growthRate": "fast",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "thunder"
+        },
+        {
+          "level": 10,
+          "skillId": "quick_strike"
+        },
+        {
+          "level": 12,
+          "skillId": "charge"
+        },
+        {
+          "level": 19,
+          "skillId": "pound"
+        },
+        {
+          "level": 23,
+          "skillId": "scratch"
+        },
+        {
+          "level": 29,
+          "skillId": "tackle"
+        },
+        {
+          "level": 29,
+          "skillId": "unique_spark_mouse"
+        },
+        {
+          "level": 39,
+          "skillId": "thunder_shock"
+        },
+        {
+          "level": 41,
+          "skillId": "discharge"
+        },
+        {
+          "level": 43,
+          "skillId": "bite"
+        },
+        {
+          "level": 46,
+          "skillId": "lightning_fang"
+        },
+        {
+          "level": 53,
+          "skillId": "unique_thunder_god"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 29,
+        "skillId": "unique_electric_eel"
+      },
+      "evolution": {
+        "to": 12,
+        "level": 38
+      },
+      "catchRate": 77,
+      "expYield": 151,
+      "description": "전기를 뿜는 전격서은(는) 전격 타입 포켓몬스터.",
+      "spriteConfig": {
+        "baseColor": "#FFCC00",
+        "accentColor": "#AADDFF",
+        "shape": "elemental",
+        "features": [
+          "wings"
+        ]
+      }
+    },
+    {
+      "id": 12,
+      "name": "뇌신",
+      "type": [
+        "electric"
+      ],
+      "baseStats": {
+        "hp": 80,
+        "atk": 71,
+        "def": 94,
+        "spAtk": 87,
+        "spDef": 94,
+        "speed": 56
+      },
+      "growthRate": "medium",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "thunder"
+        },
+        {
+          "level": 5,
+          "skillId": "spark"
+        },
+        {
+          "level": 12,
+          "skillId": "charge"
+        },
+        {
+          "level": 15,
+          "skillId": "tackle"
+        },
+        {
+          "level": 22,
+          "skillId": "discharge"
+        },
+        {
+          "level": 25,
+          "skillId": "pound"
+        },
+        {
+          "level": 35,
+          "skillId": "lightning_fang"
+        },
+        {
+          "level": 47,
+          "skillId": "thunder_shock"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 52,
+        "skillId": "unique_bolt_fox"
+      },
+      "evolution": null,
+      "catchRate": 41,
+      "expYield": 200,
+      "description": "번개를 조종하는 뇌신은(는) 전격 타입 존재.",
+      "spriteConfig": {
+        "baseColor": "#FFCC00",
+        "accentColor": "#44DDFF",
+        "shape": "bipedal",
+        "features": [
+          "crystals"
+        ]
+      }
+    },
+    {
+      "id": 13,
+      "name": "얼음새",
+      "type": [
+        "ice"
+      ],
+      "baseStats": {
+        "hp": 53,
+        "atk": 37,
+        "def": 41,
+        "spAtk": 67,
+        "spDef": 46,
+        "speed": 72
+      },
+      "growthRate": "slow",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "ice_wall"
+        },
+        {
+          "level": 11,
+          "skillId": "bite"
+        },
+        {
+          "level": 13,
+          "skillId": "scratch"
+        },
+        {
+          "level": 21,
+          "skillId": "ice_beam"
+        },
+        {
+          "level": 22,
+          "skillId": "blizzard"
+        },
+        {
+          "level": 25,
+          "skillId": "ice_shard"
+        },
+        {
+          "level": 37,
+          "skillId": "tackle"
+        },
+        {
+          "level": 37,
+          "skillId": "freeze_ray"
+        },
+        {
+          "level": 45,
+          "skillId": "unique_ice_queen"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 31,
+        "skillId": "unique_frost_bear"
+      },
+      "evolution": {
+        "to": 14,
+        "level": 17
+      },
+      "catchRate": 154,
+      "expYield": 86,
+      "description": "모든 것을 얼리는 얼음새은(는) 빙결 타입 존재.",
+      "spriteConfig": {
+        "baseColor": "#88DDFF",
+        "accentColor": "#FF4444",
+        "shape": "serpent",
+        "features": [
+          "claws",
+          "fangs",
+          "fins"
+        ]
+      }
+    },
+    {
+      "id": 14,
+      "name": "빙하조",
+      "type": [
+        "ice"
+      ],
+      "baseStats": {
+        "hp": 51,
+        "atk": 64,
+        "def": 87,
+        "spAtk": 71,
+        "spDef": 79,
+        "speed": 53
+      },
+      "growthRate": "slow",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "ice_fang"
+        },
+        {
+          "level": 5,
+          "skillId": "quick_strike"
+        },
+        {
+          "level": 14,
+          "skillId": "scratch"
+        },
+        {
+          "level": 20,
+          "skillId": "glacial_lance"
+        },
+        {
+          "level": 20,
+          "skillId": "frost_breath"
+        },
+        {
+          "level": 27,
+          "skillId": "unique_ice_mammoth"
+        },
+        {
+          "level": 29,
+          "skillId": "unique_frost_bear"
+        },
+        {
+          "level": 38,
+          "skillId": "hail"
+        },
+        {
+          "level": 38,
+          "skillId": "blizzard"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 33,
+        "skillId": "unique_ice_mammoth"
+      },
+      "evolution": {
+        "to": 15,
+        "level": 32
+      },
+      "catchRate": 63,
+      "expYield": 161,
+      "description": "극한의 추위를 견디는 빙하조은(는) 빙결 타입 몬스터.",
+      "spriteConfig": {
+        "baseColor": "#66CCEE",
+        "accentColor": "#FF4444",
+        "shape": "aquatic",
+        "features": [
+          "wings",
+          "spikes",
+          "fangs"
+        ]
+      }
+    },
+    {
+      "id": 15,
+      "name": "극빙황",
+      "type": [
+        "ice"
+      ],
+      "baseStats": {
+        "hp": 55,
+        "atk": 66,
+        "def": 124,
+        "spAtk": 70,
+        "spDef": 94,
+        "speed": 89
+      },
+      "growthRate": "medium",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "hail"
+        },
+        {
+          "level": 9,
+          "skillId": "quick_strike"
+        },
+        {
+          "level": 14,
+          "skillId": "unique_ice_mammoth"
+        },
+        {
+          "level": 15,
+          "skillId": "unique_snow_fox"
+        },
+        {
+          "level": 17,
+          "skillId": "unique_frost_bear"
+        },
+        {
+          "level": 26,
+          "skillId": "scratch"
+        },
+        {
+          "level": 39,
+          "skillId": "pound"
+        },
+        {
+          "level": 39,
+          "skillId": "tackle"
+        },
+        {
+          "level": 45,
+          "skillId": "ice_wall"
+        },
+        {
+          "level": 52,
+          "skillId": "bite"
+        },
+        {
+          "level": 53,
+          "skillId": "ice_fang"
+        },
+        {
+          "level": 57,
+          "skillId": "ice_beam"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 51,
+        "skillId": "unique_ice_queen"
+      },
+      "evolution": null,
+      "catchRate": 42,
+      "expYield": 210,
+      "description": "극한의 추위를 견디는 극빙황은(는) 빙결 타입 포켓몬스터.",
+      "spriteConfig": {
+        "baseColor": "#88DDFF",
+        "accentColor": "#FFAA00",
+        "shape": "bipedal",
+        "features": [
+          "spikes"
+        ]
+      }
+    },
+    {
+      "id": 16,
+      "name": "바람새",
+      "type": [
+        "wind"
+      ],
+      "baseStats": {
+        "hp": 29,
+        "atk": 37,
+        "def": 50,
+        "spAtk": 63,
+        "spDef": 54,
+        "speed": 53
+      },
+      "growthRate": "medium",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "scratch"
+        },
+        {
+          "level": 5,
+          "skillId": "quick_strike"
+        },
+        {
+          "level": 13,
+          "skillId": "wing_attack"
+        },
+        {
+          "level": 14,
+          "skillId": "feather_dance"
+        },
+        {
+          "level": 22,
+          "skillId": "tailwind"
+        },
+        {
+          "level": 29,
+          "skillId": "unique_wind_serpent"
+        },
+        {
+          "level": 36,
+          "skillId": "pound"
+        },
+        {
+          "level": 40,
+          "skillId": "hurricane"
+        },
+        {
+          "level": 41,
+          "skillId": "bite"
+        },
+        {
+          "level": 42,
+          "skillId": "tackle"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 25,
+        "skillId": "unique_wind_serpent"
+      },
+      "evolution": {
+        "to": 17,
+        "level": 17
+      },
+      "catchRate": 254,
+      "expYield": 68,
+      "description": "바람을 타고 나는 바람새은(는) 질풍 타입 존재.",
+      "spriteConfig": {
+        "baseColor": "#99DDBB",
+        "accentColor": "#DDAAFF",
+        "shape": "quadruped",
+        "features": [
+          "crystals",
+          "shell",
+          "tail"
+        ]
+      }
+    },
+    {
+      "id": 17,
+      "name": "질풍조",
+      "type": [
+        "wind"
+      ],
+      "baseStats": {
+        "hp": 76,
+        "atk": 80,
+        "def": 56,
+        "spAtk": 54,
+        "spDef": 48,
+        "speed": 72
+      },
+      "growthRate": "medium",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "unique_normal_bird"
+        },
+        {
+          "level": 11,
+          "skillId": "gust"
+        },
+        {
+          "level": 17,
+          "skillId": "quick_strike"
+        },
+        {
+          "level": 22,
+          "skillId": "sky_dive"
+        },
+        {
+          "level": 23,
+          "skillId": "unique_gale_bird"
+        },
+        {
+          "level": 34,
+          "skillId": "wing_attack"
+        },
+        {
+          "level": 36,
+          "skillId": "air_slash"
+        },
+        {
+          "level": 39,
+          "skillId": "hurricane"
+        },
+        {
+          "level": 41,
+          "skillId": "scratch"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 37,
+        "skillId": "unique_gale_bird"
+      },
+      "evolution": {
+        "to": 18,
+        "level": 33
+      },
+      "catchRate": 65,
+      "expYield": 137,
+      "description": "자유로운 하늘의 질풍조은(는) 질풍 타입 몬스터.",
+      "spriteConfig": {
+        "baseColor": "#BBEECC",
+        "accentColor": "#FFFFFF",
+        "shape": "elemental",
+        "features": [
+          "spikes",
+          "fins"
+        ]
+      }
+    },
+    {
+      "id": 18,
+      "name": "태풍왕",
+      "type": [
+        "wind"
+      ],
+      "baseStats": {
+        "hp": 71,
+        "atk": 62,
+        "def": 86,
+        "spAtk": 101,
+        "spDef": 98,
+        "speed": 98
+      },
+      "growthRate": "slow",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "feather_dance"
+        },
+        {
+          "level": 5,
+          "skillId": "hurricane"
+        },
+        {
+          "level": 12,
+          "skillId": "air_slash"
+        },
+        {
+          "level": 13,
+          "skillId": "pound"
+        },
+        {
+          "level": 17,
+          "skillId": "tackle"
+        },
+        {
+          "level": 27,
+          "skillId": "tailwind"
+        },
+        {
+          "level": 38,
+          "skillId": "unique_breeze_fairy"
+        },
+        {
+          "level": 39,
+          "skillId": "quick_strike"
+        },
+        {
+          "level": 40,
+          "skillId": "unique_wind_serpent"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 42,
+        "skillId": "unique_gale_bird"
+      },
+      "evolution": null,
+      "catchRate": 36,
+      "expYield": 243,
+      "description": "폭풍을 일으키는 태풍왕은(는) 질풍 타입 몬스터.",
+      "spriteConfig": {
+        "baseColor": "#99DDBB",
+        "accentColor": "#88FF88",
+        "shape": "bipedal",
+        "features": [
+          "wings",
+          "fins"
+        ]
+      }
+    },
+    {
+      "id": 19,
+      "name": "독침이",
+      "type": [
+        "poison"
+      ],
+      "baseStats": {
+        "hp": 45,
+        "atk": 48,
+        "def": 44,
+        "spAtk": 64,
+        "spDef": 57,
+        "speed": 30
+      },
+      "growthRate": "medium",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "poison_gas"
+        },
+        {
+          "level": 8,
+          "skillId": "poison_sting"
+        },
+        {
+          "level": 9,
+          "skillId": "tackle"
+        },
+        {
+          "level": 15,
+          "skillId": "venoshock"
+        },
+        {
+          "level": 25,
+          "skillId": "acid_spray"
+        },
+        {
+          "level": 28,
+          "skillId": "scratch"
+        },
+        {
+          "level": 29,
+          "skillId": "unique_poison_toad"
+        },
+        {
+          "level": 33,
+          "skillId": "bite"
+        },
+        {
+          "level": 42,
+          "skillId": "pound"
+        },
+        {
+          "level": 52,
+          "skillId": "quick_strike"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 32,
+        "skillId": "unique_poison_moth"
+      },
+      "evolution": {
+        "to": 20,
+        "level": 15
+      },
+      "catchRate": 217,
+      "expYield": 62,
+      "description": "독안개를 뿜는 독침이은(는) 맹독 타입 크리처.",
+      "spriteConfig": {
+        "baseColor": "#9933BB",
+        "accentColor": "#88FF88",
+        "shape": "amorphous",
+        "features": [
+          "claws",
+          "horns"
+        ]
+      }
+    },
+    {
+      "id": 20,
+      "name": "맹독사",
+      "type": [
+        "poison"
+      ],
+      "baseStats": {
+        "hp": 80,
+        "atk": 53,
+        "def": 65,
+        "spAtk": 61,
+        "spDef": 65,
+        "speed": 81
+      },
+      "growthRate": "medium",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "acid_spray"
+        },
+        {
+          "level": 5,
+          "skillId": "corrosion"
+        },
+        {
+          "level": 15,
+          "skillId": "poison_sting"
+        },
+        {
+          "level": 15,
+          "skillId": "bite"
+        },
+        {
+          "level": 19,
+          "skillId": "quick_strike"
+        },
+        {
+          "level": 24,
+          "skillId": "sludge_bomb"
+        },
+        {
+          "level": 38,
+          "skillId": "scratch"
+        },
+        {
+          "level": 39,
+          "skillId": "tackle"
+        },
+        {
+          "level": 42,
+          "skillId": "plague_claw"
+        },
+        {
+          "level": 42,
+          "skillId": "venom_fang"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 30,
+        "skillId": "unique_poison_toad"
+      },
+      "evolution": {
+        "to": 21,
+        "level": 34
+      },
+      "catchRate": 63,
+      "expYield": 163,
+      "description": "치명적인 독소의 맹독사은(는) 맹독 타입 크리처.",
+      "spriteConfig": {
+        "baseColor": "#9933BB",
+        "accentColor": "#DDAAFF",
+        "shape": "quadruped",
+        "features": [
+          "horns",
+          "crystals",
+          "fangs"
+        ]
+      }
+    },
+    {
+      "id": 21,
+      "name": "독왕뱀",
+      "type": [
+        "poison"
+      ],
+      "baseStats": {
+        "hp": 93,
+        "atk": 85,
+        "def": 97,
+        "spAtk": 89,
+        "spDef": 68,
+        "speed": 71
+      },
+      "growthRate": "medium",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "poison_sting"
+        },
+        {
+          "level": 7,
+          "skillId": "unique_venom_hydra"
+        },
+        {
+          "level": 16,
+          "skillId": "corrosion"
+        },
+        {
+          "level": 20,
+          "skillId": "sludge_bomb"
+        },
+        {
+          "level": 25,
+          "skillId": "poison_gas"
+        },
+        {
+          "level": 32,
+          "skillId": "pound"
+        },
+        {
+          "level": 36,
+          "skillId": "acid_spray"
+        },
+        {
+          "level": 43,
+          "skillId": "bite"
+        },
+        {
+          "level": 46,
+          "skillId": "venoshock"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 45,
+        "skillId": "unique_venom_hydra"
+      },
+      "evolution": null,
+      "catchRate": 56,
+      "expYield": 235,
+      "description": "맹독을 가진 독왕뱀은(는) 맹독 타입 크리처.",
+      "spriteConfig": {
+        "baseColor": "#9933BB",
+        "accentColor": "#FF4444",
+        "shape": "insectoid",
+        "features": [
+          "fangs",
+          "tail",
+          "wings"
+        ]
+      }
+    },
+    {
+      "id": 22,
+      "name": "철갑이",
+      "type": [
+        "metal"
+      ],
+      "baseStats": {
+        "hp": 50,
+        "atk": 38,
+        "def": 54,
+        "spAtk": 50,
+        "spDef": 48,
+        "speed": 44
+      },
+      "growthRate": "slow",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "steel_lance"
+        },
+        {
+          "level": 5,
+          "skillId": "unique_metal_scorpion"
+        },
+        {
+          "level": 11,
+          "skillId": "bullet_punch"
+        },
+        {
+          "level": 13,
+          "skillId": "unique_steel_knight"
+        },
+        {
+          "level": 25,
+          "skillId": "scratch"
+        },
+        {
+          "level": 33,
+          "skillId": "metal_claw"
+        },
+        {
+          "level": 35,
+          "skillId": "chrome_shield"
+        },
+        {
+          "level": 43,
+          "skillId": "tackle"
+        },
+        {
+          "level": 50,
+          "skillId": "unique_gear_bot"
+        },
+        {
+          "level": 55,
+          "skillId": "iron_defense"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 30,
+        "skillId": "unique_metal_scorpion"
+      },
+      "evolution": {
+        "to": 23,
+        "level": 18
+      },
+      "catchRate": 218,
+      "expYield": 89,
+      "description": "금속을 조종하는 철갑이은(는) 강철 타입 몬스터.",
+      "spriteConfig": {
+        "baseColor": "#8888AA",
+        "accentColor": "#FF6699",
+        "shape": "serpent",
+        "features": [
+          "fins",
+          "aura",
+          "shell"
+        ]
+      }
+    },
+    {
+      "id": 23,
+      "name": "강철기",
+      "type": [
+        "metal"
+      ],
+      "baseStats": {
+        "hp": 84,
+        "atk": 62,
+        "def": 88,
+        "spAtk": 51,
+        "spDef": 65,
+        "speed": 58
+      },
+      "growthRate": "slow",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "metal_sound"
+        },
+        {
+          "level": 10,
+          "skillId": "gear_grind"
+        },
+        {
+          "level": 14,
+          "skillId": "tackle"
+        },
+        {
+          "level": 16,
+          "skillId": "steel_beam"
+        },
+        {
+          "level": 25,
+          "skillId": "unique_gear_bot"
+        },
+        {
+          "level": 26,
+          "skillId": "iron_head"
+        },
+        {
+          "level": 32,
+          "skillId": "unique_metal_scorpion"
+        },
+        {
+          "level": 34,
+          "skillId": "bullet_punch"
+        },
+        {
+          "level": 41,
+          "skillId": "bite"
+        },
+        {
+          "level": 50,
+          "skillId": "metal_claw"
+        },
+        {
+          "level": 65,
+          "skillId": "pound"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 38,
+        "skillId": "unique_metal_scorpion"
+      },
+      "evolution": {
+        "to": 24,
+        "level": 32
+      },
+      "catchRate": 68,
+      "expYield": 152,
+      "description": "파괴할 수 없는 강철기은(는) 강철 타입 포켓몬스터.",
+      "spriteConfig": {
+        "baseColor": "#8888AA",
+        "accentColor": "#FFFFFF",
+        "shape": "quadruped",
+        "features": [
+          "crystals"
+        ]
+      }
+    },
+    {
+      "id": 24,
+      "name": "메탈킹",
+      "type": [
+        "metal"
+      ],
+      "baseStats": {
+        "hp": 64,
+        "atk": 98,
+        "def": 122,
+        "spAtk": 91,
+        "spDef": 64,
+        "speed": 74
+      },
+      "growthRate": "medium",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "metal_sound"
+        },
+        {
+          "level": 10,
+          "skillId": "scratch"
+        },
+        {
+          "level": 11,
+          "skillId": "bite"
+        },
+        {
+          "level": 14,
+          "skillId": "steel_lance"
+        },
+        {
+          "level": 17,
+          "skillId": "quick_strike"
+        },
+        {
+          "level": 28,
+          "skillId": "iron_head"
+        },
+        {
+          "level": 34,
+          "skillId": "metal_claw"
+        },
+        {
+          "level": 35,
+          "skillId": "tackle"
+        },
+        {
+          "level": 42,
+          "skillId": "pound"
+        },
+        {
+          "level": 45,
+          "skillId": "chrome_shield"
+        },
+        {
+          "level": 48,
+          "skillId": "bullet_punch"
+        },
+        {
+          "level": 71,
+          "skillId": "unique_steel_knight"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 40,
+        "skillId": "unique_gear_bot"
+      },
+      "evolution": null,
+      "catchRate": 37,
+      "expYield": 239,
+      "description": "파괴할 수 없는 메탈킹은(는) 강철 타입 크리처.",
+      "spriteConfig": {
+        "baseColor": "#CCCCDD",
+        "accentColor": "#FFFF66",
+        "shape": "humanoid",
+        "features": [
+          "aura"
+        ]
+      }
+    },
+    {
+      "id": 25,
+      "name": "빛나리",
+      "type": [
+        "light"
+      ],
+      "baseStats": {
+        "hp": 34,
+        "atk": 61,
+        "def": 56,
+        "spAtk": 40,
+        "spDef": 45,
+        "speed": 65
+      },
+      "growthRate": "medium",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "divine_light"
+        },
+        {
+          "level": 11,
+          "skillId": "unique_sun_guardian"
+        },
+        {
+          "level": 16,
+          "skillId": "unique_light_butterfly"
+        },
+        {
+          "level": 22,
+          "skillId": "pound"
+        },
+        {
+          "level": 23,
+          "skillId": "radiance"
+        },
+        {
+          "level": 25,
+          "skillId": "bite"
+        },
+        {
+          "level": 27,
+          "skillId": "unique_holy_deer"
+        },
+        {
+          "level": 33,
+          "skillId": "unique_legend_light_dragon"
+        },
+        {
+          "level": 40,
+          "skillId": "solar_flare"
+        },
+        {
+          "level": 44,
+          "skillId": "holy_beam"
+        },
+        {
+          "level": 65,
+          "skillId": "scratch"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 33,
+        "skillId": "unique_prism_cat"
+      },
+      "evolution": {
+        "to": 26,
+        "level": 16
+      },
+      "catchRate": 244,
+      "expYield": 65,
+      "description": "세상을 밝히는 빛나리은(는) 광명 타입 크리처.",
+      "spriteConfig": {
+        "baseColor": "#FFFFAA",
+        "accentColor": "#FF6699",
+        "shape": "elemental",
+        "features": [
+          "aura"
+        ]
+      }
+    },
+    {
+      "id": 26,
+      "name": "광명조",
+      "type": [
+        "light"
+      ],
+      "baseStats": {
+        "hp": 60,
+        "atk": 56,
+        "def": 42,
+        "spAtk": 79,
+        "spDef": 65,
+        "speed": 93
+      },
+      "growthRate": "slow",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "tackle"
+        },
+        {
+          "level": 8,
+          "skillId": "scratch"
+        },
+        {
+          "level": 10,
+          "skillId": "unique_sun_guardian"
+        },
+        {
+          "level": 21,
+          "skillId": "unique_holy_deer"
+        },
+        {
+          "level": 22,
+          "skillId": "blessing"
+        },
+        {
+          "level": 33,
+          "skillId": "unique_legend_light_dragon"
+        },
+        {
+          "level": 34,
+          "skillId": "light_screen"
+        },
+        {
+          "level": 41,
+          "skillId": "radiance"
+        },
+        {
+          "level": 48,
+          "skillId": "pound"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 30,
+        "skillId": "unique_sun_guardian"
+      },
+      "evolution": {
+        "to": 27,
+        "level": 38
+      },
+      "catchRate": 79,
+      "expYield": 148,
+      "description": "신성한 광명의 광명조은(는) 광명 타입 포켓몬스터.",
+      "spriteConfig": {
+        "baseColor": "#FFFFAA",
+        "accentColor": "#FFFF66",
+        "shape": "mythical",
+        "features": [
+          "wings"
+        ]
+      }
+    },
+    {
+      "id": 27,
+      "name": "성광제",
+      "type": [
+        "light"
+      ],
+      "baseStats": {
+        "hp": 105,
+        "atk": 76,
+        "def": 58,
+        "spAtk": 90,
+        "spDef": 111,
+        "speed": 101
+      },
+      "growthRate": "fast",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "unique_legend_light_dragon"
+        },
+        {
+          "level": 9,
+          "skillId": "unique_prism_cat"
+        },
+        {
+          "level": 15,
+          "skillId": "quick_strike"
+        },
+        {
+          "level": 19,
+          "skillId": "blessing"
+        },
+        {
+          "level": 19,
+          "skillId": "purify"
+        },
+        {
+          "level": 23,
+          "skillId": "solar_flare"
+        },
+        {
+          "level": 29,
+          "skillId": "pound"
+        },
+        {
+          "level": 43,
+          "skillId": "holy_beam"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 41,
+        "skillId": "unique_sun_guardian"
+      },
+      "evolution": null,
+      "catchRate": 50,
+      "expYield": 251,
+      "description": "신성한 광명의 성광제은(는) 광명 타입 생명체.",
+      "spriteConfig": {
+        "baseColor": "#FFFFAA",
+        "accentColor": "#FFAA00",
+        "shape": "humanoid",
+        "features": [
+          "crystals",
+          "spikes",
+          "shell"
+        ]
+      }
+    },
+    {
+      "id": 28,
+      "name": "그림자",
+      "type": [
+        "dark"
+      ],
+      "baseStats": {
+        "hp": 56,
+        "atk": 62,
+        "def": 38,
+        "spAtk": 50,
+        "spDef": 51,
+        "speed": 58
+      },
+      "growthRate": "fast",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "pound"
+        },
+        {
+          "level": 8,
+          "skillId": "dark_void"
+        },
+        {
+          "level": 10,
+          "skillId": "crunch"
+        },
+        {
+          "level": 19,
+          "skillId": "unique_night_wolf"
+        },
+        {
+          "level": 23,
+          "skillId": "unique_shadow_bat"
+        },
+        {
+          "level": 28,
+          "skillId": "abyss_gaze"
+        },
+        {
+          "level": 34,
+          "skillId": "night_slash"
+        },
+        {
+          "level": 35,
+          "skillId": "unique_shadow_emperor"
+        },
+        {
+          "level": 47,
+          "skillId": "quick_strike"
+        },
+        {
+          "level": 48,
+          "skillId": "shadow_sneak"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 34,
+        "skillId": "unique_shadow_bat"
+      },
+      "evolution": {
+        "to": 29,
+        "level": 15
+      },
+      "catchRate": 231,
+      "expYield": 85,
+      "description": "그림자처럼 움직이는 그림자은(는) 암흑 타입 몬스터.",
+      "spriteConfig": {
+        "baseColor": "#554466",
+        "accentColor": "#44DDFF",
+        "shape": "quadruped",
+        "features": [
+          "fangs",
+          "tail"
+        ]
+      }
+    },
+    {
+      "id": 29,
+      "name": "암흑사",
+      "type": [
+        "dark"
+      ],
+      "baseStats": {
+        "hp": 73,
+        "atk": 61,
+        "def": 86,
+        "spAtk": 68,
+        "spDef": 74,
+        "speed": 39
+      },
+      "growthRate": "medium",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "scratch"
+        },
+        {
+          "level": 8,
+          "skillId": "unique_shadow_emperor"
+        },
+        {
+          "level": 10,
+          "skillId": "dark_pulse"
+        },
+        {
+          "level": 16,
+          "skillId": "bite"
+        },
+        {
+          "level": 21,
+          "skillId": "unique_legend_dark_dragon"
+        },
+        {
+          "level": 27,
+          "skillId": "tackle"
+        },
+        {
+          "level": 30,
+          "skillId": "unique_dark_cat"
+        },
+        {
+          "level": 31,
+          "skillId": "unique_night_wolf"
+        },
+        {
+          "level": 33,
+          "skillId": "shadow_claw"
+        },
+        {
+          "level": 37,
+          "skillId": "night_slash"
+        },
+        {
+          "level": 56,
+          "skillId": "abyss_gaze"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 38,
+        "skillId": "unique_legend_dark_dragon"
+      },
+      "evolution": {
+        "to": 30,
+        "level": 37
+      },
+      "catchRate": 86,
+      "expYield": 152,
+      "description": "어둠 속에 숨는 암흑사은(는) 암흑 타입 존재.",
+      "spriteConfig": {
+        "baseColor": "#554466",
+        "accentColor": "#88FF88",
+        "shape": "avian",
+        "features": [
+          "fangs",
+          "fins"
+        ]
+      }
+    },
+    {
+      "id": 30,
+      "name": "명암왕",
+      "type": [
+        "dark"
+      ],
+      "baseStats": {
+        "hp": 92,
+        "atk": 70,
+        "def": 99,
+        "spAtk": 90,
+        "spDef": 57,
+        "speed": 107
+      },
+      "growthRate": "slow",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "night_slash"
+        },
+        {
+          "level": 11,
+          "skillId": "pound"
+        },
+        {
+          "level": 13,
+          "skillId": "dark_void"
+        },
+        {
+          "level": 13,
+          "skillId": "shadow_ball"
+        },
+        {
+          "level": 22,
+          "skillId": "unique_legend_dark_dragon"
+        },
+        {
+          "level": 26,
+          "skillId": "scratch"
+        },
+        {
+          "level": 31,
+          "skillId": "shadow_sneak"
+        },
+        {
+          "level": 33,
+          "skillId": "bite"
+        },
+        {
+          "level": 38,
+          "skillId": "dark_pulse"
+        },
+        {
+          "level": 55,
+          "skillId": "tackle"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 54,
+        "skillId": "unique_shadow_emperor"
+      },
+      "evolution": null,
+      "catchRate": 31,
+      "expYield": 216,
+      "description": "어둠 속에 숨는 명암왕은(는) 암흑 타입 생명체.",
+      "spriteConfig": {
+        "baseColor": "#554466",
+        "accentColor": "#44DDFF",
+        "shape": "serpent",
+        "features": [
+          "wings",
+          "crystals",
+          "tail"
+        ]
+      }
+    },
+    {
+      "id": 31,
+      "name": "혼령이",
+      "type": [
+        "spirit"
+      ],
+      "baseStats": {
+        "hp": 53,
+        "atk": 60,
+        "def": 44,
+        "spAtk": 42,
+        "spDef": 47,
+        "speed": 53
+      },
+      "growthRate": "medium",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "curse"
+        },
+        {
+          "level": 10,
+          "skillId": "ectoplasm"
+        },
+        {
+          "level": 16,
+          "skillId": "spectral_chain"
+        },
+        {
+          "level": 21,
+          "skillId": "unique_spirit_owl"
+        },
+        {
+          "level": 26,
+          "skillId": "ghost_wind"
+        },
+        {
+          "level": 29,
+          "skillId": "scratch"
+        },
+        {
+          "level": 29,
+          "skillId": "phantom_force"
+        },
+        {
+          "level": 43,
+          "skillId": "unique_phantom_knight"
+        },
+        {
+          "level": 43,
+          "skillId": "unique_spirit_fox"
+        },
+        {
+          "level": 45,
+          "skillId": "haunt"
+        },
+        {
+          "level": 65,
+          "skillId": "tackle"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 33,
+        "skillId": "unique_phantom_knight"
+      },
+      "evolution": {
+        "to": 32,
+        "level": 18
+      },
+      "catchRate": 171,
+      "expYield": 70,
+      "description": "혼령의 힘을 가진 혼령이은(는) 영혼 타입 존재.",
+      "spriteConfig": {
+        "baseColor": "#6655BB",
+        "accentColor": "#FFFF66",
+        "shape": "serpent",
+        "features": [
+          "fangs"
+        ]
+      }
+    },
+    {
+      "id": 32,
+      "name": "유령왕",
+      "type": [
+        "spirit"
+      ],
+      "baseStats": {
+        "hp": 61,
+        "atk": 53,
+        "def": 64,
+        "spAtk": 83,
+        "spDef": 79,
+        "speed": 60
+      },
+      "growthRate": "medium",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "quick_strike"
+        },
+        {
+          "level": 8,
+          "skillId": "unique_spirit_owl"
+        },
+        {
+          "level": 13,
+          "skillId": "phantom_force"
+        },
+        {
+          "level": 15,
+          "skillId": "pound"
+        },
+        {
+          "level": 27,
+          "skillId": "haunt"
+        },
+        {
+          "level": 28,
+          "skillId": "soul_drain"
+        },
+        {
+          "level": 31,
+          "skillId": "unique_soul_reaper"
+        },
+        {
+          "level": 39,
+          "skillId": "unique_spirit_fox"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 33,
+        "skillId": "unique_ghost_lantern"
+      },
+      "evolution": {
+        "to": 33,
+        "level": 32
+      },
+      "catchRate": 67,
+      "expYield": 146,
+      "description": "영계를 넘나드는 유령왕은(는) 영혼 타입 생명체.",
+      "spriteConfig": {
+        "baseColor": "#6655BB",
+        "accentColor": "#DDAAFF",
+        "shape": "mythical",
+        "features": [
+          "fins",
+          "horns"
+        ]
+      }
+    },
+    {
+      "id": 33,
+      "name": "명계제",
+      "type": [
+        "spirit"
+      ],
+      "baseStats": {
+        "hp": 71,
+        "atk": 100,
+        "def": 85,
+        "spAtk": 81,
+        "spDef": 85,
+        "speed": 85
+      },
+      "growthRate": "fast",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "unique_phantom_knight"
+        },
+        {
+          "level": 9,
+          "skillId": "scratch"
+        },
+        {
+          "level": 13,
+          "skillId": "bite"
+        },
+        {
+          "level": 15,
+          "skillId": "unique_spirit_owl"
+        },
+        {
+          "level": 24,
+          "skillId": "phantom_force"
+        },
+        {
+          "level": 29,
+          "skillId": "pound"
+        },
+        {
+          "level": 35,
+          "skillId": "quick_strike"
+        },
+        {
+          "level": 42,
+          "skillId": "haunt"
+        },
+        {
+          "level": 44,
+          "skillId": "ectoplasm"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 48,
+        "skillId": "unique_ghost_lantern"
+      },
+      "evolution": null,
+      "catchRate": 45,
+      "expYield": 213,
+      "description": "사후세계에서 온 명계제은(는) 영혼 타입 존재.",
+      "spriteConfig": {
+        "baseColor": "#6655BB",
+        "accentColor": "#FFFF66",
+        "shape": "mythical",
+        "features": [
+          "aura"
+        ]
+      }
+    },
+    {
+      "id": 34,
+      "name": "아룡이",
+      "type": [
+        "dragon"
+      ],
+      "baseStats": {
+        "hp": 59,
+        "atk": 36,
+        "def": 35,
+        "spAtk": 39,
+        "spDef": 72,
+        "speed": 50
+      },
+      "growthRate": "fast",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "outrage"
+        },
+        {
+          "level": 7,
+          "skillId": "unique_legend_thunder_dragon"
+        },
+        {
+          "level": 11,
+          "skillId": "pound"
+        },
+        {
+          "level": 20,
+          "skillId": "unique_drake_pup"
+        },
+        {
+          "level": 23,
+          "skillId": "scratch"
+        },
+        {
+          "level": 28,
+          "skillId": "unique_wyrm_lord"
+        },
+        {
+          "level": 32,
+          "skillId": "draco_meteor"
+        },
+        {
+          "level": 35,
+          "skillId": "scale_armor"
+        },
+        {
+          "level": 41,
+          "skillId": "quick_strike"
+        },
+        {
+          "level": 43,
+          "skillId": "dragon_dance"
+        },
+        {
+          "level": 50,
+          "skillId": "tackle"
+        },
+        {
+          "level": 56,
+          "skillId": "unique_dragon_turtle"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 29,
+        "skillId": "unique_dragon_turtle"
+      },
+      "evolution": {
+        "to": 35,
+        "level": 16
+      },
+      "catchRate": 169,
+      "expYield": 50,
+      "description": "고대의 힘을 가진 아룡이은(는) 용린 타입 포켓몬스터.",
+      "spriteConfig": {
+        "baseColor": "#7755CC",
+        "accentColor": "#FF4444",
+        "shape": "serpent",
+        "features": [
+          "fangs",
+          "shell",
+          "aura"
+        ]
+      }
+    },
+    {
+      "id": 35,
+      "name": "비룡",
+      "type": [
+        "dragon"
+      ],
+      "baseStats": {
+        "hp": 91,
+        "atk": 63,
+        "def": 50,
+        "spAtk": 57,
+        "spDef": 66,
+        "speed": 80
+      },
+      "growthRate": "fast",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "draco_meteor"
+        },
+        {
+          "level": 7,
+          "skillId": "pound"
+        },
+        {
+          "level": 11,
+          "skillId": "unique_legend_thunder_dragon"
+        },
+        {
+          "level": 19,
+          "skillId": "dragon_breath"
+        },
+        {
+          "level": 26,
+          "skillId": "dragon_pulse"
+        },
+        {
+          "level": 27,
+          "skillId": "unique_dragon_emperor"
+        },
+        {
+          "level": 29,
+          "skillId": "unique_dragon_turtle"
+        },
+        {
+          "level": 32,
+          "skillId": "scratch"
+        },
+        {
+          "level": 36,
+          "skillId": "dragon_dance"
+        },
+        {
+          "level": 51,
+          "skillId": "outrage"
+        },
+        {
+          "level": 62,
+          "skillId": "dragon_claw"
+        },
+        {
+          "level": 63,
+          "skillId": "tackle"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 34,
+        "skillId": "unique_legend_thunder_dragon"
+      },
+      "evolution": {
+        "to": 36,
+        "level": 33
+      },
+      "catchRate": 82,
+      "expYield": 164,
+      "description": "전설 속의 비룡은(는) 용린 타입 존재.",
+      "spriteConfig": {
+        "baseColor": "#6644BB",
+        "accentColor": "#FFFF66",
+        "shape": "insectoid",
+        "features": [
+          "fangs"
+        ]
+      }
+    },
+    {
+      "id": 36,
+      "name": "천룡제",
+      "type": [
+        "dragon"
+      ],
+      "baseStats": {
+        "hp": 72,
+        "atk": 115,
+        "def": 72,
+        "spAtk": 68,
+        "spDef": 140,
+        "speed": 72
+      },
+      "growthRate": "fast",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "unique_wyrm_lord"
+        },
+        {
+          "level": 10,
+          "skillId": "unique_drake_pup"
+        },
+        {
+          "level": 16,
+          "skillId": "dragon_claw"
+        },
+        {
+          "level": 16,
+          "skillId": "twin_fang"
+        },
+        {
+          "level": 20,
+          "skillId": "draco_meteor"
+        },
+        {
+          "level": 23,
+          "skillId": "dragon_pulse"
+        },
+        {
+          "level": 29,
+          "skillId": "scratch"
+        },
+        {
+          "level": 35,
+          "skillId": "dragon_breath"
+        },
+        {
+          "level": 45,
+          "skillId": "quick_strike"
+        },
+        {
+          "level": 51,
+          "skillId": "unique_dragon_emperor"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 46,
+        "skillId": "unique_drake_pup"
+      },
+      "evolution": null,
+      "catchRate": 42,
+      "expYield": 222,
+      "description": "하늘을 나는 위엄의 천룡제은(는) 용린 타입 포켓몬스터.",
+      "spriteConfig": {
+        "baseColor": "#7755CC",
+        "accentColor": "#FFAA00",
+        "shape": "avian",
+        "features": [
+          "aura"
+        ]
+      }
+    },
+    {
+      "id": 37,
+      "name": "주먹이",
+      "type": [
+        "fighting"
+      ],
+      "baseStats": {
+        "hp": 37,
+        "atk": 53,
+        "def": 43,
+        "spAtk": 53,
+        "spDef": 56,
+        "speed": 48
+      },
+      "growthRate": "slow",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "unique_martial_god"
+        },
+        {
+          "level": 10,
+          "skillId": "low_kick"
+        },
+        {
+          "level": 10,
+          "skillId": "pound"
+        },
+        {
+          "level": 19,
+          "skillId": "tackle"
+        },
+        {
+          "level": 21,
+          "skillId": "close_combat"
+        },
+        {
+          "level": 29,
+          "skillId": "drain_punch"
+        },
+        {
+          "level": 29,
+          "skillId": "bite"
+        },
+        {
+          "level": 38,
+          "skillId": "unique_fight_bear"
+        },
+        {
+          "level": 40,
+          "skillId": "scratch"
+        },
+        {
+          "level": 43,
+          "skillId": "unique_wrestler"
+        },
+        {
+          "level": 48,
+          "skillId": "dynamic_kick"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 31,
+        "skillId": "unique_boxer"
+      },
+      "evolution": {
+        "to": 38,
+        "level": 15
+      },
+      "catchRate": 232,
+      "expYield": 56,
+      "description": "강인한 근력의 주먹이은(는) 투지 타입 크리처.",
+      "spriteConfig": {
+        "baseColor": "#CC4444",
+        "accentColor": "#88FF88",
+        "shape": "aquatic",
+        "features": [
+          "shell",
+          "fangs"
+        ]
+      }
+    },
+    {
+      "id": 38,
+      "name": "격투사",
+      "type": [
+        "fighting"
+      ],
+      "baseStats": {
+        "hp": 91,
+        "atk": 80,
+        "def": 68,
+        "spAtk": 73,
+        "spDef": 61,
+        "speed": 45
+      },
+      "growthRate": "fast",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "counter"
+        },
+        {
+          "level": 10,
+          "skillId": "unique_fight_bear"
+        },
+        {
+          "level": 16,
+          "skillId": "bite"
+        },
+        {
+          "level": 22,
+          "skillId": "drain_punch"
+        },
+        {
+          "level": 25,
+          "skillId": "low_kick"
+        },
+        {
+          "level": 27,
+          "skillId": "unique_boxer"
+        },
+        {
+          "level": 30,
+          "skillId": "karate_chop"
+        },
+        {
+          "level": 37,
+          "skillId": "brick_break"
+        },
+        {
+          "level": 38,
+          "skillId": "unique_wrestler"
+        },
+        {
+          "level": 46,
+          "skillId": "quick_strike"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 28,
+        "skillId": "unique_boxer"
+      },
+      "evolution": {
+        "to": 39,
+        "level": 36
+      },
+      "catchRate": 75,
+      "expYield": 149,
+      "description": "무술을 익힌 격투사은(는) 투지 타입 생명체.",
+      "spriteConfig": {
+        "baseColor": "#CC4444",
+        "accentColor": "#AADDFF",
+        "shape": "insectoid",
+        "features": [
+          "wings",
+          "shell"
+        ]
+      }
+    },
+    {
+      "id": 39,
+      "name": "무쌍왕",
+      "type": [
+        "fighting"
+      ],
+      "baseStats": {
+        "hp": 71,
+        "atk": 89,
+        "def": 58,
+        "spAtk": 119,
+        "spDef": 71,
+        "speed": 98
+      },
+      "growthRate": "medium",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "counter"
+        },
+        {
+          "level": 9,
+          "skillId": "scratch"
+        },
+        {
+          "level": 16,
+          "skillId": "bite"
+        },
+        {
+          "level": 18,
+          "skillId": "pound"
+        },
+        {
+          "level": 21,
+          "skillId": "tackle"
+        },
+        {
+          "level": 22,
+          "skillId": "quick_strike"
+        },
+        {
+          "level": 25,
+          "skillId": "unique_martial_god"
+        },
+        {
+          "level": 34,
+          "skillId": "karate_chop"
+        },
+        {
+          "level": 43,
+          "skillId": "unique_fight_bear"
+        },
+        {
+          "level": 44,
+          "skillId": "dynamic_kick"
+        },
+        {
+          "level": 45,
+          "skillId": "low_kick"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 42,
+        "skillId": "unique_fight_bear"
+      },
+      "evolution": null,
+      "catchRate": 35,
+      "expYield": 268,
+      "description": "최강의 전사인 무쌍왕은(는) 투지 타입 몬스터.",
+      "spriteConfig": {
+        "baseColor": "#DD5555",
+        "accentColor": "#FF6699",
+        "shape": "aquatic",
+        "features": [
+          "spikes"
+        ]
+      }
+    },
+    {
+      "id": 40,
+      "name": "돌멩이",
+      "type": [
+        "rock"
+      ],
+      "baseStats": {
+        "hp": 42,
+        "atk": 47,
+        "def": 51,
+        "spAtk": 58,
+        "spDef": 53,
+        "speed": 57
+      },
+      "growthRate": "slow",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "scratch"
+        },
+        {
+          "level": 9,
+          "skillId": "unique_crystal_guardian"
+        },
+        {
+          "level": 10,
+          "skillId": "fossil_impact"
+        },
+        {
+          "level": 14,
+          "skillId": "quick_strike"
+        },
+        {
+          "level": 17,
+          "skillId": "unique_rock_rhino"
+        },
+        {
+          "level": 25,
+          "skillId": "unique_fossil_rex"
+        },
+        {
+          "level": 28,
+          "skillId": "rock_slide"
+        },
+        {
+          "level": 38,
+          "skillId": "bite"
+        },
+        {
+          "level": 39,
+          "skillId": "petrify"
+        },
+        {
+          "level": 39,
+          "skillId": "boulder_crush"
+        },
+        {
+          "level": 45,
+          "skillId": "rock_polish"
+        },
+        {
+          "level": 61,
+          "skillId": "stone_edge"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 30,
+        "skillId": "unique_crystal_guardian"
+      },
+      "evolution": {
+        "to": 41,
+        "level": 15
+      },
+      "catchRate": 189,
+      "expYield": 64,
+      "description": "고대 화석에서 깨어난 돌멩이은(는) 암석 타입 존재.",
+      "spriteConfig": {
+        "baseColor": "#887744",
+        "accentColor": "#DDAAFF",
+        "shape": "humanoid",
+        "features": [
+          "shell",
+          "fins"
+        ]
+      }
+    },
+    {
+      "id": 41,
+      "name": "바위곰",
+      "type": [
+        "rock"
+      ],
+      "baseStats": {
+        "hp": 79,
+        "atk": 75,
+        "def": 41,
+        "spAtk": 47,
+        "spDef": 90,
+        "speed": 79
+      },
+      "growthRate": "medium",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "unique_rock_turtle"
+        },
+        {
+          "level": 11,
+          "skillId": "tackle"
+        },
+        {
+          "level": 12,
+          "skillId": "stone_edge"
+        },
+        {
+          "level": 21,
+          "skillId": "rock_throw"
+        },
+        {
+          "level": 26,
+          "skillId": "scratch"
+        },
+        {
+          "level": 29,
+          "skillId": "crystal_shot"
+        },
+        {
+          "level": 33,
+          "skillId": "unique_crystal_guardian"
+        },
+        {
+          "level": 35,
+          "skillId": "rock_polish"
+        },
+        {
+          "level": 43,
+          "skillId": "unique_rock_rhino"
+        },
+        {
+          "level": 50,
+          "skillId": "bite"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 35,
+        "skillId": "unique_fossil_rex"
+      },
+      "evolution": {
+        "to": 42,
+        "level": 36
+      },
+      "catchRate": 92,
+      "expYield": 150,
+      "description": "단단한 바위로 된 바위곰은(는) 암석 타입 포켓몬스터.",
+      "spriteConfig": {
+        "baseColor": "#998855",
+        "accentColor": "#FF8844",
+        "shape": "elemental",
+        "features": [
+          "horns"
+        ]
+      }
+    },
+    {
+      "id": 42,
+      "name": "화산거",
+      "type": [
+        "rock"
+      ],
+      "baseStats": {
+        "hp": 116,
+        "atk": 68,
+        "def": 74,
+        "spAtk": 92,
+        "spDef": 68,
+        "speed": 99
+      },
+      "growthRate": "fast",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "scratch"
+        },
+        {
+          "level": 6,
+          "skillId": "unique_fossil_rex"
+        },
+        {
+          "level": 11,
+          "skillId": "unique_crystal_guardian"
+        },
+        {
+          "level": 22,
+          "skillId": "rock_slide"
+        },
+        {
+          "level": 25,
+          "skillId": "pound"
+        },
+        {
+          "level": 29,
+          "skillId": "fossil_impact"
+        },
+        {
+          "level": 41,
+          "skillId": "unique_ancient_golem"
+        },
+        {
+          "level": 42,
+          "skillId": "bite"
+        },
+        {
+          "level": 45,
+          "skillId": "boulder_crush"
+        },
+        {
+          "level": 47,
+          "skillId": "rock_throw"
+        },
+        {
+          "level": 49,
+          "skillId": "unique_rock_turtle"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 55,
+        "skillId": "unique_fossil_rex"
+      },
+      "evolution": null,
+      "catchRate": 48,
+      "expYield": 203,
+      "description": "단단한 바위로 된 화산거은(는) 암석 타입 포켓몬스터.",
+      "spriteConfig": {
+        "baseColor": "#776633",
+        "accentColor": "#FFFF66",
+        "shape": "humanoid",
+        "features": [
+          "claws",
+          "wings"
+        ]
+      }
+    },
+    {
+      "id": 43,
+      "name": "울음이",
+      "type": [
+        "sound"
+      ],
+      "baseStats": {
+        "hp": 33,
+        "atk": 33,
+        "def": 60,
+        "spAtk": 55,
+        "spDef": 69,
+        "speed": 35
+      },
+      "growthRate": "fast",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "unique_drum_beast"
+        },
+        {
+          "level": 9,
+          "skillId": "quick_strike"
+        },
+        {
+          "level": 12,
+          "skillId": "unique_echo_bat"
+        },
+        {
+          "level": 16,
+          "skillId": "tackle"
+        },
+        {
+          "level": 28,
+          "skillId": "discord"
+        },
+        {
+          "level": 29,
+          "skillId": "scratch"
+        },
+        {
+          "level": 40,
+          "skillId": "lullaby"
+        },
+        {
+          "level": 42,
+          "skillId": "unique_siren_queen"
+        },
+        {
+          "level": 48,
+          "skillId": "sonic_boom"
+        },
+        {
+          "level": 54,
+          "skillId": "unique_sound_cricket"
+        },
+        {
+          "level": 55,
+          "skillId": "bite"
+        },
+        {
+          "level": 65,
+          "skillId": "screech"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 29,
+        "skillId": "unique_drum_beast"
+      },
+      "evolution": {
+        "to": 44,
+        "level": 15
+      },
+      "catchRate": 173,
+      "expYield": 85,
+      "description": "아름다운 음색의 울음이은(는) 음파 타입 크리처.",
+      "spriteConfig": {
+        "baseColor": "#CC6699",
+        "accentColor": "#FF6699",
+        "shape": "mythical",
+        "features": [
+          "shell",
+          "fins",
+          "fangs"
+        ]
+      }
+    },
+    {
+      "id": 44,
+      "name": "진동새",
+      "type": [
+        "sound"
+      ],
+      "baseStats": {
+        "hp": 69,
+        "atk": 79,
+        "def": 57,
+        "spAtk": 86,
+        "spDef": 46,
+        "speed": 58
+      },
+      "growthRate": "fast",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "war_cry"
+        },
+        {
+          "level": 11,
+          "skillId": "screech"
+        },
+        {
+          "level": 12,
+          "skillId": "sonic_boom"
+        },
+        {
+          "level": 20,
+          "skillId": "scratch"
+        },
+        {
+          "level": 21,
+          "skillId": "unique_siren_queen"
+        },
+        {
+          "level": 26,
+          "skillId": "discord"
+        },
+        {
+          "level": 28,
+          "skillId": "resonance"
+        },
+        {
+          "level": 34,
+          "skillId": "shatter_note"
+        },
+        {
+          "level": 38,
+          "skillId": "unique_legend_harmony"
+        },
+        {
+          "level": 43,
+          "skillId": "tackle"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 38,
+        "skillId": "unique_drum_beast"
+      },
+      "evolution": {
+        "to": 45,
+        "level": 32
+      },
+      "catchRate": 75,
+      "expYield": 176,
+      "description": "초음파를 발사하는 진동새은(는) 음파 타입 생명체.",
+      "spriteConfig": {
+        "baseColor": "#EE88BB",
+        "accentColor": "#44DDFF",
+        "shape": "mythical",
+        "features": [
+          "aura",
+          "crystals",
+          "fangs"
+        ]
+      }
+    },
+    {
+      "id": 45,
+      "name": "폭음왕",
+      "type": [
+        "sound"
+      ],
+      "baseStats": {
+        "hp": 77,
+        "atk": 56,
+        "def": 109,
+        "spAtk": 101,
+        "spDef": 99,
+        "speed": 78
+      },
+      "growthRate": "medium",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "discord"
+        },
+        {
+          "level": 10,
+          "skillId": "echo"
+        },
+        {
+          "level": 17,
+          "skillId": "lullaby"
+        },
+        {
+          "level": 21,
+          "skillId": "sonic_boom"
+        },
+        {
+          "level": 29,
+          "skillId": "unique_sound_cricket"
+        },
+        {
+          "level": 32,
+          "skillId": "screech"
+        },
+        {
+          "level": 35,
+          "skillId": "shatter_note"
+        },
+        {
+          "level": 37,
+          "skillId": "quick_strike"
+        },
+        {
+          "level": 45,
+          "skillId": "unique_legend_harmony"
+        },
+        {
+          "level": 51,
+          "skillId": "hyper_voice"
+        },
+        {
+          "level": 54,
+          "skillId": "unique_siren_queen"
+        },
+        {
+          "level": 70,
+          "skillId": "resonance"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 55,
+        "skillId": "unique_drum_beast"
+      },
+      "evolution": null,
+      "catchRate": 58,
+      "expYield": 223,
+      "description": "초음파를 발사하는 폭음왕은(는) 음파 타입 크리처.",
+      "spriteConfig": {
+        "baseColor": "#CC6699",
+        "accentColor": "#FFFF66",
+        "shape": "serpent",
+        "features": [
+          "horns",
+          "crystals",
+          "claws"
+        ]
+      }
+    },
+    {
+      "id": 46,
+      "name": "홧불이",
+      "type": [
+        "fire"
+      ],
+      "baseStats": {
+        "hp": 72,
+        "atk": 50,
+        "def": 39,
+        "spAtk": 66,
+        "spDef": 44,
+        "speed": 33
+      },
+      "growthRate": "fast",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "unique_legend_phoenix"
+        },
+        {
+          "level": 9,
+          "skillId": "bite"
+        },
+        {
+          "level": 17,
+          "skillId": "eruption"
+        },
+        {
+          "level": 18,
+          "skillId": "flame_claw"
+        },
+        {
+          "level": 26,
+          "skillId": "tackle"
+        },
+        {
+          "level": 28,
+          "skillId": "flame_charge"
+        },
+        {
+          "level": 32,
+          "skillId": "unique_fire_horse"
+        },
+        {
+          "level": 39,
+          "skillId": "unique_flame_beast"
+        },
+        {
+          "level": 46,
+          "skillId": "unique_fire_puppy"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 25,
+        "skillId": "unique_legend_phoenix"
+      },
+      "evolution": {
+        "to": 47,
+        "level": 28
+      },
+      "catchRate": 174,
+      "expYield": 61,
+      "description": "용암처럼 뜨거운 체온의 홧불이은(는) 화염 타입 몬스터.",
+      "spriteConfig": {
+        "baseColor": "#CC3300",
+        "accentColor": "#AADDFF",
+        "shape": "bipedal",
+        "features": [
+          "spikes",
+          "claws"
+        ]
+      }
+    },
+    {
+      "id": 47,
+      "name": "염왕",
+      "type": [
+        "fire"
+      ],
+      "baseStats": {
+        "hp": 56,
+        "atk": 65,
+        "def": 42,
+        "spAtk": 67,
+        "spDef": 84,
+        "speed": 67
+      },
+      "growthRate": "slow",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "unique_legend_phoenix"
+        },
+        {
+          "level": 9,
+          "skillId": "scratch"
+        },
+        {
+          "level": 13,
+          "skillId": "bite"
+        },
+        {
+          "level": 21,
+          "skillId": "fire_spin"
+        },
+        {
+          "level": 27,
+          "skillId": "fire_wall"
+        },
+        {
+          "level": 27,
+          "skillId": "flame_claw"
+        },
+        {
+          "level": 30,
+          "skillId": "eruption"
+        },
+        {
+          "level": 38,
+          "skillId": "unique_flame_beast"
+        },
+        {
+          "level": 49,
+          "skillId": "heat_fang"
+        },
+        {
+          "level": 51,
+          "skillId": "flame_charge"
+        },
+        {
+          "level": 51,
+          "skillId": "quick_strike"
+        },
+        {
+          "level": 56,
+          "skillId": "fire_breath"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 36,
+        "skillId": "unique_flame_beast"
+      },
+      "evolution": null,
+      "catchRate": 73,
+      "expYield": 142,
+      "description": "용암처럼 뜨거운 체온의 염왕은(는) 화염 타입 크리처.",
+      "spriteConfig": {
+        "baseColor": "#FF6600",
+        "accentColor": "#FFFFFF",
+        "shape": "amorphous",
+        "features": [
+          "fangs",
+          "fins",
+          "claws"
+        ]
+      }
+    },
+    {
+      "id": 48,
+      "name": "거품이",
+      "type": [
+        "water"
+      ],
+      "baseStats": {
+        "hp": 52,
+        "atk": 53,
+        "def": 53,
+        "spAtk": 45,
+        "spDef": 48,
+        "speed": 46
+      },
+      "growthRate": "medium",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "aqua_shield"
+        },
+        {
+          "level": 11,
+          "skillId": "waterfall"
+        },
+        {
+          "level": 13,
+          "skillId": "rain_dance"
+        },
+        {
+          "level": 17,
+          "skillId": "tackle"
+        },
+        {
+          "level": 21,
+          "skillId": "unique_legend_leviathan"
+        },
+        {
+          "level": 23,
+          "skillId": "water_pulse"
+        },
+        {
+          "level": 29,
+          "skillId": "torrent_bite"
+        },
+        {
+          "level": 47,
+          "skillId": "unique_water_sprite"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 26,
+        "skillId": "unique_ocean_emperor"
+      },
+      "evolution": {
+        "to": 49,
+        "level": 26
+      },
+      "catchRate": 207,
+      "expYield": 54,
+      "description": "깊은 바다를 지배하는 거품이은(는) 해류 타입 크리처.",
+      "spriteConfig": {
+        "baseColor": "#2266CC",
+        "accentColor": "#AADDFF",
+        "shape": "avian",
+        "features": [
+          "fangs",
+          "tail",
+          "shell"
+        ]
+      }
+    },
+    {
+      "id": 49,
+      "name": "소용돌",
+      "type": [
+        "water"
+      ],
+      "baseStats": {
+        "hp": 99,
+        "atk": 78,
+        "def": 46,
+        "spAtk": 51,
+        "spDef": 69,
+        "speed": 48
+      },
+      "growthRate": "medium",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "bite"
+        },
+        {
+          "level": 8,
+          "skillId": "water_gun"
+        },
+        {
+          "level": 11,
+          "skillId": "torrent_bite"
+        },
+        {
+          "level": 17,
+          "skillId": "aqua_jet"
+        },
+        {
+          "level": 20,
+          "skillId": "rain_dance"
+        },
+        {
+          "level": 22,
+          "skillId": "unique_tidal_beast"
+        },
+        {
+          "level": 37,
+          "skillId": "tidal_wave"
+        },
+        {
+          "level": 41,
+          "skillId": "tackle"
+        },
+        {
+          "level": 45,
+          "skillId": "scratch"
+        },
+        {
+          "level": 45,
+          "skillId": "aqua_shield"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 29,
+        "skillId": "unique_legend_leviathan"
+      },
+      "evolution": null,
+      "catchRate": 113,
+      "expYield": 173,
+      "description": "맑은 물속에서 사는 소용돌은(는) 해류 타입 크리처.",
+      "spriteConfig": {
+        "baseColor": "#44AAFF",
+        "accentColor": "#FF4444",
+        "shape": "insectoid",
+        "features": [
+          "shell",
+          "claws",
+          "tail"
+        ]
+      }
+    },
+    {
+      "id": 50,
+      "name": "덩굴이",
+      "type": [
+        "grass"
+      ],
+      "baseStats": {
+        "hp": 46,
+        "atk": 48,
+        "def": 49,
+        "spAtk": 56,
+        "spDef": 50,
+        "speed": 39
+      },
+      "growthRate": "medium",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "sleep_powder"
+        },
+        {
+          "level": 9,
+          "skillId": "scratch"
+        },
+        {
+          "level": 14,
+          "skillId": "leaf_storm"
+        },
+        {
+          "level": 18,
+          "skillId": "unique_grass_mantis"
+        },
+        {
+          "level": 23,
+          "skillId": "solar_beam"
+        },
+        {
+          "level": 30,
+          "skillId": "absorb"
+        },
+        {
+          "level": 32,
+          "skillId": "quick_strike"
+        },
+        {
+          "level": 36,
+          "skillId": "seed_bomb"
+        },
+        {
+          "level": 37,
+          "skillId": "tackle"
+        },
+        {
+          "level": 38,
+          "skillId": "razor_leaf"
+        },
+        {
+          "level": 56,
+          "skillId": "bite"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 25,
+        "skillId": "unique_jungle_beast"
+      },
+      "evolution": {
+        "to": 51,
+        "level": 21
+      },
+      "catchRate": 228,
+      "expYield": 88,
+      "description": "숲의 수호자인 덩굴이은(는) 자연 타입 포켓몬스터.",
+      "spriteConfig": {
+        "baseColor": "#228822",
+        "accentColor": "#FFFF66",
+        "shape": "amorphous",
+        "features": [
+          "shell"
+        ]
+      }
+    },
+    {
+      "id": 51,
+      "name": "숲요정",
+      "type": [
+        "grass"
+      ],
+      "baseStats": {
+        "hp": 71,
+        "atk": 72,
+        "def": 86,
+        "spAtk": 73,
+        "spDef": 54,
+        "speed": 51
+      },
+      "growthRate": "slow",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "unique_forest_emperor"
+        },
+        {
+          "level": 11,
+          "skillId": "solar_beam"
+        },
+        {
+          "level": 13,
+          "skillId": "razor_leaf"
+        },
+        {
+          "level": 23,
+          "skillId": "growth"
+        },
+        {
+          "level": 23,
+          "skillId": "sleep_powder"
+        },
+        {
+          "level": 34,
+          "skillId": "scratch"
+        },
+        {
+          "level": 38,
+          "skillId": "unique_jungle_beast"
+        },
+        {
+          "level": 38,
+          "skillId": "vine_whip"
+        },
+        {
+          "level": 40,
+          "skillId": "unique_grass_mantis"
+        },
+        {
+          "level": 51,
+          "skillId": "unique_leaf_spirit"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 32,
+        "skillId": "unique_grass_mantis"
+      },
+      "evolution": null,
+      "catchRate": 76,
+      "expYield": 139,
+      "description": "식물의 힘을 가진 숲요정은(는) 자연 타입 크리처.",
+      "spriteConfig": {
+        "baseColor": "#66DD44",
+        "accentColor": "#AADDFF",
+        "shape": "aquatic",
+        "features": [
+          "fins",
+          "wings",
+          "horns"
+        ]
+      }
+    },
+    {
+      "id": 52,
+      "name": "모래쥐",
+      "type": [
+        "earth"
+      ],
+      "baseStats": {
+        "hp": 62,
+        "atk": 51,
+        "def": 37,
+        "spAtk": 31,
+        "spDef": 58,
+        "speed": 60
+      },
+      "growthRate": "slow",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "sand_tomb"
+        },
+        {
+          "level": 9,
+          "skillId": "mud_bomb"
+        },
+        {
+          "level": 16,
+          "skillId": "earthquake"
+        },
+        {
+          "level": 19,
+          "skillId": "unique_earth_titan"
+        },
+        {
+          "level": 23,
+          "skillId": "scratch"
+        },
+        {
+          "level": 26,
+          "skillId": "earth_power"
+        },
+        {
+          "level": 32,
+          "skillId": "unique_mole_king"
+        },
+        {
+          "level": 37,
+          "skillId": "unique_sand_worm"
+        },
+        {
+          "level": 38,
+          "skillId": "pound"
+        },
+        {
+          "level": 48,
+          "skillId": "mud_slap"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 33,
+        "skillId": "unique_earth_croc"
+      },
+      "evolution": {
+        "to": 53,
+        "level": 19
+      },
+      "catchRate": 227,
+      "expYield": 72,
+      "description": "땅속에서 사는 모래쥐은(는) 대지 타입 생명체.",
+      "spriteConfig": {
+        "baseColor": "#CC9955",
+        "accentColor": "#FFFF66",
+        "shape": "avian",
+        "features": [
+          "fins",
+          "claws"
+        ]
+      }
+    },
+    {
+      "id": 53,
+      "name": "사막왕",
+      "type": [
+        "earth"
+      ],
+      "baseStats": {
+        "hp": 72,
+        "atk": 55,
+        "def": 77,
+        "spAtk": 77,
+        "spDef": 62,
+        "speed": 75
+      },
+      "growthRate": "medium",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "earthquake"
+        },
+        {
+          "level": 7,
+          "skillId": "unique_earth_titan"
+        },
+        {
+          "level": 15,
+          "skillId": "bite"
+        },
+        {
+          "level": 21,
+          "skillId": "mud_slap"
+        },
+        {
+          "level": 28,
+          "skillId": "earth_power"
+        },
+        {
+          "level": 32,
+          "skillId": "scratch"
+        },
+        {
+          "level": 35,
+          "skillId": "dig"
+        },
+        {
+          "level": 37,
+          "skillId": "sand_tomb"
+        },
+        {
+          "level": 43,
+          "skillId": "pound"
+        },
+        {
+          "level": 49,
+          "skillId": "sand_armor"
+        },
+        {
+          "level": 59,
+          "skillId": "ground_slam"
+        },
+        {
+          "level": 61,
+          "skillId": "mud_bomb"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 34,
+        "skillId": "unique_mole_king"
+      },
+      "evolution": null,
+      "catchRate": 91,
+      "expYield": 167,
+      "description": "대지의 힘을 가진 사막왕은(는) 대지 타입 생명체.",
+      "spriteConfig": {
+        "baseColor": "#BB8844",
+        "accentColor": "#FF4444",
+        "shape": "avian",
+        "features": [
+          "horns",
+          "fins",
+          "crystals"
+        ]
+      }
+    },
+    {
+      "id": 54,
+      "name": "모래쥐",
+      "type": [
+        "earth"
+      ],
+      "baseStats": {
+        "hp": 40,
+        "atk": 43,
+        "def": 37,
+        "spAtk": 61,
+        "spDef": 68,
+        "speed": 55
+      },
+      "growthRate": "slow",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "unique_mole_king"
+        },
+        {
+          "level": 11,
+          "skillId": "scratch"
+        },
+        {
+          "level": 16,
+          "skillId": "fissure"
+        },
+        {
+          "level": 23,
+          "skillId": "ground_slam"
+        },
+        {
+          "level": 25,
+          "skillId": "sand_armor"
+        },
+        {
+          "level": 31,
+          "skillId": "sand_tomb"
+        },
+        {
+          "level": 34,
+          "skillId": "unique_earth_croc"
+        },
+        {
+          "level": 36,
+          "skillId": "dig"
+        },
+        {
+          "level": 53,
+          "skillId": "pound"
+        },
+        {
+          "level": 58,
+          "skillId": "bite"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 29,
+        "skillId": "unique_earth_titan"
+      },
+      "evolution": {
+        "to": 55,
+        "level": 23
+      },
+      "catchRate": 231,
+      "expYield": 79,
+      "description": "지진을 일으키는 모래쥐은(는) 대지 타입 크리처.",
+      "spriteConfig": {
+        "baseColor": "#997733",
+        "accentColor": "#FF4444",
+        "shape": "humanoid",
+        "features": [
+          "claws"
+        ]
+      }
+    },
+    {
+      "id": 55,
+      "name": "사막왕",
+      "type": [
+        "earth"
+      ],
+      "baseStats": {
+        "hp": 54,
+        "atk": 80,
+        "def": 51,
+        "spAtk": 67,
+        "spDef": 58,
+        "speed": 78
+      },
+      "growthRate": "medium",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "unique_mole_king"
+        },
+        {
+          "level": 6,
+          "skillId": "tackle"
+        },
+        {
+          "level": 9,
+          "skillId": "quick_strike"
+        },
+        {
+          "level": 21,
+          "skillId": "mud_bomb"
+        },
+        {
+          "level": 22,
+          "skillId": "dig"
+        },
+        {
+          "level": 24,
+          "skillId": "scratch"
+        },
+        {
+          "level": 29,
+          "skillId": "mud_slap"
+        },
+        {
+          "level": 40,
+          "skillId": "unique_earth_croc"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 38,
+        "skillId": "unique_mole_king"
+      },
+      "evolution": null,
+      "catchRate": 112,
+      "expYield": 171,
+      "description": "지진을 일으키는 사막왕은(는) 대지 타입 포켓몬스터.",
+      "spriteConfig": {
+        "baseColor": "#BB8844",
+        "accentColor": "#DDAAFF",
+        "shape": "insectoid",
+        "features": [
+          "tail",
+          "wings"
+        ]
+      }
+    },
+    {
+      "id": 56,
+      "name": "전기뱀",
+      "type": [
+        "electric"
+      ],
+      "baseStats": {
+        "hp": 46,
+        "atk": 51,
+        "def": 52,
+        "spAtk": 59,
+        "spDef": 40,
+        "speed": 64
+      },
+      "growthRate": "fast",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "charge"
+        },
+        {
+          "level": 7,
+          "skillId": "thunder"
+        },
+        {
+          "level": 10,
+          "skillId": "tackle"
+        },
+        {
+          "level": 14,
+          "skillId": "thunderbolt"
+        },
+        {
+          "level": 17,
+          "skillId": "quick_strike"
+        },
+        {
+          "level": 34,
+          "skillId": "thunder_wave"
+        },
+        {
+          "level": 39,
+          "skillId": "discharge"
+        },
+        {
+          "level": 40,
+          "skillId": "unique_electric_eel"
+        },
+        {
+          "level": 44,
+          "skillId": "bite"
+        },
+        {
+          "level": 55,
+          "skillId": "unique_bolt_fox"
+        },
+        {
+          "level": 56,
+          "skillId": "lightning_fang"
+        },
+        {
+          "level": 67,
+          "skillId": "scratch"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 26,
+        "skillId": "unique_thunder_god"
+      },
+      "evolution": {
+        "to": 57,
+        "level": 21
+      },
+      "catchRate": 185,
+      "expYield": 82,
+      "description": "번개를 조종하는 전기뱀은(는) 전격 타입 몬스터.",
+      "spriteConfig": {
+        "baseColor": "#FFE633",
+        "accentColor": "#DDAAFF",
+        "shape": "avian",
+        "features": [
+          "fangs",
+          "spikes"
+        ]
+      }
+    },
+    {
+      "id": 57,
+      "name": "방전사",
+      "type": [
+        "electric"
+      ],
+      "baseStats": {
+        "hp": 62,
+        "atk": 67,
+        "def": 62,
+        "spAtk": 74,
+        "spDef": 64,
+        "speed": 75
+      },
+      "growthRate": "medium",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "scratch"
+        },
+        {
+          "level": 6,
+          "skillId": "unique_electric_eel"
+        },
+        {
+          "level": 12,
+          "skillId": "bite"
+        },
+        {
+          "level": 17,
+          "skillId": "quick_strike"
+        },
+        {
+          "level": 17,
+          "skillId": "lightning_fang"
+        },
+        {
+          "level": 27,
+          "skillId": "charge"
+        },
+        {
+          "level": 39,
+          "skillId": "unique_thunder_god"
+        },
+        {
+          "level": 42,
+          "skillId": "thunder"
+        },
+        {
+          "level": 45,
+          "skillId": "tackle"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 30,
+        "skillId": "unique_bolt_fox"
+      },
+      "evolution": null,
+      "catchRate": 114,
+      "expYield": 141,
+      "description": "전기를 뿜는 방전사은(는) 전격 타입 존재.",
+      "spriteConfig": {
+        "baseColor": "#FFCC00",
+        "accentColor": "#FF8844",
+        "shape": "amorphous",
+        "features": [
+          "spikes",
+          "crystals",
+          "aura"
+        ]
+      }
+    },
+    {
+      "id": 58,
+      "name": "눈토끼",
+      "type": [
+        "ice"
+      ],
+      "baseStats": {
+        "hp": 56,
+        "atk": 36,
+        "def": 66,
+        "spAtk": 55,
+        "spDef": 48,
+        "speed": 33
+      },
+      "growthRate": "medium",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "unique_snow_fox"
+        },
+        {
+          "level": 5,
+          "skillId": "scratch"
+        },
+        {
+          "level": 10,
+          "skillId": "hail"
+        },
+        {
+          "level": 14,
+          "skillId": "glacial_lance"
+        },
+        {
+          "level": 27,
+          "skillId": "quick_strike"
+        },
+        {
+          "level": 27,
+          "skillId": "freeze_ray"
+        },
+        {
+          "level": 30,
+          "skillId": "bite"
+        },
+        {
+          "level": 34,
+          "skillId": "unique_frost_bear"
+        },
+        {
+          "level": 41,
+          "skillId": "blizzard"
+        },
+        {
+          "level": 50,
+          "skillId": "frost_breath"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 31,
+        "skillId": "unique_snow_fox"
+      },
+      "evolution": {
+        "to": 59,
+        "level": 18
+      },
+      "catchRate": 206,
+      "expYield": 70,
+      "description": "빙하에서 태어난 눈토끼은(는) 빙결 타입 존재.",
+      "spriteConfig": {
+        "baseColor": "#AAEEFF",
+        "accentColor": "#FF8844",
+        "shape": "elemental",
+        "features": [
+          "wings",
+          "claws",
+          "crystals"
+        ]
+      }
+    },
+    {
+      "id": 59,
+      "name": "서리곰",
+      "type": [
+        "ice"
+      ],
+      "baseStats": {
+        "hp": 43,
+        "atk": 49,
+        "def": 77,
+        "spAtk": 78,
+        "spDef": 76,
+        "speed": 59
+      },
+      "growthRate": "fast",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "unique_ice_queen"
+        },
+        {
+          "level": 11,
+          "skillId": "ice_shard"
+        },
+        {
+          "level": 16,
+          "skillId": "unique_snow_fox"
+        },
+        {
+          "level": 17,
+          "skillId": "quick_strike"
+        },
+        {
+          "level": 25,
+          "skillId": "freeze_ray"
+        },
+        {
+          "level": 33,
+          "skillId": "unique_frost_bear"
+        },
+        {
+          "level": 35,
+          "skillId": "unique_ice_mammoth"
+        },
+        {
+          "level": 35,
+          "skillId": "scratch"
+        },
+        {
+          "level": 43,
+          "skillId": "bite"
+        },
+        {
+          "level": 56,
+          "skillId": "frost_breath"
+        },
+        {
+          "level": 58,
+          "skillId": "glacial_lance"
+        },
+        {
+          "level": 63,
+          "skillId": "hail"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 31,
+        "skillId": "unique_frost_bear"
+      },
+      "evolution": null,
+      "catchRate": 115,
+      "expYield": 152,
+      "description": "빙하에서 태어난 서리곰은(는) 빙결 타입 몬스터.",
+      "spriteConfig": {
+        "baseColor": "#88DDFF",
+        "accentColor": "#FF8844",
+        "shape": "quadruped",
+        "features": [
+          "crystals",
+          "claws"
+        ]
+      }
+    },
+    {
+      "id": 60,
+      "name": "솔바람",
+      "type": [
+        "wind"
+      ],
+      "baseStats": {
+        "hp": 55,
+        "atk": 42,
+        "def": 36,
+        "spAtk": 51,
+        "spDef": 52,
+        "speed": 46
+      },
+      "growthRate": "medium",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "unique_normal_bird"
+        },
+        {
+          "level": 7,
+          "skillId": "sky_dive"
+        },
+        {
+          "level": 13,
+          "skillId": "unique_wind_serpent"
+        },
+        {
+          "level": 17,
+          "skillId": "scratch"
+        },
+        {
+          "level": 23,
+          "skillId": "tackle"
+        },
+        {
+          "level": 24,
+          "skillId": "unique_breeze_fairy"
+        },
+        {
+          "level": 32,
+          "skillId": "feather_dance"
+        },
+        {
+          "level": 35,
+          "skillId": "quick_strike"
+        },
+        {
+          "level": 39,
+          "skillId": "tornado"
+        },
+        {
+          "level": 51,
+          "skillId": "unique_storm_hawk"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 28,
+        "skillId": "unique_wind_serpent"
+      },
+      "evolution": {
+        "to": 61,
+        "level": 24
+      },
+      "catchRate": 165,
+      "expYield": 77,
+      "description": "폭풍을 일으키는 솔바람은(는) 질풍 타입 크리처.",
+      "spriteConfig": {
+        "baseColor": "#BBEECC",
+        "accentColor": "#FF4444",
+        "shape": "serpent",
+        "features": [
+          "horns",
+          "fins",
+          "crystals"
+        ]
+      }
+    },
+    {
+      "id": 61,
+      "name": "회오리",
+      "type": [
+        "wind"
+      ],
+      "baseStats": {
+        "hp": 83,
+        "atk": 84,
+        "def": 51,
+        "spAtk": 91,
+        "spDef": 48,
+        "speed": 51
+      },
+      "growthRate": "fast",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "tornado"
+        },
+        {
+          "level": 10,
+          "skillId": "tailwind"
+        },
+        {
+          "level": 13,
+          "skillId": "feather_dance"
+        },
+        {
+          "level": 15,
+          "skillId": "air_slash"
+        },
+        {
+          "level": 18,
+          "skillId": "sky_dive"
+        },
+        {
+          "level": 31,
+          "skillId": "unique_wind_serpent"
+        },
+        {
+          "level": 35,
+          "skillId": "aerial_ace"
+        },
+        {
+          "level": 35,
+          "skillId": "unique_storm_hawk"
+        },
+        {
+          "level": 38,
+          "skillId": "pound"
+        },
+        {
+          "level": 45,
+          "skillId": "scratch"
+        },
+        {
+          "level": 45,
+          "skillId": "gust"
+        },
+        {
+          "level": 56,
+          "skillId": "hurricane"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 36,
+        "skillId": "unique_wind_serpent"
+      },
+      "evolution": null,
+      "catchRate": 90,
+      "expYield": 152,
+      "description": "자유로운 하늘의 회오리은(는) 질풍 타입 존재.",
+      "spriteConfig": {
+        "baseColor": "#77CCAA",
+        "accentColor": "#FFAA00",
+        "shape": "mythical",
+        "features": [
+          "horns",
+          "wings",
+          "aura"
+        ]
+      }
+    },
+    {
+      "id": 62,
+      "name": "독버섯",
+      "type": [
+        "poison"
+      ],
+      "baseStats": {
+        "hp": 40,
+        "atk": 60,
+        "def": 64,
+        "spAtk": 36,
+        "spDef": 36,
+        "speed": 51
+      },
+      "growthRate": "fast",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "bite"
+        },
+        {
+          "level": 11,
+          "skillId": "corrosion"
+        },
+        {
+          "level": 14,
+          "skillId": "toxic"
+        },
+        {
+          "level": 19,
+          "skillId": "acid_spray"
+        },
+        {
+          "level": 23,
+          "skillId": "poison_gas"
+        },
+        {
+          "level": 33,
+          "skillId": "poison_sting"
+        },
+        {
+          "level": 35,
+          "skillId": "plague_claw"
+        },
+        {
+          "level": 41,
+          "skillId": "unique_venom_hydra"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 28,
+        "skillId": "unique_acid_spider"
+      },
+      "evolution": {
+        "to": 63,
+        "level": 19
+      },
+      "catchRate": 179,
+      "expYield": 89,
+      "description": "치명적인 독소의 독버섯은(는) 맹독 타입 포켓몬스터.",
+      "spriteConfig": {
+        "baseColor": "#CC66DD",
+        "accentColor": "#FFAA00",
+        "shape": "bipedal",
+        "features": [
+          "fangs"
+        ]
+      }
+    },
+    {
+      "id": 63,
+      "name": "포이즌",
+      "type": [
+        "poison"
+      ],
+      "baseStats": {
+        "hp": 69,
+        "atk": 75,
+        "def": 78,
+        "spAtk": 85,
+        "spDef": 59,
+        "speed": 54
+      },
+      "growthRate": "slow",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "corrosion"
+        },
+        {
+          "level": 6,
+          "skillId": "pound"
+        },
+        {
+          "level": 12,
+          "skillId": "scratch"
+        },
+        {
+          "level": 16,
+          "skillId": "venom_fang"
+        },
+        {
+          "level": 23,
+          "skillId": "poison_gas"
+        },
+        {
+          "level": 26,
+          "skillId": "toxic"
+        },
+        {
+          "level": 29,
+          "skillId": "unique_poison_moth"
+        },
+        {
+          "level": 34,
+          "skillId": "unique_poison_toad"
+        },
+        {
+          "level": 35,
+          "skillId": "poison_sting"
+        },
+        {
+          "level": 54,
+          "skillId": "quick_strike"
+        },
+        {
+          "level": 54,
+          "skillId": "sludge_bomb"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 38,
+        "skillId": "unique_acid_spider"
+      },
+      "evolution": null,
+      "catchRate": 78,
+      "expYield": 178,
+      "description": "치명적인 독소의 포이즌은(는) 맹독 타입 생명체.",
+      "spriteConfig": {
+        "baseColor": "#9933BB",
+        "accentColor": "#FFFF66",
+        "shape": "avian",
+        "features": [
+          "fins"
+        ]
+      }
+    },
+    {
+      "id": 64,
+      "name": "기어톱",
+      "type": [
+        "metal"
+      ],
+      "baseStats": {
+        "hp": 71,
+        "atk": 52,
+        "def": 49,
+        "spAtk": 43,
+        "spDef": 53,
+        "speed": 38
+      },
+      "growthRate": "medium",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "scratch"
+        },
+        {
+          "level": 6,
+          "skillId": "unique_gear_bot"
+        },
+        {
+          "level": 12,
+          "skillId": "steel_lance"
+        },
+        {
+          "level": 16,
+          "skillId": "quick_strike"
+        },
+        {
+          "level": 17,
+          "skillId": "bite"
+        },
+        {
+          "level": 27,
+          "skillId": "metal_claw"
+        },
+        {
+          "level": 40,
+          "skillId": "tackle"
+        },
+        {
+          "level": 43,
+          "skillId": "metal_sound"
+        },
+        {
+          "level": 44,
+          "skillId": "iron_head"
+        },
+        {
+          "level": 48,
+          "skillId": "steel_beam"
+        },
+        {
+          "level": 54,
+          "skillId": "unique_steel_knight"
+        },
+        {
+          "level": 55,
+          "skillId": "chrome_shield"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 26,
+        "skillId": "unique_metal_scorpion"
+      },
+      "evolution": {
+        "to": 65,
+        "level": 21
+      },
+      "catchRate": 209,
+      "expYield": 72,
+      "description": "금속을 조종하는 기어톱은(는) 강철 타입 존재.",
+      "spriteConfig": {
+        "baseColor": "#8888AA",
+        "accentColor": "#FF6699",
+        "shape": "bipedal",
+        "features": [
+          "crystals",
+          "spikes"
+        ]
+      }
+    },
+    {
+      "id": 65,
+      "name": "톱니왕",
+      "type": [
+        "metal"
+      ],
+      "baseStats": {
+        "hp": 62,
+        "atk": 82,
+        "def": 62,
+        "spAtk": 71,
+        "spDef": 50,
+        "speed": 76
+      },
+      "growthRate": "slow",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "bullet_punch"
+        },
+        {
+          "level": 10,
+          "skillId": "scratch"
+        },
+        {
+          "level": 12,
+          "skillId": "unique_steel_knight"
+        },
+        {
+          "level": 13,
+          "skillId": "metal_claw"
+        },
+        {
+          "level": 23,
+          "skillId": "tackle"
+        },
+        {
+          "level": 26,
+          "skillId": "metal_sound"
+        },
+        {
+          "level": 31,
+          "skillId": "steel_beam"
+        },
+        {
+          "level": 38,
+          "skillId": "iron_defense"
+        },
+        {
+          "level": 39,
+          "skillId": "gear_grind"
+        },
+        {
+          "level": 40,
+          "skillId": "bite"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 37,
+        "skillId": "unique_iron_colossus"
+      },
+      "evolution": null,
+      "catchRate": 107,
+      "expYield": 139,
+      "description": "파괴할 수 없는 톱니왕은(는) 강철 타입 포켓몬스터.",
+      "spriteConfig": {
+        "baseColor": "#CCCCDD",
+        "accentColor": "#DDAAFF",
+        "shape": "insectoid",
+        "features": [
+          "horns",
+          "tail"
+        ]
+      }
+    },
+    {
+      "id": 66,
+      "name": "반딧불",
+      "type": [
+        "light"
+      ],
+      "baseStats": {
+        "hp": 37,
+        "atk": 43,
+        "def": 67,
+        "spAtk": 36,
+        "spDef": 54,
+        "speed": 65
+      },
+      "growthRate": "medium",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "solar_flare"
+        },
+        {
+          "level": 6,
+          "skillId": "unique_sun_guardian"
+        },
+        {
+          "level": 15,
+          "skillId": "blessing"
+        },
+        {
+          "level": 17,
+          "skillId": "unique_light_butterfly"
+        },
+        {
+          "level": 25,
+          "skillId": "holy_beam"
+        },
+        {
+          "level": 29,
+          "skillId": "divine_light"
+        },
+        {
+          "level": 32,
+          "skillId": "tackle"
+        },
+        {
+          "level": 37,
+          "skillId": "flash"
+        },
+        {
+          "level": 39,
+          "skillId": "unique_prism_cat"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 35,
+        "skillId": "unique_holy_deer"
+      },
+      "evolution": {
+        "to": 67,
+        "level": 18
+      },
+      "catchRate": 171,
+      "expYield": 51,
+      "description": "신성한 광명의 반딧불은(는) 광명 타입 포켓몬스터.",
+      "spriteConfig": {
+        "baseColor": "#FFDD55",
+        "accentColor": "#FF4444",
+        "shape": "quadruped",
+        "features": [
+          "fangs",
+          "spikes"
+        ]
+      }
+    },
+    {
+      "id": 67,
+      "name": "섬광사",
+      "type": [
+        "light"
+      ],
+      "baseStats": {
+        "hp": 56,
+        "atk": 59,
+        "def": 54,
+        "spAtk": 70,
+        "spDef": 87,
+        "speed": 68
+      },
+      "growthRate": "slow",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "quick_strike"
+        },
+        {
+          "level": 8,
+          "skillId": "light_screen"
+        },
+        {
+          "level": 13,
+          "skillId": "bite"
+        },
+        {
+          "level": 15,
+          "skillId": "holy_beam"
+        },
+        {
+          "level": 25,
+          "skillId": "pound"
+        },
+        {
+          "level": 26,
+          "skillId": "blessing"
+        },
+        {
+          "level": 29,
+          "skillId": "unique_light_butterfly"
+        },
+        {
+          "level": 41,
+          "skillId": "aurora_ray"
+        },
+        {
+          "level": 44,
+          "skillId": "purify"
+        },
+        {
+          "level": 49,
+          "skillId": "unique_prism_cat"
+        },
+        {
+          "level": 53,
+          "skillId": "unique_holy_deer"
+        },
+        {
+          "level": 55,
+          "skillId": "radiance"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 31,
+        "skillId": "unique_prism_cat"
+      },
+      "evolution": null,
+      "catchRate": 69,
+      "expYield": 165,
+      "description": "신성한 광명의 섬광사은(는) 광명 타입 존재.",
+      "spriteConfig": {
+        "baseColor": "#FFDD55",
+        "accentColor": "#AADDFF",
+        "shape": "aquatic",
+        "features": [
+          "horns",
+          "wings",
+          "spikes"
+        ]
+      }
+    },
+    {
+      "id": 68,
+      "name": "야귀",
+      "type": [
+        "dark"
+      ],
+      "baseStats": {
+        "hp": 36,
+        "atk": 58,
+        "def": 44,
+        "spAtk": 36,
+        "spDef": 74,
+        "speed": 52
+      },
+      "growthRate": "slow",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "dark_shroud"
+        },
+        {
+          "level": 9,
+          "skillId": "unique_legend_dark_dragon"
+        },
+        {
+          "level": 11,
+          "skillId": "unique_shadow_bat"
+        },
+        {
+          "level": 19,
+          "skillId": "crunch"
+        },
+        {
+          "level": 23,
+          "skillId": "shadow_claw"
+        },
+        {
+          "level": 28,
+          "skillId": "quick_strike"
+        },
+        {
+          "level": 29,
+          "skillId": "pound"
+        },
+        {
+          "level": 32,
+          "skillId": "abyss_gaze"
+        },
+        {
+          "level": 38,
+          "skillId": "unique_dark_cat"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 29,
+        "skillId": "unique_shadow_bat"
+      },
+      "evolution": {
+        "to": 69,
+        "level": 23
+      },
+      "catchRate": 231,
+      "expYield": 58,
+      "description": "암흑을 지배하는 야귀은(는) 암흑 타입 몬스터.",
+      "spriteConfig": {
+        "baseColor": "#443355",
+        "accentColor": "#44DDFF",
+        "shape": "humanoid",
+        "features": [
+          "horns",
+          "spikes",
+          "tail"
+        ]
+      }
+    },
+    {
+      "id": 69,
+      "name": "칠흑",
+      "type": [
+        "dark"
+      ],
+      "baseStats": {
+        "hp": 86,
+        "atk": 57,
+        "def": 57,
+        "spAtk": 41,
+        "spDef": 56,
+        "speed": 91
+      },
+      "growthRate": "slow",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "night_slash"
+        },
+        {
+          "level": 10,
+          "skillId": "scratch"
+        },
+        {
+          "level": 10,
+          "skillId": "dark_pulse"
+        },
+        {
+          "level": 21,
+          "skillId": "unique_shadow_bat"
+        },
+        {
+          "level": 22,
+          "skillId": "shadow_claw"
+        },
+        {
+          "level": 35,
+          "skillId": "tackle"
+        },
+        {
+          "level": 38,
+          "skillId": "crunch"
+        },
+        {
+          "level": 38,
+          "skillId": "unique_dark_cat"
+        },
+        {
+          "level": 41,
+          "skillId": "pound"
+        },
+        {
+          "level": 42,
+          "skillId": "dark_shroud"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 35,
+        "skillId": "unique_shadow_emperor"
+      },
+      "evolution": null,
+      "catchRate": 94,
+      "expYield": 149,
+      "description": "그림자처럼 움직이는 칠흑은(는) 암흑 타입 몬스터.",
+      "spriteConfig": {
+        "baseColor": "#554466",
+        "accentColor": "#FFFFFF",
+        "shape": "quadruped",
+        "features": [
+          "claws"
+        ]
+      }
+    },
+    {
+      "id": 70,
+      "name": "귀불",
+      "type": [
+        "spirit"
+      ],
+      "baseStats": {
+        "hp": 40,
+        "atk": 49,
+        "def": 63,
+        "spAtk": 50,
+        "spDef": 50,
+        "speed": 39
+      },
+      "growthRate": "medium",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "unique_phantom_knight"
+        },
+        {
+          "level": 5,
+          "skillId": "life_steal"
+        },
+        {
+          "level": 11,
+          "skillId": "spectral_chain"
+        },
+        {
+          "level": 16,
+          "skillId": "soul_drain"
+        },
+        {
+          "level": 17,
+          "skillId": "quick_strike"
+        },
+        {
+          "level": 29,
+          "skillId": "ghost_wind"
+        },
+        {
+          "level": 35,
+          "skillId": "curse"
+        },
+        {
+          "level": 44,
+          "skillId": "unique_spirit_owl"
+        },
+        {
+          "level": 47,
+          "skillId": "bite"
+        },
+        {
+          "level": 51,
+          "skillId": "unique_spirit_fox"
+        },
+        {
+          "level": 56,
+          "skillId": "pound"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 28,
+        "skillId": "unique_phantom_knight"
+      },
+      "evolution": {
+        "to": 71,
+        "level": 25
+      },
+      "catchRate": 233,
+      "expYield": 55,
+      "description": "혼령의 힘을 가진 귀불은(는) 영혼 타입 포켓몬스터.",
+      "spriteConfig": {
+        "baseColor": "#8877DD",
+        "accentColor": "#FF4444",
+        "shape": "amorphous",
+        "features": [
+          "fins",
+          "claws",
+          "crystals"
+        ]
+      }
+    },
+    {
+      "id": 71,
+      "name": "사령사",
+      "type": [
+        "spirit"
+      ],
+      "baseStats": {
+        "hp": 52,
+        "atk": 69,
+        "def": 72,
+        "spAtk": 55,
+        "spDef": 68,
+        "speed": 95
+      },
+      "growthRate": "slow",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "tackle"
+        },
+        {
+          "level": 9,
+          "skillId": "ectoplasm"
+        },
+        {
+          "level": 11,
+          "skillId": "unique_ghost_lantern"
+        },
+        {
+          "level": 19,
+          "skillId": "phantom_force"
+        },
+        {
+          "level": 21,
+          "skillId": "scratch"
+        },
+        {
+          "level": 26,
+          "skillId": "curse"
+        },
+        {
+          "level": 30,
+          "skillId": "pound"
+        },
+        {
+          "level": 44,
+          "skillId": "ghost_wind"
+        },
+        {
+          "level": 46,
+          "skillId": "unique_spirit_owl"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 31,
+        "skillId": "unique_spirit_fox"
+      },
+      "evolution": null,
+      "catchRate": 95,
+      "expYield": 179,
+      "description": "사후세계에서 온 사령사은(는) 영혼 타입 포켓몬스터.",
+      "spriteConfig": {
+        "baseColor": "#8877DD",
+        "accentColor": "#FF4444",
+        "shape": "quadruped",
+        "features": [
+          "fins",
+          "wings"
+        ]
+      }
+    },
+    {
+      "id": 72,
+      "name": "발차기",
+      "type": [
+        "fighting"
+      ],
+      "baseStats": {
+        "hp": 48,
+        "atk": 42,
+        "def": 32,
+        "spAtk": 63,
+        "spDef": 51,
+        "speed": 53
+      },
+      "growthRate": "medium",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "low_kick"
+        },
+        {
+          "level": 7,
+          "skillId": "dynamic_kick"
+        },
+        {
+          "level": 13,
+          "skillId": "unique_boxer"
+        },
+        {
+          "level": 21,
+          "skillId": "bulk_up"
+        },
+        {
+          "level": 22,
+          "skillId": "drain_punch"
+        },
+        {
+          "level": 24,
+          "skillId": "tackle"
+        },
+        {
+          "level": 38,
+          "skillId": "quick_strike"
+        },
+        {
+          "level": 40,
+          "skillId": "karate_chop"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 33,
+        "skillId": "unique_martial_god"
+      },
+      "evolution": {
+        "to": 73,
+        "level": 26
+      },
+      "catchRate": 245,
+      "expYield": 67,
+      "description": "최강의 전사인 발차기은(는) 투지 타입 포켓몬스터.",
+      "spriteConfig": {
+        "baseColor": "#CC4444",
+        "accentColor": "#FF6699",
+        "shape": "bipedal",
+        "features": [
+          "crystals"
+        ]
+      }
+    },
+    {
+      "id": 73,
+      "name": "태권도",
+      "type": [
+        "fighting"
+      ],
+      "baseStats": {
+        "hp": 76,
+        "atk": 91,
+        "def": 68,
+        "spAtk": 58,
+        "spDef": 69,
+        "speed": 42
+      },
+      "growthRate": "slow",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "drain_punch"
+        },
+        {
+          "level": 9,
+          "skillId": "tackle"
+        },
+        {
+          "level": 15,
+          "skillId": "dynamic_kick"
+        },
+        {
+          "level": 17,
+          "skillId": "low_kick"
+        },
+        {
+          "level": 18,
+          "skillId": "pound"
+        },
+        {
+          "level": 21,
+          "skillId": "unique_boxer"
+        },
+        {
+          "level": 30,
+          "skillId": "unique_fight_mantis"
+        },
+        {
+          "level": 40,
+          "skillId": "unique_wrestler"
+        },
+        {
+          "level": 40,
+          "skillId": "bite"
+        },
+        {
+          "level": 41,
+          "skillId": "unique_martial_god"
+        },
+        {
+          "level": 57,
+          "skillId": "counter"
+        },
+        {
+          "level": 58,
+          "skillId": "focus_punch"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 31,
+        "skillId": "unique_fight_bear"
+      },
+      "evolution": null,
+      "catchRate": 81,
+      "expYield": 169,
+      "description": "최강의 전사인 태권도은(는) 투지 타입 크리처.",
+      "spriteConfig": {
+        "baseColor": "#BB3333",
+        "accentColor": "#FFFFFF",
+        "shape": "elemental",
+        "features": [
+          "shell",
+          "tail",
+          "wings"
+        ]
+      }
+    },
+    {
+      "id": 74,
+      "name": "수정바위",
+      "type": [
+        "rock"
+      ],
+      "baseStats": {
+        "hp": 61,
+        "atk": 36,
+        "def": 63,
+        "spAtk": 39,
+        "spDef": 37,
+        "speed": 62
+      },
+      "growthRate": "medium",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "unique_crystal_guardian"
+        },
+        {
+          "level": 6,
+          "skillId": "boulder_crush"
+        },
+        {
+          "level": 13,
+          "skillId": "quick_strike"
+        },
+        {
+          "level": 17,
+          "skillId": "sandstorm"
+        },
+        {
+          "level": 18,
+          "skillId": "crystal_shot"
+        },
+        {
+          "level": 29,
+          "skillId": "tackle"
+        },
+        {
+          "level": 33,
+          "skillId": "unique_rock_turtle"
+        },
+        {
+          "level": 40,
+          "skillId": "rock_slide"
+        },
+        {
+          "level": 45,
+          "skillId": "rock_throw"
+        },
+        {
+          "level": 45,
+          "skillId": "rock_polish"
+        },
+        {
+          "level": 51,
+          "skillId": "unique_fossil_rex"
+        },
+        {
+          "level": 53,
+          "skillId": "bite"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 34,
+        "skillId": "unique_rock_turtle"
+      },
+      "evolution": {
+        "to": 75,
+        "level": 21
+      },
+      "catchRate": 198,
+      "expYield": 79,
+      "description": "단단한 바위로 된 수정바위은(는) 암석 타입 존재.",
+      "spriteConfig": {
+        "baseColor": "#887744",
+        "accentColor": "#FF8844",
+        "shape": "insectoid",
+        "features": [
+          "wings",
+          "aura"
+        ]
+      }
+    },
+    {
+      "id": 75,
+      "name": "절벽수",
+      "type": [
+        "rock"
+      ],
+      "baseStats": {
+        "hp": 72,
+        "atk": 72,
+        "def": 68,
+        "spAtk": 52,
+        "spDef": 81,
+        "speed": 74
+      },
+      "growthRate": "medium",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "tackle"
+        },
+        {
+          "level": 9,
+          "skillId": "stone_edge"
+        },
+        {
+          "level": 11,
+          "skillId": "boulder_crush"
+        },
+        {
+          "level": 20,
+          "skillId": "rock_throw"
+        },
+        {
+          "level": 20,
+          "skillId": "fossil_impact"
+        },
+        {
+          "level": 22,
+          "skillId": "scratch"
+        },
+        {
+          "level": 34,
+          "skillId": "rock_slide"
+        },
+        {
+          "level": 36,
+          "skillId": "quick_strike"
+        },
+        {
+          "level": 47,
+          "skillId": "unique_rock_rhino"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 30,
+        "skillId": "unique_rock_turtle"
+      },
+      "evolution": null,
+      "catchRate": 75,
+      "expYield": 136,
+      "description": "고대 화석에서 깨어난 절벽수은(는) 암석 타입 크리처.",
+      "spriteConfig": {
+        "baseColor": "#998855",
+        "accentColor": "#FF8844",
+        "shape": "insectoid",
+        "features": [
+          "fangs",
+          "horns"
+        ]
+      }
+    },
+    {
+      "id": 76,
+      "name": "메아리",
+      "type": [
+        "sound"
+      ],
+      "baseStats": {
+        "hp": 38,
+        "atk": 49,
+        "def": 53,
+        "spAtk": 50,
+        "spDef": 31,
+        "speed": 67
+      },
+      "growthRate": "medium",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "pound"
+        },
+        {
+          "level": 10,
+          "skillId": "screech"
+        },
+        {
+          "level": 14,
+          "skillId": "bite"
+        },
+        {
+          "level": 17,
+          "skillId": "echo"
+        },
+        {
+          "level": 20,
+          "skillId": "lullaby"
+        },
+        {
+          "level": 29,
+          "skillId": "hyper_voice"
+        },
+        {
+          "level": 29,
+          "skillId": "tackle"
+        },
+        {
+          "level": 34,
+          "skillId": "quick_strike"
+        },
+        {
+          "level": 35,
+          "skillId": "scratch"
+        },
+        {
+          "level": 59,
+          "skillId": "war_cry"
+        },
+        {
+          "level": 64,
+          "skillId": "unique_echo_bat"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 34,
+        "skillId": "unique_echo_bat"
+      },
+      "evolution": {
+        "to": 77,
+        "level": 27
+      },
+      "catchRate": 246,
+      "expYield": 80,
+      "description": "초음파를 발사하는 메아리은(는) 음파 타입 크리처.",
+      "spriteConfig": {
+        "baseColor": "#CC6699",
+        "accentColor": "#FFAA00",
+        "shape": "serpent",
+        "features": [
+          "shell"
+        ]
+      }
+    },
+    {
+      "id": 77,
+      "name": "공명사",
+      "type": [
+        "sound"
+      ],
+      "baseStats": {
+        "hp": 94,
+        "atk": 92,
+        "def": 63,
+        "spAtk": 45,
+        "spDef": 46,
+        "speed": 66
+      },
+      "growthRate": "fast",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "shatter_note"
+        },
+        {
+          "level": 7,
+          "skillId": "unique_drum_beast"
+        },
+        {
+          "level": 17,
+          "skillId": "unique_sound_cricket"
+        },
+        {
+          "level": 17,
+          "skillId": "tackle"
+        },
+        {
+          "level": 20,
+          "skillId": "war_cry"
+        },
+        {
+          "level": 30,
+          "skillId": "discord"
+        },
+        {
+          "level": 30,
+          "skillId": "bite"
+        },
+        {
+          "level": 33,
+          "skillId": "echo"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 29,
+        "skillId": "unique_siren_queen"
+      },
+      "evolution": null,
+      "catchRate": 77,
+      "expYield": 170,
+      "description": "폭음을 내지르는 공명사은(는) 음파 타입 존재.",
+      "spriteConfig": {
+        "baseColor": "#EE88BB",
+        "accentColor": "#44DDFF",
+        "shape": "avian",
+        "features": [
+          "aura",
+          "spikes",
+          "crystals"
+        ]
+      }
+    },
+    {
+      "id": 78,
+      "name": "운석이",
+      "type": [
+        "cosmic"
+      ],
+      "baseStats": {
+        "hp": 69,
+        "atk": 45,
+        "def": 69,
+        "spAtk": 46,
+        "spDef": 38,
+        "speed": 44
+      },
+      "growthRate": "slow",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "quick_strike"
+        },
+        {
+          "level": 6,
+          "skillId": "cosmic_armor"
+        },
+        {
+          "level": 10,
+          "skillId": "unique_nebula_god"
+        },
+        {
+          "level": 23,
+          "skillId": "nebula_burst"
+        },
+        {
+          "level": 25,
+          "skillId": "unique_legend_space_lord"
+        },
+        {
+          "level": 27,
+          "skillId": "scratch"
+        },
+        {
+          "level": 28,
+          "skillId": "gravity_well"
+        },
+        {
+          "level": 34,
+          "skillId": "unique_cosmic_jelly"
+        },
+        {
+          "level": 36,
+          "skillId": "tackle"
+        },
+        {
+          "level": 52,
+          "skillId": "pound"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 31,
+        "skillId": "unique_legend_space_lord"
+      },
+      "evolution": {
+        "to": 79,
+        "level": 21
+      },
+      "catchRate": 170,
+      "expYield": 83,
+      "description": "은하를 여행하는 운석이은(는) 우주 타입 생명체.",
+      "spriteConfig": {
+        "baseColor": "#222255",
+        "accentColor": "#88FF88",
+        "shape": "bipedal",
+        "features": [
+          "wings",
+          "claws"
+        ]
+      }
+    },
+    {
+      "id": 79,
+      "name": "혜성사",
+      "type": [
+        "cosmic"
+      ],
+      "baseStats": {
+        "hp": 86,
+        "atk": 68,
+        "def": 51,
+        "spAtk": 91,
+        "spDef": 50,
+        "speed": 51
+      },
+      "growthRate": "slow",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "dark_matter"
+        },
+        {
+          "level": 11,
+          "skillId": "void_ray"
+        },
+        {
+          "level": 14,
+          "skillId": "unique_legend_time_lord"
+        },
+        {
+          "level": 22,
+          "skillId": "star_fall"
+        },
+        {
+          "level": 23,
+          "skillId": "nebula_burst"
+        },
+        {
+          "level": 24,
+          "skillId": "pound"
+        },
+        {
+          "level": 34,
+          "skillId": "unique_cosmic_jelly"
+        },
+        {
+          "level": 41,
+          "skillId": "warp"
+        },
+        {
+          "level": 43,
+          "skillId": "quick_strike"
+        },
+        {
+          "level": 47,
+          "skillId": "scratch"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 31,
+        "skillId": "unique_cosmic_jelly"
+      },
+      "evolution": null,
+      "catchRate": 106,
+      "expYield": 166,
+      "description": "별의 힘을 가진 혜성사은(는) 우주 타입 포켓몬스터.",
+      "spriteConfig": {
+        "baseColor": "#333377",
+        "accentColor": "#AADDFF",
+        "shape": "serpent",
+        "features": [
+          "shell",
+          "wings",
+          "crystals"
+        ]
+      }
+    },
+    {
+      "id": 80,
+      "name": "운석이",
+      "type": [
+        "cosmic"
+      ],
+      "baseStats": {
+        "hp": 59,
+        "atk": 40,
+        "def": 68,
+        "spAtk": 48,
+        "spDef": 37,
+        "speed": 47
+      },
+      "growthRate": "medium",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "unique_legend_time_lord"
+        },
+        {
+          "level": 11,
+          "skillId": "unique_nebula_god"
+        },
+        {
+          "level": 11,
+          "skillId": "cosmic_armor"
+        },
+        {
+          "level": 18,
+          "skillId": "nebula_burst"
+        },
+        {
+          "level": 23,
+          "skillId": "pound"
+        },
+        {
+          "level": 24,
+          "skillId": "unique_star_fox"
+        },
+        {
+          "level": 36,
+          "skillId": "tackle"
+        },
+        {
+          "level": 38,
+          "skillId": "bite"
+        },
+        {
+          "level": 41,
+          "skillId": "singularity"
+        },
+        {
+          "level": 45,
+          "skillId": "cosmic_ray"
+        },
+        {
+          "level": 56,
+          "skillId": "scratch"
+        },
+        {
+          "level": 63,
+          "skillId": "dark_matter"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 32,
+        "skillId": "unique_moon_rabbit"
+      },
+      "evolution": {
+        "to": 81,
+        "level": 25
+      },
+      "catchRate": 184,
+      "expYield": 57,
+      "description": "우주에서 온 운석이은(는) 우주 타입 몬스터.",
+      "spriteConfig": {
+        "baseColor": "#333377",
+        "accentColor": "#88FF88",
+        "shape": "aquatic",
+        "features": [
+          "spikes"
+        ]
+      }
+    },
+    {
+      "id": 81,
+      "name": "혜성사",
+      "type": [
+        "cosmic"
+      ],
+      "baseStats": {
+        "hp": 77,
+        "atk": 36,
+        "def": 74,
+        "spAtk": 53,
+        "spDef": 83,
+        "speed": 71
+      },
+      "growthRate": "fast",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "unique_legend_time_lord"
+        },
+        {
+          "level": 11,
+          "skillId": "tackle"
+        },
+        {
+          "level": 12,
+          "skillId": "cosmic_ray"
+        },
+        {
+          "level": 23,
+          "skillId": "quick_strike"
+        },
+        {
+          "level": 27,
+          "skillId": "singularity"
+        },
+        {
+          "level": 28,
+          "skillId": "unique_moon_rabbit"
+        },
+        {
+          "level": 31,
+          "skillId": "nebula_burst"
+        },
+        {
+          "level": 33,
+          "skillId": "unique_cosmic_jelly"
+        },
+        {
+          "level": 35,
+          "skillId": "pound"
+        },
+        {
+          "level": 43,
+          "skillId": "star_fall"
+        },
+        {
+          "level": 48,
+          "skillId": "cosmic_armor"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 30,
+        "skillId": "unique_cosmic_jelly"
+      },
+      "evolution": null,
+      "catchRate": 92,
+      "expYield": 175,
+      "description": "우주에서 온 혜성사은(는) 우주 타입 포켓몬스터.",
+      "spriteConfig": {
+        "baseColor": "#333377",
+        "accentColor": "#FF4444",
+        "shape": "elemental",
+        "features": [
+          "aura",
+          "fangs"
+        ]
+      }
+    },
+    {
+      "id": 82,
+      "name": "고랭이",
+      "type": [
+        "normal"
+      ],
+      "baseStats": {
+        "hp": 40,
+        "atk": 45,
+        "def": 35,
+        "spAtk": 30,
+        "spDef": 35,
+        "speed": 60
+      },
+      "growthRate": "fast",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "tackle"
+        },
+        {
+          "level": 1,
+          "skillId": "growl"
+        },
+        {
+          "level": 5,
+          "skillId": "quick_strike"
+        },
+        {
+          "level": 10,
+          "skillId": "bite"
+        },
+        {
+          "level": 15,
+          "skillId": "fury_swipes"
+        },
+        {
+          "level": 20,
+          "skillId": "scratch"
+        },
+        {
+          "level": 28,
+          "skillId": "pound"
+        },
+        {
+          "level": 35,
+          "skillId": "protect"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 25,
+        "skillId": "unique_normal_dog"
+      },
+      "evolution": {
+        "to": 83,
+        "level": 20
+      },
+      "catchRate": 255,
+      "expYield": 50,
+      "description": "호기심 많은 꼬마 쥐 몬스터. 작은 몸집이지만 재빠르고 용감하다. 트레이너의 첫 동반자로 사랑받는다.",
+      "spriteConfig": {
+        "baseColor": "#CCBB88",
+        "accentColor": "#FFDD66",
+        "shape": "quadruped",
+        "features": [
+          "tail",
+          "fangs"
+        ]
+      }
+    },
+    {
+      "id": 83,
+      "name": "나시고랭",
+      "type": [
+        "normal",
+        "fighting"
+      ],
+      "baseStats": {
+        "hp": 70,
+        "atk": 80,
+        "def": 60,
+        "spAtk": 50,
+        "spDef": 60,
+        "speed": 95
+      },
+      "growthRate": "fast",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "tackle"
+        },
+        {
+          "level": 1,
+          "skillId": "growl"
+        },
+        {
+          "level": 5,
+          "skillId": "quick_strike"
+        },
+        {
+          "level": 10,
+          "skillId": "bite"
+        },
+        {
+          "level": 15,
+          "skillId": "fury_swipes"
+        },
+        {
+          "level": 20,
+          "skillId": "scratch"
+        },
+        {
+          "level": 25,
+          "skillId": "pound"
+        },
+        {
+          "level": 30,
+          "skillId": "protect"
+        },
+        {
+          "level": 38,
+          "skillId": "fury_swipes"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 35,
+        "skillId": "unique_normal_dog"
+      },
+      "evolution": null,
+      "catchRate": 90,
+      "expYield": 160,
+      "description": "고랭이가 진화한 모습. 번개처럼 빠른 움직임으로 적을 압도한다. 이름과 달리 볶음밥과는 관계없다.",
+      "spriteConfig": {
+        "baseColor": "#BBAA66",
+        "accentColor": "#FF8844",
+        "shape": "bipedal",
+        "features": [
+          "tail",
+          "claws",
+          "fangs"
+        ]
+      }
+    },
+    {
+      "id": 84,
+      "name": "솜뭉치",
+      "type": [
+        "normal"
+      ],
+      "baseStats": {
+        "hp": 38,
+        "atk": 40,
+        "def": 51,
+        "spAtk": 48,
+        "spDef": 67,
+        "speed": 64
+      },
+      "growthRate": "medium",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "quick_strike"
+        },
+        {
+          "level": 5,
+          "skillId": "pound"
+        },
+        {
+          "level": 9,
+          "skillId": "tackle"
+        },
+        {
+          "level": 18,
+          "skillId": "hyper_beam"
+        },
+        {
+          "level": 21,
+          "skillId": "fury_swipes"
+        },
+        {
+          "level": 27,
+          "skillId": "bite"
+        },
+        {
+          "level": 27,
+          "skillId": "growl"
+        },
+        {
+          "level": 45,
+          "skillId": "unique_normal_cat"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 29,
+        "skillId": "unique_legend_origin"
+      },
+      "evolution": {
+        "to": 85,
+        "level": 19
+      },
+      "catchRate": 166,
+      "expYield": 68,
+      "description": "평범해 보이지만 강한 솜뭉치은(는) 무속성 타입 포켓몬스터.",
+      "spriteConfig": {
+        "baseColor": "#BBBBAA",
+        "accentColor": "#AADDFF",
+        "shape": "humanoid",
+        "features": [
+          "claws"
+        ]
+      }
+    },
+    {
+      "id": 85,
+      "name": "달리기",
+      "type": [
+        "normal"
+      ],
+      "baseStats": {
+        "hp": 72,
+        "atk": 70,
+        "def": 76,
+        "spAtk": 79,
+        "spDef": 75,
+        "speed": 45
+      },
+      "growthRate": "fast",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "unique_normal_dog"
+        },
+        {
+          "level": 7,
+          "skillId": "fury_swipes"
+        },
+        {
+          "level": 12,
+          "skillId": "tackle"
+        },
+        {
+          "level": 23,
+          "skillId": "unique_legend_origin"
+        },
+        {
+          "level": 25,
+          "skillId": "body_slam"
+        },
+        {
+          "level": 27,
+          "skillId": "scratch"
+        },
+        {
+          "level": 29,
+          "skillId": "pound"
+        },
+        {
+          "level": 43,
+          "skillId": "protect"
+        },
+        {
+          "level": 47,
+          "skillId": "hyper_beam"
+        },
+        {
+          "level": 48,
+          "skillId": "growl"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 33,
+        "skillId": "unique_legend_origin"
+      },
+      "evolution": null,
+      "catchRate": 101,
+      "expYield": 148,
+      "description": "예측할 수 없는 달리기은(는) 무속성 타입 존재.",
+      "spriteConfig": {
+        "baseColor": "#AAAA99",
+        "accentColor": "#FFFFFF",
+        "shape": "serpent",
+        "features": [
+          "shell",
+          "fins",
+          "fangs"
+        ]
+      }
+    },
+    {
+      "id": 86,
+      "name": "진흙이",
+      "type": [
+        "earth"
+      ],
+      "baseStats": {
+        "hp": 95,
+        "atk": 78,
+        "def": 71,
+        "spAtk": 60,
+        "spDef": 83,
+        "speed": 82
+      },
+      "growthRate": "medium",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "bite"
+        },
+        {
+          "level": 11,
+          "skillId": "ground_slam"
+        },
+        {
+          "level": 13,
+          "skillId": "earthquake"
+        },
+        {
+          "level": 16,
+          "skillId": "unique_sand_worm"
+        },
+        {
+          "level": 23,
+          "skillId": "dig"
+        },
+        {
+          "level": 24,
+          "skillId": "earth_power"
+        },
+        {
+          "level": 29,
+          "skillId": "sand_tomb"
+        },
+        {
+          "level": 45,
+          "skillId": "mud_bomb"
+        },
+        {
+          "level": 53,
+          "skillId": "mud_slap"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 35,
+        "skillId": "unique_earth_croc"
+      },
+      "evolution": null,
+      "catchRate": 133,
+      "expYield": 194,
+      "description": "지진을 일으키는 진흙이은(는) 대지 타입 포켓몬스터.",
+      "spriteConfig": {
+        "baseColor": "#BB8844",
+        "accentColor": "#DDAAFF",
+        "shape": "humanoid",
+        "features": [
+          "fangs",
+          "claws",
+          "crystals"
+        ]
+      }
+    },
+    {
+      "id": 87,
+      "name": "돌풍이",
+      "type": [
+        "wind"
+      ],
+      "baseStats": {
+        "hp": 86,
+        "atk": 81,
+        "def": 56,
+        "spAtk": 80,
+        "spDef": 74,
+        "speed": 59
+      },
+      "growthRate": "fast",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "air_slash"
+        },
+        {
+          "level": 8,
+          "skillId": "scratch"
+        },
+        {
+          "level": 14,
+          "skillId": "tackle"
+        },
+        {
+          "level": 22,
+          "skillId": "hurricane"
+        },
+        {
+          "level": 27,
+          "skillId": "quick_strike"
+        },
+        {
+          "level": 34,
+          "skillId": "tornado"
+        },
+        {
+          "level": 34,
+          "skillId": "pound"
+        },
+        {
+          "level": 35,
+          "skillId": "sky_dive"
+        },
+        {
+          "level": 38,
+          "skillId": "aerial_ace"
+        },
+        {
+          "level": 54,
+          "skillId": "unique_breeze_fairy"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 28,
+        "skillId": "unique_breeze_fairy"
+      },
+      "evolution": null,
+      "catchRate": 94,
+      "expYield": 189,
+      "description": "폭풍을 일으키는 돌풍이은(는) 질풍 타입 포켓몬스터.",
+      "spriteConfig": {
+        "baseColor": "#77CCAA",
+        "accentColor": "#FFFFFF",
+        "shape": "aquatic",
+        "features": [
+          "fangs",
+          "fins"
+        ]
+      }
+    },
+    {
+      "id": 88,
+      "name": "슬라임",
+      "type": [
+        "poison"
+      ],
+      "baseStats": {
+        "hp": 88,
+        "atk": 84,
+        "def": 89,
+        "spAtk": 55,
+        "spDef": 74,
+        "speed": 68
+      },
+      "growthRate": "medium",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "venom_fang"
+        },
+        {
+          "level": 7,
+          "skillId": "venoshock"
+        },
+        {
+          "level": 11,
+          "skillId": "toxic"
+        },
+        {
+          "level": 18,
+          "skillId": "bite"
+        },
+        {
+          "level": 24,
+          "skillId": "scratch"
+        },
+        {
+          "level": 26,
+          "skillId": "unique_acid_spider"
+        },
+        {
+          "level": 29,
+          "skillId": "sludge_bomb"
+        },
+        {
+          "level": 36,
+          "skillId": "pound"
+        },
+        {
+          "level": 37,
+          "skillId": "tackle"
+        },
+        {
+          "level": 48,
+          "skillId": "quick_strike"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 33,
+        "skillId": "unique_acid_spider"
+      },
+      "evolution": null,
+      "catchRate": 121,
+      "expYield": 193,
+      "description": "치명적인 독소의 슬라임은(는) 맹독 타입 크리처.",
+      "spriteConfig": {
+        "baseColor": "#CC66DD",
+        "accentColor": "#DDAAFF",
+        "shape": "humanoid",
+        "features": [
+          "wings",
+          "horns"
+        ]
+      }
+    },
+    {
+      "id": 89,
+      "name": "우주먼지",
+      "type": [
+        "cosmic"
+      ],
+      "baseStats": {
+        "hp": 88,
+        "atk": 53,
+        "def": 55,
+        "spAtk": 85,
+        "spDef": 77,
+        "speed": 71
+      },
+      "growthRate": "medium",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "cosmic_armor"
+        },
+        {
+          "level": 9,
+          "skillId": "dark_matter"
+        },
+        {
+          "level": 10,
+          "skillId": "pound"
+        },
+        {
+          "level": 17,
+          "skillId": "tackle"
+        },
+        {
+          "level": 26,
+          "skillId": "void_ray"
+        },
+        {
+          "level": 28,
+          "skillId": "unique_moon_rabbit"
+        },
+        {
+          "level": 28,
+          "skillId": "singularity"
+        },
+        {
+          "level": 37,
+          "skillId": "warp"
+        },
+        {
+          "level": 39,
+          "skillId": "scratch"
+        },
+        {
+          "level": 47,
+          "skillId": "quick_strike"
+        },
+        {
+          "level": 47,
+          "skillId": "bite"
+        },
+        {
+          "level": 54,
+          "skillId": "unique_cosmic_jelly"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 32,
+        "skillId": "unique_moon_rabbit"
+      },
+      "evolution": null,
+      "catchRate": 130,
+      "expYield": 168,
+      "description": "별의 힘을 가진 우주먼지은(는) 우주 타입 몬스터.",
+      "spriteConfig": {
+        "baseColor": "#333377",
+        "accentColor": "#FFFFFF",
+        "shape": "quadruped",
+        "features": [
+          "wings",
+          "spikes"
+        ]
+      }
+    },
+    {
+      "id": 90,
+      "name": "동글이",
+      "type": [
+        "normal"
+      ],
+      "baseStats": {
+        "hp": 70,
+        "atk": 57,
+        "def": 59,
+        "spAtk": 83,
+        "spDef": 97,
+        "speed": 88
+      },
+      "growthRate": "fast",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "growl"
+        },
+        {
+          "level": 10,
+          "skillId": "hyper_beam"
+        },
+        {
+          "level": 15,
+          "skillId": "body_slam"
+        },
+        {
+          "level": 16,
+          "skillId": "tackle"
+        },
+        {
+          "level": 24,
+          "skillId": "unique_legend_origin"
+        },
+        {
+          "level": 33,
+          "skillId": "scratch"
+        },
+        {
+          "level": 35,
+          "skillId": "bite"
+        },
+        {
+          "level": 37,
+          "skillId": "protect"
+        },
+        {
+          "level": 51,
+          "skillId": "quick_strike"
+        },
+        {
+          "level": 59,
+          "skillId": "unique_normal_cat"
+        },
+        {
+          "level": 60,
+          "skillId": "unique_normal_dog"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 34,
+        "skillId": "unique_normal_cat"
+      },
+      "evolution": null,
+      "catchRate": 143,
+      "expYield": 188,
+      "description": "평범해 보이지만 강한 동글이은(는) 무속성 타입 존재.",
+      "spriteConfig": {
+        "baseColor": "#AAAA99",
+        "accentColor": "#88FF88",
+        "shape": "bipedal",
+        "features": [
+          "claws"
+        ]
+      }
+    },
+    {
+      "id": 91,
+      "name": "태양신수",
+      "type": [
+        "fire",
+        "light"
+      ],
+      "baseStats": {
+        "hp": 93,
+        "atk": 119,
+        "def": 84,
+        "spAtk": 85,
+        "spDef": 89,
+        "speed": 101
+      },
+      "growthRate": "slow",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "flame_claw"
+        },
+        {
+          "level": 9,
+          "skillId": "flame_charge"
+        },
+        {
+          "level": 10,
+          "skillId": "scratch"
+        },
+        {
+          "level": 22,
+          "skillId": "flash"
+        },
+        {
+          "level": 29,
+          "skillId": "radiance"
+        },
+        {
+          "level": 29,
+          "skillId": "unique_legend_phoenix"
+        },
+        {
+          "level": 32,
+          "skillId": "purify"
+        },
+        {
+          "level": 32,
+          "skillId": "will_o_wisp"
+        },
+        {
+          "level": 44,
+          "skillId": "aurora_ray"
+        },
+        {
+          "level": 58,
+          "skillId": "unique_inferno_emperor"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 51,
+        "skillId": "unique_inferno_emperor"
+      },
+      "evolution": null,
+      "catchRate": 4,
+      "expYield": 347,
+      "description": "온몸에서 불꽃이 타오르는 태양신수은(는) 화염·광명 타입 몬스터.",
+      "spriteConfig": {
+        "baseColor": "#CC3300",
+        "accentColor": "#44DDFF",
+        "shape": "mythical",
+        "features": [
+          "crystals",
+          "aura"
+        ]
+      }
+    },
+    {
+      "id": 92,
+      "name": "심연해왕",
+      "type": [
+        "water",
+        "dark"
+      ],
+      "baseStats": {
+        "hp": 84,
+        "atk": 117,
+        "def": 108,
+        "spAtk": 112,
+        "spDef": 84,
+        "speed": 81
+      },
+      "growthRate": "slow",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "dark_void"
+        },
+        {
+          "level": 8,
+          "skillId": "scratch"
+        },
+        {
+          "level": 14,
+          "skillId": "waterfall"
+        },
+        {
+          "level": 17,
+          "skillId": "aqua_jet"
+        },
+        {
+          "level": 23,
+          "skillId": "night_slash"
+        },
+        {
+          "level": 28,
+          "skillId": "unique_water_octopus"
+        },
+        {
+          "level": 30,
+          "skillId": "hydro_pump"
+        },
+        {
+          "level": 37,
+          "skillId": "rain_dance"
+        },
+        {
+          "level": 41,
+          "skillId": "shadow_sneak"
+        },
+        {
+          "level": 56,
+          "skillId": "dark_pulse"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 67,
+        "skillId": "unique_night_wolf"
+      },
+      "evolution": null,
+      "catchRate": 10,
+      "expYield": 330,
+      "description": "깊은 바다를 지배하는 심연해왕은(는) 해류·암흑 타입 크리처.",
+      "spriteConfig": {
+        "baseColor": "#2266CC",
+        "accentColor": "#DDAAFF",
+        "shape": "mythical",
+        "features": [
+          "crystals"
+        ]
+      }
+    },
+    {
+      "id": 93,
+      "name": "세계수",
+      "type": [
+        "grass",
+        "cosmic"
+      ],
+      "baseStats": {
+        "hp": 102,
+        "atk": 113,
+        "def": 81,
+        "spAtk": 100,
+        "spDef": 102,
+        "speed": 108
+      },
+      "growthRate": "slow",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "scratch"
+        },
+        {
+          "level": 6,
+          "skillId": "absorb"
+        },
+        {
+          "level": 16,
+          "skillId": "unique_nebula_god"
+        },
+        {
+          "level": 17,
+          "skillId": "bite"
+        },
+        {
+          "level": 18,
+          "skillId": "unique_forest_emperor"
+        },
+        {
+          "level": 31,
+          "skillId": "tackle"
+        },
+        {
+          "level": 41,
+          "skillId": "mega_drain"
+        },
+        {
+          "level": 44,
+          "skillId": "vine_whip"
+        },
+        {
+          "level": 45,
+          "skillId": "gravity_well"
+        },
+        {
+          "level": 50,
+          "skillId": "cosmic_armor"
+        },
+        {
+          "level": 62,
+          "skillId": "star_fall"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 65,
+        "skillId": "unique_jungle_beast"
+      },
+      "evolution": null,
+      "catchRate": 3,
+      "expYield": 281,
+      "description": "식물의 힘을 가진 세계수은(는) 자연·우주 타입 생명체.",
+      "spriteConfig": {
+        "baseColor": "#66DD44",
+        "accentColor": "#FFFFFF",
+        "shape": "elemental",
+        "features": [
+          "horns",
+          "crystals"
+        ]
+      }
+    },
+    {
+      "id": 94,
+      "name": "뇌제",
+      "type": [
+        "electric",
+        "dragon"
+      ],
+      "baseStats": {
+        "hp": 96,
+        "atk": 131,
+        "def": 91,
+        "spAtk": 109,
+        "spDef": 85,
+        "speed": 104
+      },
+      "growthRate": "slow",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "dragon_claw"
+        },
+        {
+          "level": 7,
+          "skillId": "unique_bolt_fox"
+        },
+        {
+          "level": 12,
+          "skillId": "thunder"
+        },
+        {
+          "level": 14,
+          "skillId": "scratch"
+        },
+        {
+          "level": 23,
+          "skillId": "unique_thunder_god"
+        },
+        {
+          "level": 25,
+          "skillId": "unique_spark_mouse"
+        },
+        {
+          "level": 30,
+          "skillId": "unique_legend_thunder_dragon"
+        },
+        {
+          "level": 31,
+          "skillId": "discharge"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 69,
+        "skillId": "unique_drake_pup"
+      },
+      "evolution": null,
+      "catchRate": 4,
+      "expYield": 320,
+      "description": "전기를 뿜는 뇌제은(는) 전격·용린 타입 몬스터.",
+      "spriteConfig": {
+        "baseColor": "#FFCC00",
+        "accentColor": "#FFFFFF",
+        "shape": "mythical",
+        "features": [
+          "shell"
+        ]
+      }
+    },
+    {
+      "id": 95,
+      "name": "시간지배자",
+      "type": [
+        "cosmic",
+        "spirit"
+      ],
+      "baseStats": {
+        "hp": 92,
+        "atk": 95,
+        "def": 117,
+        "spAtk": 92,
+        "spDef": 94,
+        "speed": 100
+      },
+      "growthRate": "slow",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "unique_legend_space_lord"
+        },
+        {
+          "level": 9,
+          "skillId": "life_steal"
+        },
+        {
+          "level": 10,
+          "skillId": "quick_strike"
+        },
+        {
+          "level": 14,
+          "skillId": "unique_spirit_fox"
+        },
+        {
+          "level": 20,
+          "skillId": "phantom_force"
+        },
+        {
+          "level": 25,
+          "skillId": "unique_legend_time_lord"
+        },
+        {
+          "level": 29,
+          "skillId": "unique_phantom_knight"
+        },
+        {
+          "level": 31,
+          "skillId": "warp"
+        },
+        {
+          "level": 45,
+          "skillId": "haunt"
+        },
+        {
+          "level": 46,
+          "skillId": "unique_cosmic_jelly"
+        },
+        {
+          "level": 48,
+          "skillId": "cosmic_ray"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 69,
+        "skillId": "unique_ghost_lantern"
+      },
+      "evolution": null,
+      "catchRate": 9,
+      "expYield": 284,
+      "description": "은하를 여행하는 시간지배자은(는) 우주·영혼 타입 몬스터.",
+      "spriteConfig": {
+        "baseColor": "#333377",
+        "accentColor": "#44DDFF",
+        "shape": "mythical",
+        "features": [
+          "tail",
+          "wings"
+        ]
+      }
+    },
+    {
+      "id": 96,
+      "name": "공간창조자",
+      "type": [
+        "cosmic",
+        "dragon"
+      ],
+      "baseStats": {
+        "hp": 87,
+        "atk": 93,
+        "def": 86,
+        "spAtk": 115,
+        "spDef": 110,
+        "speed": 101
+      },
+      "growthRate": "slow",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "dragon_pulse"
+        },
+        {
+          "level": 7,
+          "skillId": "void_ray"
+        },
+        {
+          "level": 13,
+          "skillId": "unique_legend_thunder_dragon"
+        },
+        {
+          "level": 20,
+          "skillId": "gravity_well"
+        },
+        {
+          "level": 27,
+          "skillId": "twin_fang"
+        },
+        {
+          "level": 27,
+          "skillId": "quick_strike"
+        },
+        {
+          "level": 31,
+          "skillId": "unique_cosmic_jelly"
+        },
+        {
+          "level": 34,
+          "skillId": "draco_meteor"
+        },
+        {
+          "level": 39,
+          "skillId": "warp"
+        },
+        {
+          "level": 44,
+          "skillId": "outrage"
+        },
+        {
+          "level": 57,
+          "skillId": "unique_wyrm_lord"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 66,
+        "skillId": "unique_wyrm_lord"
+      },
+      "evolution": null,
+      "catchRate": 6,
+      "expYield": 296,
+      "description": "우주에서 온 공간창조자은(는) 우주·용린 타입 존재.",
+      "spriteConfig": {
+        "baseColor": "#111144",
+        "accentColor": "#FF6699",
+        "shape": "mythical",
+        "features": [
+          "tail",
+          "claws",
+          "horns"
+        ]
+      }
+    },
+    {
+      "id": 97,
+      "name": "혼돈의화신",
+      "type": [
+        "dark",
+        "fighting"
+      ],
+      "baseStats": {
+        "hp": 99,
+        "atk": 113,
+        "def": 93,
+        "spAtk": 109,
+        "spDef": 95,
+        "speed": 109
+      },
+      "growthRate": "slow",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "shadow_claw"
+        },
+        {
+          "level": 6,
+          "skillId": "drain_punch"
+        },
+        {
+          "level": 11,
+          "skillId": "unique_martial_god"
+        },
+        {
+          "level": 19,
+          "skillId": "close_combat"
+        },
+        {
+          "level": 28,
+          "skillId": "counter"
+        },
+        {
+          "level": 29,
+          "skillId": "unique_boxer"
+        },
+        {
+          "level": 37,
+          "skillId": "unique_shadow_bat"
+        },
+        {
+          "level": 40,
+          "skillId": "dark_void"
+        },
+        {
+          "level": 44,
+          "skillId": "brick_break"
+        },
+        {
+          "level": 44,
+          "skillId": "pound"
+        },
+        {
+          "level": 45,
+          "skillId": "unique_fight_bear"
+        },
+        {
+          "level": 59,
+          "skillId": "scratch"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 64,
+        "skillId": "unique_dark_cat"
+      },
+      "evolution": null,
+      "catchRate": 7,
+      "expYield": 344,
+      "description": "어둠 속에 숨는 혼돈의화신은(는) 암흑·투지 타입 몬스터.",
+      "spriteConfig": {
+        "baseColor": "#443355",
+        "accentColor": "#FFFFFF",
+        "shape": "humanoid",
+        "features": [
+          "horns",
+          "shell"
+        ]
+      }
+    },
+    {
+      "id": 98,
+      "name": "질서의수호자",
+      "type": [
+        "light",
+        "metal"
+      ],
+      "baseStats": {
+        "hp": 98,
+        "atk": 111,
+        "def": 100,
+        "spAtk": 99,
+        "spDef": 75,
+        "speed": 91
+      },
+      "growthRate": "slow",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "metal_claw"
+        },
+        {
+          "level": 11,
+          "skillId": "quick_strike"
+        },
+        {
+          "level": 12,
+          "skillId": "unique_steel_knight"
+        },
+        {
+          "level": 16,
+          "skillId": "divine_light"
+        },
+        {
+          "level": 17,
+          "skillId": "unique_metal_scorpion"
+        },
+        {
+          "level": 21,
+          "skillId": "iron_head"
+        },
+        {
+          "level": 36,
+          "skillId": "bite"
+        },
+        {
+          "level": 41,
+          "skillId": "metal_sound"
+        },
+        {
+          "level": 45,
+          "skillId": "unique_prism_cat"
+        },
+        {
+          "level": 45,
+          "skillId": "unique_legend_light_dragon"
+        },
+        {
+          "level": 60,
+          "skillId": "purify"
+        },
+        {
+          "level": 64,
+          "skillId": "unique_light_butterfly"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 62,
+        "skillId": "unique_prism_cat"
+      },
+      "evolution": null,
+      "catchRate": 6,
+      "expYield": 307,
+      "description": "빛을 발하는 질서의수호자은(는) 광명·강철 타입 존재.",
+      "spriteConfig": {
+        "baseColor": "#FFEE88",
+        "accentColor": "#44DDFF",
+        "shape": "humanoid",
+        "features": [
+          "shell",
+          "aura",
+          "fins"
+        ]
+      }
+    },
+    {
+      "id": 99,
+      "name": "영원의불꽃",
+      "type": [
+        "fire",
+        "spirit"
+      ],
+      "baseStats": {
+        "hp": 94,
+        "atk": 122,
+        "def": 88,
+        "spAtk": 104,
+        "spDef": 86,
+        "speed": 118
+      },
+      "growthRate": "slow",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "unique_ghost_lantern"
+        },
+        {
+          "level": 6,
+          "skillId": "unique_legend_phoenix"
+        },
+        {
+          "level": 17,
+          "skillId": "unique_inferno_emperor"
+        },
+        {
+          "level": 20,
+          "skillId": "haunt"
+        },
+        {
+          "level": 21,
+          "skillId": "eruption"
+        },
+        {
+          "level": 34,
+          "skillId": "phantom_force"
+        },
+        {
+          "level": 40,
+          "skillId": "unique_flame_beast"
+        },
+        {
+          "level": 43,
+          "skillId": "bite"
+        },
+        {
+          "level": 45,
+          "skillId": "life_steal"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 61,
+        "skillId": "unique_inferno_emperor"
+      },
+      "evolution": null,
+      "catchRate": 8,
+      "expYield": 328,
+      "description": "뜨거운 화염을 내뿜는 영원의불꽃은(는) 화염·영혼 타입 존재.",
+      "spriteConfig": {
+        "baseColor": "#CC3300",
+        "accentColor": "#88FF88",
+        "shape": "elemental",
+        "features": [
+          "tail",
+          "aura"
+        ]
+      }
+    },
+    {
+      "id": 100,
+      "name": "절대영도",
+      "type": [
+        "ice",
+        "cosmic"
+      ],
+      "baseStats": {
+        "hp": 102,
+        "atk": 106,
+        "def": 91,
+        "spAtk": 104,
+        "spDef": 106,
+        "speed": 96
+      },
+      "growthRate": "slow",
+      "learnset": [
+        {
+          "level": 1,
+          "skillId": "unique_legend_time_lord"
+        },
+        {
+          "level": 8,
+          "skillId": "scratch"
+        },
+        {
+          "level": 12,
+          "skillId": "star_fall"
+        },
+        {
+          "level": 22,
+          "skillId": "tackle"
+        },
+        {
+          "level": 23,
+          "skillId": "blizzard"
+        },
+        {
+          "level": 23,
+          "skillId": "cosmic_ray"
+        },
+        {
+          "level": 37,
+          "skillId": "unique_cosmic_jelly"
+        },
+        {
+          "level": 39,
+          "skillId": "unique_snow_fox"
+        }
+      ],
+      "uniqueSkill": {
+        "level": 70,
+        "skillId": "unique_ice_queen"
+      },
+      "evolution": null,
+      "catchRate": 10,
+      "expYield": 285,
+      "description": "빙하에서 태어난 절대영도은(는) 빙결·우주 타입 크리처.",
+      "spriteConfig": {
+        "baseColor": "#88DDFF",
+        "accentColor": "#FF8844",
+        "shape": "elemental",
+        "features": [
+          "claws",
+          "crystals",
+          "shell"
+        ]
+      }
+    }
+  ]
+}

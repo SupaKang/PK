@@ -1,0 +1,337 @@
+{
+  "items": [
+    {
+      "id": "potion",
+      "name": "포션",
+      "category": "healing",
+      "price": 200,
+      "effect": { "type": "heal_hp", "value": 30 },
+      "description": "HP를 30 회복한다.",
+      "usableInBattle": true
+    },
+    {
+      "id": "super_potion",
+      "name": "고급포션",
+      "category": "healing",
+      "price": 700,
+      "effect": { "type": "heal_hp", "value": 100 },
+      "description": "HP를 100 회복한다.",
+      "usableInBattle": true
+    },
+    {
+      "id": "hyper_potion",
+      "name": "최고급포션",
+      "category": "healing",
+      "price": 1500,
+      "effect": { "type": "heal_hp", "value": 9999 },
+      "description": "HP를 완전히 회복한다.",
+      "usableInBattle": true
+    },
+    {
+      "id": "pp_restore",
+      "name": "기력회복제",
+      "category": "healing",
+      "price": 1000,
+      "effect": { "type": "restore_pp", "value": 10 },
+      "description": "기술의 PP를 10 회복한다.",
+      "usableInBattle": true
+    },
+    {
+      "id": "pp_restore_full",
+      "name": "고급기력회복제",
+      "category": "healing",
+      "price": 2500,
+      "effect": { "type": "restore_pp", "value": 9999 },
+      "description": "기술의 PP를 완전히 회복한다.",
+      "usableInBattle": true
+    },
+    {
+      "id": "status_cure",
+      "name": "만병통치약",
+      "category": "healing",
+      "price": 400,
+      "effect": { "type": "cure_status", "value": "all" },
+      "description": "모든 상태 이상을 치료한다.",
+      "usableInBattle": true
+    },
+    {
+      "id": "revive",
+      "name": "부활초",
+      "category": "healing",
+      "price": 2000,
+      "effect": { "type": "revive", "value": 0.5 },
+      "description": "쓰러진 몬스터를 HP 절반으로 부활시킨다.",
+      "usableInBattle": true
+    },
+    {
+      "id": "full_revive",
+      "name": "완전부활초",
+      "category": "healing",
+      "price": 5000,
+      "effect": { "type": "revive", "value": 1.0 },
+      "description": "쓰러진 몬스터를 HP 전부 회복하여 부활시킨다.",
+      "usableInBattle": true
+    },
+    {
+      "id": "antidote",
+      "name": "해독제",
+      "category": "healing",
+      "price": 100,
+      "effect": { "type": "cure_status", "value": "poison" },
+      "description": "독 상태를 치료한다.",
+      "usableInBattle": true
+    },
+    {
+      "id": "burn_heal",
+      "name": "화상치료제",
+      "category": "healing",
+      "price": 100,
+      "effect": { "type": "cure_status", "value": "burn" },
+      "description": "화상 상태를 치료한다.",
+      "usableInBattle": true
+    },
+    {
+      "id": "paralyze_heal",
+      "name": "마비치료제",
+      "category": "healing",
+      "price": 100,
+      "effect": { "type": "cure_status", "value": "paralyze" },
+      "description": "마비 상태를 치료한다.",
+      "usableInBattle": true
+    },
+    {
+      "id": "awakening",
+      "name": "각성제",
+      "category": "healing",
+      "price": 100,
+      "effect": { "type": "cure_status", "value": "sleep" },
+      "description": "수면 상태를 깨운다.",
+      "usableInBattle": true
+    },
+    {
+      "id": "capsule_ball",
+      "name": "캡슐볼",
+      "category": "capture",
+      "price": 200,
+      "effect": { "type": "capture", "value": 1.0 },
+      "description": "야생 몬스터를 포획하는 기본 볼.",
+      "usableInBattle": true
+    },
+    {
+      "id": "high_ball",
+      "name": "하이볼",
+      "category": "capture",
+      "price": 600,
+      "effect": { "type": "capture", "value": 1.5 },
+      "description": "캡슐볼보다 성능이 좋은 포획 볼.",
+      "usableInBattle": true
+    },
+    {
+      "id": "ultra_ball",
+      "name": "울트라볼",
+      "category": "capture",
+      "price": 1200,
+      "effect": { "type": "capture", "value": 2.0 },
+      "description": "뛰어난 성능의 고급 포획 볼.",
+      "usableInBattle": true
+    },
+    {
+      "id": "master_ball",
+      "name": "마스터볼",
+      "category": "capture",
+      "price": 0,
+      "effect": { "type": "capture", "value": 255 },
+      "description": "어떤 몬스터도 반드시 포획하는 최고의 볼.",
+      "usableInBattle": true
+    },
+    {
+      "id": "atk_boost",
+      "name": "공격강화제",
+      "category": "battle",
+      "price": 500,
+      "effect": { "type": "stat_boost", "stat": "atk", "value": 1 },
+      "description": "전투 중 공격력을 1단계 올린다.",
+      "usableInBattle": true
+    },
+    {
+      "id": "def_boost",
+      "name": "방어강화제",
+      "category": "battle",
+      "price": 500,
+      "effect": { "type": "stat_boost", "stat": "def", "value": 1 },
+      "description": "전투 중 방어력을 1단계 올린다.",
+      "usableInBattle": true
+    },
+    {
+      "id": "spatk_boost",
+      "name": "특수공격강화제",
+      "category": "battle",
+      "price": 500,
+      "effect": { "type": "stat_boost", "stat": "spAtk", "value": 1 },
+      "description": "전투 중 특수공격력을 1단계 올린다.",
+      "usableInBattle": true
+    },
+    {
+      "id": "spdef_boost",
+      "name": "특수방어강화제",
+      "category": "battle",
+      "price": 500,
+      "effect": { "type": "stat_boost", "stat": "spDef", "value": 1 },
+      "description": "전투 중 특수방어력을 1단계 올린다.",
+      "usableInBattle": true
+    },
+    {
+      "id": "speed_boost",
+      "name": "속도강화제",
+      "category": "battle",
+      "price": 500,
+      "effect": { "type": "stat_boost", "stat": "speed", "value": 1 },
+      "description": "전투 중 속도를 1단계 올린다.",
+      "usableInBattle": true
+    },
+    {
+      "id": "accuracy_boost",
+      "name": "명중강화제",
+      "category": "battle",
+      "price": 500,
+      "effect": { "type": "stat_boost", "stat": "accuracy", "value": 1 },
+      "description": "전투 중 명중률을 1단계 올린다.",
+      "usableInBattle": true
+    },
+    {
+      "id": "critical_boost",
+      "name": "급소강화제",
+      "category": "battle",
+      "price": 700,
+      "effect": { "type": "stat_boost", "stat": "critical", "value": 2 },
+      "description": "전투 중 급소 적중률을 크게 올린다.",
+      "usableInBattle": true
+    },
+    {
+      "id": "escape_rope",
+      "name": "탈출로프",
+      "category": "battle",
+      "price": 300,
+      "effect": { "type": "escape", "value": 1 },
+      "description": "동굴이나 던전에서 즉시 탈출한다.",
+      "usableInBattle": false
+    },
+    {
+      "id": "repel",
+      "name": "퇴치스프레이",
+      "category": "battle",
+      "price": 350,
+      "effect": { "type": "repel", "value": 100 },
+      "description": "100걸음 동안 약한 야생 몬스터가 나타나지 않는다.",
+      "usableInBattle": false
+    },
+    {
+      "id": "badge_fire",
+      "name": "화염배지",
+      "category": "key",
+      "price": 0,
+      "effect": { "type": "badge", "value": 1 },
+      "description": "화염 체육관장을 이긴 증거.",
+      "usableInBattle": false
+    },
+    {
+      "id": "badge_water",
+      "name": "해류배지",
+      "category": "key",
+      "price": 0,
+      "effect": { "type": "badge", "value": 2 },
+      "description": "해류 체육관장을 이긴 증거.",
+      "usableInBattle": false
+    },
+    {
+      "id": "badge_electric",
+      "name": "전격배지",
+      "category": "key",
+      "price": 0,
+      "effect": { "type": "badge", "value": 3 },
+      "description": "전격 체육관장을 이긴 증거.",
+      "usableInBattle": false
+    },
+    {
+      "id": "badge_grass",
+      "name": "자연배지",
+      "category": "key",
+      "price": 0,
+      "effect": { "type": "badge", "value": 4 },
+      "description": "자연 체육관장을 이긴 증거.",
+      "usableInBattle": false
+    },
+    {
+      "id": "badge_fighting",
+      "name": "투지배지",
+      "category": "key",
+      "price": 0,
+      "effect": { "type": "badge", "value": 5 },
+      "description": "투지 체육관장을 이긴 증거.",
+      "usableInBattle": false
+    },
+    {
+      "id": "badge_ice",
+      "name": "빙결배지",
+      "category": "key",
+      "price": 0,
+      "effect": { "type": "badge", "value": 6 },
+      "description": "빙결 체육관장을 이긴 증거.",
+      "usableInBattle": false
+    },
+    {
+      "id": "badge_dragon",
+      "name": "용린배지",
+      "category": "key",
+      "price": 0,
+      "effect": { "type": "badge", "value": 7 },
+      "description": "용린 체육관장을 이긴 증거.",
+      "usableInBattle": false
+    },
+    {
+      "id": "badge_dark",
+      "name": "암흑배지",
+      "category": "key",
+      "price": 0,
+      "effect": { "type": "badge", "value": 8 },
+      "description": "암흑 체육관장을 이긴 증거.",
+      "usableInBattle": false
+    },
+    {
+      "id": "town_map",
+      "name": "마을지도",
+      "category": "key",
+      "price": 0,
+      "effect": { "type": "map", "value": 1 },
+      "description": "포켓 왕국의 전체 지도를 볼 수 있다.",
+      "usableInBattle": false
+    },
+    {
+      "id": "monster_dex",
+      "name": "몬스터도감",
+      "category": "key",
+      "price": 0,
+      "effect": { "type": "dex", "value": 1 },
+      "description": "만난 몬스터의 정보를 기록하는 도감.",
+      "usableInBattle": false
+    },
+    {
+      "id": "dark_key",
+      "name": "암흑의 열쇠",
+      "category": "key",
+      "price": 0,
+      "effect": { "type": "key", "value": "shadow_base" },
+      "description": "그림자단 비밀 기지로 들어가는 열쇠.",
+      "usableInBattle": false
+    },
+    {
+      "id": "legendary_flute",
+      "name": "전설의 피리",
+      "category": "key",
+      "price": 0,
+      "effect": { "type": "key", "value": "legendary_summon" },
+      "description": "전설의 몬스터를 불러내는 신비한 피리.",
+      "usableInBattle": false
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "types": [
+    { "id": "fire", "name": "화염", "color": "#FF4422" },
+    { "id": "water", "name": "해류", "color": "#3399FF" },
+    { "id": "grass", "name": "자연", "color": "#44BB44" },
+    { "id": "electric", "name": "전격", "color": "#FFCC00" },
+    { "id": "earth", "name": "대지", "color": "#BB8844" },
+    { "id": "ice", "name": "빙결", "color": "#66CCEE" },
+    { "id": "wind", "name": "질풍", "color": "#99DDBB" },
+    { "id": "poison", "name": "맹독", "color": "#AA44CC" },
+    { "id": "metal", "name": "강철", "color": "#AAAACC" },
+    { "id": "light", "name": "광명", "color": "#FFEE88" },
+    { "id": "dark", "name": "암흑", "color": "#554466" },
+    { "id": "spirit", "name": "영혼", "color": "#7766CC" },
+    { "id": "dragon", "name": "용린", "color": "#6644BB" },
+    { "id": "fighting", "name": "투지", "color": "#CC4444" },
+    { "id": "rock", "name": "암석", "color": "#887744" },
+    { "id": "sound", "name": "음파", "color": "#DD77AA" },
+    { "id": "cosmic", "name": "우주", "color": "#222255" },
+    { "id": "normal", "name": "무속성", "color": "#BBBBAA" }
+  ],
+  "matchups": {
+    "fire":     { "fire": 0.5, "water": 0.5, "grass": 2.0, "electric": 1.0, "earth": 1.0, "ice": 2.0, "wind": 1.0, "poison": 1.0, "metal": 2.0, "light": 1.0, "dark": 1.0, "spirit": 1.0, "dragon": 0.5, "fighting": 1.0, "rock": 0.5, "sound": 1.0, "cosmic": 1.0, "normal": 1.0 },
+    "water":    { "fire": 2.0, "water": 0.5, "grass": 0.5, "electric": 1.0, "earth": 2.0, "ice": 0.5, "wind": 1.0, "poison": 1.0, "metal": 1.0, "light": 1.0, "dark": 1.0, "spirit": 1.0, "dragon": 0.5, "fighting": 1.0, "rock": 2.0, "sound": 1.0, "cosmic": 1.0, "normal": 1.0 },
+    "grass":    { "fire": 0.5, "water": 2.0, "grass": 0.5, "electric": 1.0, "earth": 2.0, "ice": 0.5, "wind": 0.5, "poison": 0.5, "metal": 1.0, "light": 1.0, "dark": 1.0, "spirit": 1.0, "dragon": 0.5, "fighting": 1.0, "rock": 2.0, "sound": 1.0, "cosmic": 1.0, "normal": 1.0 },
+    "electric": { "fire": 1.0, "water": 2.0, "grass": 0.5, "electric": 0.5, "earth": 0.0, "ice": 1.0, "wind": 2.0, "poison": 1.0, "metal": 2.0, "light": 1.0, "dark": 1.0, "spirit": 1.0, "dragon": 0.5, "fighting": 1.0, "rock": 1.0, "sound": 1.0, "cosmic": 1.0, "normal": 1.0 },
+    "earth":    { "fire": 2.0, "water": 0.5, "grass": 0.5, "electric": 2.0, "earth": 1.0, "ice": 1.0, "wind": 0.0, "poison": 2.0, "metal": 2.0, "light": 1.0, "dark": 1.0, "spirit": 1.0, "dragon": 1.0, "fighting": 1.0, "rock": 2.0, "sound": 1.0, "cosmic": 1.0, "normal": 1.0 },
+    "ice":      { "fire": 0.5, "water": 1.0, "grass": 2.0, "electric": 1.0, "earth": 2.0, "ice": 0.5, "wind": 2.0, "poison": 1.0, "metal": 0.5, "light": 1.0, "dark": 1.0, "spirit": 1.0, "dragon": 2.0, "fighting": 1.0, "rock": 1.0, "sound": 1.0, "cosmic": 1.0, "normal": 1.0 },
+    "wind":     { "fire": 1.0, "water": 1.0, "grass": 2.0, "electric": 0.5, "earth": 1.0, "ice": 0.5, "wind": 1.0, "poison": 1.0, "metal": 1.0, "light": 1.0, "dark": 1.0, "spirit": 2.0, "dragon": 1.0, "fighting": 2.0, "rock": 0.5, "sound": 1.0, "cosmic": 1.0, "normal": 1.0 },
+    "poison":   { "fire": 1.0, "water": 1.0, "grass": 2.0, "electric": 1.0, "earth": 0.5, "ice": 1.0, "wind": 1.0, "poison": 0.5, "metal": 0.0, "light": 1.0, "dark": 1.0, "spirit": 2.0, "dragon": 1.0, "fighting": 1.0, "rock": 0.5, "sound": 1.0, "cosmic": 1.0, "normal": 1.0 },
+    "metal":    { "fire": 0.5, "water": 1.0, "grass": 1.0, "electric": 0.5, "earth": 1.0, "ice": 2.0, "wind": 1.0, "poison": 1.0, "metal": 0.5, "light": 1.0, "dark": 1.0, "spirit": 1.0, "dragon": 1.0, "fighting": 1.0, "rock": 2.0, "sound": 2.0, "cosmic": 1.0, "normal": 1.0 },
+    "light":    { "fire": 1.0, "water": 1.0, "grass": 1.0, "electric": 1.0, "earth": 1.0, "ice": 1.0, "wind": 1.0, "poison": 1.0, "metal": 1.0, "light": 0.5, "dark": 2.0, "spirit": 2.0, "dragon": 1.0, "fighting": 1.0, "rock": 1.0, "sound": 1.0, "cosmic": 0.5, "normal": 1.0 },
+    "dark":     { "fire": 1.0, "water": 1.0, "grass": 1.0, "electric": 1.0, "earth": 1.0, "ice": 1.0, "wind": 1.0, "poison": 1.0, "metal": 1.0, "light": 0.5, "dark": 0.5, "spirit": 2.0, "dragon": 1.0, "fighting": 0.5, "rock": 1.0, "sound": 1.0, "cosmic": 2.0, "normal": 1.0 },
+    "spirit":   { "fire": 1.0, "water": 1.0, "grass": 1.0, "electric": 1.0, "earth": 1.0, "ice": 1.0, "wind": 1.0, "poison": 2.0, "metal": 1.0, "light": 0.5, "dark": 0.5, "spirit": 2.0, "dragon": 1.0, "fighting": 0.0, "rock": 1.0, "sound": 1.0, "cosmic": 1.0, "normal": 0.0 },
+    "dragon":   { "fire": 1.0, "water": 1.0, "grass": 1.0, "electric": 1.0, "earth": 1.0, "ice": 1.0, "wind": 1.0, "poison": 1.0, "metal": 0.5, "light": 1.0, "dark": 1.0, "spirit": 1.0, "dragon": 2.0, "fighting": 1.0, "rock": 1.0, "sound": 1.0, "cosmic": 1.0, "normal": 1.0 },
+    "fighting": { "fire": 1.0, "water": 1.0, "grass": 1.0, "electric": 1.0, "earth": 1.0, "ice": 2.0, "wind": 0.5, "poison": 0.5, "metal": 2.0, "light": 1.0, "dark": 2.0, "spirit": 0.0, "dragon": 1.0, "fighting": 1.0, "rock": 2.0, "sound": 1.0, "cosmic": 1.0, "normal": 2.0 },
+    "rock":     { "fire": 2.0, "water": 0.5, "grass": 0.5, "electric": 1.0, "earth": 0.5, "ice": 2.0, "wind": 2.0, "poison": 1.0, "metal": 0.5, "light": 1.0, "dark": 1.0, "spirit": 1.0, "dragon": 1.0, "fighting": 0.5, "rock": 1.0, "sound": 1.0, "cosmic": 1.0, "normal": 1.0 },
+    "sound":    { "fire": 1.0, "water": 1.0, "grass": 1.0, "electric": 1.0, "earth": 1.0, "ice": 1.0, "wind": 1.0, "poison": 1.0, "metal": 0.5, "light": 1.0, "dark": 1.0, "spirit": 2.0, "dragon": 1.0, "fighting": 1.0, "rock": 2.0, "sound": 0.5, "cosmic": 1.0, "normal": 2.0 },
+    "cosmic":   { "fire": 1.0, "water": 1.0, "grass": 1.0, "electric": 1.0, "earth": 1.0, "ice": 1.0, "wind": 1.0, "poison": 2.0, "metal": 1.0, "light": 2.0, "dark": 0.5, "spirit": 1.0, "dragon": 2.0, "fighting": 1.0, "rock": 1.0, "sound": 1.0, "cosmic": 0.5, "normal": 1.0 },
+    "normal":   { "fire": 1.0, "water": 1.0, "grass": 1.0, "electric": 1.0, "earth": 1.0, "ice": 1.0, "wind": 1.0, "poison": 1.0, "metal": 0.5, "light": 1.0, "dark": 1.0, "spirit": 0.0, "dragon": 1.0, "fighting": 1.0, "rock": 0.5, "sound": 1.0, "cosmic": 1.0, "normal": 1.0 }
+  }
+}

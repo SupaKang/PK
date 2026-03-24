@@ -1,0 +1,1588 @@
+{
+  "maps": [
+    {
+      "id": "town_01",
+      "name": "시작의 마을",
+      "type": "town",
+      "description": "마왕의 어둠이 드리우기 전, 평화로웠던 작은 마을. 한별 박사의 연구소가 있다.",
+      "connections": [
+        {
+          "to": "route_01"
+        }
+      ],
+      "encounters": null,
+      "trainers": null,
+      "gym": null,
+      "shop": [
+        {
+          "itemId": "potion",
+          "stock": -1
+        },
+        {
+          "itemId": "capsule_ball",
+          "stock": -1
+        }
+      ],
+      "events": null,
+      "requiredBadges": 0,
+      "wildEncounterRate": 0
+    },
+    {
+      "id": "town_02",
+      "name": "화염촌",
+      "type": "town",
+      "description": "활화산 기슭에 자리잡은 마을. 마왕의 하수인들이 출몰하기 시작했다.",
+      "connections": [
+        {
+          "to": "route_01"
+        },
+        {
+          "to": "route_02"
+        },
+        {
+          "to": "gym_01"
+        }
+      ],
+      "encounters": null,
+      "trainers": null,
+      "gym": null,
+      "shop": [
+        {
+          "itemId": "potion",
+          "stock": -1
+        },
+        {
+          "itemId": "capsule_ball",
+          "stock": -1
+        },
+        {
+          "itemId": "antidote",
+          "stock": -1
+        }
+      ],
+      "events": null,
+      "requiredBadges": 0,
+      "wildEncounterRate": 0
+    },
+    {
+      "id": "town_03",
+      "name": "암벽도시",
+      "type": "town",
+      "description": "거대한 암벽 사이에 세워진 도시. 어둠의 동굴에서 마왕의 기운이 새어나온다.",
+      "connections": [
+        {
+          "to": "route_02"
+        },
+        {
+          "to": "route_03"
+        },
+        {
+          "to": "gym_02"
+        },
+        {
+          "to": "cave_01"
+        }
+      ],
+      "encounters": null,
+      "trainers": null,
+      "gym": null,
+      "shop": [
+        {
+          "itemId": "potion",
+          "stock": -1
+        },
+        {
+          "itemId": "super_potion",
+          "stock": -1
+        },
+        {
+          "itemId": "capsule_ball",
+          "stock": -1
+        },
+        {
+          "itemId": "high_ball",
+          "stock": -1
+        }
+      ],
+      "events": null,
+      "requiredBadges": 1,
+      "wildEncounterRate": 0
+    },
+    {
+      "id": "town_04",
+      "name": "호반도시",
+      "type": "town",
+      "description": "고요한 호수 옆의 아름다운 도시. 마왕의 어둠이 호수의 빛을 삼키고 있다.",
+      "connections": [
+        {
+          "to": "route_03"
+        },
+        {
+          "to": "route_04"
+        },
+        {
+          "to": "gym_03"
+        }
+      ],
+      "encounters": null,
+      "trainers": null,
+      "gym": null,
+      "shop": [
+        {
+          "itemId": "super_potion",
+          "stock": -1
+        },
+        {
+          "itemId": "high_ball",
+          "stock": -1
+        },
+        {
+          "itemId": "status_cure",
+          "stock": -1
+        },
+        {
+          "itemId": "revive",
+          "stock": -1
+        }
+      ],
+      "events": null,
+      "requiredBadges": 2,
+      "wildEncounterRate": 0
+    },
+    {
+      "id": "town_05",
+      "name": "뇌광시티",
+      "type": "town",
+      "description": "끊임없이 번개가 치는 폭풍의 도시. 마왕의 간부가 잠입해 있다는 소문이 돈다.",
+      "connections": [
+        {
+          "to": "route_04"
+        },
+        {
+          "to": "route_05"
+        },
+        {
+          "to": "gym_04"
+        }
+      ],
+      "encounters": null,
+      "trainers": null,
+      "gym": null,
+      "shop": [
+        {
+          "itemId": "super_potion",
+          "stock": -1
+        },
+        {
+          "itemId": "high_ball",
+          "stock": -1
+        },
+        {
+          "itemId": "status_cure",
+          "stock": -1
+        },
+        {
+          "itemId": "pp_restore",
+          "stock": -1
+        }
+      ],
+      "events": null,
+      "requiredBadges": 3,
+      "wildEncounterRate": 0
+    },
+    {
+      "id": "town_06",
+      "name": "투혼마을",
+      "type": "town",
+      "description": "뜨거운 사막 한가운데의 오아시스 마을. 마왕의 어둠이 사막까지 침식하고 있다.",
+      "connections": [
+        {
+          "to": "route_05"
+        },
+        {
+          "to": "route_06"
+        },
+        {
+          "to": "gym_05"
+        }
+      ],
+      "encounters": null,
+      "trainers": null,
+      "gym": null,
+      "shop": [
+        {
+          "itemId": "hyper_potion",
+          "stock": -1
+        },
+        {
+          "itemId": "ultra_ball",
+          "stock": -1
+        },
+        {
+          "itemId": "revive",
+          "stock": -1
+        }
+      ],
+      "events": null,
+      "requiredBadges": 4,
+      "wildEncounterRate": 0
+    },
+    {
+      "id": "town_07",
+      "name": "빙하마을",
+      "type": "town",
+      "description": "만년설로 뒤덮인 산꼭대기 마을. 결정 동굴에 전설의 몬스터가 잠들어 있다는 전설이 있다.",
+      "connections": [
+        {
+          "to": "route_06"
+        },
+        {
+          "to": "route_07"
+        },
+        {
+          "to": "gym_06"
+        },
+        {
+          "to": "cave_02"
+        }
+      ],
+      "encounters": null,
+      "trainers": null,
+      "gym": null,
+      "shop": [
+        {
+          "itemId": "hyper_potion",
+          "stock": -1
+        },
+        {
+          "itemId": "ultra_ball",
+          "stock": -1
+        },
+        {
+          "itemId": "hyper_potion",
+          "stock": -1
+        },
+        {
+          "itemId": "revive",
+          "stock": -1
+        }
+      ],
+      "events": null,
+      "requiredBadges": 5,
+      "wildEncounterRate": 0
+    },
+    {
+      "id": "town_08",
+      "name": "왕도",
+      "type": "town",
+      "description": "세계의 중심에 위치한 최대 도시. 마왕성으로 통하는 성문이 봉인되어 있다.",
+      "connections": [
+        {
+          "to": "route_07"
+        },
+        {
+          "to": "gym_07"
+        },
+        {
+          "to": "gym_08"
+        },
+        {
+          "to": "elite_four"
+        }
+      ],
+      "encounters": null,
+      "trainers": null,
+      "gym": null,
+      "shop": [
+        {
+          "itemId": "hyper_potion",
+          "stock": -1
+        },
+        {
+          "itemId": "hyper_potion",
+          "stock": -1
+        },
+        {
+          "itemId": "ultra_ball",
+          "stock": -1
+        },
+        {
+          "itemId": "full_revive",
+          "stock": -1
+        },
+        {
+          "itemId": "pp_restore",
+          "stock": -1
+        }
+      ],
+      "events": null,
+      "requiredBadges": 6,
+      "wildEncounterRate": 0
+    },
+    {
+      "id": "route_01",
+      "name": "여명의 길",
+      "type": "route",
+      "description": "시작의 마을에서 화염촌으로 이어지는 길. 마왕의 어둠이 서서히 드리우고 있다.",
+      "connections": [
+        {
+          "to": "town_01"
+        },
+        {
+          "to": "town_02"
+        }
+      ],
+      "encounters": [
+        {
+          "monsterId": 82,
+          "minLevel": 2,
+          "maxLevel": 5,
+          "weight": 30
+        },
+        {
+          "monsterId": 86,
+          "minLevel": 2,
+          "maxLevel": 4,
+          "weight": 30
+        },
+        {
+          "monsterId": 46,
+          "minLevel": 3,
+          "maxLevel": 5,
+          "weight": 20
+        },
+        {
+          "monsterId": 84,
+          "minLevel": 3,
+          "maxLevel": 5,
+          "weight": 20
+        }
+      ],
+      "trainers": [
+        {
+          "id": "trainer_r1_1",
+          "name": "훈련생 민수",
+          "team": [
+            {
+              "monsterId": 86,
+              "level": 4
+            }
+          ],
+          "reward": 120
+        },
+        {
+          "id": "trainer_r1_2",
+          "name": "소녀 지은",
+          "team": [
+            {
+              "monsterId": 82,
+              "level": 3
+            },
+            {
+              "monsterId": 46,
+              "level": 4
+            }
+          ],
+          "reward": 160
+        }
+      ],
+      "gym": null,
+      "shop": null,
+      "events": null,
+      "requiredBadges": 0,
+      "wildEncounterRate": 0.18
+    },
+    {
+      "id": "route_02",
+      "name": "화산재의 길",
+      "type": "route",
+      "description": "화염촌에서 암벽도시로 향하는 길. 화산재가 날리고 마왕의 부하들이 출몰한다.",
+      "connections": [
+        {
+          "to": "town_02"
+        },
+        {
+          "to": "town_03"
+        }
+      ],
+      "encounters": [
+        {
+          "monsterId": 10,
+          "minLevel": 8,
+          "maxLevel": 11,
+          "weight": 25
+        },
+        {
+          "monsterId": 22,
+          "minLevel": 7,
+          "maxLevel": 10,
+          "weight": 25
+        },
+        {
+          "monsterId": 48,
+          "minLevel": 8,
+          "maxLevel": 11,
+          "weight": 25
+        },
+        {
+          "monsterId": 58,
+          "minLevel": 9,
+          "maxLevel": 12,
+          "weight": 25
+        }
+      ],
+      "trainers": [
+        {
+          "id": "trainer_r2_1",
+          "name": "산악인 철수",
+          "team": [
+            {
+              "monsterId": 22,
+              "level": 10
+            },
+            {
+              "monsterId": 58,
+              "level": 11
+            }
+          ],
+          "reward": 300
+        },
+        {
+          "id": "trainer_r2_2",
+          "name": "벌레잡이 영희",
+          "team": [
+            {
+              "monsterId": 48,
+              "level": 9
+            },
+            {
+              "monsterId": 48,
+              "level": 9
+            },
+            {
+              "monsterId": 10,
+              "level": 10
+            }
+          ],
+          "reward": 280
+        }
+      ],
+      "gym": null,
+      "shop": null,
+      "events": null,
+      "requiredBadges": 1,
+      "wildEncounterRate": 0.2
+    },
+    {
+      "id": "route_03",
+      "name": "호수의 길",
+      "type": "route",
+      "description": "암벽도시에서 호반도시로 이어지는 호숫가 길. 어둠의 기운에 물이 탁해지고 있다.",
+      "connections": [
+        {
+          "to": "town_03"
+        },
+        {
+          "to": "town_04"
+        }
+      ],
+      "encounters": [
+        {
+          "monsterId": 4,
+          "minLevel": 14,
+          "maxLevel": 17,
+          "weight": 20
+        },
+        {
+          "monsterId": 50,
+          "minLevel": 13,
+          "maxLevel": 16,
+          "weight": 25
+        },
+        {
+          "monsterId": 52,
+          "minLevel": 14,
+          "maxLevel": 17,
+          "weight": 25
+        },
+        {
+          "monsterId": 66,
+          "minLevel": 15,
+          "maxLevel": 18,
+          "weight": 15
+        },
+        {
+          "monsterId": 70,
+          "minLevel": 14,
+          "maxLevel": 16,
+          "weight": 15
+        }
+      ],
+      "trainers": [
+        {
+          "id": "trainer_r3_1",
+          "name": "낚시꾼 동현",
+          "team": [
+            {
+              "monsterId": 4,
+              "level": 15
+            },
+            {
+              "monsterId": 50,
+              "level": 16
+            }
+          ],
+          "reward": 500
+        },
+        {
+          "id": "trainer_r3_2",
+          "name": "수영선수 수진",
+          "team": [
+            {
+              "monsterId": 52,
+              "level": 16
+            },
+            {
+              "monsterId": 4,
+              "level": 17
+            }
+          ],
+          "reward": 550
+        }
+      ],
+      "gym": null,
+      "shop": null,
+      "events": null,
+      "requiredBadges": 2,
+      "wildEncounterRate": 0.18
+    },
+    {
+      "id": "route_04",
+      "name": "뇌운의 길",
+      "type": "route",
+      "description": "호반도시에서 뇌광시티로 향하는 절벽 도로. 폭풍의 기운이 감돈다.",
+      "connections": [
+        {
+          "to": "town_04"
+        },
+        {
+          "to": "town_05"
+        }
+      ],
+      "encounters": [
+        {
+          "monsterId": 19,
+          "minLevel": 20,
+          "maxLevel": 24,
+          "weight": 20
+        },
+        {
+          "monsterId": 25,
+          "minLevel": 20,
+          "maxLevel": 23,
+          "weight": 20
+        },
+        {
+          "monsterId": 54,
+          "minLevel": 21,
+          "maxLevel": 24,
+          "weight": 20
+        },
+        {
+          "monsterId": 62,
+          "minLevel": 20,
+          "maxLevel": 24,
+          "weight": 20
+        },
+        {
+          "monsterId": 72,
+          "minLevel": 22,
+          "maxLevel": 25,
+          "weight": 20
+        }
+      ],
+      "trainers": [
+        {
+          "id": "trainer_r4_1",
+          "name": "격투가 태권",
+          "team": [
+            {
+              "monsterId": 40,
+              "level": 23
+            },
+            {
+              "monsterId": 41,
+              "level": 24
+            }
+          ],
+          "reward": 750
+        },
+        {
+          "id": "trainer_r4_2",
+          "name": "등산가 미영",
+          "team": [
+            {
+              "monsterId": 25,
+              "level": 22
+            },
+            {
+              "monsterId": 19,
+              "level": 23
+            },
+            {
+              "monsterId": 54,
+              "level": 24
+            }
+          ],
+          "reward": 800
+        }
+      ],
+      "gym": null,
+      "shop": null,
+      "events": null,
+      "requiredBadges": 3,
+      "wildEncounterRate": 0.18
+    },
+    {
+      "id": "route_05",
+      "name": "사막의 길",
+      "type": "route",
+      "description": "뇌광시티에서 투혼마을로 이어지는 사막길. 마왕의 힘이 대지를 메마르게 한다.",
+      "connections": [
+        {
+          "to": "town_05"
+        },
+        {
+          "to": "town_06"
+        }
+      ],
+      "encounters": [
+        {
+          "monsterId": 16,
+          "minLevel": 27,
+          "maxLevel": 31,
+          "weight": 20
+        },
+        {
+          "monsterId": 56,
+          "minLevel": 27,
+          "maxLevel": 30,
+          "weight": 20
+        },
+        {
+          "monsterId": 60,
+          "minLevel": 28,
+          "maxLevel": 31,
+          "weight": 20
+        },
+        {
+          "monsterId": 64,
+          "minLevel": 28,
+          "maxLevel": 32,
+          "weight": 20
+        },
+        {
+          "monsterId": 74,
+          "minLevel": 29,
+          "maxLevel": 32,
+          "weight": 20
+        }
+      ],
+      "trainers": [
+        {
+          "id": "trainer_r5_1",
+          "name": "사막여행자 한솔",
+          "team": [
+            {
+              "monsterId": 16,
+              "level": 29
+            },
+            {
+              "monsterId": 56,
+              "level": 30
+            },
+            {
+              "monsterId": 60,
+              "level": 30
+            }
+          ],
+          "reward": 1000
+        }
+      ],
+      "gym": null,
+      "shop": null,
+      "events": null,
+      "requiredBadges": 4,
+      "wildEncounterRate": 0.22
+    },
+    {
+      "id": "route_06",
+      "name": "설산의 길",
+      "type": "route",
+      "description": "투혼마을에서 빙하마을로 오르는 눈 덮인 산길. 어둠의 기운에 한기가 더욱 매섭다.",
+      "connections": [
+        {
+          "to": "town_06"
+        },
+        {
+          "to": "town_07"
+        }
+      ],
+      "encounters": [
+        {
+          "monsterId": 19,
+          "minLevel": 33,
+          "maxLevel": 37,
+          "weight": 15
+        },
+        {
+          "monsterId": 68,
+          "minLevel": 34,
+          "maxLevel": 37,
+          "weight": 20
+        },
+        {
+          "monsterId": 76,
+          "minLevel": 34,
+          "maxLevel": 38,
+          "weight": 20
+        },
+        {
+          "monsterId": 78,
+          "minLevel": 35,
+          "maxLevel": 38,
+          "weight": 20
+        },
+        {
+          "monsterId": 80,
+          "minLevel": 35,
+          "maxLevel": 39,
+          "weight": 25
+        }
+      ],
+      "trainers": [
+        {
+          "id": "trainer_r6_1",
+          "name": "스키어 유나",
+          "team": [
+            {
+              "monsterId": 19,
+              "level": 35
+            },
+            {
+              "monsterId": 68,
+              "level": 36
+            },
+            {
+              "monsterId": 20,
+              "level": 37
+            }
+          ],
+          "reward": 1200
+        },
+        {
+          "id": "trainer_r6_2",
+          "name": "등반가 석진",
+          "team": [
+            {
+              "monsterId": 76,
+              "level": 36
+            },
+            {
+              "monsterId": 78,
+              "level": 37
+            }
+          ],
+          "reward": 1100
+        }
+      ],
+      "gym": null,
+      "shop": null,
+      "events": null,
+      "requiredBadges": 5,
+      "wildEncounterRate": 0.2
+    },
+    {
+      "id": "route_07",
+      "name": "왕도의 길",
+      "type": "route",
+      "description": "빙하마을에서 왕도로 향하는 최후의 도로. 마왕성의 그림자가 하늘을 뒤덮고 있다.",
+      "connections": [
+        {
+          "to": "town_07"
+        },
+        {
+          "to": "town_08"
+        }
+      ],
+      "encounters": [
+        {
+          "monsterId": 38,
+          "minLevel": 38,
+          "maxLevel": 42,
+          "weight": 15
+        },
+        {
+          "monsterId": 41,
+          "minLevel": 39,
+          "maxLevel": 43,
+          "weight": 20
+        },
+        {
+          "monsterId": 44,
+          "minLevel": 39,
+          "maxLevel": 43,
+          "weight": 20
+        },
+        {
+          "monsterId": 80,
+          "minLevel": 40,
+          "maxLevel": 44,
+          "weight": 20
+        },
+        {
+          "monsterId": 89,
+          "minLevel": 38,
+          "maxLevel": 42,
+          "weight": 25
+        }
+      ],
+      "trainers": [
+        {
+          "id": "trainer_r7_1",
+          "name": "베테랑 현우",
+          "team": [
+            {
+              "monsterId": 38,
+              "level": 40
+            },
+            {
+              "monsterId": 41,
+              "level": 41
+            },
+            {
+              "monsterId": 44,
+              "level": 42
+            },
+            {
+              "monsterId": 89,
+              "level": 43
+            }
+          ],
+          "reward": 2000
+        }
+      ],
+      "gym": null,
+      "shop": null,
+      "events": null,
+      "requiredBadges": 6,
+      "wildEncounterRate": 0.2
+    },
+    {
+      "id": "cave_01",
+      "name": "어둠의 동굴",
+      "type": "cave",
+      "description": "암벽도시 깊은 곳의 동굴. 마왕의 기운이 스며들어 몬스터들이 흉포해졌다.",
+      "connections": [
+        {
+          "to": "town_03"
+        }
+      ],
+      "encounters": [
+        {
+          "monsterId": 31,
+          "minLevel": 12,
+          "maxLevel": 16,
+          "weight": 25
+        },
+        {
+          "monsterId": 34,
+          "minLevel": 13,
+          "maxLevel": 17,
+          "weight": 25
+        },
+        {
+          "monsterId": 43,
+          "minLevel": 14,
+          "maxLevel": 18,
+          "weight": 25
+        },
+        {
+          "monsterId": 58,
+          "minLevel": 12,
+          "maxLevel": 15,
+          "weight": 25
+        }
+      ],
+      "trainers": [
+        {
+          "id": "trainer_cave1_1",
+          "name": "탐험가 준혁",
+          "team": [
+            {
+              "monsterId": 31,
+              "level": 15
+            },
+            {
+              "monsterId": 34,
+              "level": 16
+            }
+          ],
+          "reward": 400
+        }
+      ],
+      "gym": null,
+      "shop": null,
+      "events": null,
+      "requiredBadges": 2,
+      "wildEncounterRate": 0.25
+    },
+    {
+      "id": "cave_02",
+      "name": "결정 동굴",
+      "type": "cave",
+      "description": "아름다운 수정으로 가득한 신비로운 동굴. 전설의 몬스터가 잠들어 있다는 소문이 있다.",
+      "connections": [
+        {
+          "to": "town_07"
+        }
+      ],
+      "encounters": [
+        {
+          "monsterId": 28,
+          "minLevel": 35,
+          "maxLevel": 40,
+          "weight": 20
+        },
+        {
+          "monsterId": 38,
+          "minLevel": 36,
+          "maxLevel": 41,
+          "weight": 20
+        },
+        {
+          "monsterId": 44,
+          "minLevel": 37,
+          "maxLevel": 42,
+          "weight": 20
+        },
+        {
+          "monsterId": 80,
+          "minLevel": 38,
+          "maxLevel": 43,
+          "weight": 20
+        },
+        {
+          "monsterId": 88,
+          "minLevel": 38,
+          "maxLevel": 42,
+          "weight": 20
+        }
+      ],
+      "trainers": [
+        {
+          "id": "trainer_cave2_1",
+          "name": "보석수집가 보라",
+          "team": [
+            {
+              "monsterId": 28,
+              "level": 38
+            },
+            {
+              "monsterId": 44,
+              "level": 39
+            },
+            {
+              "monsterId": 88,
+              "level": 40
+            }
+          ],
+          "reward": 1500
+        }
+      ],
+      "gym": null,
+      "shop": null,
+      "events": null,
+      "requiredBadges": 6,
+      "wildEncounterRate": 0.25
+    },
+    {
+      "id": "gym_01",
+      "name": "화염의 전당",
+      "type": "gym",
+      "description": "화염 타입 수호자 불꽃이 지키는 전당. 마왕의 어둠에 맞서는 화염의 결계가 빛난다.",
+      "connections": [
+        {
+          "to": "town_02"
+        }
+      ],
+      "encounters": null,
+      "trainers": [
+        {
+          "id": "gym1_trainer1",
+          "name": "체육관 훈련생 A",
+          "team": [
+            {
+              "monsterId": 7,
+              "level": 10
+            },
+            {
+              "monsterId": 46,
+              "level": 10
+            }
+          ],
+          "reward": 300
+        }
+      ],
+      "gym": {
+        "leader": "수호자 불꽃",
+        "type": "grass",
+        "badge": "badge_grass",
+        "team": [
+          {
+            "monsterId": 7,
+            "level": 12
+          },
+          {
+            "monsterId": 8,
+            "level": 13
+          },
+          {
+            "monsterId": 46,
+            "level": 14
+          }
+        ],
+        "reward": 1500
+      },
+      "shop": null,
+      "events": null,
+      "requiredBadges": 0,
+      "wildEncounterRate": 0
+    },
+    {
+      "id": "gym_02",
+      "name": "대지의 전당",
+      "type": "gym",
+      "description": "암석 타입 수호자 석진이 지키는 전당. 대지의 결계로 마왕의 침식을 막고 있다.",
+      "connections": [
+        {
+          "to": "town_03"
+        }
+      ],
+      "encounters": null,
+      "trainers": [
+        {
+          "id": "gym2_trainer1",
+          "name": "체육관 훈련생 B",
+          "team": [
+            {
+              "monsterId": 43,
+              "level": 14
+            },
+            {
+              "monsterId": 58,
+              "level": 15
+            }
+          ],
+          "reward": 450
+        }
+      ],
+      "gym": {
+        "leader": "수호자 석진",
+        "type": "rock",
+        "badge": "badge_rock",
+        "team": [
+          {
+            "monsterId": 43,
+            "level": 17
+          },
+          {
+            "monsterId": 58,
+            "level": 18
+          },
+          {
+            "monsterId": 44,
+            "level": 19
+          }
+        ],
+        "reward": 2000
+      },
+      "shop": null,
+      "events": null,
+      "requiredBadges": 1,
+      "wildEncounterRate": 0
+    },
+    {
+      "id": "gym_03",
+      "name": "해류의 전당",
+      "type": "gym",
+      "description": "해류 타입 수호자 미나가 지키는 전당. 물의 결계가 어둠의 오염을 정화한다.",
+      "connections": [
+        {
+          "to": "town_04"
+        }
+      ],
+      "encounters": null,
+      "trainers": [
+        {
+          "id": "gym3_trainer1",
+          "name": "체육관 훈련생 C",
+          "team": [
+            {
+              "monsterId": 4,
+              "level": 20
+            },
+            {
+              "monsterId": 50,
+              "level": 21
+            }
+          ],
+          "reward": 600
+        }
+      ],
+      "gym": {
+        "leader": "수호자 미나",
+        "type": "water",
+        "badge": "badge_water",
+        "team": [
+          {
+            "monsterId": 4,
+            "level": 23
+          },
+          {
+            "monsterId": 5,
+            "level": 24
+          },
+          {
+            "monsterId": 52,
+            "level": 25
+          }
+        ],
+        "reward": 2500
+      },
+      "shop": null,
+      "events": null,
+      "requiredBadges": 2,
+      "wildEncounterRate": 0
+    },
+    {
+      "id": "gym_04",
+      "name": "전격의 전당",
+      "type": "gym",
+      "description": "전격 타입 수호자 라이가 지키는 전당. 번개의 결계가 어둠을 꿰뚫는다.",
+      "connections": [
+        {
+          "to": "town_05"
+        }
+      ],
+      "encounters": null,
+      "trainers": [
+        {
+          "id": "gym4_trainer1",
+          "name": "체육관 훈련생 D",
+          "team": [
+            {
+              "monsterId": 10,
+              "level": 26
+            },
+            {
+              "monsterId": 54,
+              "level": 27
+            }
+          ],
+          "reward": 800
+        }
+      ],
+      "gym": {
+        "leader": "수호자 라이",
+        "type": "electric",
+        "badge": "badge_electric",
+        "team": [
+          {
+            "monsterId": 10,
+            "level": 28
+          },
+          {
+            "monsterId": 11,
+            "level": 29
+          },
+          {
+            "monsterId": 54,
+            "level": 30
+          }
+        ],
+        "reward": 3000
+      },
+      "shop": null,
+      "events": null,
+      "requiredBadges": 3,
+      "wildEncounterRate": 0
+    },
+    {
+      "id": "gym_05",
+      "name": "투지의 전당",
+      "type": "gym",
+      "description": "투지 타입 수호자 무현이 지키는 전당. 불굴의 투지로 어둠에 맞선다.",
+      "connections": [
+        {
+          "to": "town_06"
+        }
+      ],
+      "encounters": null,
+      "trainers": [
+        {
+          "id": "gym5_trainer1",
+          "name": "체육관 훈련생 E",
+          "team": [
+            {
+              "monsterId": 40,
+              "level": 31
+            },
+            {
+              "monsterId": 64,
+              "level": 32
+            }
+          ],
+          "reward": 1000
+        }
+      ],
+      "gym": {
+        "leader": "수호자 무현",
+        "type": "fighting",
+        "badge": "badge_fighting",
+        "team": [
+          {
+            "monsterId": 40,
+            "level": 33
+          },
+          {
+            "monsterId": 41,
+            "level": 34
+          },
+          {
+            "monsterId": 64,
+            "level": 35
+          }
+        ],
+        "reward": 3500
+      },
+      "shop": null,
+      "events": null,
+      "requiredBadges": 4,
+      "wildEncounterRate": 0
+    },
+    {
+      "id": "gym_06",
+      "name": "빙결의 전당",
+      "type": "gym",
+      "description": "빙결 타입 수호자 설화가 지키는 전당. 영원한 얼음의 결계가 어둠을 가둔다.",
+      "connections": [
+        {
+          "to": "town_07"
+        }
+      ],
+      "encounters": null,
+      "trainers": [
+        {
+          "id": "gym6_trainer1",
+          "name": "체육관 훈련생 F",
+          "team": [
+            {
+              "monsterId": 16,
+              "level": 36
+            },
+            {
+              "monsterId": 68,
+              "level": 37
+            }
+          ],
+          "reward": 1200
+        }
+      ],
+      "gym": {
+        "leader": "수호자 설화",
+        "type": "ice",
+        "badge": "badge_ice",
+        "team": [
+          {
+            "monsterId": 16,
+            "level": 38
+          },
+          {
+            "monsterId": 17,
+            "level": 39
+          },
+          {
+            "monsterId": 68,
+            "level": 40
+          },
+          {
+            "monsterId": 18,
+            "level": 41
+          }
+        ],
+        "reward": 4000
+      },
+      "shop": null,
+      "events": null,
+      "requiredBadges": 5,
+      "wildEncounterRate": 0
+    },
+    {
+      "id": "gym_07",
+      "name": "용린의 전당",
+      "type": "gym",
+      "description": "용린 타입 수호자 용왕이 지키는 전당. 고대 용의 결계가 마왕의 어둠을 억누른다.",
+      "connections": [
+        {
+          "to": "town_08"
+        }
+      ],
+      "encounters": null,
+      "trainers": [
+        {
+          "id": "gym7_trainer1",
+          "name": "체육관 훈련생 G",
+          "team": [
+            {
+              "monsterId": 37,
+              "level": 42
+            },
+            {
+              "monsterId": 38,
+              "level": 43
+            }
+          ],
+          "reward": 1500
+        }
+      ],
+      "gym": {
+        "leader": "수호자 용왕",
+        "type": "dragon",
+        "badge": "badge_dragon",
+        "team": [
+          {
+            "monsterId": 37,
+            "level": 44
+          },
+          {
+            "monsterId": 38,
+            "level": 45
+          },
+          {
+            "monsterId": 80,
+            "level": 46
+          },
+          {
+            "monsterId": 39,
+            "level": 48
+          }
+        ],
+        "reward": 5000
+      },
+      "shop": null,
+      "events": null,
+      "requiredBadges": 6,
+      "wildEncounterRate": 0
+    },
+    {
+      "id": "gym_08",
+      "name": "성문의 전당",
+      "type": "gym",
+      "description": "우주 타입 수호자 성운이 지키는 전당. 별빛의 결계가 마왕성으로의 관문을 봉인한다.",
+      "connections": [
+        {
+          "to": "town_08"
+        }
+      ],
+      "encounters": null,
+      "trainers": [
+        {
+          "id": "gym8_trainer1",
+          "name": "체육관 훈련생 H",
+          "team": [
+            {
+              "monsterId": 76,
+              "level": 47
+            },
+            {
+              "monsterId": 78,
+              "level": 48
+            }
+          ],
+          "reward": 1800
+        }
+      ],
+      "gym": {
+        "leader": "수호자 성운",
+        "type": "cosmic",
+        "badge": "badge_cosmic",
+        "team": [
+          {
+            "monsterId": 76,
+            "level": 49
+          },
+          {
+            "monsterId": 78,
+            "level": 50
+          },
+          {
+            "monsterId": 80,
+            "level": 51
+          },
+          {
+            "monsterId": 77,
+            "level": 53
+          }
+        ],
+        "reward": 6000
+      },
+      "shop": null,
+      "events": null,
+      "requiredBadges": 7,
+      "wildEncounterRate": 0
+    },
+    {
+      "id": "elite_four",
+      "name": "마왕성",
+      "type": "elite_four",
+      "description": "마왕 카오스가 세계의 중심에 세운 암흑의 요새. 사천왕이 그 앞을 지키고 있다.",
+      "connections": [
+        {
+          "to": "town_08"
+        }
+      ],
+      "encounters": null,
+      "trainers": [
+        {
+          "id": "elite_1",
+          "name": "사천왕 독아",
+          "team": [
+            {
+              "monsterId": 22,
+              "level": 52
+            },
+            {
+              "monsterId": 23,
+              "level": 53
+            },
+            {
+              "monsterId": 24,
+              "level": 54
+            },
+            {
+              "monsterId": 66,
+              "level": 55
+            }
+          ],
+          "reward": 5000
+        },
+        {
+          "id": "elite_2",
+          "name": "사천왕 철귀",
+          "team": [
+            {
+              "monsterId": 25,
+              "level": 53
+            },
+            {
+              "monsterId": 26,
+              "level": 54
+            },
+            {
+              "monsterId": 27,
+              "level": 55
+            },
+            {
+              "monsterId": 62,
+              "level": 56
+            }
+          ],
+          "reward": 5000
+        },
+        {
+          "id": "elite_3",
+          "name": "사천왕 유령왕",
+          "team": [
+            {
+              "monsterId": 34,
+              "level": 54
+            },
+            {
+              "monsterId": 35,
+              "level": 55
+            },
+            {
+              "monsterId": 36,
+              "level": 56
+            },
+            {
+              "monsterId": 70,
+              "level": 57
+            }
+          ],
+          "reward": 5000
+        },
+        {
+          "id": "elite_4",
+          "name": "사천왕 염제",
+          "team": [
+            {
+              "monsterId": 37,
+              "level": 55
+            },
+            {
+              "monsterId": 38,
+              "level": 56
+            },
+            {
+              "monsterId": 39,
+              "level": 57
+            },
+            {
+              "monsterId": 80,
+              "level": 58
+            }
+          ],
+          "reward": 5000
+        },
+        {
+          "id": "champion",
+          "name": "마왕 카오스",
+          "team": [
+            {
+              "monsterId": 33,
+              "level": 58
+            },
+            {
+              "monsterId": 39,
+              "level": 60
+            },
+            {
+              "monsterId": 27,
+              "level": 59
+            },
+            {
+              "monsterId": 97,
+              "level": 62
+            },
+            {
+              "monsterId": 95,
+              "level": 63
+            },
+            {
+              "monsterId": 91,
+              "level": 65
+            }
+          ],
+          "reward": 30000
+        }
+      ],
+      "gym": null,
+      "shop": null,
+      "events": null,
+      "requiredBadges": 8,
+      "wildEncounterRate": 0
+    }
+  ]
+}

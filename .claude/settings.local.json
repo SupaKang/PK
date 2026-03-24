@@ -1,0 +1,33 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install:*)",
+      "Bash(node:*)",
+      "Bash(npx vite:*)",
+      "Bash(pkill -f \"vite.*3001\")",
+      "Bash(pkill -f \"vite\")",
+      "Bash(curl -s http://localhost:8080/data/types.json)",
+      "WebSearch",
+      "WebFetch(domain:freebieskit.com)",
+      "WebFetch(domain:www.uistore.design)",
+      "WebFetch(domain:sightmap.co.kr)",
+      "WebFetch(domain:noonnu.cc)",
+      "WebFetch(domain:getillustrations.com)",
+      "WebFetch(domain:info.searcheditors.com)",
+      "Bash(python -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(f''''Total monsters: {len\\(d[\"\"monsters\"\"]\\)}''''\\); shapes=set\\(\\); [shapes.add\\(m[''''spriteConfig''''][''''shape'''']\\) for m in d[''''monsters'''']]; print\\(f''''Shapes: {shapes}''''\\)\")",
+      "Bash(wc:*)",
+      "Bash(python -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(f''''Total maps: {len\\(d[\"\"maps\"\"]\\)}''''\\); types={}; [types.__setitem__\\(m[''''type''''], types.get\\(m[''''type''''],0\\)+1\\) for m in d[''''maps'''']]; print\\(f''''Map types: {types}''''\\)\")",
+      "Bash(python -c \"import json,sys; d=json.load\\(sys.stdin\\); cats={}; [cats.__setitem__\\(i[''''category''''], cats.get\\(i[''''category''''],0\\)+1\\) for i in d[''''items'''']]; print\\(f''''Total items: {len\\(d[\"\"items\"\"]\\)}''''\\); print\\(f''''Categories: {cats}''''\\)\")",
+      "WebFetch(domain:itch.io)",
+      "WebFetch(domain:opengameart.org)",
+      "WebFetch(domain:craftpix.net)",
+      "WebFetch(domain:limezu.itch.io)",
+      "WebFetch(domain:scarloxy.itch.io)",
+      "WebFetch(domain:monsteretro.itch.io)",
+      "WebFetch(domain:willibab.itch.io)",
+      "WebFetch(domain:cyangmou.itch.io)",
+      "Bash(git init:*)",
+      "Bash(gh auth:*)"
+    ]
+  }
+}
