@@ -20,6 +20,11 @@ export class TrainerManager {
     this.defeatedTrainers.add(trainerId);
   }
 
+  /** 트레이너 패배 취소 (연속전 실패 시 리셋용) */
+  unmarkDefeated(trainerId) {
+    this.defeatedTrainers.delete(trainerId);
+  }
+
   /**
    * 트레이너 팀 생성 — 트레이너 데이터에서 몬스터 인스턴스 배열 생성
    * @param {Object} trainer - { id, name, team: [{ monsterId, level }], ... }

@@ -32,16 +32,27 @@ export class MapManager {
     return this.getLocation(this.currentLocation);
   }
 
+  /** 연결 데이터 정규화 — 문자열이면 객체로 변환 */
+  _normalizeConnection(conn) {
+    if (typeof conn === 'string') {
+      return { to: conn, requiredBadges: 0 };
+    }
+    return { to: conn.to, requiredBadges: conn.requiredBadges || 0, description: conn.description || '' };
+  }
+
   /** 현재 위치에서 이동 가능한 연결 목록 */
   getConnections() {
     const location = this.getCurrentLocation();
     if (!location || !location.connections) return [];
-    return location.connections.map(conn => {
+    return location.connections.map(raw => {
+      const conn = this._normalizeConnection(raw);
       const target = this.getLocation(conn.to);
+      const targetRequiredBadges = target ? (target.requiredBadges || 0) : 0;
+      const maxRequired = Math.max(conn.requiredBadges, targetRequiredBadges);
       return {
         id: conn.to,
         name: target ? target.name : conn.to,
-        requiredBadges: conn.requiredBadges || 0,
+        requiredBadges: maxRequired,
         description: conn.description || '',
       };
     });
@@ -52,23 +63,31 @@ export class MapManager {
     const current = this.getCurrentLocation();
     if (!current || !current.connections) return false;
 
-    const conn = current.connections.find(c => c.to === locationId);
+    const normalized = current.connections.map(c => this._normalizeConnection(c));
+    const conn = normalized.find(c => c.to === locationId);
     if (!conn) return false;
 
-    const required = conn.requiredBadges || 0;
+    const target = this.getLocation(locationId);
+    const targetRequiredBadges = target ? (target.requiredBadges || 0) : 0;
+    const required = Math.max(conn.requiredBadges, targetRequiredBadges);
     return badgeCount >= required;
   }
 
   /** 이동 시도 — 연결돼있고 뱃지 조건 충족 시 이동 */
   moveTo(locationId, badgeCount = 0) {
     if (!this.canAccess(locationId, badgeCount)) {
-      const conn = this.getCurrentLocation()?.connections?.find(c => c.to === locationId);
+      const rawConns = this.getCurrentLocation()?.connections;
+      const normalized = rawConns ? rawConns.map(c => this._normalizeConnection(c)) : [];
+      const conn = normalized.find(c => c.to === locationId);
       if (!conn) {
         return { success: false, message: '이 장소로 갈 수 없습니다.' };
       }
+      const target = this.getLocation(locationId);
+      const targetRequiredBadges = target ? (target.requiredBadges || 0) : 0;
+      const needed = Math.max(conn.requiredBadges, targetRequiredBadges);
       return {
         success: false,
-        message: `이 길을 지나려면 뱃지 ${conn.requiredBadges}개가 필요합니다.`,
+        message: `이 길을 지나려면 뱃지 ${needed}개가 필요합니다.`,
       };
     }
 
@@ -95,7 +114,6 @@ export class MapManager {
 
   /** 마지막 방문한 마을로 복귀 (전멸 시 사용) */
   returnToLastTown() {
-    // 방문 기록 중 마을 타입을 역순으로 찾기
     const visited = [...this.visitedLocations];
     for (let i = visited.length - 1; i >= 0; i--) {
       const loc = this.getLocation(visited[i]);
@@ -104,7 +122,6 @@ export class MapManager {
         return;
       }
     }
-    // 못 찾으면 시작 마을로
     this.currentLocation = 'town_01';
   }
 

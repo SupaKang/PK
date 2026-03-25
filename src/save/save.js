@@ -20,7 +20,7 @@ export class SaveManager {
     const saveData = {
       version: 1,
       timestamp: Date.now(),
-      playerName: gameState.playerName || '트레이너',
+      playerName: gameState.playerName || '계약자',
       playtime: gameState.playtime || 0,
 
       party: gameState.party,        // PartyManager.serialize()
@@ -28,8 +28,9 @@ export class SaveManager {
       story: gameState.story,         // StoryManager.serialize()
       map: gameState.map,             // MapManager.serialize()
       trainers: gameState.trainers,   // TrainerManager.serialize()
-      dex: gameState.dex || [],       // 발견/포획 도감 데이터
+      dex: gameState.dex || [],
       settings: gameState.settings || {},
+      expedition: gameState.expedition || null,
     };
 
     try {
@@ -106,7 +107,7 @@ export class SaveManager {
       const playtimeStr = `${hours}시간 ${minutes}분`;
 
       return {
-        playerName: data.playerName || '트레이너',
+        playerName: data.playerName || '계약자',
         playtime: data.playtime || 0,
         playtimeFormatted: playtimeStr,
         badgeCount,

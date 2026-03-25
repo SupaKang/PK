@@ -1,0 +1,34 @@
+{
+  "_comment": "타일맵 JSON 스키마 레퍼런스 (실제 데이터 아님)",
+  "mapId": "town_01",
+  "width": 30,
+  "height": 20,
+  "tileSize": 16,
+  "tileset": "town",
+  "layers": [
+    {
+      "name": "ground",
+      "data": "1차원 배열, width*height 길이, 타일셋 내 타일 인덱스"
+    },
+    {
+      "name": "objects",
+      "data": "0=없음, 양수=타일 인덱스"
+    },
+    {
+      "name": "collision",
+      "data": "0=통과 가능, 1=이동 불가"
+    }
+  ],
+  "spawns": {
+    "player": { "x": 15, "y": 18 },
+    "npcs": [
+      { "id": "npc_01", "x": 10, "y": 12, "sprite": "citizen_01" }
+    ]
+  },
+  "connections": {
+    "north": null,
+    "south": "route_01",
+    "east": null,
+    "west": null
+  }
+}

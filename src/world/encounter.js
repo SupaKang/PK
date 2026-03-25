@@ -36,14 +36,24 @@ function weightedRandom(encounters) {
 /**
  * 야생 몬스터 생성
  * @param {Object} location - 위치 데이터
+ * @param {number} badgeCount - 현재 획득한 배지 수 (전설 몬스터 필터용)
  * @returns {Object|null} 생성된 몬스터 인스턴스
  */
-export function generateWildMonster(location) {
+export function generateWildMonster(location, badgeCount = 0) {
   if (!location || !location.encounters || location.encounters.length === 0) {
     return null;
   }
 
-  const entry = weightedRandom(location.encounters);
+  // requiredBadges 조건을 충족하지 못하는 인카운터 필터링
+  const filteredEncounters = location.encounters.filter(
+    e => !e.requiredBadges || badgeCount >= e.requiredBadges
+  );
+
+  if (filteredEncounters.length === 0) {
+    return null;
+  }
+
+  const entry = weightedRandom(filteredEncounters);
   if (!entry) return null;
 
   // minLevel ~ maxLevel 사이 랜덤 레벨

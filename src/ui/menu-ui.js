@@ -1,5 +1,6 @@
 // 메인 메뉴 및 게임 내 메뉴 오버레이
 import { generateSprite } from './sprite-generator.js';
+import { generateItemIcon } from './item-icon-generator.js';
 import { TYPE_COLORS, STATUS_COLORS, STATUS_LABELS } from './renderer.js';
 
 // ==========================================
@@ -82,6 +83,11 @@ export class TitleScreenUI {
     const subWidth = r.measureText(subText, 2);
     r.drawPixelText(subText, Math.floor((800 - subWidth) / 2), this.titleY + 50, '#aaaacc', 2);
 
+    // 부제2 (서브타이틀)
+    const sub2Text = '마석 계약자의 타임어택 탐험';
+    const sub2Width = r.measureText(sub2Text, 1);
+    r.drawPixelText(sub2Text, Math.floor((800 - sub2Width) / 2), this.titleY + 75, '#7777aa', 1);
+
     if (this.subState === 'load_slots') {
       this._renderLoadSlots(r, ctx);
     } else if (this.subState === 'options') {
@@ -105,6 +111,21 @@ export class TitleScreenUI {
 
     // 하단 안내
     r.drawPixelText('Arrow Keys + Enter', 280, 560, '#444466', 2);
+
+    // 터치 안내 (터치 디바이스 전용)
+    if ('ontouchstart' in window) {
+      r.drawPixelText('터치하여 시작', 300, 530, '#444466', 2);
+    }
+
+    // 깜빡이는 Press Enter 안내
+    if (Math.floor(Date.now() / 600) % 2 === 0) {
+      const pressText = 'Press Enter to Start';
+      const pressWidth = r.measureText(pressText, 2);
+      r.drawPixelText(pressText, Math.floor((800 - pressWidth) / 2), 500, '#6666aa', 2);
+    }
+
+    // 버전 표시
+    r.drawPixelText('v0.8.0', 730, 580, '#333355', 1);
 
     r.renderFade();
   }
@@ -209,7 +230,7 @@ export class GameMenuUI {
       { id: 'party', label: '파티' },
       { id: 'bag', label: '가방' },
       { id: 'dex', label: '도감' },
-      { id: 'trainer', label: '트레이너카드' },
+      { id: 'trainer', label: '계약자 카드' },
       { id: 'save', label: '저장' },
       { id: 'settings', label: '설정' },
     ];
@@ -225,6 +246,10 @@ export class GameMenuUI {
     // 콜백
     this.onOpenDex = null;
     this.onSave = null;
+    this.onShowMessage = null;  // (msg) => show dialog message
+    this.onUseEscapeRope = null; // () => handle escape rope
+    this.onSettingsChange = null; // (settings) => apply settings
+    this.onClassChange = null; // () => handle class change scroll
 
     // 설정
     this.settings = {
@@ -239,11 +264,17 @@ export class GameMenuUI {
     this.bagCategory = 0;
     this.bagCursor = 0;
     this.bagCategories = [
-      { id: 'heal', label: '회복' },
-      { id: 'ball', label: '볼' },
+      { id: 'healing', label: '회복' },
+      { id: 'consumable', label: '소모품' },
+      { id: 'contract', label: '마석' },
       { id: 'battle', label: '전투' },
       { id: 'key', label: '중요' },
     ];
+
+    // 아이템 사용 대상 선택
+    this.bagUseTarget = false;  // true when selecting party member to use item on
+    this.bagTargetCursor = 0;
+    this.bagSelectedItem = null;
 
     // 설정 서브
     this.settingsCursor = 0;
@@ -320,36 +351,45 @@ export class GameMenuUI {
   }
 
   _renderParty(r, ctx) {
-    const party = this.partyManager?.party || [];
+    const contractor = this.partyManager?.contractor;
+    const monsters = this.partyManager?.party || [];
 
     r.drawPanel(50, 30, 700, 540, '#0d0d1e', '#3a3a5a');
     r.drawPixelText('파티', 75, 45, '#ffcc44', 3);
 
-    for (let i = 0; i < party.length; i++) {
-      const mon = party[i];
-      const y = 90 + i * 75;
+    // Build full display list: contractor + monsters
+    const displayList = [];
+    if (contractor) displayList.push(contractor);
+    displayList.push(...monsters);
+
+    for (let i = 0; i < displayList.length; i++) {
+      const mon = displayList[i];
+      const y = 85 + i * 72;
       const selected = this.cursor === i;
 
       if (selected) {
-        r.drawPanel(65, y - 5, 670, 70, '#1a1a3e', '#6666aa');
+        r.drawPanel(65, y - 5, 670, 67, '#1a1a3e', '#6666aa');
       } else {
-        r.drawPanel(65, y - 5, 670, 70, '#111122', '#3a3a5a');
+        r.drawPanel(65, y - 5, 670, 67, '#111122', '#3a3a5a');
       }
 
       // 미니 스프라이트
       const sprite = generateSprite(mon.spriteConfig, 32);
       if (sprite) r.drawSprite(sprite, 75, y, 1.5);
 
-      // 이름, 레벨
-      r.drawPixelText(mon.nickname || mon.name, 135, y + 2, '#ffffff', 2);
-      r.drawPixelText(`Lv${mon.level}`, 340, y + 2, '#aaaacc', 2);
+      // 이름, 레벨, 직업 표시
+      const nameStr = mon.isContractor
+        ? `[${mon.className}] ${mon.nickname || mon.name}`
+        : (mon.nickname || mon.name);
+      r.drawPixelText(nameStr, 135, y + 2, mon.isContractor ? '#ffdd66' : '#ffffff', 2);
+      r.drawPixelText(`Lv${mon.level}`, 420, y + 2, '#aaaacc', 2);
 
       // 타입
       for (let t = 0; t < mon.type.length; t++) {
         const tColor = TYPE_COLORS[mon.type[t]] || '#888';
         ctx.fillStyle = tColor;
-        ctx.fillRect(415 + t * 50, y + 2, 44, 16);
-        r.drawPixelText(mon.type[t], 418 + t * 50, y + 5, '#ffffff', 1);
+        ctx.fillRect(490 + t * 50, y + 2, 44, 16);
+        r.drawPixelText(mon.type[t], 493 + t * 50, y + 5, '#ffffff', 1);
       }
 
       // HP 바
@@ -376,12 +416,18 @@ export class GameMenuUI {
       r.drawPixelText(skillStr.substring(0, 60), 135, y + 52, '#666688', 1);
     }
 
-    r.drawPixelText('[ESC] 뒤로  [Enter] 순서 교체', 75, 555, '#666688', 1);
+    r.drawPixelText('[ESC] 뒤로  [Enter] 순서 교체 (몬스터만)', 75, 555, '#666688', 1);
   }
 
   _renderBag(r, ctx) {
     const inv = this.inventory;
     if (!inv) return;
+
+    // If selecting a target party member for item use
+    if (this.bagUseTarget) {
+      this._renderBagTargetSelect(r, ctx);
+      return;
+    }
 
     r.drawPanel(50, 30, 700, 540, '#0d0d1e', '#3a3a5a');
     r.drawPixelText('가방', 75, 45, '#ffcc44', 3);
@@ -422,34 +468,83 @@ export class GameMenuUI {
           ctx.fillRect(72, y + 14, 6, 6);
         }
 
-        r.drawPixelText(item.name, 88, y + 4, selected ? '#ffffff' : '#ccccdd', 2);
-        r.drawPixelText(`x${item.count}`, 350, y + 4, '#aaaacc', 2);
-        r.drawPixelText(`${item.price || 0}원`, 450, y + 4, '#888899', 2);
+        // 아이템 아이콘
+        try {
+          const icon = generateItemIcon(item.category, item.id, 24);
+          if (icon) ctx.drawImage(icon, 68, y + 2, 24, 24);
+        } catch(e) { /* 아이콘 실패 무시 */ }
+
+        r.drawPixelText(item.name, 98, y + 4, selected ? '#ffffff' : '#ccccdd', 2);
+        r.drawPixelText(`x${item.count}`, 360, y + 4, '#aaaacc', 2);
+        r.drawPixelText(`${item.price || 0}원`, 460, y + 4, '#888899', 2);
         if (item.description) {
-          r.drawPixelText(item.description.substring(0, 50), 88, y + 26, '#777799', 1);
+          r.drawPixelText(item.description.substring(0, 50), 98, y + 26, '#777799', 1);
         }
       }
     }
 
-    r.drawPixelText('[ESC] 뒤로  [Tab] 카테고리 전환', 75, 555, '#666688', 1);
+    r.drawPixelText('[ESC] 뒤로  [Tab] 카테고리  [Enter] 사용', 75, 555, '#666688', 1);
+  }
+
+  _renderBagTargetSelect(r, ctx) {
+    const party = this.partyManager?.party || [];
+    const item = this.bagSelectedItem;
+
+    r.drawPanel(50, 30, 700, 540, '#0d0d1e', '#3a3a5a');
+    r.drawPixelText(`${item?.name || '아이템'} - 대상 선택`, 75, 45, '#ffcc44', 3);
+
+    for (let i = 0; i < party.length; i++) {
+      const mon = party[i];
+      const y = 90 + i * 70;
+      const selected = this.bagTargetCursor === i;
+
+      if (selected) {
+        r.drawPanel(65, y - 5, 670, 65, '#1a1a3e', '#6666aa');
+      } else {
+        r.drawPanel(65, y - 5, 670, 65, '#111122', '#3a3a5a');
+      }
+
+      const isFainted = mon.currentHp <= 0;
+      r.drawPixelText(mon.nickname || mon.name, 85, y + 2, isFainted ? '#664444' : '#ffffff', 2);
+      r.drawPixelText(`Lv${mon.level}`, 300, y + 2, '#aaaacc', 2);
+
+      r.drawPixelText('HP', 85, y + 24, '#ffcc44', 1);
+      r.drawHpBar(108, y + 23, 160, 10, mon.currentHp, mon.stats.hp);
+      r.drawPixelText(`${mon.currentHp}/${mon.stats.hp}`, 275, y + 24, '#aaaaaa', 1);
+
+      if (mon.status) {
+        const sColor = STATUS_COLORS[mon.status] || '#888';
+        ctx.fillStyle = sColor;
+        ctx.fillRect(400, y + 22, 44, 14);
+        r.drawPixelText(STATUS_LABELS[mon.status] || '', 403, y + 24, '#fff', 1);
+      }
+
+      if (isFainted) {
+        r.drawPixelText('[기절]', 460, y + 8, '#ff4444', 2);
+      }
+    }
+
+    r.drawPixelText('[ESC] 뒤로  [Enter] 사용', 75, 555, '#666688', 1);
   }
 
   _renderTrainer(r, ctx) {
     const pd = this.playerData || {};
 
     r.drawPanel(150, 80, 500, 440, '#0d0d1e', '#3a3a5a');
-    r.drawPixelText('트레이너카드', 200, 100, '#ffcc44', 3);
+    r.drawPixelText('계약자 카드', 200, 100, '#ffcc44', 3);
 
     const labelX = 190, valX = 400;
     let y = 160;
 
+    const contractor = this.partyManager?.contractor;
     const rows = [
       ['이름', pd.name || '???'],
+      ['직업', contractor?.className || '???'],
       ['뱃지', `${pd.badges || 0}개`],
       ['소지금', `${this.inventory?.money || 0}원`],
-      ['도감', `${pd.dexCaught || 0} / 100 포획`],
+      ['도감', `${pd.dexCaught || 0} / 100 계약`],
       ['플레이 시간', pd.playTime || '0:00:00'],
-      ['파티', `${this.partyManager?.party?.length || 0}마리`],
+      ['파티', `계약자 + ${this.partyManager?.party?.length || 0}마리`],
     ];
 
     for (const [label, value] of rows) {
@@ -605,20 +700,27 @@ export class GameMenuUI {
   }
 
   _handlePartyInput(key) {
-    const party = this.partyManager?.party || [];
+    const contractor = this.partyManager?.contractor;
+    const monsters = this.partyManager?.party || [];
+    const totalLen = (contractor ? 1 : 0) + monsters.length;
+    const contractorOffset = contractor ? 1 : 0;
+
     switch (key) {
       case 'ArrowUp':
         this.cursor = Math.max(0, this.cursor - 1);
         return true;
       case 'ArrowDown':
-        this.cursor = Math.min(party.length - 1, this.cursor + 1);
+        this.cursor = Math.min(totalLen - 1, this.cursor + 1);
         return true;
       case 'Enter':
       case ' ':
-        // 순서 교체 (간소화: 위의 슬롯과 교체)
-        if (this.cursor > 0 && this.partyManager) {
-          this.partyManager.swapPartySlots(this.cursor, this.cursor - 1);
-          this.cursor--;
+        // 계약자는 교체 불가, 몬스터만 순서 교체
+        if (this.cursor >= contractorOffset + 1 && this.partyManager) {
+          const monIdx = this.cursor - contractorOffset;
+          if (monIdx > 0) {
+            this.partyManager.swapPartySlots(monIdx, monIdx - 1);
+            this.cursor--;
+          }
         }
         return true;
       case 'Escape':
@@ -630,6 +732,11 @@ export class GameMenuUI {
   }
 
   _handleBagInput(key) {
+    // Target selection mode
+    if (this.bagUseTarget) {
+      return this._handleBagTargetInput(key);
+    }
+
     const items = this.inventory?.getItemsByCategory(this.bagCategories[this.bagCategory].id) || [];
     switch (key) {
       case 'Tab':
@@ -642,9 +749,104 @@ export class GameMenuUI {
       case 'ArrowDown':
         this.bagCursor = Math.min(Math.max(0, items.length - 1), this.bagCursor + 1);
         return true;
+      case 'Enter':
+      case ' ': {
+        if (items.length === 0) return true;
+        const item = items[this.bagCursor];
+        if (!item) return true;
+
+        const effectType = item.effect?.type;
+
+        // Class change scroll
+        if (effectType === 'class_change') {
+          if (this.onClassChange) this.onClassChange();
+          return true;
+        }
+
+        // Non-usable items
+        if (!effectType || ['badge', 'map', 'dex', 'key', 'contract'].includes(effectType)) {
+          if (this.onShowMessage) this.onShowMessage('이 아이템은 여기서 사용할 수 없다.');
+          return true;
+        }
+
+        // Escape rope — special handling
+        if (effectType === 'escape') {
+          if (this.onUseEscapeRope) {
+            this.inventory.removeItem(item.id);
+            this.onUseEscapeRope();
+          }
+          return true;
+        }
+
+        // Return scroll — same as escape rope
+        if (effectType === 'return') {
+          if (this.onUseEscapeRope) {
+            this.inventory.removeItem(item.id);
+            this.onUseEscapeRope();
+          }
+          return true;
+        }
+
+        // Food — camping only
+        if (effectType === 'food') {
+          if (this.onShowMessage) this.onShowMessage('이 아이템은 캠핑 중에만 사용할 수 있다.');
+          return true;
+        }
+
+        // Repel
+        if (effectType === 'repel') {
+          if (this.onShowMessage) this.onShowMessage('퇴치스프레이를 사용했다!');
+          this.inventory.removeItem(item.id);
+          return true;
+        }
+
+        // Stat boost — only usable in battle
+        if (effectType === 'stat_boost') {
+          if (this.onShowMessage) this.onShowMessage('이 아이템은 전투 중에만 사용할 수 있다.');
+          return true;
+        }
+
+        // Healing/status/revive/pp — select target
+        this.bagSelectedItem = item;
+        this.bagUseTarget = true;
+        this.bagTargetCursor = 0;
+        return true;
+      }
       case 'Escape':
         this.subMenu = null;
         this.cursor = 1;
+        return true;
+    }
+    return true;
+  }
+
+  _handleBagTargetInput(key) {
+    const party = this.partyManager?.party || [];
+    switch (key) {
+      case 'ArrowUp':
+        this.bagTargetCursor = Math.max(0, this.bagTargetCursor - 1);
+        return true;
+      case 'ArrowDown':
+        this.bagTargetCursor = Math.min(party.length - 1, this.bagTargetCursor + 1);
+        return true;
+      case 'Enter':
+      case ' ': {
+        const target = party[this.bagTargetCursor];
+        if (!target || !this.bagSelectedItem) return true;
+
+        const result = this.inventory.useItem(this.bagSelectedItem.id, target);
+        if (result.success) {
+          this.bagUseTarget = false;
+          this.bagSelectedItem = null;
+          if (this.onShowMessage) this.onShowMessage(result.messages.join('\n'));
+        } else {
+          if (this.onShowMessage) this.onShowMessage(result.messages.join('\n'));
+        }
+        return true;
+      }
+      case 'Escape':
+        this.bagUseTarget = false;
+        this.bagSelectedItem = null;
         return true;
     }
     return true;
@@ -672,6 +874,7 @@ export class GameMenuUI {
   }
 
   _handleSettingsInput(key) {
+    let changed = false;
     switch (key) {
       case 'ArrowUp':
         this.settingsCursor = Math.max(0, this.settingsCursor - 1);
@@ -685,18 +888,23 @@ export class GameMenuUI {
         } else {
           this.settings.volume = Math.max(0, this.settings.volume - 1);
         }
-        return true;
+        changed = true;
+        break;
       case 'ArrowRight':
         if (this.settingsCursor === 0) {
           this.settings.textSpeed = Math.min(2, this.settings.textSpeed + 1);
         } else {
           this.settings.volume = Math.min(10, this.settings.volume + 1);
         }
-        return true;
+        changed = true;
+        break;
       case 'Escape':
         this.subMenu = null;
         this.cursor = 5;
         return true;
+    }
+    if (changed && this.onSettingsChange) {
+      this.onSettingsChange({ ...this.settings });
     }
     return true;
   }
@@ -726,6 +934,7 @@ export class ShopUI {
 
     // 콜백
     this.onClose = null;
+    this.onTransaction = null;
   }
 
   open(shopItems) {
@@ -849,7 +1058,10 @@ export class ShopUI {
         case 'Enter':
         case ' ': {
           const item = this.shopItems[this.buyCursor];
-          if (item) this.inventory.buyItem(item.id, 1);
+          if (item) {
+            const result = this.inventory.buyItem(item.id, 1);
+            if (result.success && this.onTransaction) this.onTransaction('buy');
+          }
           return true;
         }
         case 'Escape': this.mode = 'select'; this.cursor = 0; return true;
@@ -866,6 +1078,7 @@ export class ShopUI {
             const sellPrice = Math.floor((item.price || 0) / 2);
             this.inventory.money += sellPrice;
             this.inventory.removeItem(item.id, 1);
+            if (this.onTransaction) this.onTransaction('sell');
             if (this.sellCursor >= items.length - 1) {
               this.sellCursor = Math.max(0, this.sellCursor - 1);
             }

@@ -102,8 +102,9 @@ export class DialogUI {
       this.active = false;
       this.currentScene = null;
       if (this.onAllComplete) {
-        this.onAllComplete();
-        this.onAllComplete = null;
+        const cb = this.onAllComplete;
+        this.onAllComplete = null;  // 먼저 클리어 (콜백 안에서 새 onAllComplete 설정 가능)
+        cb();
       }
       return;
     }
@@ -200,7 +201,13 @@ export class DialogUI {
     if (scene.speaker) {
       const nameW = r.measureText(scene.speaker, 2) + 20;
       r.drawPanel(this.boxX + 10, this.boxY - 22, nameW, 28, '#1a1a3e', '#6666aa');
-      r.drawPixelText(scene.speaker, this.boxX + 20, this.boxY - 16, '#ffcc44', 2);
+      let nameColor = '#ffcc44'; // default gold
+      if (scene.speaker === '은하') nameColor = '#44aaff'; // rival = blue
+      else if (scene.speaker === '할아버지') nameColor = '#88dd88'; // grandfather = green
+      else if (scene.speaker?.includes('그림자단')) nameColor = '#cc44cc'; // shadow clan = purple
+      else if (scene.speaker?.includes('수호자')) nameColor = '#ffaa44'; // guardian = orange
+      else if (scene.speaker === '고랭이') nameColor = '#ddbb88'; // cat = warm brown
+      r.drawPixelText(scene.speaker, this.boxX + 20, this.boxY - 16, nameColor, 2);
     }
 
     // 초상화

@@ -1,22 +1,24 @@
 // 배틀 엔진 — 턴 기반 1:1 전투 관리
 import {
   calcDamage, checkAccuracy, checkCritical,
-  applySkillEffect, getEffectiveStat,
+  applySkillEffect, getEffectiveStat, getSkillPriority, getMultiHitCount,
   processStatusDamage, checkStatusAction, STRUGGLE_SKILL
 } from './skill.js';
 import { getEffectiveness, getEffectivenessText } from './type.js';
+import { calculatePartyBuffs } from './party-buffs.js';
 
 /**
  * 배틀 상태 머신
  */
 export class Battle {
   constructor({ playerParty, enemyParty, isWild = false, trainerName = null, reward = 0, onEnd }) {
-    this.playerParty = playerParty;         // 플레이어 파티 (몬스터 배열)
+    this.playerParty = playerParty;         // 플레이어 전투 파티 (계약자 + 몬스터 배열)
     this.enemyParty = enemyParty;           // 상대 파티
     this.isWild = isWild;
     this.trainerName = trainerName;
     this.reward = reward;
     this.onEnd = onEnd;                     // 배틀 종료 콜백
+    this.contractorKO = false;              // 계약자(주인) 기절 플래그
 
     this.playerActive = this.getFirstAlive(playerParty);
     this.enemyActive = this.getFirstAlive(enemyParty);
@@ -26,6 +28,13 @@ export class Battle {
     this.messageQueue = [];
     this.pendingActions = [];
     this.result = null;                     // 'win', 'lose', 'flee', 'capture'
+
+    // 파티 버프 계산
+    this.playerBuffs = null;
+    const contractor = playerParty.find(m => m.isContractor);
+    if (contractor) {
+      this.playerBuffs = calculatePartyBuffs(contractor);
+    }
 
     // 스탯 초기화
     this.initBattleState(this.playerActive);
@@ -83,18 +92,58 @@ export class Battle {
       return { type: 'fight', skillIndex: -1, monster }; // 발버둥
     }
 
-    // 간단한 AI: 가장 효과적인 스킬 선택
+    // Smart AI: consider HP, status, type effectiveness
+    const hpRatio = monster.currentHp / monster.stats.hp;
+    const playerHpRatio = this.playerActive.currentHp / this.playerActive.stats.hp;
+
+    // AI 전략: 트레이너 배틀은 더 똑똑하게
+    const isSmart = !this.isWild;
+
+    // 교체 고려 (트레이너만, 불리한 타입 매칭 + 대안이 있을 때)
+    if (isSmart && this.getAliveCount(this.enemyParty) > 1 && hpRatio > 0.3) {
+      const currentEff = this._getBestMoveEffectiveness(monster, this.playerActive);
+      const playerEff = this._getBestMoveEffectiveness(this.playerActive, monster);
+
+      // 상대가 매우 유리하고 자신이 불리하면 교체 고려
+      if (playerEff >= 2 && currentEff <= 0.5) {
+        const betterSwitch = this._findBetterSwitch();
+        if (betterSwitch >= 0 && Math.random() < 0.6) {
+          return { type: 'switch', monsterIndex: betterSwitch, monster };
+        }
+      }
+    }
+
     let bestIndex = 0;
     let bestScore = -1;
 
     for (const { skill, index } of usableSkills) {
-      let score = skill.power || 30;
-      const eff = getEffectiveness(skill.type, this.playerActive.type);
-      score *= eff;
-      if (monster.type.includes(skill.type)) score *= 1.5; // STAB
-      if (skill.category === 'status') score = 40; // 상태기 기본 점수
-      // 약간의 랜덤성
-      score *= (0.8 + Math.random() * 0.4);
+      let score = 0;
+
+      if (skill.category === 'status') {
+        // Status move scoring
+        score = this._scoreStatusMove(skill, monster, hpRatio, playerHpRatio, isSmart);
+      } else {
+        // Damage move scoring
+        score = skill.power || 30;
+        const eff = getEffectiveness(skill.type, this.playerActive.type);
+        score *= eff;
+        if (monster.type.includes(skill.type)) score *= 1.5; // STAB
+        score *= (skill.accuracy / 100); // Weight by accuracy
+
+        // Avoid overkill — prefer weaker moves when opponent is low
+        if (isSmart && playerHpRatio < 0.2 && score > 150) {
+          score *= 0.7; // Don't waste big moves on nearly dead opponent
+        }
+
+        // Avoid ineffective moves
+        if (eff <= 0.5) score *= 0.3;
+        if (eff === 0) score = 0;
+      }
+
+      // Add randomness (less for smart AI)
+      const randomRange = isSmart ? 0.15 : 0.3;
+      score *= (1 - randomRange + Math.random() * randomRange * 2);
+
       if (score > bestScore) {
         bestScore = score;
         bestIndex = index;
@@ -102,6 +151,87 @@ export class Battle {
     }
 
     return { type: 'fight', skillIndex: bestIndex, monster };
+  }
+
+  /** AI: Score status moves based on context */
+  _scoreStatusMove(skill, monster, hpRatio, playerHpRatio, isSmart) {
+    if (!isSmart) return 20 + Math.random() * 20;
+
+    let score = 0;
+    const effect = skill.effect;
+
+    // Don't use status moves when opponent is almost dead
+    if (playerHpRatio < 0.15) return 5;
+
+    if (effect) {
+      switch (effect.type) {
+        case 'status':
+          // Don't apply status if already has one
+          if (this.playerActive.status) return 5;
+          score = 60;
+          // Paralyze/burn are great early battle
+          if (['paralyze', 'burn'].includes(effect.status)) score = 70;
+          if (effect.status === 'sleep') score = 75;
+          break;
+        case 'stat_change':
+          if (effect.target === 'self') {
+            // Boost self — good when HP is high and early in battle
+            score = hpRatio > 0.7 ? 55 : 20;
+          } else {
+            // Debuff opponent
+            score = 45;
+          }
+          break;
+        case 'heal':
+          // Heal when HP is low
+          score = hpRatio < 0.4 ? 80 : (hpRatio < 0.6 ? 40 : 5);
+          break;
+        default:
+          score = 30;
+      }
+    } else {
+      score = 25;
+    }
+
+    return score;
+  }
+
+  /** AI: Find best type effectiveness this monster can deal */
+  _getBestMoveEffectiveness(attacker, defender) {
+    let best = 0;
+    for (const skill of attacker.skills) {
+      if (skill.pp > 0 && skill.category !== 'status') {
+        const eff = getEffectiveness(skill.type, defender.type);
+        if (eff > best) best = eff;
+      }
+    }
+    return best;
+  }
+
+  /** AI: Find a better switch-in against current player monster */
+  _findBetterSwitch() {
+    let bestIdx = -1;
+    let bestScore = 0;
+
+    for (let i = 0; i < this.enemyParty.length; i++) {
+      const mon = this.enemyParty[i];
+      if (mon === this.enemyActive || mon.currentHp <= 0) continue;
+
+      // Score by how well this monster matches up
+      let score = 0;
+      const offEff = this._getBestMoveEffectiveness(mon, this.playerActive);
+      const defEff = this._getBestMoveEffectiveness(this.playerActive, mon);
+
+      score = offEff * 2 - defEff; // Favor good offense, penalize being weak to player
+      score += mon.currentHp / mon.stats.hp; // Prefer healthier mons
+
+      if (score > bestScore) {
+        bestScore = score;
+        bestIdx = i;
+      }
+    }
+
+    return bestScore > 1.5 ? bestIdx : -1; // Only switch if significantly better
   }
 
   /** 행동 순서 결정 */
@@ -120,19 +250,31 @@ export class Battle {
       return actions;
     }
 
-    // 둘 다 fight인 경우 속도 비교
-    const playerSpeed = getEffectiveStat(this.playerActive, 'speed');
-    const enemySpeed = getEffectiveStat(this.enemyActive, 'speed');
-
-    // 마비 시 속도 50% 감소
-    const pSpeed = this.playerActive.status === 'paralyze' ? playerSpeed * 0.5 : playerSpeed;
-    const eSpeed = this.enemyActive.status === 'paralyze' ? enemySpeed * 0.5 : enemySpeed;
+    // 우선도(priority) 비교
+    const playerSkill = this.playerActive.skills?.[playerAction.skillIndex];
+    const enemySkill = this.enemyActive.skills?.[enemyAction.skillIndex];
+    const playerPriority = getSkillPriority(playerSkill);
+    const enemyPriority = getSkillPriority(enemySkill);
 
     let playerFirst;
-    if (pSpeed !== eSpeed) {
-      playerFirst = pSpeed > eSpeed;
+
+    if (playerPriority !== enemyPriority) {
+      // 우선도가 다르면 높은 쪽이 선공
+      playerFirst = playerPriority > enemyPriority;
     } else {
-      playerFirst = Math.random() < 0.5;
+      // 우선도 같으면 속도 비교
+      const playerSpeed = getEffectiveStat(this.playerActive, 'speed');
+      const enemySpeed = getEffectiveStat(this.enemyActive, 'speed');
+
+      // 마비 시 속도 50% 감소
+      const pSpeed = this.playerActive.status === 'paralyze' ? playerSpeed * 0.5 : playerSpeed;
+      const eSpeed = this.enemyActive.status === 'paralyze' ? enemySpeed * 0.5 : enemySpeed;
+
+      if (pSpeed !== eSpeed) {
+        playerFirst = pSpeed > eSpeed;
+      } else {
+        playerFirst = Math.random() < 0.5;
+      }
     }
 
     if (playerFirst) {
@@ -173,8 +315,14 @@ export class Battle {
     }
 
     // 풀린 플래그
-    if (this.playerActive) this.playerActive._flinched = false;
-    if (this.enemyActive) this.enemyActive._flinched = false;
+    if (this.playerActive) {
+      this.playerActive._flinched = false;
+      this.playerActive._protected = false;
+    }
+    if (this.enemyActive) {
+      this.enemyActive._flinched = false;
+      this.enemyActive._protected = false;
+    }
 
     this.messageQueue = turnLog;
     if (this.result) {
@@ -225,35 +373,63 @@ export class Battle {
           }
         }
 
+        // 방어(protect) 상태 체크
+        if (defender._protected && skill.category !== 'status') {
+          messages.push(`${defender.name}은(는) 공격을 막아냈다!`);
+          break;
+        }
+
+        // 파티 버프 결정 (플레이어 측 공격자만 공격 버프 적용)
+        const attackerBuffs = action.side === 'player' ? this.playerBuffs : null;
+        const defenderBuffs = action.side === 'enemy' ? this.playerBuffs : null;
+
         // 명중 판정
-        if (!checkAccuracy(attacker, defender, skill)) {
+        if (!checkAccuracy(attacker, defender, skill, attackerBuffs)) {
           messages.push(`빗나갔다!`);
           break;
         }
 
-        // 데미지 계산
-        const isCrit = checkCritical();
-        const damage = calcDamage(attacker, defender, skill, isCrit);
+        // 멀티히트 처리
+        const hitCount = getMultiHitCount(skill);
+        let totalDamage = 0;
 
-        if (isCrit && damage > 0) messages.push('급소에 맞았다!');
+        for (let hit = 0; hit < hitCount; hit++) {
+          if (defender.currentHp <= 0) break;
 
-        // 타입 상성 메시지
-        const eff = getEffectiveness(skill.type, defender.type);
-        const effText = getEffectivenessText(eff);
-        if (effText) messages.push(effText);
+          const isCrit = checkCritical(skill, attackerBuffs);
+          const damage = calcDamage(attacker, defender, skill, isCrit, attackerBuffs);
 
-        // 데미지 적용
-        if (damage > 0) {
-          defender.currentHp = Math.max(0, defender.currentHp - damage);
+          if (hit === 0 || hitCount > 1) {
+            if (isCrit && damage > 0) messages.push('급소에 맞았다!');
+          }
+
+          if (hit === 0) {
+            const eff = getEffectiveness(skill.type, defender.type);
+            const effText = getEffectivenessText(eff);
+            if (effText) messages.push(effText);
+          }
+
+          if (damage > 0) {
+            defender.currentHp = Math.max(0, defender.currentHp - damage);
+            totalDamage += damage;
+          }
+        }
+
+        if (hitCount > 1) {
+          messages.push(`${hitCount}번 맞았다!`);
         }
 
         // 스킬 효과 적용
-        messages.push(...applySkillEffect(skill, attacker, defender, damage));
+        messages.push(...applySkillEffect(skill, attacker, defender, totalDamage, attackerBuffs, defenderBuffs));
 
         // 기절 체크
         if (defender.currentHp <= 0) {
           messages.push(`${defender.name}은(는) 쓰러졌다!`);
-          // 경험치 처리는 외부에서
+          // 계약자 기절 추적
+          if (defender.isContractor && action.side === 'enemy') {
+            this.contractorKO = true;
+            messages.push('계약자가 쓰러졌다! 전투 후 마을로 돌아가야 한다!');
+          }
         }
         break;
       }
@@ -263,14 +439,16 @@ export class Battle {
         const newMonster = party[action.monsterIndex];
         if (newMonster && newMonster.currentHp > 0) {
           const old = action.side === 'player' ? this.playerActive : this.enemyActive;
-          messages.push(`${old.name}, 돌아와!`);
+          const recallMsg = old.isContractor ? `${old.name}이(가) 뒤로 물러났다!` : `${old.name}, 돌아와!`;
+          messages.push(recallMsg);
           this.initBattleState(newMonster);
           if (action.side === 'player') {
             this.playerActive = newMonster;
           } else {
             this.enemyActive = newMonster;
           }
-          messages.push(`가라, ${newMonster.name}!`);
+          const sendMsg = newMonster.isContractor ? `${newMonster.name}이(가) 전투에 나섰다!` : `가라, ${newMonster.name}!`;
+          messages.push(sendMsg);
         }
         break;
       }
@@ -295,7 +473,7 @@ export class Battle {
             messages.push('도망칠 수 없었다!');
           }
         } else {
-          messages.push('트레이너 배틀에서는 도망칠 수 없다!');
+          messages.push('상대와의 배틀에서는 도망칠 수 없다!');
         }
         break;
       }
@@ -349,14 +527,17 @@ export class Battle {
       this.initBattleState(newMonster);
       this.playerActive = newMonster;
       this.state = 'select_action';
-      return [`가라, ${newMonster.name}!`];
+      const msg = newMonster.isContractor
+        ? `${newMonster.name}이(가) 전투에 나섰다!`
+        : `가라, ${newMonster.name}!`;
+      return [msg];
     }
     return [];
   }
 
-  /** 포획 시도 */
+  /** 계약 시도 (마석) */
   attemptCapture(ballMultiplier = 1) {
-    if (!this.isWild) return { success: false, messages: ['트레이너의 몬스터는 포획할 수 없다!'] };
+    if (!this.isWild) return { success: false, messages: ['상대의 몬스터와는 계약할 수 없다!'] };
 
     const target = this.enemyActive;
     const maxHp = target.stats.hp;
@@ -366,7 +547,7 @@ export class Battle {
     // 마스터볼
     if (ballMultiplier >= 255) {
       this.result = 'capture';
-      return { success: true, messages: ['잡았다!', `${target.name}을(를) 포획했다!`], shakes: 3 };
+      return { success: true, messages: ['계약 성립!', `${target.name}과(와) 계약했다!`], shakes: 3 };
     }
 
     // 포획 확률 계산
@@ -387,7 +568,7 @@ export class Battle {
       // 최종 판정
       if (Math.random() * 65536 < shakeChance) {
         this.result = 'capture';
-        messages.push('잡았다!', `${target.name}을(를) 포획했다!`);
+        messages.push('계약 성립!', `${target.name}과(와) 계약했다!`);
         return { success: true, messages, shakes: 3 };
       }
       shakes = 2; // 아깝게 실패
@@ -395,7 +576,7 @@ export class Battle {
 
     const shakeTexts = ['', '흔들...', '흔들... 흔들...', '흔들... 흔들... 흔들...'];
     if (shakes > 0) messages.push(shakeTexts[shakes]);
-    messages.push('아! 빠져나와 버렸다!');
+    messages.push('계약이 거부되었다!');
 
     return { success: false, messages, shakes };
   }

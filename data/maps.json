@@ -17,11 +17,15 @@
           "stock": -1
         },
         {
-          "itemId": "capsule_ball",
+          "itemId": "magic_stone",
           "stock": -1
         },
         {
           "itemId": "antidote",
+          "stock": -1
+        },
+        {
+          "itemId": "ration",
           "stock": -1
         }
       ],
@@ -78,11 +82,18 @@
           "minLevel": 3,
           "maxLevel": 5,
           "weight": 15
+        },
+        {
+          "monsterId": 91,
+          "weight": 1,
+          "minLevel": 50,
+          "maxLevel": 55,
+          "requiredBadges": 8
         }
       ],
       "trainers": [
         {
-          "id": "trainer_r1_1",
+          "id": "route1_t1",
           "name": "훈련생 민수",
           "team": [
             {
@@ -93,7 +104,7 @@
           "reward": 100
         },
         {
-          "id": "trainer_r1_2",
+          "id": "route1_t2",
           "name": "훈련생 수지",
           "team": [
             {
@@ -108,7 +119,7 @@
       "shop": null,
       "events": null,
       "requiredBadges": 0,
-      "wildEncounterRate": 0.15
+      "wildEncounterRate": 0.1
     },
     {
       "id": "town_02",
@@ -129,7 +140,7 @@
           "stock": -1
         },
         {
-          "itemId": "capsule_ball",
+          "itemId": "magic_stone",
           "stock": -1
         },
         {
@@ -142,6 +153,14 @@
         },
         {
           "itemId": "escape_rope",
+          "stock": -1
+        },
+        {
+          "itemId": "ration",
+          "stock": -1
+        },
+        {
+          "itemId": "herb_tea",
           "stock": -1
         }
       ],
@@ -187,7 +206,7 @@
         }
       ],
       "gym": {
-        "leader": "체육관장 불꽃",
+        "leader": "수호자 불꽃",
         "type": "fire",
         "badge": "badge_fire",
         "team": [
@@ -255,7 +274,7 @@
       ],
       "trainers": [
         {
-          "id": "trainer_r2_1",
+          "id": "route2_t1",
           "name": "등산가 철수",
           "team": [
             {
@@ -270,7 +289,7 @@
           "reward": 300
         },
         {
-          "id": "trainer_r2_2",
+          "id": "route2_t2",
           "name": "소녀 하나",
           "team": [
             {
@@ -297,7 +316,8 @@
       "type": "cave",
       "description": "해안 절벽에 뚫린 어두운 동굴.",
       "connections": [
-        "route_02"
+        "route_02",
+        "town_03"
       ],
       "encounters": [
         {
@@ -329,6 +349,13 @@
           "minLevel": 8,
           "maxLevel": 11,
           "weight": 15
+        },
+        {
+          "monsterId": 92,
+          "weight": 1,
+          "minLevel": 50,
+          "maxLevel": 55,
+          "requiredBadges": 8
         }
       ],
       "trainers": [
@@ -373,7 +400,8 @@
       "connections": [
         "route_02",
         "gym_02",
-        "route_03"
+        "route_03",
+        "cave_01"
       ],
       "encounters": null,
       "trainers": null,
@@ -388,11 +416,11 @@
           "stock": -1
         },
         {
-          "itemId": "capsule_ball",
+          "itemId": "magic_stone",
           "stock": -1
         },
         {
-          "itemId": "high_ball",
+          "itemId": "high_stone",
           "stock": -1
         },
         {
@@ -405,6 +433,18 @@
         },
         {
           "itemId": "repel",
+          "stock": -1
+        },
+        {
+          "itemId": "ration",
+          "stock": -1
+        },
+        {
+          "itemId": "herb_tea",
+          "stock": -1
+        },
+        {
+          "itemId": "energy_bar",
           "stock": -1
         }
       ],
@@ -450,7 +490,7 @@
         }
       ],
       "gym": {
-        "leader": "체육관장 파도",
+        "leader": "수호자 석진",
         "type": "water",
         "badge": "badge_water",
         "team": [
@@ -523,7 +563,7 @@
       ],
       "trainers": [
         {
-          "id": "trainer_r3_1",
+          "id": "route3_t1",
           "name": "학생 지원",
           "team": [
             {
@@ -538,7 +578,7 @@
           "reward": 500
         },
         {
-          "id": "trainer_r3_2",
+          "id": "route3_t2",
           "name": "등산가 대호",
           "team": [
             {
@@ -553,7 +593,7 @@
           "reward": 520
         },
         {
-          "id": "trainer_r3_3",
+          "id": "route3_t3",
           "name": "그림자단원 알파",
           "team": [
             {
@@ -599,7 +639,7 @@
           "stock": -1
         },
         {
-          "itemId": "high_ball",
+          "itemId": "high_stone",
           "stock": -1
         },
         {
@@ -620,6 +660,18 @@
         },
         {
           "itemId": "repel",
+          "stock": -1
+        },
+        {
+          "itemId": "ration",
+          "stock": -1
+        },
+        {
+          "itemId": "herb_tea",
+          "stock": -1
+        },
+        {
+          "itemId": "energy_bar",
           "stock": -1
         }
       ],
@@ -665,7 +717,7 @@
         }
       ],
       "gym": {
-        "leader": "체육관장 썬더",
+        "leader": "수호자 미나",
         "type": "electric",
         "badge": "badge_electric",
         "team": [
@@ -735,11 +787,18 @@
           "minLevel": 19,
           "maxLevel": 22,
           "weight": 20
+        },
+        {
+          "monsterId": 94,
+          "weight": 1,
+          "minLevel": 52,
+          "maxLevel": 57,
+          "requiredBadges": 8
         }
       ],
       "trainers": [
         {
-          "id": "trainer_r4_1",
+          "id": "route4_t1",
           "name": "곤충소년 벌",
           "team": [
             {
@@ -754,7 +813,7 @@
           "reward": 650
         },
         {
-          "id": "trainer_r4_2",
+          "id": "route4_t2",
           "name": "자연인 나무",
           "team": [
             {
@@ -781,7 +840,8 @@
       "type": "forest",
       "description": "안개가 자욱한 신비한 숲.",
       "connections": [
-        "route_04"
+        "route_04",
+        "town_05"
       ],
       "encounters": [
         {
@@ -819,6 +879,13 @@
           "minLevel": 20,
           "maxLevel": 24,
           "weight": 20
+        },
+        {
+          "monsterId": 93,
+          "weight": 1,
+          "minLevel": 52,
+          "maxLevel": 57,
+          "requiredBadges": 8
         }
       ],
       "trainers": [
@@ -863,7 +930,7 @@
         }
       ],
       "requiredBadges": 3,
-      "wildEncounterRate": 0.2
+      "wildEncounterRate": 0.17
     },
     {
       "id": "town_05",
@@ -873,7 +940,8 @@
       "connections": [
         "route_04",
         "gym_04",
-        "route_05"
+        "route_05",
+        "forest_01"
       ],
       "encounters": null,
       "trainers": null,
@@ -884,7 +952,7 @@
           "stock": -1
         },
         {
-          "itemId": "high_ball",
+          "itemId": "high_stone",
           "stock": -1
         },
         {
@@ -897,6 +965,14 @@
         },
         {
           "itemId": "repel",
+          "stock": -1
+        },
+        {
+          "itemId": "energy_bar",
+          "stock": -1
+        },
+        {
+          "itemId": "return_scroll",
           "stock": -1
         }
       ],
@@ -946,7 +1022,7 @@
         }
       ],
       "gym": {
-        "leader": "체육관장 수풀",
+        "leader": "수호자 라이",
         "type": "grass",
         "badge": "badge_grass",
         "team": [
@@ -1023,7 +1099,7 @@
       ],
       "trainers": [
         {
-          "id": "trainer_r5_1",
+          "id": "route5_t1",
           "name": "격투가 주먹",
           "team": [
             {
@@ -1038,7 +1114,7 @@
           "reward": 900
         },
         {
-          "id": "trainer_r5_2",
+          "id": "route5_t2",
           "name": "등산가 산악",
           "team": [
             {
@@ -1053,7 +1129,7 @@
           "reward": 920
         },
         {
-          "id": "trainer_r5_3",
+          "id": "route5_t3",
           "name": "그림자단 간부 검은달",
           "team": [
             {
@@ -1107,11 +1183,11 @@
           "stock": -1
         },
         {
-          "itemId": "high_ball",
+          "itemId": "high_stone",
           "stock": -1
         },
         {
-          "itemId": "ultra_ball",
+          "itemId": "ultra_stone",
           "stock": -1
         },
         {
@@ -1128,6 +1204,14 @@
         },
         {
           "itemId": "speed_boost",
+          "stock": -1
+        },
+        {
+          "itemId": "energy_bar",
+          "stock": -1
+        },
+        {
+          "itemId": "return_scroll",
           "stock": -1
         }
       ],
@@ -1177,7 +1261,7 @@
         }
       ],
       "gym": {
-        "leader": "체육관장 권왕",
+        "leader": "수호자 무현",
         "type": "fighting",
         "badge": "badge_fighting",
         "team": [
@@ -1255,7 +1339,7 @@
       ],
       "trainers": [
         {
-          "id": "trainer_r6_1",
+          "id": "route6_t1",
           "name": "스키선수 윈터",
           "team": [
             {
@@ -1270,7 +1354,7 @@
           "reward": 1100
         },
         {
-          "id": "trainer_r6_2",
+          "id": "route6_t2",
           "name": "천문학자 스텔라",
           "team": [
             {
@@ -1283,6 +1367,21 @@
             }
           ],
           "reward": 1150
+        },
+        {
+          "id": "route6_t3",
+          "name": "산악 전사 석진",
+          "team": [
+            {
+              "monsterId": 37,
+              "level": 33
+            },
+            {
+              "monsterId": 78,
+              "level": 32
+            }
+          ],
+          "reward": 1200
         }
       ],
       "gym": null,
@@ -1297,7 +1396,8 @@
       "type": "cave",
       "description": "얼음으로 뒤덮인 거대한 동굴.",
       "connections": [
-        "route_06"
+        "route_06",
+        "town_07"
       ],
       "encounters": [
         {
@@ -1335,6 +1435,13 @@
           "minLevel": 32,
           "maxLevel": 35,
           "weight": 10
+        },
+        {
+          "monsterId": 95,
+          "weight": 1,
+          "minLevel": 55,
+          "maxLevel": 60,
+          "requiredBadges": 8
         }
       ],
       "trainers": [
@@ -1389,7 +1496,8 @@
       "connections": [
         "route_06",
         "gym_06",
-        "route_07"
+        "route_07",
+        "cave_02"
       ],
       "encounters": null,
       "trainers": null,
@@ -1400,7 +1508,7 @@
           "stock": -1
         },
         {
-          "itemId": "ultra_ball",
+          "itemId": "ultra_stone",
           "stock": -1
         },
         {
@@ -1417,6 +1525,14 @@
         },
         {
           "itemId": "pp_restore",
+          "stock": -1
+        },
+        {
+          "itemId": "energy_bar",
+          "stock": -1
+        },
+        {
+          "itemId": "return_scroll",
           "stock": -1
         }
       ],
@@ -1466,7 +1582,7 @@
         }
       ],
       "gym": {
-        "leader": "체육관장 빙하",
+        "leader": "수호자 설화",
         "type": "ice",
         "badge": "badge_ice",
         "team": [
@@ -1545,11 +1661,18 @@
           "minLevel": 35,
           "maxLevel": 38,
           "weight": 15
+        },
+        {
+          "monsterId": 96,
+          "weight": 1,
+          "minLevel": 55,
+          "maxLevel": 60,
+          "requiredBadges": 8
         }
       ],
       "trainers": [
         {
-          "id": "trainer_r7_1",
+          "id": "route7_t1",
           "name": "드래곤테이머 용기",
           "team": [
             {
@@ -1564,7 +1687,7 @@
           "reward": 1400
         },
         {
-          "id": "trainer_r7_2",
+          "id": "route7_t2",
           "name": "연금술사 오로라",
           "team": [
             {
@@ -1579,7 +1702,7 @@
           "reward": 1450
         },
         {
-          "id": "trainer_r7_3",
+          "id": "route7_t3",
           "name": "그림자단 간부 흑사",
           "team": [
             {
@@ -1629,7 +1752,7 @@
           "stock": -1
         },
         {
-          "itemId": "ultra_ball",
+          "itemId": "ultra_stone",
           "stock": -1
         },
         {
@@ -1654,6 +1777,14 @@
         },
         {
           "itemId": "spatk_boost",
+          "stock": -1
+        },
+        {
+          "itemId": "energy_bar",
+          "stock": -1
+        },
+        {
+          "itemId": "return_scroll",
           "stock": -1
         }
       ],
@@ -1703,7 +1834,7 @@
         }
       ],
       "gym": {
-        "leader": "체육관장 용왕",
+        "leader": "수호자 용왕",
         "type": "dragon",
         "badge": "badge_dragon",
         "team": [
@@ -1781,7 +1912,7 @@
       ],
       "trainers": [
         {
-          "id": "trainer_r8_1",
+          "id": "route8_t1",
           "name": "암흑술사 미스트",
           "team": [
             {
@@ -1796,7 +1927,7 @@
           "reward": 1600
         },
         {
-          "id": "trainer_r8_2",
+          "id": "route8_t2",
           "name": "저주사 섀도우",
           "team": [
             {
@@ -1823,7 +1954,8 @@
       "type": "cave",
       "description": "그림자단의 본거지.",
       "connections": [
-        "route_08"
+        "route_08",
+        "town_09"
       ],
       "encounters": [
         {
@@ -1855,6 +1987,13 @@
           "minLevel": 40,
           "maxLevel": 44,
           "weight": 20
+        },
+        {
+          "monsterId": 97,
+          "weight": 1,
+          "minLevel": 58,
+          "maxLevel": 63,
+          "requiredBadges": 8
         }
       ],
       "trainers": [
@@ -1906,6 +2045,25 @@
             }
           ],
           "reward": 2500
+        },
+        {
+          "id": "shadow_t4",
+          "name": "그림자 간부 암살",
+          "team": [
+            {
+              "monsterId": 89,
+              "level": 44
+            },
+            {
+              "monsterId": 64,
+              "level": 45
+            },
+            {
+              "monsterId": 32,
+              "level": 45
+            }
+          ],
+          "reward": 2800
         },
         {
           "id": "shadow_boss",
@@ -1960,7 +2118,8 @@
       "connections": [
         "route_08",
         "gym_08",
-        "route_09"
+        "route_09",
+        "shadow_base"
       ],
       "encounters": null,
       "trainers": null,
@@ -1971,7 +2130,7 @@
           "stock": -1
         },
         {
-          "itemId": "ultra_ball",
+          "itemId": "ultra_stone",
           "stock": -1
         },
         {
@@ -1988,6 +2147,14 @@
         },
         {
           "itemId": "critical_boost",
+          "stock": -1
+        },
+        {
+          "itemId": "energy_bar",
+          "stock": -1
+        },
+        {
+          "itemId": "return_scroll",
           "stock": -1
         }
       ],
@@ -2037,7 +2204,7 @@
         }
       ],
       "gym": {
-        "leader": "체육관장 흑야",
+        "leader": "수호자 성운",
         "type": "dark",
         "badge": "badge_dark",
         "team": [
@@ -2138,11 +2305,18 @@
           "minLevel": 45,
           "maxLevel": 50,
           "weight": 10
+        },
+        {
+          "monsterId": 98,
+          "weight": 1,
+          "minLevel": 58,
+          "maxLevel": 63,
+          "requiredBadges": 8
         }
       ],
       "trainers": [
         {
-          "id": "champ_road_t1",
+          "id": "route9_t1",
           "name": "에이스 트레이너 진",
           "team": [
             {
@@ -2161,7 +2335,7 @@
           "reward": 3000
         },
         {
-          "id": "champ_road_t2",
+          "id": "route9_t2",
           "name": "에이스 트레이너 현",
           "team": [
             {
@@ -2180,7 +2354,7 @@
           "reward": 3000
         },
         {
-          "id": "champ_road_t3",
+          "id": "route9_t3",
           "name": "에이스 트레이너 별",
           "team": [
             {
@@ -2355,7 +2529,38 @@
           "reward": 20000
         }
       ],
-      "gym": null,
+      "gym": {
+        "leader": "마왕 카오스",
+        "type": "all",
+        "badge": "badge_champion",
+        "team": [
+          {
+            "monsterId": 28,
+            "level": 58
+          },
+          {
+            "monsterId": 54,
+            "level": 58
+          },
+          {
+            "monsterId": 45,
+            "level": 58
+          },
+          {
+            "monsterId": 73,
+            "level": 59
+          },
+          {
+            "monsterId": 97,
+            "level": 59
+          },
+          {
+            "monsterId": 99,
+            "level": 60
+          }
+        ],
+        "reward": 20000
+      },
       "shop": null,
       "events": [
         {

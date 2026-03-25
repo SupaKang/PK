@@ -1,445 +1,678 @@
-// 월드 맵 네비게이션 UI
+// 타일 기반 월드 맵 UI
+import { TilemapEngine } from './tilemap-engine.js';
+import { CharacterController, NpcSprite } from './character-controller.js';
 
-const LOCATION_ICONS = {
-  town: { color: '#44aa66', symbol: 'T' },
-  city: { color: '#4488cc', symbol: 'C' },
-  route: { color: '#886644', symbol: '~' },
-  cave: { color: '#666688', symbol: 'M' },
-  gym: { color: '#ffcc44', symbol: '*' },
-  dungeon: { color: '#884444', symbol: 'D' },
-  special: { color: '#aa44cc', symbol: '!' },
-};
+// 타일맵 데이터 캐시
+const tilemapCache = new Map();
+
+async function loadTilemap(locationId) {
+  if (tilemapCache.has(locationId)) return tilemapCache.get(locationId);
+  try {
+    const res = await fetch(`./data/tilemaps/${locationId}.json`);
+    if (!res.ok) return null;
+    const data = await res.json();
+    tilemapCache.set(locationId, data);
+    return data;
+  } catch { return null; }
+}
 
 export class MapUI {
-  /**
-   * @param {import('./renderer.js').Renderer} renderer
-   * @param {import('../world/map.js').MapManager} mapManager
-   */
   constructor(renderer, mapManager) {
     this.renderer = renderer;
     this.mapManager = mapManager;
-
-    this.cursor = 0;
-    this.connections = [];
-    this.currentLocation = null;
+    this.canvas = renderer.getContext().canvas;
     this.visible = false;
+    this.showMinimap = false;
+    this.showHelp = false;
 
-    // 위치 배너
+    // 타일 엔진
+    this.tileEngine = new TilemapEngine(this.canvas);
+
+    // 플레이어 캐릭터
+    this.player = new CharacterController();
+    this.player.setCollisionChecker((tx, ty) => this.tileEngine.isBlocked(tx, ty));
+
+    // NPC 스프라이트
+    this.npcSprites = [];
+
+    // 현재 맵 데이터
+    this.currentMapData = null;
+    this.currentLocationId = null;
+    this.mapLoaded = false;
+
+    // 트랜지션
+    this.transitioning = false;
+    this.transitionTimer = 0;
+    this.transitionDuration = 0.6;
+    this.transitionTarget = null;
+    this.transitionSpawn = null;
+    this.fadeAlpha = 0;
+
+    // 배너
     this.banner = null;
     this.bannerTimer = 0;
     this.bannerDuration = 2.5;
 
-    // 미니맵 노드 좌표 캐시 (자동 레이아웃)
-    this._nodePositions = new Map();
-    this._nodeLayoutDirty = true;
+    // 인카운터 쿨다운 (이동할 때마다 체크)
+    this._lastTileX = -1;
+    this._lastTileY = -1;
+    this._stepCount = 0;
 
-    // 이동 트랜지션
-    this.transitioning = false;
-    this.transitionTimer = 0;
-    this.transitionDuration = 1.0;
-    this.transitionTarget = null;
+    // 키 상태 (지속 입력 감지용)
+    this._keys = {};
 
     // 콜백
-    this.onMove = null; // (locationId) => void
-    this.onEncounter = null; // () => void
+    this.onMove = null;
+    this.onInteract = null; // (npc) => void
+    this.onEncounterCheck = null; // () => boolean — 인카운터 발생 여부
+    this.onShop = null;
+    this.onHeal = null;
+    this.onBoss = null;
+    this.onHiddenEvent = null;
 
-    // 뱃지 수 (외부에서 설정)
+    // 계약자 레벨 (감응 타일용)
+    this._contractorLevel = 0;
+
+    // 뱃지 수
     this.badgeCount = 0;
 
-    this._refresh();
+    // 폴백 맵 커서
+    this._fallbackCursor = 0;
+
+    // 시간대 시각 효과
+    this.expeditionTimeOfDay = null;
+
+    // 파티 HP 위험 경고
+    this._partyLowHP = false;
+
+    // 파티 HP 요약 데이터
+    this._partyData = [];
+
+    // 플레이어 외형 (직업)
+    this.playerAppearance = { classId: 'warrior', baseColor: '#CC4444', accentColor: '#882222' };
   }
 
-  _refresh() {
-    this.currentLocation = this.mapManager.getCurrentLocation();
-    this.connections = this.mapManager.getConnections();
-    this.cursor = 0;
-    this._nodeLayoutDirty = true;
+  setPlayerAppearance(classId, baseColor, accentColor) {
+    this.playerAppearance = { classId, baseColor, accentColor };
+    this.player.setAppearance(classId, baseColor, accentColor);
   }
 
-  /**
-   * 미니맵 노드 자동 레이아웃
-   */
-  _layoutNodes() {
-    if (!this._nodeLayoutDirty) return;
-    this._nodeLayoutDirty = false;
-    this._nodePositions.clear();
+  /** 현재 위치의 타일맵 로드 */
+  async loadCurrentMap() {
+    const locId = this.mapManager.currentLocation;
+    if (locId === this.currentLocationId && this.mapLoaded) return;
 
-    const allLocations = this.mapManager.getAllLocations();
-    if (!allLocations || allLocations.length === 0) return;
+    const mapData = await loadTilemap(locId);
+    if (mapData) {
+      this.tileEngine.loadMap(mapData);
+      this.currentMapData = mapData;
+      this.currentLocationId = locId;
+      this.mapLoaded = true;
 
-    // 간단한 방사형 레이아웃: 현재 위치 중심
-    const centerX = 600, centerY = 300;
-    const visited = this.mapManager.visitedLocations;
-
-    // BFS로 위치 좌표 계산
-    const placed = new Map();
-    const queue = [{ id: this.mapManager.currentLocation, x: centerX, y: centerY, depth: 0 }];
-    placed.set(this.mapManager.currentLocation, { x: centerX, y: centerY });
-
-    const spacing = 70;
-    const angleStep = (Math.PI * 2) / 6;
-    let childIndex = 0;
-
-    while (queue.length > 0) {
-      const { id, x, y, depth } = queue.shift();
-      const loc = this.mapManager.getLocation(id);
-      if (!loc || !loc.connections) continue;
-
-      const conns = loc.connections;
-      let angle = -Math.PI / 2;
-
-      for (const conn of conns) {
-        if (placed.has(conn.to)) continue;
-        if (!visited.has(conn.to) && !visited.has(id)) continue;
-
-        const nx = x + Math.cos(angle + childIndex * 0.5) * spacing;
-        const ny = y + Math.sin(angle + childIndex * 0.5) * spacing;
-        placed.set(conn.to, { x: nx, y: ny });
-        queue.push({ id: conn.to, x: nx, y: ny, depth: depth + 1 });
-        angle += angleStep;
-        childIndex++;
+      // 플레이어 위치 설정
+      if (this.transitionSpawn) {
+        this.player.setPosition(this.transitionSpawn.x, this.transitionSpawn.y);
+        this.transitionSpawn = null;
+      } else if (mapData.playerSpawn) {
+        this.player.setPosition(mapData.playerSpawn.x, mapData.playerSpawn.y);
       }
-    }
 
-    this._nodePositions = placed;
+      this.player.setMapSize(mapData.width, mapData.height);
+
+      // NPC 스프라이트 생성
+      this.npcSprites = (mapData.npcs || []).map(npc => new NpcSprite(npc));
+
+      this._lastTileX = this.player.getTileX();
+      this._lastTileY = this.player.getTileY();
+    } else {
+      // 타일맵 없으면 폴백 (빈 맵)
+      this.mapLoaded = false;
+      this.currentMapData = null;
+    }
   }
 
-  /**
-   * 위치 도착 배너 표시
-   */
-  showBanner(locationName) {
-    this.banner = locationName;
+  showBanner(name) {
+    this.banner = name;
     this.bannerTimer = this.bannerDuration;
   }
 
-  open() {
-    this.visible = true;
-    this._refresh();
-  }
-
-  close() {
-    this.visible = false;
+  _refresh() {
+    // 맵 로드 트리거
+    this.loadCurrentMap();
   }
 
   update(dt) {
-    // 배너 타이머
+    if (!this.visible) return;
+
+    // 배너
     if (this.bannerTimer > 0) {
       this.bannerTimer -= dt;
-      if (this.bannerTimer <= 0) {
-        this.banner = null;
-      }
+      if (this.bannerTimer <= 0) this.banner = null;
     }
 
     // 트랜지션
     if (this.transitioning) {
       this.transitionTimer += dt;
+      const half = this.transitionDuration / 2;
+      if (this.transitionTimer < half) {
+        this.fadeAlpha = this.transitionTimer / half;
+      } else {
+        // 중간 지점에서 맵 전환
+        if (this.transitionTarget && this.fadeAlpha >= 0.95) {
+          this._executeTransition();
+          this.transitionTarget = null;
+        }
+        this.fadeAlpha = 1 - (this.transitionTimer - half) / half;
+      }
       if (this.transitionTimer >= this.transitionDuration) {
         this.transitioning = false;
-        this._finishMove();
+        this.fadeAlpha = 0;
+      }
+      return; // 트랜지션 중 이동 불가
+    }
+
+    // 타일맵 미로드 시 로드 시도
+    if (!this.mapLoaded) {
+      this.loadCurrentMap();
+      return;
+    }
+
+    // 플레이어 이동
+    this.player.update(dt, this._keys);
+
+    // 카메라 추적
+    this.tileEngine.setCamera(this.player.getWorldX(), this.player.getWorldY());
+
+    // 타일 이동 감지
+    const tx = this.player.getTileX();
+    const ty = this.player.getTileY();
+    if (tx !== this._lastTileX || ty !== this._lastTileY) {
+      this._lastTileX = tx;
+      this._lastTileY = ty;
+      this._onTileChange(tx, ty);
+    }
+  }
+
+  /** 타일 이동 시 체크 */
+  _onTileChange(tx, ty) {
+    // 출구 체크
+    const exit = this.tileEngine.getExitAt(tx, ty);
+    if (exit) {
+      this._startTransition(exit.to, exit.spawnX, exit.spawnY);
+      return;
+    }
+
+    // Hidden event check
+    if (this.currentMapData?.hiddenEvents) {
+      const hiddenEvent = this.currentMapData.hiddenEvents.find(e => e.x === tx && e.y === ty);
+      if (hiddenEvent && !hiddenEvent._triggered) {
+        hiddenEvent._triggered = true;
+        if (this.onHiddenEvent) this.onHiddenEvent(hiddenEvent);
+        return;
+      }
+    }
+
+    // 야생 인카운터 체크 (풀밭 타일 위를 걸을 때)
+    const groundTile = this.tileEngine.getTileAt('ground', tx, ty);
+    if (groundTile === 1) { // 1 = grass (인카운터 가능 지역)
+      this._stepCount++;
+      if (this._stepCount >= 4 && this.onEncounterCheck) {
+        this._stepCount = 0;
+        this.onEncounterCheck();
       }
     }
   }
 
-  _finishMove() {
+  _startTransition(targetLocationId, spawnX, spawnY) {
+    this.transitioning = true;
+    this.transitionTimer = 0;
+    this.transitionTarget = targetLocationId;
+    this.transitionSpawn = { x: spawnX ?? 1, y: spawnY ?? 1 };
+    this.fadeAlpha = 0;
+  }
+
+  _executeTransition() {
     if (!this.transitionTarget) return;
+    const targetId = this.transitionTarget;
 
-    const result = this.mapManager.moveTo(this.transitionTarget, this.badgeCount);
-    this.transitionTarget = null;
-
+    // MapManager 이동
+    const result = this.mapManager.moveTo(targetId, this.badgeCount);
     if (result.success) {
-      this._refresh();
-      this.showBanner(result.location?.name || '???');
+      this.currentLocationId = null; // 리로드 강제
+      this.mapLoaded = false;
+      this.loadCurrentMap();
+      this.showBanner(result.location?.name || targetId);
 
       if (this.onMove) {
-        this.onMove(this.mapManager.currentLocation);
+        this.onMove(targetId);
       }
-
-      // 야생 인카운터 체크 (루트인 경우)
-      const loc = this.mapManager.getCurrentLocation();
-      if (loc && loc.encounters && loc.encounters.length > 0 && this.onEncounter) {
-        // 인카운터 체크는 외부에서 처리
-      }
+    } else {
+      // 이동 실패 (뱃지 부족 등) — 원래 위치로
+      this.transitionSpawn = null;
     }
   }
 
   render() {
-    const r = this.renderer;
-    const ctx = r.getContext();
-
-    if (!this.visible && !this.banner) return;
-
-    // 배너 (항상 렌더, 맵 열려있든 아니든)
-    if (this.banner && this.bannerTimer > 0) {
-      this._renderBanner(r, ctx);
-    }
-
     if (!this.visible) return;
 
-    // 맵 전체 화면
-    r.clear('#0a0a16');
+    const ctx = this.renderer.getContext();
 
-    // 미니맵 (우측)
-    this._layoutNodes();
-    this._renderMiniMap(r, ctx);
+    if (!this.mapLoaded || !this.currentMapData) {
+      // Fallback: simple location info screen
+      const r = this.renderer;
+      const ctx2 = r.getContext();
+      r.clear('#1a2a1a');
 
-    // 좌측 - 현재 위치 정보
-    this._renderLocationInfo(r, ctx);
+      const loc = this.mapManager?.getCurrentLocation();
+      if (loc) {
+        // Simple background based on location type
+        const bgColors = { town: '#2a3a2a', route: '#1a2a1a', cave: '#1a1a2a', gym: '#2a2a1a', dungeon: '#1a1a1a', elite_four: '#2a1a2a' };
+        r.clear(bgColors[loc.type] || '#1a2a1a');
 
-    // 하단 - 이동 가능 목적지
-    this._renderConnections(r, ctx);
+        // Location name
+        const nameW = r.measureText(loc.name, 3);
+        r.drawPixelText(loc.name, (800 - nameW) / 2, 30, '#ffffff', 3);
 
-    // 트랜지션 오버레이
-    if (this.transitioning) {
-      const progress = this.transitionTimer / this.transitionDuration;
-      // 페이드아웃 -> 페이드인
-      let alpha;
-      if (progress < 0.5) {
-        alpha = progress * 2;
-      } else {
-        alpha = (1 - progress) * 2;
+        // Description
+        if (loc.description) {
+          for (let i = 0; i < loc.description.length; i += 40) {
+            r.drawPixelText(loc.description.substring(i, i + 40), 50, 80 + Math.floor(i/40) * 22, '#aaaacc', 2);
+          }
+        }
+
+        // Connections as menu
+        const conns = this.mapManager.getConnections();
+        r.drawPixelText('이동 가능:', 50, 200, '#ffcc44', 2);
+        for (let i = 0; i < conns.length; i++) {
+          const selected = this._fallbackCursor === i;
+          const y = 230 + i * 35;
+          if (selected) {
+            ctx2.fillStyle = 'rgba(100,100,200,0.2)';
+            ctx2.fillRect(45, y - 5, 710, 30);
+            r.drawPixelText('\u25b6 ' + conns[i].name, 60, y, '#ffffff', 2);
+          } else {
+            r.drawPixelText('  ' + conns[i].name, 60, y, '#aaaacc', 2);
+          }
+        }
+
+        // Facilities
+        let fy = 450;
+        if (loc.type === 'town') {
+          r.drawPixelText('[자동 회복됨]', 50, fy, '#44cc66', 2);
+          fy += 25;
+        }
+        if (loc.shop) r.drawPixelText('[S] 상점', 50, fy, '#44aa55', 2);
+
+        r.drawPixelText('[Enter] 이동  [Esc] 메뉴  [S] 상점', 50, 560, '#666688', 1);
       }
-      ctx.fillStyle = `rgba(0,0,0,${alpha})`;
-      ctx.fillRect(0, 0, 800, 600);
-
-      // 이동 텍스트
-      if (progress > 0.3 && progress < 0.7) {
-        const moveText = '이동 중...';
-        const tw = r.measureText(moveText, 3);
-        r.drawPixelText(moveText, (800 - tw) / 2, 280, '#ffffff', 3);
-      }
-    }
-  }
-
-  _renderBanner(r, ctx) {
-    // 슬라이드-인 배너
-    const progress = 1 - (this.bannerTimer / this.bannerDuration);
-    let bannerX;
-
-    if (progress < 0.15) {
-      bannerX = -400 + (400 * progress / 0.15);
-    } else if (progress > 0.75) {
-      bannerX = 800 * ((progress - 0.75) / 0.25);
-    } else {
-      bannerX = 0;
-    }
-
-    const bannerY = 50;
-    const bannerH = 60;
-
-    ctx.save();
-    ctx.translate(bannerX, 0);
-
-    // 배너 배경
-    ctx.fillStyle = 'rgba(10,10,30,0.85)';
-    ctx.fillRect(0, bannerY, 800, bannerH);
-    ctx.fillStyle = '#ffcc44';
-    ctx.fillRect(0, bannerY, 800, 3);
-    ctx.fillRect(0, bannerY + bannerH - 3, 800, 3);
-
-    // 위치 이름
-    const nameWidth = r.measureText(this.banner, 3);
-    r.drawPixelText(this.banner, (800 - nameWidth) / 2, bannerY + 15, '#ffffff', 3);
-
-    ctx.restore();
-  }
-
-  _renderLocationInfo(r, ctx) {
-    const loc = this.currentLocation;
-    if (!loc) return;
-
-    r.drawPanel(20, 20, 380, 250, '#0d0d1e', '#3a3a5a');
-
-    // 위치 타입 아이콘
-    const icon = LOCATION_ICONS[loc.type] || LOCATION_ICONS.route;
-    ctx.fillStyle = icon.color;
-    ctx.fillRect(35, 35, 24, 24);
-    r.drawPixelText(icon.symbol, 39, 39, '#ffffff', 2);
-
-    // 이름
-    r.drawPixelText(loc.name, 70, 35, '#ffffff', 3);
-
-    // 타입 라벨
-    const typeLabels = {
-      town: '마을', city: '도시', route: '도로', cave: '동굴',
-      gym: '체육관', dungeon: '던전', special: '특수',
-    };
-    r.drawPixelText(typeLabels[loc.type] || loc.type, 70, 62, '#888899', 2);
-
-    // 설명
-    if (loc.description) {
-      const desc = loc.description;
-      let y = 95;
-      // 줄바꿈
-      for (let i = 0; i < desc.length; i += 25) {
-        r.drawPixelText(desc.substring(i, i + 25), 35, y, '#aaaacc', 2);
-        y += 20;
-        if (y > 220) break;
-      }
-    }
-
-    // 야생 인카운터 경고
-    if (loc.encounters && loc.encounters.length > 0) {
-      ctx.fillStyle = '#442222';
-      ctx.fillRect(35, 220, 350, 22);
-      r.drawPixelText('! 야생 몬스터 출현 지역', 42, 224, '#ff6644', 2);
-    }
-
-    // 시설 정보
-    if (loc.facilities) {
-      let y = 190;
-      for (const fac of loc.facilities) {
-        const facLabels = {
-          heal: '몬스터 센터', shop: '상점', gym: '체육관',
-        };
-        r.drawPixelText(`- ${facLabels[fac] || fac}`, 40, y, '#66aa88', 1);
-        y += 14;
-      }
-    }
-  }
-
-  _renderMiniMap(r, ctx) {
-    r.drawPanel(410, 20, 370, 320, '#0a0a16', '#3a3a5a');
-    r.drawPixelText('지도', 425, 30, '#ffcc44', 2);
-
-    // 연결선 그리기
-    ctx.strokeStyle = '#334455';
-    ctx.lineWidth = 2;
-
-    for (const [id, pos] of this._nodePositions) {
-      const loc = this.mapManager.getLocation(id);
-      if (!loc || !loc.connections) continue;
-
-      for (const conn of loc.connections) {
-        const targetPos = this._nodePositions.get(conn.to);
-        if (!targetPos) continue;
-
-        ctx.beginPath();
-        ctx.moveTo(pos.x, pos.y);
-        ctx.lineTo(targetPos.x, targetPos.y);
-        ctx.stroke();
-      }
-    }
-
-    // 노드 그리기
-    for (const [id, pos] of this._nodePositions) {
-      const loc = this.mapManager.getLocation(id);
-      if (!loc) continue;
-
-      const isCurrent = id === this.mapManager.currentLocation;
-      const icon = LOCATION_ICONS[loc.type] || LOCATION_ICONS.route;
-      const visited = this.mapManager.hasVisited(id);
-
-      // 노드 원
-      const nodeSize = isCurrent ? 10 : 7;
-      ctx.fillStyle = isCurrent ? '#ffcc44' : visited ? icon.color : '#333355';
-      ctx.beginPath();
-      ctx.arc(pos.x, pos.y, nodeSize, 0, Math.PI * 2);
-      ctx.fill();
-
-      if (isCurrent) {
-        // 맥동 효과
-        const pulse = Math.sin(Date.now() * 0.005) * 3;
-        ctx.strokeStyle = '#ffcc44';
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        ctx.arc(pos.x, pos.y, nodeSize + pulse, 0, Math.PI * 2);
-        ctx.stroke();
-      }
-
-      // 라벨
-      if (visited || isCurrent) {
-        const name = loc.name.substring(0, 6);
-        const tw = r.measureText(name, 1);
-        r.drawPixelText(name, pos.x - tw / 2, pos.y + nodeSize + 4, isCurrent ? '#ffffff' : '#888899', 1);
-      }
-    }
-  }
-
-  _renderConnections(r, ctx) {
-    r.drawPanel(20, 350, 760, 230, '#0d0d1e', '#3a3a5a');
-    r.drawPixelText('이동 가능한 장소', 40, 365, '#ffcc44', 2);
-
-    if (this.connections.length === 0) {
-      r.drawPixelText('이동할 수 있는 장소가 없습니다.', 40, 400, '#888899', 2);
       return;
     }
 
-    for (let i = 0; i < this.connections.length; i++) {
-      const conn = this.connections[i];
-      const y = 395 + i * 42;
-      const selected = this.cursor === i;
-      const canAccess = this.mapManager.canAccess(conn.id, this.badgeCount);
+    // 타일맵 하단 레이어 (바닥 + 오브젝트)
+    this.tileEngine.renderBelow(ctx);
 
-      if (selected) {
-        ctx.fillStyle = 'rgba(100,100,200,0.15)';
-        ctx.fillRect(30, y - 2, 740, 38);
-        ctx.fillStyle = '#ffcc44';
-        ctx.fillRect(36, y + 10, 6, 6);
-      }
-
-      // 위치 타입 아이콘
-      const targetLoc = this.mapManager.getLocation(conn.id);
-      const locType = targetLoc?.type || 'route';
-      const icon = LOCATION_ICONS[locType] || LOCATION_ICONS.route;
-      ctx.fillStyle = canAccess ? icon.color : '#444444';
-      ctx.fillRect(50, y + 2, 18, 18);
-      r.drawPixelText(icon.symbol, 53, y + 5, '#ffffff', 1);
-
-      // 이름
-      const nameColor = !canAccess ? '#664444' : selected ? '#ffffff' : '#ccccdd';
-      r.drawPixelText(conn.name, 78, y + 2, nameColor, 2);
-
-      // 설명
-      if (conn.description) {
-        r.drawPixelText(conn.description.substring(0, 40), 78, y + 22, '#777799', 1);
-      }
-
-      // 잠김 표시
-      if (!canAccess) {
-        r.drawPixelText(`[뱃지 ${conn.requiredBadges}개 필요]`, 500, y + 4, '#ff4444', 1);
-      }
-
-      // 방문 여부
-      if (this.mapManager.hasVisited(conn.id)) {
-        r.drawPixelText('[방문함]', 660, y + 4, '#44aa66', 1);
+    // Time-of-day map tinting
+    if (this.expeditionTimeOfDay) {
+      const tints = {
+        morning: { color: 'rgba(255,200,100,0.08)', blend: 'source-over' },
+        day: null,
+        evening: { color: 'rgba(200,80,30,0.12)', blend: 'source-over' },
+        night: { color: 'rgba(0,0,40,0.35)', blend: 'source-over' },
+      };
+      const tint = tints[this.expeditionTimeOfDay];
+      if (tint) {
+        ctx.fillStyle = tint.color;
+        ctx.fillRect(0, 0, 800, 600);
       }
     }
 
-    r.drawPixelText('[Enter] 이동  [ESC] 닫기', 40, 560, '#666688', 1);
+    // NPC 렌더링
+    for (const npc of this.npcSprites) {
+      const screen = this.tileEngine.worldToScreen(npc.x * 64, npc.y * 64);
+      if (screen.x > -64 && screen.x < 864 && screen.y > -64 && screen.y < 664) {
+        npc.render(ctx, screen.x, screen.y);
+      }
+    }
+
+    // Hidden event glow (감응 타일)
+    if (this.currentMapData?.hiddenEvents && this._contractorLevel > 0) {
+      const time = Date.now() * 0.003;
+      for (const event of this.currentMapData.hiddenEvents) {
+        if (this._contractorLevel >= event.requiredLevel) {
+          const screen = this.tileEngine.worldToScreen(event.x * 64, event.y * 64);
+          if (screen.x > -64 && screen.x < 864 && screen.y > -64 && screen.y < 664) {
+            const alpha = 0.3 + Math.sin(time + event.x * 2 + event.y * 3) * 0.2;
+            ctx.fillStyle = `rgba(200,180,255,${alpha})`;
+            ctx.beginPath();
+            ctx.arc(screen.x + 32, screen.y + 32, 20 + Math.sin(time * 1.5) * 5, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Sparkle particles
+            for (let i = 0; i < 3; i++) {
+              const px = screen.x + 16 + Math.sin(time * 2 + i * 2.1) * 24;
+              const py = screen.y + 16 + Math.cos(time * 1.7 + i * 1.8) * 24;
+              const sa = 0.5 + Math.sin(time * 3 + i) * 0.5;
+              ctx.fillStyle = `rgba(255,255,200,${sa * 0.6})`;
+              ctx.fillRect(px, py, 3, 3);
+            }
+          }
+        }
+      }
+    }
+
+    // 플레이어 렌더링
+    const playerScreen = this.tileEngine.worldToScreen(this.player.getWorldX(), this.player.getWorldY());
+    this.player.render(ctx, playerScreen.x, playerScreen.y);
+
+    // 타일맵 상단 레이어 (플레이어 위에 그려질 것)
+    this.tileEngine.renderAbove(ctx);
+
+    // Night vision cone
+    if (this.expeditionTimeOfDay === 'night') {
+      const playerScreen = this.tileEngine.worldToScreen(this.player.getWorldX(), this.player.getWorldY());
+      const px = playerScreen.x + 32;
+      const py = playerScreen.y + 32;
+      const grad = ctx.createRadialGradient(px, py, 60, px, py, 280);
+      grad.addColorStop(0, 'rgba(0,0,0,0)');
+      grad.addColorStop(0.5, 'rgba(0,0,20,0.2)');
+      grad.addColorStop(1, 'rgba(0,0,30,0.7)');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, 800, 600);
+    }
+
+    // 미니 HUD (위치 이름)
+    const loc = this.mapManager.getCurrentLocation();
+    if (loc) {
+      const r = this.renderer;
+      ctx.fillStyle = 'rgba(0,0,0,0.6)';
+      ctx.fillRect(0, 0, 800, 28);
+      r.drawPixelText(loc.name, 10, 6, '#ffffff', 2);
+      r.drawPixelText(`인장: ${this.badgeCount}/8`, 650, 6, '#ffcc44', 2);
+    }
+
+    // Low HP warning
+    if (this._partyLowHP) {
+      const blink = Math.floor(Date.now() / 500) % 2;
+      if (blink) {
+        r.drawPixelText('! HP 위험', 300, 8, '#ff4444', 2);
+      }
+    }
+
+    // Minimap overlay
+    if (this.showMinimap && this.currentMapData) {
+      const mmX = 580, mmY = 40;
+      const mmScale = 4; // each tile = 4px on minimap
+      const mmW = this.currentMapData.width * mmScale;
+      const mmH = this.currentMapData.height * mmScale;
+
+      // Background
+      ctx.fillStyle = 'rgba(0,0,0,0.75)';
+      ctx.fillRect(mmX - 5, mmY - 5, mmW + 10, mmH + 30);
+
+      // Title
+      const r = this.renderer;
+      r.drawPixelText('지도 [M]', mmX, mmY - 2, '#ffcc44', 1);
+
+      const mapY = mmY + 12;
+
+      // Draw tiles
+      const ground = this.currentMapData.layers?.ground;
+      const collision = this.currentMapData.layers?.collision;
+      if (ground) {
+        for (let y = 0; y < this.currentMapData.height; y++) {
+          for (let x = 0; x < this.currentMapData.width; x++) {
+            const idx = y * this.currentMapData.width + x;
+            const blocked = collision && collision[idx];
+            const tileId = ground[idx];
+
+            let color;
+            if (blocked) color = '#333';
+            else if (tileId === 1 || tileId === 9) color = '#4a8c3f'; // grass
+            else if (tileId === 2) color = '#9c7a4a'; // dirt
+            else if (tileId === 3) color = '#4a7aac'; // water
+            else if (tileId === 4 || tileId === 17) color = '#8a8a6a'; // stone/gym
+            else if (tileId === 5) color = '#8a6a4a'; // wood
+            else if (tileId === 19) color = '#8a3030'; // carpet
+            else color = '#555';
+
+            ctx.fillStyle = color;
+            ctx.fillRect(mmX + x * mmScale, mapY + y * mmScale, mmScale - 1, mmScale - 1);
+          }
+        }
+      }
+
+      // NPCs as colored dots
+      if (this.currentMapData.npcs) {
+        for (const npc of this.currentMapData.npcs) {
+          const npcColors = { shop: '#44aa55', heal: '#88aaff', trainer: '#cc4444', gym_leader: '#ddaa22', boss: '#992266', dialog: '#4488cc' };
+          ctx.fillStyle = npcColors[npc.type] || '#ffffff';
+          ctx.fillRect(mmX + npc.x * mmScale, mapY + npc.y * mmScale, mmScale, mmScale);
+        }
+      }
+
+      // Exits as yellow arrows
+      if (this.currentMapData.exits) {
+        for (const exit of this.currentMapData.exits) {
+          ctx.fillStyle = '#ffcc44';
+          ctx.fillRect(mmX + exit.x * mmScale, mapY + exit.y * mmScale, mmScale, mmScale);
+        }
+      }
+
+      // Player position (blinking)
+      const blink = Math.floor(Date.now() / 300) % 2;
+      if (blink) {
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(mmX + this.player.getTileX() * mmScale - 1, mapY + this.player.getTileY() * mmScale - 1, mmScale + 2, mmScale + 2);
+      }
+
+      // Hidden events (if detected)
+      if (this.currentMapData.hiddenEvents) {
+        for (const ev of this.currentMapData.hiddenEvents) {
+          if (this._contractorLevel >= ev.requiredLevel && !ev._triggered) {
+            const sparkle = 0.5 + Math.sin(Date.now() * 0.005 + ev.x) * 0.5;
+            ctx.fillStyle = 'rgba(200,180,255,' + sparkle + ')';
+            ctx.fillRect(mmX + ev.x * mmScale, mapY + ev.y * mmScale, mmScale, mmScale);
+          }
+        }
+      }
+    }
+
+    // 도움말 오버레이
+    if (this.showHelp) {
+      const r = this.renderer;
+      ctx.fillStyle = 'rgba(0,0,0,0.8)';
+      ctx.fillRect(0, 0, 800, 600);
+
+      r.drawPanel(150, 50, 500, 500, '#0d0d1e', '#4a4a6a');
+      r.drawPixelText('조작법', 320, 70, '#ffcc44', 3);
+
+      const controls = [
+        ['방향키', '이동'],
+        ['Enter / Space', 'NPC 대화 / 상호작용'],
+        ['Escape', '메뉴 열기'],
+        ['C', '캠핑 (탐험 중)'],
+        ['M / Tab', '미니맵 토글'],
+        ['H', '도움말 토글'],
+        ['', ''],
+        ['── 전투 중 ──', ''],
+        ['방향키', '메뉴 탐색'],
+        ['Enter', '선택 / 확인'],
+        ['Escape', '뒤로'],
+        ['', ''],
+        ['── 탐험 ──', ''],
+        ['마을 밖으로 나가면', '탐험 시작 (240AP)'],
+        ['마을로 돌아오면', '귀환 성공 + 보너스'],
+        ['AP 소진 시', '강제 귀환 (패널티)'],
+      ];
+
+      let y = 120;
+      for (const [key, desc] of controls) {
+        if (key === '') { y += 10; continue; }
+        if (key.startsWith('──')) {
+          r.drawPixelText(key, 200, y, '#888899', 2);
+          y += 25;
+          continue;
+        }
+        r.drawPixelText(key, 200, y, '#ffcc44', 2);
+        r.drawPixelText(desc, 420, y, '#ccccdd', 2);
+        y += 22;
+      }
+
+      r.drawPixelText('[H] 닫기', 350, 520, '#666688', 2);
+    }
+
+    // Party HP summary (bottom bar)
+    if (this._partyData.length > 0) {
+      const barY = 570;
+      ctx.fillStyle = 'rgba(0,0,0,0.6)';
+      ctx.fillRect(0, barY - 5, 800, 35);
+
+      const count = Math.min(6, this._partyData.length);
+      const barW = Math.floor(700 / count);
+
+      for (let i = 0; i < count; i++) {
+        const m = this._partyData[i];
+        const x = 50 + i * barW;
+
+        // Name (truncated)
+        const name = (m.isContractor ? '[C]' : '') + (m.nickname || m.name || '?').substring(0, 4);
+        const r = this.renderer;
+        r.drawPixelText(name, x, barY - 2, m.currentHp <= 0 ? '#664444' : '#ccccdd', 1);
+
+        // HP bar
+        const hpRatio = m.currentHp / (m.stats?.hp || 1);
+        const hpColor = hpRatio > 0.5 ? '#44cc44' : hpRatio > 0.2 ? '#cccc44' : '#cc4444';
+        ctx.fillStyle = '#222';
+        ctx.fillRect(x, barY + 10, barW - 10, 6);
+        ctx.fillStyle = m.currentHp <= 0 ? '#333' : hpColor;
+        ctx.fillRect(x, barY + 10, (barW - 10) * Math.max(0, hpRatio), 6);
+
+        // Status dot
+        if (m.status) {
+          ctx.fillStyle = '#ff4444';
+          ctx.fillRect(x + barW - 14, barY + 10, 4, 4);
+        }
+      }
+    }
+
+    // 배너
+    if (this.banner && this.bannerTimer > 0) {
+      this._renderBanner(ctx);
+    }
+
+    // 트랜지션 페이드
+    if (this.fadeAlpha > 0) {
+      ctx.fillStyle = `rgba(0,0,0,${Math.min(1, this.fadeAlpha)})`;
+      ctx.fillRect(0, 0, 800, 600);
+    }
+  }
+
+  _renderBanner(ctx) {
+    const r = this.renderer;
+    const progress = 1 - (this.bannerTimer / this.bannerDuration);
+    let alpha = 1;
+    if (progress < 0.1) alpha = progress / 0.1;
+    else if (progress > 0.7) alpha = (1 - progress) / 0.3;
+
+    ctx.fillStyle = `rgba(10,10,30,${0.85 * alpha})`;
+    ctx.fillRect(0, 250, 800, 70);
+    ctx.fillStyle = `rgba(255,204,68,${alpha})`;
+    ctx.fillRect(0, 250, 800, 3);
+    ctx.fillRect(0, 317, 800, 3);
+
+    const tw = r.measureText(this.banner, 3);
+    r.drawPixelText(this.banner, (800 - tw) / 2, 270, `rgba(255,255,255,${alpha})`, 3);
   }
 
   handleInput(key) {
     if (!this.visible) return false;
-    if (this.transitioning) return true; // 이동 중 입력 차단
+    if (this.transitioning) return true;
 
-    switch (key) {
-      case 'ArrowUp':
-        this.cursor = Math.max(0, this.cursor - 1);
-        return true;
-      case 'ArrowDown':
-        this.cursor = Math.min(this.connections.length - 1, this.cursor + 1);
-        return true;
-      case 'Enter':
-      case ' ': {
-        if (this.connections.length === 0) return true;
-        const conn = this.connections[this.cursor];
-        if (!conn) return true;
-
-        if (!this.mapManager.canAccess(conn.id, this.badgeCount)) {
-          // 접근 불가 피드백 (외부 다이얼로그 연동 가능)
-          return true;
+    // 타일맵 미로드 시 폴백 입력 처리
+    if (!this.mapLoaded) {
+      const conns = this.mapManager?.getConnections() || [];
+      if (key === 'ArrowUp') this._fallbackCursor = Math.max(0, this._fallbackCursor - 1);
+      if (key === 'ArrowDown') this._fallbackCursor = Math.min(conns.length - 1, this._fallbackCursor + 1);
+      if (key === 'Enter' || key === ' ') {
+        if (conns[this._fallbackCursor]) {
+          this._startTransition(conns[this._fallbackCursor].id);
         }
-
-        // 이동 트랜지션 시작
-        this.transitioning = true;
-        this.transitionTimer = 0;
-        this.transitionTarget = conn.id;
-        return true;
       }
-      case 'Escape':
-        this.close();
-        return true;
+      if (key === 's' || key === 'S') {
+        if (this.onShop) this.onShop(null); // null NPC triggers loc.shop lookup in main.js
+      }
+      return true;
     }
-    return true;
+
+    // 도움말 오버레이가 열려 있으면 H/Escape 외 모든 입력 소비
+    if (this.showHelp) {
+      if (key === 'h' || key === 'H' || key === 'Escape') {
+        this.showHelp = false;
+      }
+      return true; // consume all input while help is open
+    }
+
+    // 도움말 토글
+    if (key === 'h' || key === 'H') {
+      this.showHelp = !this.showHelp;
+      return true;
+    }
+
+    // 방향키 → 지속 입력으로 처리
+    if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(key)) {
+      this._keys[key] = true;
+      // keyup은 별도 처리 필요 — update에서 keys 객체 참조
+      return true;
+    }
+
+    // Minimap toggle
+    if (key === 'm' || key === 'M' || key === 'Tab') {
+      this.showMinimap = !this.showMinimap;
+      return true;
+    }
+
+    // Enter — NPC 상호작용
+    if (key === 'Enter' || key === ' ') {
+      this._tryInteract();
+      return true;
+    }
+
+    // Escape — 메뉴
+    if (key === 'Escape') {
+      return false; // main.js에서 메뉴 열기 처리
+    }
+
+    return false;
+  }
+
+  /** 키 상태 동기화 (main.js에서 호출) */
+  syncKeys(keys) {
+    this._keys = keys;
+  }
+
+  _tryInteract() {
+    if (!this.currentMapData) return;
+
+    const facing = this.player.getFacingTile();
+    const npc = this.tileEngine.getNpcAt(facing.x, facing.y);
+    if (!npc) return;
+
+    switch (npc.type) {
+      case 'shop':
+        if (this.onShop) this.onShop(npc);
+        break;
+      case 'heal':
+        if (this.onHeal) this.onHeal(npc);
+        break;
+      case 'boss':
+        if (this.onBoss) this.onBoss(npc);
+        break;
+      case 'trainer':
+      case 'gym_leader':
+      case 'dialog':
+      default:
+        if (this.onInteract) this.onInteract(npc);
+        break;
+    }
   }
 }

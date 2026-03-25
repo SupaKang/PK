@@ -1,5 +1,5 @@
 // 배틀 화면 UI
-import { generateSprite, generateSpriteBack } from './sprite-generator.js';
+import { generateSprite, generateSpriteBack, getHybridSprite } from './sprite-generator.js';
 import { TYPE_COLORS, STATUS_COLORS, STATUS_LABELS } from './renderer.js';
 
 // 상태 상수
@@ -47,7 +47,10 @@ export class BattleUI {
       this.queueMessage(`${battle.trainerName}이(가) 승부를 걸어왔다!`);
       this.queueMessage(`${battle.trainerName}은(는) ${battle.enemyActive.name}을(를) 내보냈다!`);
     }
-    this.queueMessage(`가라, ${battle.playerActive.name}!`);
+    const activeLabel = battle.playerActive.isContractor
+      ? `${battle.playerActive.name}이(가) 전투에 나섰다!`
+      : `가라, ${battle.playerActive.name}!`;
+    this.queueMessage(activeLabel);
     this._advanceMessage();
 
     // 애니메이션 상태
@@ -70,16 +73,30 @@ export class BattleUI {
     this.battleItems = [];
     this._refreshBattleItems();
 
+    // 시간대
+    this.timeOfDay = 'day';
+
+    // 승리 대기
+    this._victoryPending = false;
+
     // 콜백
     this.onBattleEnd = null;
   }
 
   _updateSprites() {
-    if (this.battle.enemyActive?.spriteConfig) {
-      this._enemySprite = generateSprite(this.battle.enemyActive.spriteConfig, 64);
+    if (this.battle.enemyActive) {
+      this._enemySprite = getHybridSprite(
+        this.battle.enemyActive.id,
+        this.battle.enemyActive.spriteConfig,
+        'front', 64
+      );
     }
-    if (this.battle.playerActive?.spriteConfig) {
-      this._playerSprite = generateSpriteBack(this.battle.playerActive.spriteConfig, 64);
+    if (this.battle.playerActive) {
+      this._playerSprite = getHybridSprite(
+        this.battle.playerActive.id,
+        this.battle.playerActive.spriteConfig,
+        'back', 64
+      );
     }
   }
 
@@ -102,6 +119,12 @@ export class BattleUI {
       this.messageComplete = false;
       this.state = STATE.MESSAGE;
     } else {
+      // 승리 대기 처리
+      if (this._victoryPending) {
+        this._victoryPending = false;
+        if (this.onBattleEnd) this.onBattleEnd('win');
+        return;
+      }
       // 메시지 끝 -> 다음 상태로
       if (this.battle.state === 'end') {
         this._handleBattleEnd();
@@ -116,7 +139,12 @@ export class BattleUI {
   }
 
   _handleBattleEnd() {
-    if (this.onBattleEnd) {
+    if (this.battle.result === 'win') {
+      // Victory message with brief delay
+      this.queueMessage('전투에서 승리했다!');
+      this._victoryPending = true;
+      this._advanceMessage();
+    } else if (this.onBattleEnd) {
       this.onBattleEnd(this.battle.result);
     }
   }
@@ -198,11 +226,32 @@ export class BattleUI {
   }
 
   _renderBattleScene(r, ctx) {
-    // 배경 - 그라디언트 하늘
+    // 배경 - 시간대별 그라디언트
     const grad = ctx.createLinearGradient(0, 0, 0, 300);
-    grad.addColorStop(0, '#1a1a3e');
-    grad.addColorStop(0.6, '#2a2a5e');
-    grad.addColorStop(1, '#3a4a3e');
+    switch (this.timeOfDay) {
+      case 'morning':
+        grad.addColorStop(0, '#4a3a2e');
+        grad.addColorStop(0.4, '#8a6a4e');
+        grad.addColorStop(0.7, '#aa8a5e');
+        grad.addColorStop(1, '#5a6a3e');
+        break;
+      case 'evening':
+        grad.addColorStop(0, '#3a1a1e');
+        grad.addColorStop(0.4, '#6a3a2e');
+        grad.addColorStop(0.7, '#4a3a2e');
+        grad.addColorStop(1, '#2a3a2a');
+        break;
+      case 'night':
+        grad.addColorStop(0, '#0a0a1e');
+        grad.addColorStop(0.4, '#121228');
+        grad.addColorStop(0.7, '#1a1a2e');
+        grad.addColorStop(1, '#1a2a1a');
+        break;
+      default: // day
+        grad.addColorStop(0, '#1a1a3e');
+        grad.addColorStop(0.6, '#2a2a5e');
+        grad.addColorStop(1, '#3a4a3e');
+    }
     ctx.fillStyle = grad;
     ctx.fillRect(0, 0, 800, 300);
 
@@ -215,6 +264,13 @@ export class BattleUI {
       const gx = (i * 23 + 5) % 800;
       const gy = 250 + (i * 7) % 40;
       ctx.fillRect(gx, gy, 3, 1);
+    }
+    // Ground texture dots
+    ctx.fillStyle = 'rgba(255,255,255,0.05)';
+    for (let i = 0; i < 30; i++) {
+      const gx = (i * 29 + 7) % 800;
+      const gy = 245 + (i * 11) % 50;
+      ctx.fillRect(gx, gy, 2, 1);
     }
 
     // 적 플랫폼
@@ -366,7 +422,7 @@ export class BattleUI {
     r.drawPixelText('어떻게 할까?', 40, 345, '#ffffff', 2);
 
     // 2x2 버튼 그리드
-    const actions = ['싸우기', '가방', '몬스터', '도망'];
+    const actions = ['싸우기', '가방', '파티', '도주'];
     const bx = 440, by = 315;
     const bw = 165, bh = 55;
 
@@ -455,42 +511,44 @@ export class BattleUI {
 
     r.drawPanel(20, 315, 760, 270, '#111122', '#3a3a5a');
     r.drawPixelText(
-      isForceSwitch ? '다음 몬스터를 선택!' : '몬스터 교체',
+      isForceSwitch ? '다음 전투 멤버를 선택!' : '파티 교체',
       40, 325, '#ffcc44', 2
     );
 
     for (let i = 0; i < party.length; i++) {
       const mon = party[i];
-      const y = 355 + i * 38;
+      const y = 350 + i * 35;
       const selected = this.cursor === i;
       const isFainted = mon.currentHp <= 0;
       const isActive = mon === this.battle.playerActive;
 
       if (selected) {
         ctx.fillStyle = 'rgba(100,100,200,0.2)';
-        ctx.fillRect(30, y - 2, 740, 34);
+        ctx.fillRect(30, y - 2, 740, 32);
         ctx.fillStyle = '#ffcc44';
         ctx.fillRect(34, y + 8, 6, 6);
       }
 
-      const nameColor = isFainted ? '#664444' : isActive ? '#44aa44' : selected ? '#ffffff' : '#ccccdd';
-      r.drawPixelText(mon.nickname || mon.name, 50, y, nameColor, 2);
-      r.drawPixelText(`Lv${mon.level}`, 250, y, '#aaaacc', 2);
+      // 계약자 표시
+      const prefix = mon.isContractor ? `[${mon.className}] ` : '';
+      const nameColor = isFainted ? '#664444' : isActive ? '#44aa44' : mon.isContractor ? '#ffdd66' : selected ? '#ffffff' : '#ccccdd';
+      r.drawPixelText(`${prefix}${mon.nickname || mon.name}`, 50, y, nameColor, 2);
+      r.drawPixelText(`Lv${mon.level}`, 300, y, '#aaaacc', 2);
 
       // HP 바
-      r.drawHpBar(340, y + 2, 140, 10, mon.currentHp, mon.stats.hp);
-      r.drawPixelText(`${mon.currentHp}/${mon.stats.hp}`, 490, y, isFainted ? '#664444' : '#aaaaaa', 1);
+      r.drawHpBar(370, y + 2, 120, 10, mon.currentHp, mon.stats.hp);
+      r.drawPixelText(`${mon.currentHp}/${mon.stats.hp}`, 500, y, isFainted ? '#664444' : '#aaaaaa', 1);
 
       // 상태이상
       if (mon.status) {
         const sColor = STATUS_COLORS[mon.status] || '#888';
         ctx.fillStyle = sColor;
-        ctx.fillRect(560, y, 30, 14);
-        r.drawPixelText(STATUS_LABELS[mon.status] || '', 562, y + 2, '#fff', 1);
+        ctx.fillRect(580, y, 30, 14);
+        r.drawPixelText(STATUS_LABELS[mon.status] || '', 582, y + 2, '#fff', 1);
       }
 
       if (isActive) {
-        r.drawPixelText('[전투중]', 610, y, '#44aa44', 1);
+        r.drawPixelText('[전투중]', 630, y, '#44aa44', 1);
       }
     }
 
@@ -526,6 +584,14 @@ export class BattleUI {
         r.drawPixelText(`x${item.count}`, 300, y, '#aaaacc', 2);
         if (item.description) {
           r.drawPixelText(item.description.substring(0, 30), 50, y + 20, '#888899', 1);
+        }
+
+        // 계약 확률 표시
+        if (selected && item.category === 'contract' && this.battle.isWild) {
+          const target = this.battle.enemyActive;
+          const mult = {magic_stone: 1, high_stone: 1.5, ultra_stone: 2, domination_stone: 255}[item.id] || 1;
+          const rate = Math.min(100, Math.floor(((3 * target.stats.hp - 2 * target.currentHp) * target.catchRate * mult) / (3 * target.stats.hp) / 255 * 100));
+          r.drawPixelText(`계약 확률: ~${rate}%`, 50, y + 20, '#88cc88', 1);
         }
       }
 
@@ -713,9 +779,22 @@ export class BattleUI {
         const item = this.battleItems[this.cursor];
         if (!item) return true;
 
-        // 포획볼 체크
-        if (item.category === 'ball') {
-          this._useCaptureBall(item);
+        // 마석(계약) 체크
+        if (item.category === 'contract') {
+          this._useContractStone(item);
+        } else if (item.effect?.type === 'escape') {
+          // 탈출로프 — 야생전에서 도주
+          if (this.battle.isWild) {
+            this.inventory.removeItem(item.id);
+            this.queueMessage('탈출로프를 사용했다!');
+            this.queueMessage('무사히 도망쳤다!');
+            this.battle.result = 'flee';
+            this.battle.state = 'end';
+            this._advanceMessage();
+          } else {
+            this.queueMessage('상대와의 배틀에서는 사용할 수 없다!');
+            this._advanceMessage();
+          }
         } else {
           // 회복 아이템 등 -> 대상 선택 필요 (간소화: 현재 전투몬에 사용)
           const result = this.inventory.useItem(item.id, this.battle.playerActive);
@@ -740,19 +819,19 @@ export class BattleUI {
     return false;
   }
 
-  _useCaptureBall(item) {
-    const BALL_MULTIPLIERS = {
-      capsule_ball: 1,
-      high_ball: 1.5,
-      ultra_ball: 2,
-      master_ball: 255,
+  _useContractStone(item) {
+    const STONE_MULTIPLIERS = {
+      magic_stone: 1,
+      high_stone: 1.5,
+      ultra_stone: 2,
+      domination_stone: 255,
     };
 
-    const multiplier = BALL_MULTIPLIERS[item.id] || 1;
+    const multiplier = STONE_MULTIPLIERS[item.id] || 1;
     const result = this.battle.attemptCapture(multiplier);
     this.inventory.removeItem(item.id);
 
-    this.queueMessage(`${item.name}을(를) 던졌다!`);
+    this.queueMessage(`${item.name}을(를) 사용했다!`);
     for (const msg of result.messages) {
       this.queueMessage(msg);
     }

@@ -1,5 +1,5 @@
 // 몬스터 도감 (포켓덱스) UI
-import { generateSprite, generateSilhouette } from './sprite-generator.js';
+import { generateSprite, generateSilhouette, getHybridSprite } from './sprite-generator.js';
 import { TYPE_COLORS } from './renderer.js';
 
 // ==========================================
@@ -123,7 +123,7 @@ export class DexUI {
 
     let sprite;
     if (isCaught) {
-      sprite = generateSprite(monster.spriteConfig, 32);
+      sprite = getHybridSprite(monster.id, monster.spriteConfig, 'front', 32);
     } else if (isSeen) {
       sprite = generateSilhouette(monster.spriteConfig, 32);
     } else {
@@ -161,7 +161,7 @@ export class DexUI {
     const seenCount = this.tracker.getSeenCount();
     const caughtCount = this.tracker.getCaughtCount();
     r.drawPixelText(
-      `발견: ${seenCount}/100  포획: ${caughtCount}/100`,
+      `발견: ${seenCount}/100  계약: ${caughtCount}/100`,
       450, 18, '#aaaacc', 2
     );
 
@@ -281,7 +281,7 @@ export class DexUI {
         }
       } else if (isSeen) {
         r.drawPixelText(mon.name, 120, previewY + 12, '#888899', 3);
-        r.drawPixelText('아직 포획하지 않았다.', 20, previewY + 50, '#666688', 2);
+        r.drawPixelText('아직 계약하지 않았다.', 20, previewY + 50, '#666688', 2);
       } else {
         r.drawPixelText('???', 120, previewY + 12, '#444466', 3);
         r.drawPixelText('아직 발견하지 못한 몬스터.', 20, previewY + 50, '#444466', 2);
@@ -307,7 +307,7 @@ export class DexUI {
 
     // 스프라이트 (큰 버전)
     if (isCaught && mon.spriteConfig) {
-      const sprite = generateSprite(mon.spriteConfig, 64);
+      const sprite = getHybridSprite(mon.id, mon.spriteConfig, 'front', 64);
       if (sprite) {
         r.drawPanel(40, 70, 210, 210, '#111122', '#3a3a5a');
         r.drawSprite(sprite, 60, 80, 3);

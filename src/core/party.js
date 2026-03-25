@@ -1,17 +1,32 @@
 // 파티 & 보관함 관리
+// 파티 구성: 계약자(주인) 1명 + 몬스터 최대 5마리
 
-const MAX_PARTY_SIZE = 6;
+const MAX_MONSTER_SLOTS = 5;
 const MAX_BOX_SIZE = 300;
 
 export class PartyManager {
   constructor() {
-    this.party = [];
-    this.box = []; // 보관함
+    this.contractor = null;  // 계약자 (플레이어 캐릭터)
+    this.party = [];         // 몬스터 파티 (최대 5)
+    this.box = [];           // 보관함
   }
 
-  /** 파티에 추가. 꽉 차면 보관함으로 */
+  /** 계약자 설정 */
+  setContractor(contractor) {
+    this.contractor = contractor;
+  }
+
+  /** 전투용 전체 파티 (계약자 + 몬스터) */
+  getBattleParty() {
+    const result = [];
+    if (this.contractor) result.push(this.contractor);
+    result.push(...this.party);
+    return result;
+  }
+
+  /** 파티에 몬스터 추가. 5마리 이상이면 보관함으로 */
   addMonster(monster) {
-    if (this.party.length < MAX_PARTY_SIZE) {
+    if (this.party.length < MAX_MONSTER_SLOTS) {
       this.party.push(monster);
       return { location: 'party', index: this.party.length - 1 };
     }
@@ -19,7 +34,7 @@ export class PartyManager {
     return { location: 'box', index: this.box.length - 1 };
   }
 
-  /** 파티 내 교체 (순서 변경) */
+  /** 파티 내 몬스터 교체 (순서 변경) */
   swapPartySlots(indexA, indexB) {
     if (indexA < 0 || indexA >= this.party.length) return false;
     if (indexB < 0 || indexB >= this.party.length) return false;
@@ -37,33 +52,38 @@ export class PartyManager {
 
   /** 보관함에서 파티로 (빈 슬롯 있을 때) */
   withdrawFromBox(boxIndex) {
-    if (this.party.length >= MAX_PARTY_SIZE) return false;
+    if (this.party.length >= MAX_MONSTER_SLOTS) return false;
     if (boxIndex < 0 || boxIndex >= this.box.length) return false;
     this.party.push(this.box.splice(boxIndex, 1)[0]);
     return true;
   }
 
-  /** 파티에서 보관함으로 (최소 1마리 유지) */
+  /** 파티에서 보관함으로 */
   depositToBox(partyIndex) {
-    if (this.party.length <= 1) return false;
+    if (this.party.length <= 0) return false;
     if (partyIndex < 0 || partyIndex >= this.party.length) return false;
     this.box.push(this.party.splice(partyIndex, 1)[0]);
     return true;
   }
 
-  /** 살아있는 파티 몬스터 수 */
+  /** 살아있는 전투 멤버 수 (계약자 포함) */
   getAliveCount() {
-    return this.party.filter(m => m.currentHp > 0).length;
+    let count = 0;
+    if (this.contractor && this.contractor.currentHp > 0) count++;
+    count += this.party.filter(m => m.currentHp > 0).length;
+    return count;
   }
 
-  /** 첫 번째 살아있는 몬스터 */
+  /** 첫 번째 살아있는 전투 멤버 (계약자 우선) */
   getFirstAlive() {
+    if (this.contractor && this.contractor.currentHp > 0) return this.contractor;
     return this.party.find(m => m.currentHp > 0);
   }
 
-  /** 전체 파티 회복 (몬스터센터) */
+  /** 전체 파티 회복 (계약자 포함) */
   healAll() {
-    for (const m of this.party) {
+    const all = this.getBattleParty();
+    for (const m of all) {
       m.currentHp = m.stats.hp;
       m.status = null;
       m.statusTurns = 0;
@@ -76,16 +96,18 @@ export class PartyManager {
   /** 직렬화 */
   serialize() {
     return {
-      party: this.party.map(m => ({ ...m })),
-      box: this.box.map(m => ({ ...m })),
+      contractor: this.contractor ? JSON.parse(JSON.stringify(this.contractor)) : null,
+      party: this.party.map(m => JSON.parse(JSON.stringify(m))),
+      box: this.box.map(m => JSON.parse(JSON.stringify(m))),
     };
   }
 
   /** 역직렬화 */
   static deserialize(data) {
     const pm = new PartyManager();
-    pm.party = (data.party || []).map(m => ({ ...m }));
-    pm.box = (data.box || []).map(m => ({ ...m }));
+    pm.contractor = data.contractor ? JSON.parse(JSON.stringify(data.contractor)) : null;
+    pm.party = (data.party || []).map(m => JSON.parse(JSON.stringify(m)));
+    pm.box = (data.box || []).map(m => JSON.parse(JSON.stringify(m)));
     return pm;
   }
 }

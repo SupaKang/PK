@@ -495,6 +495,91 @@ function applyFeatures(grid, features, gridSize) {
         setPixel(grid, half, 0, 6);
         setPixel(grid, half, 1, 4);
         break;
+
+      // ─── 계약자(플레이어) 전용 장비 특징 ───
+
+      case 'armor':
+        // 갑옷 — 몸통에 견갑, 가슴판
+        fillRect(grid, half - 3, 5, 7, 2, 8);  // 어깨 장갑
+        fillRect(grid, half - 2, 7, 5, 3, 8);  // 가슴 갑옷
+        setPixel(grid, half, 7, 6);             // 가슴 장식
+        setPixel(grid, half, 8, 6);
+        // 팔 보호대
+        setPixel(grid, half - 4, 7, 8);
+        setPixel(grid, half - 4, 8, 8);
+        setPixel(grid, half + 4, 7, 8);
+        setPixel(grid, half + 4, 8, 8);
+        break;
+
+      case 'cape':
+        // 망토 — 어깨에서 내려오는 형태
+        for (let i = 0; i < 6; i++) {
+          const w = Math.min(3, 1 + Math.floor(i * 0.6));
+          for (let dx = -w; dx <= w; dx++) {
+            const px = half + dx;
+            const py = 6 + i;
+            if (py < gridSize && px >= 0 && px < gridSize) {
+              if (grid[py][px] === 0) {
+                grid[py][px] = 4;
+              }
+            }
+          }
+        }
+        // 망토 내부 음영
+        setPixel(grid, half, 8, 7);
+        setPixel(grid, half, 9, 7);
+        setPixel(grid, half - 1, 10, 7);
+        setPixel(grid, half + 1, 10, 7);
+        break;
+
+      case 'staff':
+        // 지팡이 — 오른손에 세로 지팡이 + 상단 보석
+        for (let i = 2; i <= 14; i++) {
+          setPixel(grid, half + 5, i, 8);
+        }
+        // 보석
+        setPixel(grid, half + 5, 1, 6);
+        setPixel(grid, half + 4, 1, 6);
+        setPixel(grid, half + 6, 1, 6);
+        setPixel(grid, half + 5, 0, 4);
+        break;
+
+      case 'bow':
+        // 활 — 오른쪽에 활 형태
+        setPixel(grid, half + 5, 3, 8);
+        setPixel(grid, half + 6, 4, 8);
+        setPixel(grid, half + 6, 5, 8);
+        setPixel(grid, half + 6, 6, 8);
+        setPixel(grid, half + 6, 7, 8);
+        setPixel(grid, half + 6, 8, 8);
+        setPixel(grid, half + 5, 9, 8);
+        // 줄
+        setPixel(grid, half + 5, 4, 6);
+        setPixel(grid, half + 5, 5, 6);
+        setPixel(grid, half + 5, 6, 6);
+        setPixel(grid, half + 5, 7, 6);
+        setPixel(grid, half + 5, 8, 6);
+        break;
+
+      case 'sword':
+        // 검 — 왼쪽에 검 형태
+        for (let i = 2; i <= 12; i++) {
+          setPixel(grid, half - 5, i, 6);
+        }
+        // 가드
+        setPixel(grid, half - 6, 9, 8);
+        setPixel(grid, half - 4, 9, 8);
+        // 날 하이라이트
+        setPixel(grid, half - 5, 3, 9);
+        setPixel(grid, half - 5, 5, 9);
+        break;
+
+      case 'shield':
+        // 방패 — 왼쪽에 작은 방패
+        fillRect(grid, half - 7, 6, 3, 4, 8);
+        setPixel(grid, half - 6, 7, 6);
+        setPixel(grid, half - 6, 8, 6);
+        break;
     }
   }
 }
@@ -808,4 +893,34 @@ export function generateSilhouette(spriteConfig, size = 64) {
 export function clearSpriteCache() {
   spriteCache.clear();
   backSpriteCache.clear();
+}
+
+// ─── 하이브리드 스프라이트 시스템 ───
+// 외부 PNG가 있으면 사용, 없으면 프로시저럴 폴백
+
+import { AssetLoader } from './asset-loader.js';
+
+/**
+ * 하이브리드 스프라이트 가져오기 (외부 에셋 우선)
+ * @param {number} monsterId - 몬스터 ID (계약자는 0 또는 null)
+ * @param {object} spriteConfig - 프로시저럴 생성용 config
+ * @param {'front'|'back'|'silhouette'} view
+ * @param {number} size
+ * @returns {Image|Canvas|null}
+ */
+export function getHybridSprite(monsterId, spriteConfig, view = 'front', size = 64) {
+  // 외부 에셋 체크 (몬스터만, 계약자는 프로시저럴 전용)
+  if (monsterId && !spriteConfig?.isPlayer) {
+    const key = `monster_${monsterId}_${view}`;
+    const external = AssetLoader.get(key);
+    if (external) return external;
+  }
+
+  // 프로시저럴 폴백
+  switch (view) {
+    case 'front': return generateSprite(spriteConfig, size);
+    case 'back': return generateSpriteBack(spriteConfig, size);
+    case 'silhouette': return generateSilhouette(spriteConfig, size);
+    default: return generateSprite(spriteConfig, size);
+  }
 }

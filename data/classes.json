@@ -1,0 +1,150 @@
+{
+  "classes": [
+    {
+      "id": "warrior",
+      "name": "전사",
+      "description": "강인한 체력과 물리 공격에 특화된 전투의 달인.",
+      "type": ["fighting"],
+      "baseStats": { "hp": 75, "atk": 85, "def": 70, "spAtk": 30, "spDef": 45, "speed": 55 },
+      "growthRate": "medium",
+      "learnset": [
+        { "level": 1, "skillId": "tackle" },
+        { "level": 1, "skillId": "growl" },
+        { "level": 5, "skillId": "karate_chop" },
+        { "level": 9, "skillId": "bulk_up" },
+        { "level": 13, "skillId": "brick_break" },
+        { "level": 18, "skillId": "iron_defense" },
+        { "level": 23, "skillId": "body_slam" },
+        { "level": 28, "skillId": "counter" },
+        { "level": 33, "skillId": "close_combat" },
+        { "level": 38, "skillId": "earthquake" },
+        { "level": 43, "skillId": "focus_punch" },
+        { "level": 50, "skillId": "hyper_beam" }
+      ],
+      "spriteConfig": {
+        "shape": "humanoid",
+        "features": ["armor"],
+        "baseColor": "#CC4444",
+        "accentColor": "#882222",
+        "isPlayer": true
+      }
+    },
+    {
+      "id": "mage",
+      "name": "마법사",
+      "description": "강력한 원소 마법을 다루는 신비의 주술사.",
+      "type": ["cosmic"],
+      "baseStats": { "hp": 50, "atk": 30, "def": 40, "spAtk": 90, "spDef": 70, "speed": 60 },
+      "growthRate": "medium",
+      "learnset": [
+        { "level": 1, "skillId": "scratch" },
+        { "level": 1, "skillId": "flash" },
+        { "level": 5, "skillId": "ember" },
+        { "level": 8, "skillId": "water_gun" },
+        { "level": 11, "skillId": "thunder_shock" },
+        { "level": 15, "skillId": "fire_breath" },
+        { "level": 19, "skillId": "ice_beam" },
+        { "level": 23, "skillId": "thunderbolt" },
+        { "level": 28, "skillId": "holy_beam" },
+        { "level": 33, "skillId": "dark_pulse" },
+        { "level": 38, "skillId": "solar_beam" },
+        { "level": 43, "skillId": "blizzard" },
+        { "level": 50, "skillId": "cosmic_ray" }
+      ],
+      "spriteConfig": {
+        "shape": "humanoid",
+        "features": ["cape"],
+        "baseColor": "#4444CC",
+        "accentColor": "#6666FF",
+        "isPlayer": true
+      }
+    },
+    {
+      "id": "archer",
+      "name": "궁수",
+      "description": "빠른 속도와 정확한 사격으로 적을 제압하는 사냥꾼.",
+      "type": ["wind"],
+      "baseStats": { "hp": 55, "atk": 75, "def": 45, "spAtk": 60, "spDef": 50, "speed": 85 },
+      "growthRate": "medium",
+      "learnset": [
+        { "level": 1, "skillId": "quick_strike" },
+        { "level": 1, "skillId": "gust" },
+        { "level": 5, "skillId": "aerial_ace" },
+        { "level": 9, "skillId": "poison_sting" },
+        { "level": 13, "skillId": "air_slash" },
+        { "level": 17, "skillId": "tailwind" },
+        { "level": 22, "skillId": "crystal_shot" },
+        { "level": 27, "skillId": "sonic_boom" },
+        { "level": 32, "skillId": "hurricane" },
+        { "level": 37, "skillId": "star_fall" },
+        { "level": 42, "skillId": "sky_dive" },
+        { "level": 50, "skillId": "nebula_burst" }
+      ],
+      "spriteConfig": {
+        "shape": "humanoid",
+        "features": ["bow"],
+        "baseColor": "#44AA44",
+        "accentColor": "#228822",
+        "isPlayer": true
+      }
+    },
+    {
+      "id": "cleric",
+      "name": "성직자",
+      "description": "신성한 힘으로 아군을 치유하고 적을 정화하는 사제.",
+      "type": ["light"],
+      "baseStats": { "hp": 70, "atk": 35, "def": 55, "spAtk": 75, "spDef": 85, "speed": 40 },
+      "growthRate": "medium",
+      "learnset": [
+        { "level": 1, "skillId": "pound" },
+        { "level": 1, "skillId": "flash" },
+        { "level": 5, "skillId": "purify" },
+        { "level": 9, "skillId": "blessing" },
+        { "level": 13, "skillId": "holy_beam" },
+        { "level": 18, "skillId": "light_screen" },
+        { "level": 23, "skillId": "radiance" },
+        { "level": 28, "skillId": "aurora_ray" },
+        { "level": 33, "skillId": "divine_light" },
+        { "level": 38, "skillId": "solar_flare" },
+        { "level": 43, "skillId": "protect" },
+        { "level": 50, "skillId": "singularity" }
+      ],
+      "spriteConfig": {
+        "shape": "humanoid",
+        "features": ["staff"],
+        "baseColor": "#DDDD44",
+        "accentColor": "#FFFF88",
+        "isPlayer": true
+      }
+    },
+    {
+      "id": "dark_knight",
+      "name": "암흑기사",
+      "description": "어둠의 힘을 다루는 금지된 기사. 공방 균형형.",
+      "type": ["dark"],
+      "baseStats": { "hp": 65, "atk": 80, "def": 60, "spAtk": 65, "spDef": 55, "speed": 50 },
+      "growthRate": "slow",
+      "learnset": [
+        { "level": 1, "skillId": "scratch" },
+        { "level": 1, "skillId": "shadow_sneak" },
+        { "level": 5, "skillId": "shadow_claw" },
+        { "level": 9, "skillId": "night_slash" },
+        { "level": 14, "skillId": "dark_shroud" },
+        { "level": 19, "skillId": "crunch" },
+        { "level": 24, "skillId": "iron_head" },
+        { "level": 29, "skillId": "dark_pulse" },
+        { "level": 34, "skillId": "shadow_ball" },
+        { "level": 39, "skillId": "life_steal" },
+        { "level": 44, "skillId": "dark_void" },
+        { "level": 50, "skillId": "abyss_gaze" }
+      ],
+      "spriteConfig": {
+        "shape": "humanoid",
+        "features": ["cape", "armor"],
+        "baseColor": "#442266",
+        "accentColor": "#8844CC",
+        "isPlayer": true
+      }
+    }
+  ]
+}

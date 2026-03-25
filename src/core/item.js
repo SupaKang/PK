@@ -86,15 +86,20 @@ export class Inventory {
         if (target.currentHp >= target.stats.hp) {
           return { success: false, messages: ['이미 HP가 최대다!'] };
         }
-        const heal = data.effect.value === -1 ? target.stats.hp : data.effect.value;
+        const heal = data.effect.value === -1 || data.effect.value >= 9999 ? target.stats.hp : data.effect.value;
         target.currentHp = Math.min(target.stats.hp, target.currentHp + heal);
         messages.push(`${target.name}의 HP가 회복되었다!`);
         success = true;
         break;
       }
+      case 'cure_status':
       case 'heal_status': {
         if (!target.status) {
           return { success: false, messages: ['상태이상이 아니다!'] };
+        }
+        // 특정 상태만 치료하는 아이템 체크
+        if (data.effect.value && data.effect.value !== 'all' && data.effect.value !== target.status) {
+          return { success: false, messages: [`${target.name}은(는) 해당 상태이상이 아니다!`] };
         }
         target.status = null;
         target.statusTurns = 0;
@@ -106,7 +111,7 @@ export class Inventory {
         if (target.currentHp > 0) {
           return { success: false, messages: ['기절하지 않았다!'] };
         }
-        const reviveHp = data.effect.value === -1 ? target.stats.hp : Math.floor(target.stats.hp * data.effect.value);
+        const reviveHp = data.effect.value === -1 || data.effect.value >= 1 ? target.stats.hp : Math.floor(target.stats.hp * data.effect.value);
         target.currentHp = reviveHp;
         target.status = null;
         target.statusTurns = 0;
@@ -114,14 +119,16 @@ export class Inventory {
         success = true;
         break;
       }
+      case 'restore_pp':
       case 'heal_pp': {
         if (target.currentHp <= 0) {
           return { success: false, messages: ['기절한 몬스터에게는 사용할 수 없다!'] };
         }
+        const ppVal = data.effect.value >= 9999 ? Infinity : data.effect.value;
         for (const skill of target.skills) {
-          skill.pp = skill.maxPp;
+          skill.pp = Math.min(skill.maxPp, skill.pp + ppVal);
         }
-        messages.push(`${target.name}의 PP가 모두 회복되었다!`);
+        messages.push(`${target.name}의 PP가 회복되었다!`);
         success = true;
         break;
       }
@@ -133,9 +140,16 @@ export class Inventory {
           target._statStages = { atk: 0, def: 0, spAtk: 0, spDef: 0, speed: 0 };
         }
         const stat = data.effect.stat;
-        target._statStages[stat] = Math.min(6, (target._statStages[stat] || 0) + 2);
-        const statNames = { atk: '공격', def: '방어', spAtk: '특수공격', spDef: '특수방어', speed: '스피드' };
-        messages.push(`${target.name}의 ${statNames[stat]}이(가) 크게 올랐다!`);
+        const boostVal = data.effect.value || 1;
+        target._statStages[stat] = Math.min(6, (target._statStages[stat] || 0) + boostVal);
+        const statNames = { atk: '공격', def: '방어', spAtk: '특수공격', spDef: '특수방어', speed: '스피드', accuracy: '명중률', critical: '급소율' };
+        messages.push(`${target.name}의 ${statNames[stat] || stat}이(가) 올랐다!`);
+        success = true;
+        break;
+      }
+      case 'escape': {
+        // Handled by battle/field layer
+        messages.push('탈출로프를 사용했다!');
         success = true;
         break;
       }
