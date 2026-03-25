@@ -1,6 +1,5 @@
 node_modules/
 dist/
-.env
-.env.*
-*.key
-*.pem
+_assets_raw/
+.claude/
+*.zip

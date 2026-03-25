@@ -100,18 +100,28 @@ export class SaveManager {
       const badgeCount = data.story?.badges?.length || 0;
       const partyCount = data.party?.party?.length || 0;
 
+      // 계약자 클래스 정보
+      const contractor = data.party?.contractor;
+      const className = contractor?.className || '';
+      const chapter = data.story?.currentChapter || 1;
+      const location = data.map?.currentLocation || '';
+
       // 플레이타임 포맷
       const totalSec = Math.floor(data.playtime || 0);
       const hours = Math.floor(totalSec / 3600);
       const minutes = Math.floor((totalSec % 3600) / 60);
       const playtimeStr = `${hours}시간 ${minutes}분`;
+      const playtimeShort = `${hours}:${String(minutes).padStart(2, '0')}`;
 
       return {
         playerName: data.playerName || '계약자',
         playtime: data.playtime || 0,
         playtimeFormatted: playtimeStr,
+        playtimeShort,
         badgeCount,
-        chapter: data.story?.currentChapter || 1,
+        chapter,
+        className,
+        location,
         partyCount,
         timestamp: data.timestamp,
         timestampFormatted: new Date(data.timestamp).toLocaleString('ko-KR'),

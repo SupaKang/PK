@@ -145,10 +145,12 @@ export class TitleScreenUI {
         r.drawPanel(170, y, 460, 50, '#151528', '#3a3a5a');
       }
 
-      if (slot) {
-        r.drawPixelText(`슬롯 ${i + 1}: ${slot.playerName || '???'}`, 190, y + 8, selected ? '#ffffff' : '#ccccdd', 2);
+      const info = slot?.info;
+      if (slot?.exists && info) {
+        const classSuffix = info.className ? ` (${info.className})` : '';
+        r.drawPixelText(`슬롯 ${i + 1}: ${info.playerName || '???'}${classSuffix}`, 190, y + 8, selected ? '#ffffff' : '#ccccdd', 2);
         r.drawPixelText(
-          `Lv${slot.highestLevel || '?'} | 뱃지:${slot.badges || 0} | ${slot.playTime || '0:00'}`,
+          `Ch${info.chapter || 1} | 뱃지:${info.badgeCount || 0} | ${info.playtimeShort || '0:00'}`,
           190, y + 28, '#888899', 1
         );
       } else {
@@ -206,7 +208,7 @@ export class TitleScreenUI {
         return true;
       case 'Enter':
       case ' ':
-        if (this.saveSlots[this.loadSlotCursor] && this.onLoadGame) {
+        if (this.saveSlots[this.loadSlotCursor]?.exists && this.onLoadGame) {
           this.onLoadGame(this.loadSlotCursor);
         }
         return true;
@@ -233,6 +235,7 @@ export class GameMenuUI {
       { id: 'trainer', label: '계약자 카드' },
       { id: 'save', label: '저장' },
       { id: 'settings', label: '설정' },
+      { id: 'credits', label: '크레딧' },
     ];
     this.visible = false;
     this.subMenu = null; // 'party' | 'bag' | 'trainer' | 'save' | 'settings'
@@ -250,6 +253,7 @@ export class GameMenuUI {
     this.onUseEscapeRope = null; // () => handle escape rope
     this.onSettingsChange = null; // (settings) => apply settings
     this.onClassChange = null; // () => handle class change scroll
+    this.onCredits = null; // () => show credits
 
     // 설정
     this.settings = {
@@ -682,6 +686,9 @@ export class GameMenuUI {
       case 'settings':
         this.subMenu = 'settings';
         this.settingsCursor = 0;
+        break;
+      case 'credits':
+        if (this.onCredits) this.onCredits();
         break;
     }
   }

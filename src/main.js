@@ -581,6 +581,12 @@ class Game {
     this.expeditionHUD.hourOfDay = em.getHourOfDay();
     this.expeditionHUD.isExpeditionActive = em.isActive;
 
+    // Quest indicator
+    if (this.storyManager) {
+      const chInfo = this.storyManager.getCurrentChapterInfo();
+      this.expeditionHUD.objectiveText = chInfo ? `Ch${this.storyManager.currentChapter}: ${chInfo.title}` : '';
+    }
+
     if (this.mapUI) {
       this.mapUI.expeditionTimeOfDay = em.getTimeOfDay();
       const party = this.partyManager.getBattleParty();
@@ -1276,6 +1282,16 @@ class Game {
         const c = this.partyManager.contractor;
         if (c) recalcContractorStats(c);
         this.showDialog(null, `${c.className}(으)로 전직했다!`);
+      });
+    };
+    this.menuUI.onCredits = () => {
+      this.closeMenu();
+      this.showDialog(null, 'POCKET KINGDOM — 마석 계약자의 타임어택 탐험', () => {
+        this.showDialog(null, '에셋: Kenney RPG Base Pack (CC0 Public Domain) — kenney.nl', () => {
+          this.showDialog(null, '음악: 프로시저럴 칩튠 (Web Audio API)', () => {
+            this.showDialog(null, '감사합니다! Thank you for playing!');
+          });
+        });
       });
     };
     this.menuUI.onUseEscapeRope = () => {
