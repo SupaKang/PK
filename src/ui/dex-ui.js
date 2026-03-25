@@ -71,7 +71,7 @@ export class DexUI {
     this.gridCursorX = 0;
     this.gridCursorY = 0;
     this.gridCols = 10;
-    this.gridRows = 10;
+    this.gridRows = 11;
     this.scrollY = 0;
     this.visibleRows = 5;
 
@@ -161,7 +161,7 @@ export class DexUI {
     const seenCount = this.tracker.getSeenCount();
     const caughtCount = this.tracker.getCaughtCount();
     r.drawPixelText(
-      `발견: ${seenCount}/100  계약: ${caughtCount}/100`,
+      `발견: ${seenCount}/${this.monsters.length}  계약: ${caughtCount}/${this.monsters.length}`,
       450, 18, '#aaaacc', 2
     );
 

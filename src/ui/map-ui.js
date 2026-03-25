@@ -67,6 +67,7 @@ export class MapUI {
     this.onEncounterCheck = null; // () => boolean — 인카운터 발생 여부
     this.onShop = null;
     this.onHeal = null;
+    this.onBox = null;
     this.onBoss = null;
     this.onHiddenEvent = null;
 
@@ -351,6 +352,7 @@ export class MapUI {
           let bubbleText = '...';
           let bubbleColor = '#ffffff';
           if (npc.type === 'shop') { bubbleText = '$'; bubbleColor = '#44aa55'; }
+          else if (npc.type === 'box') { bubbleText = '□'; bubbleColor = '#cc88ff'; }
           else if (npc.type === 'heal') { bubbleText = '+'; bubbleColor = '#88aaff'; }
           else if (npc.type === 'trainer') { bubbleText = '!'; bubbleColor = '#cc4444'; }
           else if (npc.type === 'gym_leader') { bubbleText = '!!'; bubbleColor = '#ddaa22'; }
@@ -490,7 +492,7 @@ export class MapUI {
       // NPCs as colored dots
       if (this.currentMapData.npcs) {
         for (const npc of this.currentMapData.npcs) {
-          const npcColors = { shop: '#44aa55', heal: '#88aaff', trainer: '#cc4444', gym_leader: '#ddaa22', boss: '#992266', dialog: '#4488cc' };
+          const npcColors = { shop: '#44aa55', heal: '#88aaff', box: '#cc88ff', trainer: '#cc4444', gym_leader: '#ddaa22', boss: '#992266', dialog: '#4488cc' };
           ctx.fillStyle = npcColors[npc.type] || '#ffffff';
           ctx.fillRect(mmX + npc.x * mmScale, mapY + npc.y * mmScale, mmScale, mmScale);
         }
@@ -709,6 +711,9 @@ export class MapUI {
         break;
       case 'heal':
         if (this.onHeal) this.onHeal(npc);
+        break;
+      case 'box':
+        if (this.onBox) this.onBox(npc);
         break;
       case 'boss':
         if (this.onBoss) this.onBoss(npc);

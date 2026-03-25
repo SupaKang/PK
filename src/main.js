@@ -367,6 +367,9 @@ class Game {
         this.partyManager.healAll();
         this.showDialog(null, '파티의 체력이 모두 회복되었다!');
       };
+      this.mapUI.onBox = () => {
+        this._openBoxUI();
+      };
       this.mapUI.onBoss = (npc) => {
         this.audio.playSfx('evolve');
         this.showDialog(npc.name, npc.dialog, () => {
@@ -733,6 +736,45 @@ class Game {
     });
   }
 
+  /** 보관함 UI */
+  _openBoxUI() {
+    const box = this.partyManager.box;
+    if (box.length === 0) {
+      this.showDialog(null, '보관함이 비어있다.');
+      return;
+    }
+
+    // Show box monsters as choices
+    const options = box.map((m, i) => ({
+      text: `${m.nickname || m.name} Lv${m.level} (${m.type.join('/')})`,
+      index: i,
+    }));
+    options.push({ text: '취소', index: -1 });
+
+    this.showChoice('보관함에서 꺼낼 몬스터를 선택하세요:', options, (opt) => {
+      if (opt.index === -1) return;
+
+      if (this.partyManager.party.length >= 5) {
+        // Party full — need to deposit first
+        const partyOpts = this.partyManager.party.map((m, i) => ({
+          text: `${m.nickname || m.name} Lv${m.level}`,
+          index: i,
+        }));
+        partyOpts.push({ text: '취소', index: -1 });
+
+        this.showChoice('파티가 가득 찼다. 보관함에 넣을 몬스터를 선택:', partyOpts, (pOpt) => {
+          if (pOpt.index === -1) return;
+          this.partyManager.swapWithBox(pOpt.index, opt.index);
+          this.showDialog(null, '몬스터를 교환했다!');
+        });
+      } else {
+        const name = box[opt.index]?.name || '몬스터';
+        this.partyManager.withdrawFromBox(opt.index);
+        this.showDialog(null, `${name}을(를) 파티에 추가했다!`);
+      }
+    });
+  }
+
   /** NPC 상호작용 */
   _onNpcInteract(npc) {
     if (!npc) return;
@@ -755,7 +797,16 @@ class Game {
           });
         }
       } else {
-        this.showDialog(npc.name, '다음에는 지지 않겠어!');
+        // Varied defeat dialog
+        const defeatDialogs = [
+          '다음에는 지지 않겠어!',
+          '강해졌구나... 인정한다.',
+          '너한테 배울 게 있어.',
+          '다음에 만나면 더 강해져 있을 거야!',
+          '좋은 승부였어!',
+        ];
+        const dialogIdx = npc.trainerId.split('').reduce((s,c) => s + c.charCodeAt(0), 0) % defeatDialogs.length;
+        this.showDialog(npc.name, defeatDialogs[dialogIdx]);
       }
       return;
     }
@@ -870,6 +921,11 @@ class Game {
     this.audio.playBgm(config.isGym ? 'boss_bgm' : 'battle_bgm');
 
     this.battleUI = new BattleUI(this.renderer, battle, this.inventory);
+    // After creating battleUI, set location type
+    const loc = this.mapManager.getCurrentLocation();
+    if (loc && this.battleUI) {
+      this.battleUI.locationType = loc.type || 'route';
+    }
     if (this.expeditionManager?.isActive) {
       this.battleUI.timeOfDay = this.expeditionManager.getTimeOfDay();
     }

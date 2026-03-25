@@ -27,6 +27,8 @@ export class BattleUI {
     this.cursor = 0;
     this.scrollOffset = 0;
 
+    this.locationType = 'route'; // route/town/cave/forest/gym/elite_four
+
     // 스프라이트 캐시
     this._enemySprite = null;
     this._playerSprite = null;
@@ -261,11 +263,20 @@ export class BattleUI {
     ctx.fillStyle = grad;
     ctx.fillRect(0, 0, 800, 300);
 
-    // 지면
-    ctx.fillStyle = '#2a3a2a';
+    // 지면 — 지형별 색상
+    const groundColors = {
+      route:      { base: '#2a3a2a', detail: '#354535' },
+      town:       { base: '#3a3a2a', detail: '#4a4535' },
+      cave:       { base: '#2a2a3a', detail: '#353545' },
+      forest:     { base: '#1a3a1a', detail: '#254525' },
+      gym:        { base: '#3a3a1a', detail: '#4a4525' },
+      elite_four: { base: '#2a1a2a', detail: '#352535' },
+      dungeon:    { base: '#1a1a2a', detail: '#252535' },
+    };
+    const gc = groundColors[this.locationType] || groundColors.route;
+    ctx.fillStyle = gc.base;
     ctx.fillRect(0, 240, 800, 60);
-    // 지면 텍스처 (점선)
-    ctx.fillStyle = '#354535';
+    ctx.fillStyle = gc.detail;
     for (let i = 0; i < 40; i++) {
       const gx = (i * 23 + 5) % 800;
       const gy = 250 + (i * 7) % 40;
@@ -279,22 +290,26 @@ export class BattleUI {
       ctx.fillRect(gx, gy, 2, 1);
     }
 
-    // 적 플랫폼
-    ctx.fillStyle = '#3a5a3a';
+    // 적 플랫폼 — 지형별
+    const platColor = this.locationType === 'cave' ? '#3a3a5a' :
+                      this.locationType === 'elite_four' ? '#3a2a3a' :
+                      this.locationType === 'gym' ? '#3a3a1a' : '#3a5a3a';
+    const platLight = platColor.replace(/3a/g, '4a');
+    ctx.fillStyle = platColor;
     ctx.beginPath();
     ctx.ellipse(560, 160, 100, 20, 0, 0, Math.PI * 2);
     ctx.fill();
-    ctx.fillStyle = '#4a6a4a';
+    ctx.fillStyle = platLight;
     ctx.beginPath();
     ctx.ellipse(560, 158, 95, 16, 0, 0, Math.PI * 2);
     ctx.fill();
 
     // 플레이어 플랫폼
-    ctx.fillStyle = '#3a5a3a';
+    ctx.fillStyle = platColor;
     ctx.beginPath();
     ctx.ellipse(200, 270, 110, 22, 0, 0, Math.PI * 2);
     ctx.fill();
-    ctx.fillStyle = '#4a6a4a';
+    ctx.fillStyle = platLight;
     ctx.beginPath();
     ctx.ellipse(200, 268, 105, 18, 0, 0, Math.PI * 2);
     ctx.fill();

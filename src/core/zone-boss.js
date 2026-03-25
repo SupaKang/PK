@@ -79,6 +79,78 @@ const ZONE_BOSSES = {
     },
     position: { x: 15, y: 3 },
   },
+
+  route_04: {
+    name: '숲의 정령왕',
+    description: '고대 숲의 깊은 곳에서 깨어난 정령들의 왕.',
+    team: [
+      { monsterId: 21, level: 24 },
+      { monsterId: 63, level: 26 },
+    ],
+    rewards: {
+      money: 3000,
+      exp: 600,
+      items: [
+        { itemId: 'ultra_stone', count: 1 },
+        { itemId: 'revive', count: 2 },
+      ],
+    },
+    position: { x: 22, y: 5 },
+  },
+
+  route_05: {
+    name: '사막의 지배자',
+    description: '끝없는 모래바람 속에서 군림하는 사막의 군주.',
+    team: [
+      { monsterId: 33, level: 30 },
+      { monsterId: 12, level: 32 },
+    ],
+    rewards: {
+      money: 3500,
+      exp: 700,
+      items: [
+        { itemId: 'ultra_stone', count: 2 },
+        { itemId: 'full_revive', count: 1 },
+      ],
+    },
+    position: { x: 22, y: 5 },
+  },
+
+  route_06: {
+    name: '산악의 거인',
+    description: '산맥을 수호하는 거대한 바위 거인.',
+    team: [
+      { monsterId: 61, level: 36 },
+      { monsterId: 58, level: 38 },
+    ],
+    rewards: {
+      money: 5000,
+      exp: 900,
+      items: [
+        { itemId: 'ultra_stone', count: 2 },
+        { itemId: 'full_revive', count: 2 },
+      ],
+    },
+    position: { x: 17, y: 5 },
+  },
+
+  route_07: {
+    name: '어둠의 파수꾼',
+    description: '어둠의 길목을 지키는 최후의 수호자.',
+    team: [
+      { monsterId: 89, level: 42 },
+      { monsterId: 64, level: 44 },
+    ],
+    rewards: {
+      money: 6000,
+      exp: 1000,
+      items: [
+        { itemId: 'domination_stone', count: 1 },
+        { itemId: 'full_revive', count: 2 },
+      ],
+    },
+    position: { x: 22, y: 5 },
+  },
 };
 
 /**
