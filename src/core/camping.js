@@ -165,17 +165,17 @@ export class CampingManager {
     // Resolve camp type from AP cost
     const campType = this._resolveCampType(apCost);
 
-    // Determine food bonuses
+    // Determine food bonuses (accept either direct bonuses or a foodItemId)
     let foodUsed = null;
-    let healBonusPercent = 0;
-    let ppBonusPercent = 0;
+    let healBonusPercent = options.healBonus || 0;
+    let ppBonusPercent = options.ppBonus || 0;
     let apSaved = 0;
 
     if (options.foodItemId && FOOD_ITEMS[options.foodItemId]) {
       const food = FOOD_ITEMS[options.foodItemId];
       foodUsed = { id: options.foodItemId, ...food };
-      healBonusPercent = food.healBonus || 0;
-      ppBonusPercent = food.ppBonus || 0;
+      healBonusPercent = healBonusPercent || food.healBonus || 0;
+      ppBonusPercent = ppBonusPercent || food.ppBonus || 0;
       apSaved = food.apSave || 0;
     }
 

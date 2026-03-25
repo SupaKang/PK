@@ -334,6 +334,52 @@ export class MapUI {
       }
     }
 
+    // NPC proximity speech bubbles
+    if (this.currentMapData?.npcs) {
+      const px = this.player.getTileX();
+      const py = this.player.getTileY();
+
+      for (const npc of this.npcSprites) {
+        const dx = Math.abs(npc.x - px);
+        const dy = Math.abs(npc.y - py);
+        const dist = dx + dy; // Manhattan distance
+
+        if (dist <= 2 && dist > 0) {
+          const screen = this.tileEngine.worldToScreen(npc.x * 64, npc.y * 64);
+
+          // Determine bubble text based on NPC type
+          let bubbleText = '...';
+          let bubbleColor = '#ffffff';
+          if (npc.type === 'shop') { bubbleText = '$'; bubbleColor = '#44aa55'; }
+          else if (npc.type === 'heal') { bubbleText = '+'; bubbleColor = '#88aaff'; }
+          else if (npc.type === 'trainer') { bubbleText = '!'; bubbleColor = '#cc4444'; }
+          else if (npc.type === 'gym_leader') { bubbleText = '!!'; bubbleColor = '#ddaa22'; }
+          else if (npc.type === 'boss') { bubbleText = '!!!'; bubbleColor = '#992266'; }
+
+          // Draw bubble
+          const bx = screen.x + 20;
+          const by = screen.y - 20;
+          const r = this.renderer;
+
+          // Bubble background
+          ctx.fillStyle = 'rgba(0,0,0,0.7)';
+          const tw = r.measureText(bubbleText, 1);
+          ctx.fillRect(bx - 2, by - 2, tw + 8, 14);
+
+          // Bubble text
+          r.drawPixelText(bubbleText, bx + 2, by, bubbleColor, 1);
+
+          // Bubble tail (small triangle)
+          ctx.fillStyle = 'rgba(0,0,0,0.7)';
+          ctx.beginPath();
+          ctx.moveTo(bx + 4, by + 12);
+          ctx.lineTo(bx + 10, by + 18);
+          ctx.lineTo(bx + 12, by + 12);
+          ctx.fill();
+        }
+      }
+    }
+
     // Hidden event glow (감응 타일)
     if (this.currentMapData?.hiddenEvents && this._contractorLevel > 0) {
       const time = Date.now() * 0.003;

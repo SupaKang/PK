@@ -76,6 +76,12 @@ export class BattleUI {
     // 시간대
     this.timeOfDay = 'day';
 
+    // 적 정보 표시 토글
+    this._showEnemyInfo = false;
+
+    // 배틀 속도
+    this.battleSpeed = 1;
+
     // 승리 대기
     this._victoryPending = false;
 
@@ -156,7 +162,7 @@ export class BattleUI {
     // 타이프라이터
     if (this.state === STATE.MESSAGE && !this.messageComplete) {
       this.typewriterTimer += dt;
-      const charsToShow = Math.floor(this.typewriterTimer * this.typewriterSpeed);
+      const charsToShow = Math.floor(this.typewriterTimer * this.typewriterSpeed * this.battleSpeed);
       if (charsToShow >= this.currentMessage.length) {
         this.displayedChars = this.currentMessage.length;
         this.messageComplete = true;
@@ -166,7 +172,7 @@ export class BattleUI {
     }
 
     // HP 애니메이션
-    const hpSpeed = 80 * dt;
+    const hpSpeed = 80 * dt * this.battleSpeed;
     this.animHpPlayerTarget = this.battle.playerActive?.currentHp ?? 0;
     this.animHpEnemyTarget = this.battle.enemyActive?.currentHp ?? 0;
 
@@ -334,6 +340,33 @@ export class BattleUI {
       }
     }
 
+    // ===== 적 상세 정보 패널 =====
+    if (this._showEnemyInfo && this.battle.enemyActive) {
+      const em = this.battle.enemyActive;
+      const r2 = this.renderer;
+      // Extended info panel
+      r2.drawPanel(20, 90, 280, 80, '#0d0d1e', '#3a3a5a');
+      // Type display
+      r2.drawPixelText('타입:', 32, 100, '#888899', 1);
+      if (em.type) {
+        for (let t = 0; t < em.type.length; t++) {
+          const tc = TYPE_COLORS[em.type[t]] || '#888';
+          const ctx2 = r2.getContext();
+          ctx2.fillStyle = tc;
+          ctx2.fillRect(70 + t * 55, 98, 48, 14);
+          r2.drawPixelText(em.type[t], 73 + t * 55, 100, '#fff', 1);
+        }
+      }
+      // Stats hint
+      const hpPct = Math.floor((em.currentHp / em.stats.hp) * 100);
+      r2.drawPixelText('HP: ' + hpPct + '%', 32, 118, '#aaaacc', 1);
+      r2.drawPixelText('Lv ' + em.level, 32, 134, '#aaaacc', 1);
+      if (em.status) {
+        r2.drawPixelText('상태: ' + (STATUS_LABELS[em.status] || em.status), 120, 134, '#ffaa44', 1);
+      }
+      r2.drawPixelText('[I] 닫기', 32, 152, '#666688', 1);
+    }
+
     // ===== 플레이어 정보 패널 (우하단) =====
     if (this.battle.playerActive) {
       const pm = this.battle.playerActive;
@@ -433,6 +466,9 @@ export class BattleUI {
       const y = by + row * (bh + 10);
       r.drawButton(x, y, bw, bh, actions[i], this.cursor === i, false);
     }
+
+    r.drawPixelText('[S] 속도: x' + this.battleSpeed, 440, 430, '#666688', 1);
+    r.drawPixelText('[I] 적 정보', 600, 430, '#666688', 1);
   }
 
   _renderSkillSelect(r, ctx) {
@@ -655,6 +691,14 @@ export class BattleUI {
       case 'Enter':
       case ' ':
         this._selectAction(this.cursor);
+        return true;
+      case 'i':
+      case 'I':
+        this._showEnemyInfo = !this._showEnemyInfo;
+        return true;
+      case 's':
+      case 'S':
+        this.battleSpeed = this.battleSpeed >= 3 ? 1 : this.battleSpeed + 1;
         return true;
     }
     return false;

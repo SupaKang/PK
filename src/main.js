@@ -21,7 +21,7 @@ import { DexUI, DexTracker } from './ui/dex-ui.js';
 import { AssetLoader } from './ui/asset-loader.js';
 import { getZoneBoss, getBossRewards } from './core/zone-boss.js';
 import { ExpeditionManager } from './core/expedition.js';
-import { CampingManager } from './core/camping.js';
+import { CampingManager, FOOD_ITEMS } from './core/camping.js';
 import { TimeEncounterManager } from './core/time-encounter.js';
 
 import { ExpeditionHUD } from './ui/expedition-hud.js';
@@ -490,6 +490,17 @@ class Game {
                 }
               }
               this.dexTracker.markSeen(wildMonster.id);
+              // 전설 몬스터 특별 연출 (ID 91-100)
+              if (wildMonster.id >= 91 && wildMonster.id <= 100) {
+                this.audio.playSfx('evolve');
+                this.renderer.screenShake(600, 6);
+                this.showDialog(null, '...! 강대한 기운이 느껴진다!', () => {
+                  this.showDialog(null, `전설의 ${wildMonster.name}이(가) 나타났다!`, () => {
+                    this.startBattle({ enemyParty: [wildMonster], isWild: true });
+                  });
+                });
+                return;
+              }
               this.startBattle({ enemyParty: [wildMonster], isWild: true });
             }
           }
@@ -587,15 +598,20 @@ class Game {
   _executeCamp(campOption) {
     if (!this.expeditionManager) return;
 
-    // 식량 아이템 체크 (소비는 AP 확인 후)
-    let apSave = 0;
-    const foodItems = ['ration', 'herb_tea', 'energy_bar'];
-    for (const fid of foodItems) {
+    // Collect food bonuses BEFORE AP check (consume one of each type only)
+    let apSave = 0, healBonus = 0, ppBonus = 0;
+    const foodToConsume = [];
+    for (const fid of ['ration', 'herb_tea', 'energy_bar']) {
       if (this.inventory.hasItem(fid)) {
-        const itemData = getItemData(fid);
-        if (itemData?.effect?.subtype === 'ap_save') apSave = itemData.effect.value;
+        const food = FOOD_ITEMS[fid];
+        if (food) {
+          if (food.healBonus) { healBonus = food.healBonus; foodToConsume.push(fid); }
+          if (food.ppBonus) { ppBonus = food.ppBonus; foodToConsume.push(fid); }
+          if (food.apSave) { apSave = food.apSave; foodToConsume.push(fid); }
+        }
       }
     }
+
     const actualAPCost = Math.max(1, campOption.ap - apSave);
 
     // AP 확인 먼저
@@ -604,16 +620,14 @@ class Game {
       return;
     }
 
-    // AP 확인 후 식량 소비
-    for (const fid of foodItems) {
-      if (this.inventory.hasItem(fid)) {
-        this.inventory.removeItem(fid);
-      }
+    // Consume food AFTER AP check (one of each type only)
+    for (const fid of foodToConsume) {
+      this.inventory.removeItem(fid, 1);
     }
 
-    // 파티 회복
+    // 파티 회복 (pass food bonuses to camping manager)
     const party = this.partyManager.getBattleParty();
-    const result = this.campingManager.executeCamp(party, actualAPCost);
+    const result = this.campingManager.executeCamp(party, actualAPCost, { healBonus, ppBonus });
 
     this._syncExpeditionHUD();
     this.audio.playSfx('select');
@@ -703,6 +717,16 @@ class Game {
           }
           this.showDialog(null, '유대가 깊어졌다. 경험치를 얻었다!');
           break;
+        case 'battle': {
+          const monsterIds = event.monsterIds || [31, 64];
+          const levelBonus = event.levelBonus || 3;
+          const level = (this.partyManager.contractor?.level || 10) + levelBonus;
+          const team = monsterIds.map(id => createMonster(id, level));
+          this.showDialog(null, '야습이다! 마물이 습격해왔다!', () => {
+            this.startBattle({ enemyParty: team, isWild: true });
+          });
+          break;
+        }
         default:
           break;
       }
