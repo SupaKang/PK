@@ -1121,15 +1121,7 @@ class Game {
     });
   }
 
-  _onGauntletBattleWin(config) {
-    if (config.trainerId) this.trainerManager.markDefeated(config.trainerId);
-
-    if (this._gauntletHealBetween) {
-      this.partyManager.healAll();
-    }
-
-    this._nextGauntletBattle();
-  }
+  // _onGauntletBattleWin — removed (dead code, handled inline in onBattleEnd)
 
   showRewardsSequence(messages, onComplete) {
     if (messages.length === 0) { onComplete(); return; }

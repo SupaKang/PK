@@ -1,6 +1,6 @@
 // 스킬 효과 처리 시스템
 import { getEffectiveness, getEffectivenessText } from './type.js';
-import { applyDamageBuff, applyAccuracyBuff, applyCritBuff, applyDrainBuff, checkStatusResist } from './party-buffs.js';
+import { applyDamageBuff, applyAccuracyBuff, applyCritBuff, applyDrainBuff, applyHealBuff, applyStatBuff, checkStatusResist } from './party-buffs.js';
 
 /**
  * 데미지 계산 (포켓몬 공식 기반)
@@ -201,7 +201,8 @@ export function applySkillEffect(skill, attacker, defender, damage, attackerBuff
     }
 
     case 'heal': {
-      const healAmount = Math.floor(attacker.stats.hp * (eff.value || 0.5));
+      let healAmount = Math.floor(attacker.stats.hp * (eff.value || 0.5));
+      healAmount = applyHealBuff(healAmount, attackerBuffs);
       attacker.currentHp = Math.min(attacker.stats.hp, attacker.currentHp + healAmount);
       messages.push(`${attacker.name}은(는) 체력을 회복했다!`);
       break;
@@ -284,10 +285,13 @@ export function getStatMultiplier(stage) {
 /**
  * 실제 전투 스탯 (단계 적용)
  */
-export function getEffectiveStat(monster, statName) {
+export function getEffectiveStat(monster, statName, partyBuffs = null) {
   const base = monster.stats[statName];
   const stage = monster._statStages?.[statName] || 0;
-  return Math.floor(base * getStatMultiplier(stage));
+  let result = Math.floor(base * getStatMultiplier(stage));
+  // 파티 버프 (궁수 속도, 마법사 특방 등)
+  result = applyStatBuff(result, statName, partyBuffs);
+  return result;
 }
 
 /**

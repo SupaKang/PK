@@ -430,19 +430,19 @@ export class MapUI {
 
     // 미니 HUD (위치 이름)
     const loc = this.mapManager.getCurrentLocation();
+    const hudR = this.renderer;
     if (loc) {
-      const r = this.renderer;
       ctx.fillStyle = 'rgba(0,0,0,0.6)';
       ctx.fillRect(0, 0, 800, 28);
-      r.drawPixelText(loc.name, 10, 6, '#ffffff', 2);
-      r.drawPixelText(`인장: ${this.badgeCount}/8`, 650, 6, '#ffcc44', 2);
+      hudR.drawPixelText(loc.name, 10, 6, '#ffffff', 2);
+      hudR.drawPixelText(`인장: ${this.badgeCount}/8`, 650, 6, '#ffcc44', 2);
     }
 
     // Low HP warning
     if (this._partyLowHP) {
       const blink = Math.floor(Date.now() / 500) % 2;
       if (blink) {
-        r.drawPixelText('! HP 위험', 300, 8, '#ff4444', 2);
+        hudR.drawPixelText('! HP 위험', 300, 8, '#ff4444', 2);
       }
     }
 

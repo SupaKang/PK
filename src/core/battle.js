@@ -45,6 +45,8 @@ export class Battle {
     if (!monster) return;
     monster._statStages = { atk: 0, def: 0, spAtk: 0, spDef: 0, speed: 0 };
     monster._flinched = false;
+    monster._protected = false;
+    monster._leech = null;
   }
 
   getFirstAlive(party) {
@@ -165,22 +167,21 @@ export class Battle {
 
     if (effect) {
       switch (effect.type) {
-        case 'status':
-          // Don't apply status if already has one
+        case 'burn': case 'poison': case 'paralyze':
+        case 'sleep': case 'confuse': case 'freeze':
+          // 상태이상 기술 평가
           if (this.playerActive.status) return 5;
           score = 60;
-          // Paralyze/burn are great early battle
-          if (['paralyze', 'burn'].includes(effect.status)) score = 70;
-          if (effect.status === 'sleep') score = 75;
+          if (['paralyze', 'burn'].includes(effect.type)) score = 70;
+          if (effect.type === 'sleep' || effect.type === 'freeze') score = 75;
           break;
-        case 'stat_change':
-          if (effect.target === 'self') {
-            // Boost self — good when HP is high and early in battle
-            score = hpRatio > 0.7 ? 55 : 20;
-          } else {
-            // Debuff opponent
-            score = 45;
-          }
+        case 'stat_up':
+          // 자기 강화 — HP 높을 때 유리
+          score = hpRatio > 0.7 ? 55 : 20;
+          break;
+        case 'stat_down':
+          // 적 약화
+          score = 45;
           break;
         case 'heal':
           // Heal when HP is low
@@ -263,7 +264,7 @@ export class Battle {
       playerFirst = playerPriority > enemyPriority;
     } else {
       // 우선도 같으면 속도 비교
-      const playerSpeed = getEffectiveStat(this.playerActive, 'speed');
+      const playerSpeed = getEffectiveStat(this.playerActive, 'speed', this.playerBuffs);
       const enemySpeed = getEffectiveStat(this.enemyActive, 'speed');
 
       // 마비 시 속도 50% 감소

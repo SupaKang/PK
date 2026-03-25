@@ -211,9 +211,7 @@ export class CampingManager {
       return {
         name: member.name ?? '???',
         hpBefore: before.hp,
-        hpAfter: member.hp,
-        ppBefore: before.pp,
-        ppAfter: member.pp ?? 0,
+        hpAfter: member.currentHp ?? 0,
         statusCured: campType.cureStatus,
       };
     });
@@ -236,6 +234,7 @@ export class CampingManager {
       event,
     };
     this.campLog.push(record);
+    if (this.campLog.length > 50) this.campLog.shift(); // 메모리 캡
 
     return record;
   }
