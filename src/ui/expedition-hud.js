@@ -33,6 +33,9 @@ export class ExpeditionHUD {
       { id: 'cancel', label: '취소', ap: 0 },
     ];
 
+    // 귀환 AP 추정치
+    this.returnAPEstimate = 0;
+
     // 경고 플래시
     this._warningFlash = 0;
 
@@ -105,6 +108,13 @@ export class ExpeditionHUD {
     ctx.fillStyle = this.magiDensity > 0.7 ? '#8844cc' : this.magiDensity > 0.4 ? '#6644aa' : '#443388';
     ctx.fillRect(magiX, apBarY, magiW * this.magiDensity, apBarH);
     r.drawPixelText('마기', magiX + magiW + 5, apBarY, '#aa88dd', 1);
+
+    // Return AP estimate
+    if (this.returnAPEstimate > 0) {
+      const canReturn = this.currentAP >= this.returnAPEstimate;
+      const color = canReturn ? '#44cc66' : '#cc4444';
+      r.drawPixelText(`귀환: ~${this.returnAPEstimate}AP`, 680, 8, color, 1);
+    }
 
     // 목표 표시
     if (this.objectiveText) {

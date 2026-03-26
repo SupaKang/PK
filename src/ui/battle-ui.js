@@ -482,6 +482,16 @@ export class BattleUI {
       r.drawButton(x, y, bw, bh, actions[i], this.cursor === i, false);
     }
 
+    // Flee chance indicator
+    if (this.battle.isWild) {
+      const playerSpeed = this.battle.playerActive?.stats?.speed || 50;
+      const enemySpeed = this.battle.enemyActive?.stats?.speed || 50;
+      const fleeChance = Math.min(100, Math.floor((playerSpeed * 128 / enemySpeed + 30 * this.battle.turn) / 256 * 100));
+      r.drawPixelText(`(${fleeChance}%)`, 620, 382, '#888899', 1);
+    } else {
+      r.drawPixelText('(불가)', 620, 382, '#664444', 1);
+    }
+
     r.drawPixelText('[S] 속도: x' + this.battleSpeed, 440, 430, '#666688', 1);
     r.drawPixelText('[I] 적 정보', 600, 430, '#666688', 1);
   }

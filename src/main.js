@@ -507,6 +507,7 @@ class Game {
                 });
                 return;
               }
+              this.audio.playSfx('hit');
               this.startBattle({ enemyParty: [wildMonster], isWild: true });
             }
           }
@@ -604,6 +605,17 @@ class Game {
       this.showDialog(null, '⚠ 마석의 빛이 약해지고 있다! AP가 얼마 남지 않았다!');
     }
     if (em.getRemainingAP() > 30) this._apWarningShown = false;
+
+    // Estimate return AP (manhattan distance from current tile to start)
+    if (this.mapUI && this.expeditionHUD && this.expeditionManager?.isActive) {
+      // Simple estimate based on map width (rough distance to town)
+      const mapData = this.mapUI.currentMapData;
+      if (mapData) {
+        const px = this.mapUI.player?.getTileX() || 0;
+        const estimate = px + 10; // distance to exit + buffer
+        this.expeditionHUD.returnAPEstimate = estimate;
+      }
+    }
   }
 
   /** 캠핑 실행 */
@@ -908,6 +920,8 @@ class Game {
   // ─── 배틀 ───
 
   startBattle(config, onEnd) {
+    this.renderer.screenShake(300, 5);
+    this.audio.playSfx('select');
     const battle = new Battle({
       playerParty: this.partyManager.getBattleParty(),
       enemyParty: config.enemyParty,
@@ -953,6 +967,7 @@ class Game {
 
     switch (result) {
       case 'win': {
+        this.renderer.screenShake(200, 3);
         this.audio.playSfx('victory_fanfare');
         const rewards = [];
 

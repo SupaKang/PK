@@ -11,8 +11,8 @@ const ZONE_BOSSES = {
     name: '숲의 우두머리',
     description: '1번 도로의 깊은 숲에 서식하는 강력한 야생 몬스터.',
     team: [
-      { monsterId: 14, level: 10 },
-      { monsterId: 21, level: 12 },
+      { monsterId: 14, level: 7 },
+      { monsterId: 21, level: 9 },
     ],
     rewards: {
       money: 1000,
@@ -28,9 +28,9 @@ const ZONE_BOSSES = {
     name: '바위동굴의 지배자',
     description: '동굴 깊은 곳에 숨어있는 암석 거인.',
     team: [
-      { monsterId: 33, level: 15 },
-      { monsterId: 61, level: 17 },
-      { monsterId: 12, level: 18 },
+      { monsterId: 33, level: 12 },
+      { monsterId: 61, level: 13 },
+      { monsterId: 12, level: 14 },
     ],
     rewards: {
       money: 2500,
@@ -47,9 +47,9 @@ const ZONE_BOSSES = {
     name: '마기의 파수꾼',
     description: '마기가 짙은 지역을 지키는 그림자단의 정예.',
     team: [
-      { monsterId: 31, level: 20 },
-      { monsterId: 64, level: 22 },
-      { monsterId: 88, level: 24 },
+      { monsterId: 31, level: 18 },
+      { monsterId: 64, level: 19 },
+      { monsterId: 88, level: 20 },
     ],
     rewards: {
       money: 4000,
@@ -138,8 +138,8 @@ const ZONE_BOSSES = {
     name: '어둠의 파수꾼',
     description: '어둠의 길목을 지키는 최후의 수호자.',
     team: [
-      { monsterId: 89, level: 42 },
-      { monsterId: 64, level: 44 },
+      { monsterId: 89, level: 40 },
+      { monsterId: 64, level: 42 },
     ],
     rewards: {
       money: 6000,
@@ -150,6 +150,54 @@ const ZONE_BOSSES = {
       ],
     },
     position: { x: 22, y: 5 },
+  },
+
+  route_08: {
+    name: '그림자의 선봉',
+    description: '마왕성을 향하는 길목을 지키는 그림자단 정예.',
+    team: [
+      { monsterId: 89, level: 44 },
+      { monsterId: 31, level: 45 },
+      { monsterId: 64, level: 46 },
+    ],
+    rewards: { money: 7000, exp: 1200, items: [{ itemId: 'full_revive', count: 2 }] },
+    position: { x: 17, y: 5 },
+  },
+
+  route_09: {
+    name: '챔피언 로드의 수문장',
+    description: '마왕성 입구를 지키는 최강의 파수꾼.',
+    team: [
+      { monsterId: 28, level: 48 },
+      { monsterId: 73, level: 49 },
+      { monsterId: 51, level: 50 },
+      { monsterId: 97, level: 52 },
+    ],
+    rewards: { money: 10000, exp: 2000, items: [{ itemId: 'domination_stone', count: 1 }] },
+    position: { x: 27, y: 6 },
+  },
+
+  cave_02: {
+    name: '빙하의 군주',
+    description: '빙하동굴 깊은 곳에 잠든 얼음 거인.',
+    team: [
+      { monsterId: 47, level: 35 },
+      { monsterId: 75, level: 37 },
+    ],
+    rewards: { money: 4500, exp: 800, items: [{ itemId: 'ultra_stone', count: 2 }] },
+    position: { x: 15, y: 7 },
+  },
+
+  forest_01: {
+    name: '숲의 요정왕',
+    description: '수수께끼의 숲을 다스리는 고대 요정.',
+    team: [
+      { monsterId: 21, level: 23 },
+      { monsterId: 63, level: 24 },
+      { monsterId: 86, level: 25 },
+    ],
+    rewards: { money: 3500, exp: 650, items: [{ itemId: 'high_stone', count: 3 }] },
+    position: { x: 17, y: 8 },
   },
 };
 
