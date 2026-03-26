@@ -152,6 +152,13 @@ export class TilemapEngine {
         ctx.fillRect(screenX, screenY, TILE_SIZE, TILE_SIZE);
       }
     }
+
+    // Water tile shimmer overlay
+    if (tileId === 3) {
+      const shimmer = 0.05 + Math.sin(Date.now() * 0.002 + screenX * 0.1 + screenY * 0.1) * 0.05;
+      ctx.fillStyle = `rgba(200,230,255,${shimmer})`;
+      ctx.fillRect(screenX, screenY, TILE_SIZE, TILE_SIZE);
+    }
   }
 
   /** Render ground + objects layers */

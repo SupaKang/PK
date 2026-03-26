@@ -382,6 +382,44 @@ export class MapUI {
       }
     }
 
+    // Exit tile arrows
+    if (this.currentMapData?.exits) {
+      const time = Date.now() * 0.003;
+      for (const exit of this.currentMapData.exits) {
+        const screen = this.tileEngine.worldToScreen(exit.x * 64, exit.y * 64);
+        if (screen.x > -64 && screen.x < 864 && screen.y > -64 && screen.y < 664) {
+          // Pulsing arrow
+          const pulse = 0.5 + Math.sin(time * 2) * 0.3;
+          ctx.fillStyle = `rgba(255,204,68,${pulse})`;
+
+          // Determine arrow direction based on position
+          const mx = this.currentMapData.width;
+          const my = this.currentMapData.height;
+          let ax = screen.x + 28, ay = screen.y + 28;
+
+          ctx.beginPath();
+          if (exit.x === 0) { // left exit
+            ctx.moveTo(ax - 16, ay);
+            ctx.lineTo(ax - 4, ay - 8);
+            ctx.lineTo(ax - 4, ay + 8);
+          } else if (exit.x >= mx - 1) { // right exit
+            ctx.moveTo(ax + 16, ay);
+            ctx.lineTo(ax + 4, ay - 8);
+            ctx.lineTo(ax + 4, ay + 8);
+          } else if (exit.y === 0) { // top exit
+            ctx.moveTo(ax, ay - 16);
+            ctx.lineTo(ax - 8, ay - 4);
+            ctx.lineTo(ax + 8, ay - 4);
+          } else { // bottom exit
+            ctx.moveTo(ax, ay + 16);
+            ctx.lineTo(ax - 8, ay + 4);
+            ctx.lineTo(ax + 8, ay + 4);
+          }
+          ctx.fill();
+        }
+      }
+    }
+
     // Hidden event glow (감응 타일)
     if (this.currentMapData?.hiddenEvents && this._contractorLevel > 0) {
       const time = Date.now() * 0.003;

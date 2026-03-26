@@ -23,6 +23,7 @@ import { getZoneBoss, getBossRewards } from './core/zone-boss.js';
 import { ExpeditionManager } from './core/expedition.js';
 import { CampingManager, FOOD_ITEMS } from './core/camping.js';
 import { TimeEncounterManager } from './core/time-encounter.js';
+import { AchievementManager } from './core/achievements.js';
 
 import { ExpeditionHUD } from './ui/expedition-hud.js';
 import { ExpeditionSummary } from './ui/expedition-summary.js';
@@ -85,10 +86,12 @@ class Game {
     this.expeditionManager = null;
     this.campingManager = new CampingManager();
     this.timeEncounterManager = new TimeEncounterManager();
+    this.achievementManager = new AchievementManager();
     this.expeditionHUD = null;
     this.expeditionSummary = null;
     // 탐험 중 추적 데이터
     this._expTracker = { monstersDefeated: 0, expGained: 0, moneyEarned: 0 };
+    this._expeditionSuccessCount = 0;
     this._tutorialShown = false;
 
     this.lastTime = 0;
@@ -901,6 +904,8 @@ class Game {
         const result = this.expeditionManager.returnSafely();
         this._syncExpeditionHUD();
         this.audio.playSfx('capture_success');
+        this._expeditionSuccessCount++;
+        this._checkAchievement('expedition_success', this._expeditionSuccessCount);
         // Show expedition summary screen
         this.expeditionSummary = new ExpeditionSummary(this.renderer);
         this.expeditionSummary.show({
@@ -996,7 +1001,7 @@ class Game {
         if (config.reward) {
           this.inventory.money += config.reward;
           this._expTracker.moneyEarned += config.reward;
-          rewards.push(`${config.reward}원을 획득했다!`);
+          rewards.push(`${config.reward}원 획득! (소지금: ${this.inventory.money}원)`);
         }
         // 탐험 추적
         this._expTracker.monstersDefeated += config.enemyParty.filter(e => e.currentHp <= 0).length;
@@ -1012,16 +1017,19 @@ class Game {
                 // 난이도 경험치 배율 적용
                 share = Math.floor(share * this._difficultySettings.expMultiplier);
                 // Bonus exp from magi density during expeditions
+                let magiBonus = 0;
                 if (this.expeditionManager?.isActive) {
-                  const magiBonus = Math.floor(share * this.expeditionManager.getMagiDensity() * 0.5);
+                  magiBonus = Math.floor(share * this.expeditionManager.getMagiDensity() * 0.5);
                   share += magiBonus;
                 }
+                rewards.push(`${m.name}: 경험치 +${share} (마기 보너스 +${magiBonus})`);
                 if (m.isContractor) {
                   const events = gainContractorExp(m, share);
                   for (const evt of events) {
                     if (evt.type === 'level_up') {
                       rewards.push(`${m.name}은(는) 레벨 ${evt.level}이(가) 되었다!`);
                       this.audio.playSfx('level_up');
+                      this._checkAchievement('level', evt.level);
                       for (const ns of evt.newSkills) this.skillLearnQueue.push({ monster: m, skill: ns });
                     }
                   }
@@ -1050,10 +1058,12 @@ class Game {
             }
           }
           rewards.push(bossReward.message);
+          this._checkAchievement('boss_defeat');
         }
         if (config.isGym && config.badge) {
           this.storyManager.addBadge(config.badge);
           rewards.push(`${config.badge} 배지를 획득했다!`);
+          this._checkAchievement('badge', this.storyManager.getBadgeCount());
           // 체육관 승리 트리거 등록 → 스토리 defeat_gym 이벤트 발동 가능
           const loc = this.mapManager.currentLocation;
           this.storyManager.completeTrigger('defeat_gym_' + loc);
@@ -1081,6 +1091,8 @@ class Game {
         const msg = loc.location === 'party'
           ? `${captured.name}과(와) 계약했다! 파티에 추가되었다!`
           : `${captured.name}과(와) 계약했다! 보관함으로 보내졌다!`;
+        this._checkAchievement('contract');
+        this._checkAchievement('dex', this.dexTracker.getCaughtCount());
         this.showDialog(null, msg, () => this.processPostBattle(callback));
         break;
       }
@@ -1176,10 +1188,17 @@ class Game {
       const { monster, skill } = this.skillLearnQueue.shift();
       const result = learnSkill(monster, skill);
       if (result.needChoice) {
-        const options = monster.skills.map((s, i) => ({ text: `${s.name} (${s.type})`, index: i }));
+        const options = monster.skills.map((s, i) => {
+          const catLabel = { physical: '물리', special: '특수', status: '변화' }[s.category] || '';
+          const powerStr = s.power ? ` 위력:${s.power}` : '';
+          return { text: `${s.name} [${s.type}/${catLabel}${powerStr}]`, index: i };
+        });
         options.push({ text: '배우지 않는다', index: -1 });
+        const newCatLabel = { physical: '물리', special: '특수', status: '변화' }[skill.category] || '';
+        const newPowerStr = skill.power ? ` 위력:${skill.power}` : '';
+        const newInfo = `${skill.name} [${skill.type}/${newCatLabel}${newPowerStr}]`;
         this.showChoice(
-          `${monster.name}이(가) ${skill.name}을(를) 배우려 한다! 어떤 기술을 잊게 할까?`,
+          `${monster.name}이(가) ${newInfo}을(를) 배우려 한다! 어떤 기술을 잊게 할까?`,
           options,
           (opt) => {
             if (opt.index >= 0) {
@@ -1245,6 +1264,16 @@ class Game {
     this.state = GameState.SHOP;
   }
 
+  // ─── 업적 ───
+
+  _checkAchievement(type, value) {
+    const ach = this.achievementManager?.check(type, value);
+    if (ach) {
+      this.audio.playSfx('level_up');
+      this.showDialog(null, `🏆 업적 달성: ${ach.name}\n${ach.description}`);
+    }
+  }
+
   // ─── 세이브/로드 ───
 
   saveGame(slot) {
@@ -1259,6 +1288,8 @@ class Game {
       story: this.storyManager.serialize(),
       dex: this.dexTracker.serialize(),
       expedition: this.expeditionManager?.serialize() || null,
+      achievements: this.achievementManager.serialize(),
+      expeditionSuccessCount: this._expeditionSuccessCount,
       difficulty: this._difficulty,
       difficultySettings: this._difficultySettings,
     });
@@ -1282,6 +1313,11 @@ class Game {
     if (state.settings) this.applySettings(state.settings);
     if (state.expedition) {
       this.expeditionManager = ExpeditionManager.deserialize(state.expedition);
+    }
+    if (state.achievements) {
+      this.achievementManager = AchievementManager.deserialize(state.achievements);
+    } else {
+      this.achievementManager = new AchievementManager();
     }
     this.enterMapState();
     return true;

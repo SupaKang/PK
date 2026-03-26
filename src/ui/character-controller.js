@@ -458,9 +458,10 @@ export class NpcSprite {
    * Render the NPC at the given screen position.
    */
   render(ctx, screenX, screenY) {
+    const idleBob = Math.sin(Date.now() * 0.002 + this.x * 3) * 2;
     renderCharacterSprite(
       ctx,
-      screenX, screenY,
+      screenX, screenY + idleBob,
       this.direction,
       this._animFrame,
       this.baseColor,
