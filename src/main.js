@@ -102,6 +102,10 @@ class Game {
       volume: 5,     // 0~10
     };
 
+    // 난이도 설정
+    this._difficulty = 'normal';
+    this._difficultySettings = { maxAP: 240, expMultiplier: 1.0, enemyLevelBonus: 0 };
+
     this.setupInput();
     this.touchControls = new TouchControls(this.canvas);
   }
@@ -174,11 +178,24 @@ class Game {
     this.inventory.addItem('potion', 5);
     this.inventory.addItem('magic_stone', 10);
 
-    // 맵 UI 미리 생성 (프롤로그 대화 배경으로 사용)
-    this.enterMapState();
+    // 난이도 선택
+    const diffOptions = [
+      { text: '쉬움 — 탐험 AP 320, 전투 보너스 경험치', difficulty: 'easy' },
+      { text: '보통 — 표준 (AP 240)', difficulty: 'normal' },
+      { text: '어려움 — AP 180, 적 레벨 +3', difficulty: 'hard' },
+    ];
+    this.showChoice('난이도를 선택하세요:', diffOptions, (opt) => {
+      this._difficulty = opt.difficulty;
+      this._difficultySettings = {
+        easy:   { maxAP: 320, expMultiplier: 1.5, enemyLevelBonus: 0 },
+        normal: { maxAP: 240, expMultiplier: 1.0, enemyLevelBonus: 0 },
+        hard:   { maxAP: 180, expMultiplier: 0.8, enemyLevelBonus: 3 },
+      }[opt.difficulty];
 
-    // 스토리 이벤트 시작 (프롤로그 → 직업 선택 → 스타터 선택)
-    this.triggerStoryEvents();
+      // 맵 UI 생성 및 스토리 시작
+      this.enterMapState();
+      this.triggerStoryEvents();
+    });
   }
 
   // ─── 직업 선택 (꿈속에서 할아버지가 묻는다) ───
@@ -481,6 +498,10 @@ class Game {
           if (checkEncounter(loc)) {
             let wildMonster = generateWildMonster(loc, this.storyManager.getBadgeCount());
             if (wildMonster) {
+              // 난이도에 따른 적 레벨 보너스
+              if (this._difficultySettings.enemyLevelBonus > 0) {
+                wildMonster = createMonster(wildMonster.id, wildMonster.level + this._difficultySettings.enemyLevelBonus);
+              }
               // 마기 농도에 따른 레벨 보너스 → 스탯 포함 재생성
               const nightBonus = Math.floor(wildMonster.level * magiDensity * 0.3);
               if (nightBonus > 0) {
@@ -544,13 +565,14 @@ class Game {
     // 탐험 시작 대기 플래그 처리
     if (this._pendingExpeditionStart) {
       this._pendingExpeditionStart = false;
+      const apMax = this._difficultySettings.maxAP;
       this.expeditionManager.startExpedition({
-        maxAP: 240,
+        maxAP: apMax,
         startLocation: this._expeditionStartLocation || this.mapManager.currentLocation,
       });
       this._syncExpeditionHUD();
       this.audio.playSfx('select');
-      this.showDialog(null, '탐험을 시작한다. 마석의 빛이 타오른다! (AP: 240)');
+      this.showDialog(null, `탐험을 시작한다. 마석의 빛이 타오른다! (AP: ${apMax})`);
     }
 
     // 탐험 HUD 초기화
@@ -987,6 +1009,8 @@ class Game {
             for (const m of battleParty) {
               if (m.currentHp > 0) {
                 let share = Math.max(1, Math.floor(expAmount / aliveCount));
+                // 난이도 경험치 배율 적용
+                share = Math.floor(share * this._difficultySettings.expMultiplier);
                 // Bonus exp from magi density during expeditions
                 if (this.expeditionManager?.isActive) {
                   const magiBonus = Math.floor(share * this.expeditionManager.getMagiDensity() * 0.5);
@@ -1235,6 +1259,8 @@ class Game {
       story: this.storyManager.serialize(),
       dex: this.dexTracker.serialize(),
       expedition: this.expeditionManager?.serialize() || null,
+      difficulty: this._difficulty,
+      difficultySettings: this._difficultySettings,
     });
   }
 
@@ -1243,6 +1269,10 @@ class Game {
     if (!state) return false;
     this.playerName = state.playerName || '주인공';
     this.playtime = state.playtime || 0;
+    if (state.difficulty) {
+      this._difficulty = state.difficulty;
+      this._difficultySettings = state.difficultySettings || { maxAP: 240, expMultiplier: 1.0, enemyLevelBonus: 0 };
+    }
     this.partyManager = PartyManager.deserialize(state.party);
     this.inventory = Inventory.deserialize(state.inventory);
     this.mapManager = MapManager.deserialize(state.map);
@@ -1293,6 +1323,12 @@ class Game {
         if (c) recalcContractorStats(c);
         this.showDialog(null, `${c.className}(으)로 전직했다!`);
       });
+    };
+    this.menuUI.onNicknameEdit = (mon) => {
+      const newName = prompt(`${mon.name}의 새 닉네임을 입력하세요:`, mon.nickname || mon.name);
+      if (newName && newName.trim()) {
+        mon.nickname = newName.trim().substring(0, 8);
+      }
     };
     this.menuUI.onCredits = () => {
       this.closeMenu();

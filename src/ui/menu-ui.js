@@ -254,6 +254,7 @@ export class GameMenuUI {
     this.onSettingsChange = null; // (settings) => apply settings
     this.onClassChange = null; // () => handle class change scroll
     this.onCredits = null; // () => show credits
+    this.onNicknameEdit = null; // (mon) => edit nickname
 
     // 설정
     this.settings = {
@@ -420,7 +421,7 @@ export class GameMenuUI {
       r.drawPixelText(skillStr.substring(0, 60), 135, y + 52, '#666688', 1);
     }
 
-    r.drawPixelText('[ESC] 뒤로  [Enter] 순서 교체 (몬스터만)', 75, 555, '#666688', 1);
+    r.drawPixelText('[ESC] 뒤로  [Enter] 순서 교체 (몬스터만)  [N] 닉네임 변경', 75, 555, '#666688', 1);
   }
 
   _renderBag(r, ctx) {
@@ -730,6 +731,18 @@ export class GameMenuUI {
           }
         }
         return true;
+      case 'n':
+      case 'N': {
+        // Nickname edit — use prompt (simple approach)
+        const displayList = [];
+        if (this.partyManager?.contractor) displayList.push(this.partyManager.contractor);
+        displayList.push(...(this.partyManager?.party || []));
+        const mon = displayList[this.cursor];
+        if (mon && !mon.isContractor) {
+          if (this.onNicknameEdit) this.onNicknameEdit(mon);
+        }
+        return true;
+      }
       case 'Escape':
         this.subMenu = null;
         this.cursor = 0;

@@ -566,6 +566,21 @@ export class MapUI {
         y += 22;
       }
 
+      // 타입 상성 차트
+      r.drawPixelText('── 타입 상성 (간략) ──', 200, y, '#888899', 2);
+      y += 25;
+      const typeHints = [
+        '화염 > 자연,빙결,강철 | 약: 해류,대지,암석',
+        '해류 > 화염,대지,암석 | 약: 자연,전격',
+        '자연 > 해류,대지,암석 | 약: 화염,빙결,맹독',
+        '전격 > 해류,질풍 | 약: 대지',
+        '용린 > 용린 | 약: 빙결,용린',
+      ];
+      for (const hint of typeHints) {
+        r.drawPixelText(hint, 180, y, '#aaaacc', 1);
+        y += 16;
+      }
+
       r.drawPixelText('[H] 닫기', 350, 520, '#666688', 2);
     }
 

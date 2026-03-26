@@ -87,6 +87,10 @@ export class BattleUI {
     // 승리 대기
     this._victoryPending = false;
 
+    // 아이템 대상 선택
+    this._itemTargetMode = false;
+    this._itemToUse = null;
+
     // 콜백
     this.onBattleEnd = null;
   }
@@ -788,6 +792,39 @@ export class BattleUI {
     const maxCursor = party.length - 1;
     const isForceSwitch = this.state === STATE.FORCE_SWITCH;
 
+    // 아이템 대상 선택 모드
+    if (this._itemTargetMode) {
+      switch (key) {
+        case 'ArrowUp':
+          this.cursor = Math.max(0, this.cursor - 1);
+          return true;
+        case 'ArrowDown':
+          this.cursor = Math.min(maxCursor, this.cursor + 1);
+          return true;
+        case 'Enter':
+        case ' ': {
+          const target = party[this.cursor];
+          const result = this.inventory.useItem(this._itemToUse.id, target);
+          this._itemTargetMode = false;
+          this._itemToUse = null;
+          if (result.success) {
+            this._executeTurn({ type: 'item', itemResult: result });
+          } else {
+            for (const msg of result.messages) this.queueMessage(msg);
+            this._advanceMessage();
+          }
+          return true;
+        }
+        case 'Escape':
+          this._itemTargetMode = false;
+          this._itemToUse = null;
+          this.state = STATE.ITEM_SELECT;
+          this.cursor = 0;
+          return true;
+      }
+      return false;
+    }
+
     switch (key) {
       case 'ArrowUp':
         this.cursor = Math.max(0, this.cursor - 1);
@@ -865,7 +902,14 @@ export class BattleUI {
             this._advanceMessage();
           }
         } else {
-          // 회복 아이템 등 -> 대상 선택 필요 (간소화: 현재 전투몬에 사용)
+          // 회복 아이템 등 -> 대상 선택
+          if (['heal_hp', 'cure_status', 'restore_pp', 'revive'].includes(item.effect?.type)) {
+            this._itemToUse = item;
+            this.state = STATE.MONSTER_SELECT;
+            this._itemTargetMode = true;
+            this.cursor = 0;
+            return true;
+          }
           const result = this.inventory.useItem(item.id, this.battle.playerActive);
           if (result.success) {
             this._executeTurn({
