@@ -989,7 +989,11 @@ export class ShopUI {
 
   _renderBuy(r, ctx) {
     r.drawPanel(50, 80, 700, 450, '#0d0d1e', '#3a3a5a');
-    r.drawPixelText('구매', 75, 95, '#ffcc44', 3);
+
+    // Buy/Sell tabs
+    r.drawPixelText('[구매]', 100, 90, '#ffffff', 2);
+    r.drawPixelText('[판매]', 250, 90, '#666688', 2);
+    r.drawPixelText('[Tab] 전환', 450, 90, '#444466', 1);
 
     for (let i = 0; i < this.shopItems.length; i++) {
       const item = this.shopItems[i];
@@ -1014,11 +1018,29 @@ export class ShopUI {
     r.drawPixelText('[ESC] 뒤로  [Enter] 구매', 75, 510, '#666688', 1);
   }
 
+  _getSellableItems() {
+    return this.inventory.getAllItems().filter(item =>
+      item.category !== 'key' && (item.price || 0) > 0
+    );
+  }
+
+  _sellItem(item) {
+    const sellPrice = Math.floor(item.price * 0.5);
+    this.inventory.removeItem(item.id, 1);
+    this.inventory.money += sellPrice;
+    if (this.onTransaction) this.onTransaction('sell');
+    return { success: true, message: `${item.name}을(를) ${sellPrice}원에 팔았다!` };
+  }
+
   _renderSell(r, ctx) {
     r.drawPanel(50, 80, 700, 450, '#0d0d1e', '#3a3a5a');
-    r.drawPixelText('판매', 75, 95, '#ffcc44', 3);
 
-    const items = this.inventory.getAllItems();
+    // Buy/Sell tabs
+    r.drawPixelText('[구매]', 100, 90, '#666688', 2);
+    r.drawPixelText('[판매]', 250, 90, '#ffffff', 2);
+    r.drawPixelText('[Tab] 전환', 450, 90, '#444466', 1);
+
+    const items = this._getSellableItems();
     if (items.length === 0) {
       r.drawPixelText('팔 수 있는 아이템이 없다.', 100, 150, '#888899', 2);
     } else {
@@ -1071,10 +1093,11 @@ export class ShopUI {
           }
           return true;
         }
+        case 'Tab': this.mode = 'sell'; this.sellCursor = 0; return true;
         case 'Escape': this.mode = 'select'; this.cursor = 0; return true;
       }
     } else if (this.mode === 'sell') {
-      const items = this.inventory.getAllItems();
+      const items = this._getSellableItems();
       switch (key) {
         case 'ArrowUp': this.sellCursor = Math.max(0, this.sellCursor - 1); return true;
         case 'ArrowDown': this.sellCursor = Math.min(Math.max(0, items.length - 1), this.sellCursor + 1); return true;
@@ -1082,16 +1105,15 @@ export class ShopUI {
         case ' ': {
           const item = items[this.sellCursor];
           if (item) {
-            const sellPrice = Math.floor((item.price || 0) / 2);
-            this.inventory.money += sellPrice;
-            this.inventory.removeItem(item.id, 1);
-            if (this.onTransaction) this.onTransaction('sell');
-            if (this.sellCursor >= items.length - 1) {
-              this.sellCursor = Math.max(0, this.sellCursor - 1);
+            this._sellItem(item);
+            const updated = this._getSellableItems();
+            if (this.sellCursor >= updated.length) {
+              this.sellCursor = Math.max(0, updated.length - 1);
             }
           }
           return true;
         }
+        case 'Tab': this.mode = 'buy'; this.buyCursor = 0; return true;
         case 'Escape': this.mode = 'select'; this.cursor = 1; return true;
       }
     }

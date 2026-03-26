@@ -28,6 +28,7 @@ import { ExpeditionHUD } from './ui/expedition-hud.js';
 import { ExpeditionSummary } from './ui/expedition-summary.js';
 import { HIDDEN_EVENT_TYPES } from './core/time-encounter.js';
 import { TouchControls } from './ui/touch-controls.js';
+import { CreditsUI } from './ui/credits-ui.js';
 
 const GameState = {
   LOADING: 'loading',
@@ -40,6 +41,7 @@ const GameState = {
   SHOP: 'shop',
   DEX: 'dex',
   EXPEDITION_SUMMARY: 'expedition_summary',
+  CREDITS: 'credits',
 };
 
 class Game {
@@ -69,6 +71,7 @@ class Game {
     this.dexUI = null;
     this.partyUI = null;
     this.shopUI = null;
+    this.creditsUI = null;
 
     this.currentBattle = null;
     this.evolutionQueue = [];
@@ -1278,24 +1281,36 @@ class Game {
     };
     this.menuUI.onCredits = () => {
       this.closeMenu();
-      this.showDialog(null, 'POCKET KINGDOM — 마석 계약자의 타임어택 탐험', () => {
-        this.showDialog(null, '에셋: Kenney RPG Base Pack (CC0 Public Domain) — kenney.nl', () => {
-          this.showDialog(null, '음악: 프로시저럴 칩튠 (Web Audio API)', () => {
-            this.showDialog(null, '감사합니다! Thank you for playing!');
-          });
-        });
-      });
+      this.creditsUI = new CreditsUI(this.renderer);
+      this.creditsUI.onClose = () => {
+        this.creditsUI = null;
+        this.enterMapState();
+      };
+      this.creditsUI.show();
+      this.state = GameState.CREDITS;
     };
     this.menuUI.onUseEscapeRope = () => {
       this.closeMenu();
-      const loc = this.mapManager.getCurrentLocation();
-      if (loc && (loc.type === 'cave' || loc.type === 'dungeon' || loc.type === 'route')) {
+      if (this.expeditionManager?.isActive) {
+        // Return scroll during expedition → safe return
+        const result = this.expeditionManager.returnSafely();
         this.mapManager.returnToLastTown();
-        this.showDialog(null, '탈출로프를 사용했다! 마을로 돌아왔다!', () => {
+        this.partyManager.healAll();
+        this._syncExpeditionHUD();
+        this.showDialog(null, '귀환의 두루마리를 사용했다! 마을로 돌아왔다.', () => {
           this.enterMapState();
         });
       } else {
-        this.showDialog(null, '여기서는 사용할 수 없다!');
+        // Normal escape rope behavior
+        const loc = this.mapManager.getCurrentLocation();
+        if (loc && (loc.type === 'cave' || loc.type === 'dungeon' || loc.type === 'route')) {
+          this.mapManager.returnToLastTown();
+          this.showDialog(null, '탈출로프를 사용했다! 마을로 돌아왔다!', () => {
+            this.enterMapState();
+          });
+        } else {
+          this.showDialog(null, '여기서는 사용할 수 없다!');
+        }
       }
     };
     this.menuUI.open();
@@ -1415,6 +1430,10 @@ class Game {
           if (this.expeditionSummary) this.expeditionSummary.handleInput('Enter');
         }
         break;
+      case GameState.CREDITS:
+        if (this.creditsUI) this.creditsUI.update(dt);
+        this.handleInput(this.creditsUI);
+        break;
     }
   }
 
@@ -1476,6 +1495,9 @@ class Game {
       case GameState.EXPEDITION_SUMMARY:
         this.renderer.clear('#0a0a16');
         if (this.expeditionSummary) this.expeditionSummary.render(ctx);
+        break;
+      case GameState.CREDITS:
+        if (this.creditsUI) this.creditsUI.render(ctx);
         break;
     }
 
