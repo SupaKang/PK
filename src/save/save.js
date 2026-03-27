@@ -38,6 +38,7 @@ export class SaveManager {
       playStats: gameState.playStats || null,
       karma: gameState.karma || 0,
       completedQuests: gameState.completedQuests || [],
+      dailyChallenge: gameState.dailyChallenge || null,
     };
 
     try {
