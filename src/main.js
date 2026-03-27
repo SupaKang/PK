@@ -108,6 +108,12 @@ class Game {
     // 카르마/성향 시스템 (-100 어둠 ~ +100 빛)
     this._karma = 0;
 
+    // 격파 도감 (종별 격파 횟수)
+    this._defeatedLog = {}; // { monsterId: count }
+
+    // 연승 추적
+    this._winStreak = 0;
+
     // 플레이 통계
     this._playStats = {
       battlesWon: 0,
@@ -1203,6 +1209,7 @@ class Game {
     if (this.expeditionManager?.isActive) {
       this.battleUI.timeOfDay = this.expeditionManager.getTimeOfDay();
     }
+    this.battleUI.winStreak = this._winStreak;
     this.battleUI.onBattleEnd = (result) => this.onBattleEnd(result);
     this.state = GameState.BATTLE;
   }
@@ -1219,6 +1226,7 @@ class Game {
     switch (result) {
       case 'win': {
         this._playStats.battlesWon++;
+        this._winStreak++;
         this.renderer.screenShake(200, 3);
         this.audio.playSfx('victory_fanfare');
         const rewards = [];
@@ -1228,6 +1236,13 @@ class Game {
           this._expTracker.moneyEarned += config.reward;
           this._checkAchievement('money', this.inventory.money);
           rewards.push(`${config.reward}원 획득! (소지금: ${this.inventory.money}원)`);
+        }
+
+        // 연승 보너스
+        if (this._winStreak >= 3 && config.reward) {
+          const streakBonus = Math.floor(config.reward * 0.1 * this._winStreak);
+          this.inventory.money += streakBonus;
+          rewards.push(`${this._winStreak}연승 보너스: +${streakBonus}원!`);
         }
         // 탐험 추적
         this._expTracker.monstersDefeated += config.enemyParty.filter(e => e.currentHp <= 0).length;
@@ -1281,6 +1296,13 @@ class Game {
           }
         }
 
+        // 격파 도감 추적
+        for (const enemy of config.enemyParty) {
+          if (enemy.currentHp <= 0) {
+            this._defeatedLog[enemy.id] = (this._defeatedLog[enemy.id] || 0) + 1;
+          }
+        }
+
         // 유대도 증가 (전투 승리)
         for (const m of this.partyManager.getBattleParty()) {
           if (m.currentHp > 0 && !m.isContractor) {
@@ -1313,6 +1335,9 @@ class Game {
           this.storyManager.completeTrigger('defeat_gym_' + loc);
           this.storyManager.advanceChapter();
         }
+
+        // 전투 요약
+        rewards.push(`── 전투 요약: 연승 ${this._winStreak} | 총 격파 ${this._expTracker.monstersDefeated} ──`);
 
         // Gauntlet: continue to next battle instead of returning to map
         if (config.isGauntlet) {
@@ -1359,9 +1384,11 @@ class Game {
         break;
       }
       case 'flee':
+        this._winStreak = 0;
         this.processPostBattle(callback);
         break;
       case 'lose':
+        this._winStreak = 0;
         this._playStats.battlesLost++;
         // Expedition wipe: trigger expedition failure
         if (this.expeditionManager?.isActive) {
@@ -1647,6 +1674,8 @@ class Game {
       karma: this._karma,
       completedQuests: [...this._completedQuests],
       dailyChallenge: this.dailyChallenge.serialize(),
+      defeatedLog: this._defeatedLog,
+      winStreak: this._winStreak,
     });
   }
 
@@ -1680,6 +1709,8 @@ class Game {
     }
     this._karma = state.karma || 0;
     this._completedQuests = new Set(state.completedQuests || []);
+    this._defeatedLog = state.defeatedLog || {};
+    this._winStreak = state.winStreak || 0;
     if (state.dailyChallenge) {
       this.dailyChallenge = DailyChallenge.deserialize(state.dailyChallenge);
     } else {
@@ -1705,6 +1736,7 @@ class Game {
     this.menuUI.onOpenDex = () => {
       const allMonsters = getAllMonsters();
       this.dexUI = new DexUI(this.renderer, this.dexTracker, allMonsters);
+      this.dexUI._defeatedLog = this._defeatedLog;
       this.dexUI.visible = true;
       this.dexUI.onClose = () => { this.dexUI = null; this.state = GameState.MENU; };
       this.state = GameState.DEX;

@@ -82,6 +82,9 @@ export class DexUI {
     // 스프라이트 캐시
     this._spriteCache = new Map();
 
+    // 격파 도감 데이터
+    this._defeatedLog = {};
+
     // 콜백
     this.onClose = null;
   }
@@ -372,6 +375,12 @@ export class DexUI {
       const habitat = mon.type.map(t => typeHabitats[t] || '알 수 없음').join(' / ');
       r.drawPixelText('서식지', infoX, 210, '#ffcc44', 2);
       r.drawPixelText(habitat.substring(0, 35), infoX, 230, '#aaaacc', 1);
+    }
+
+    // 격파 횟수
+    if (isCaught && this._defeatedLog) {
+      const count = this._defeatedLog[mon.id] || 0;
+      r.drawPixelText(`격파 횟수: ${count}`, infoX, 250, '#888899', 1);
     }
 
     // 기본 스탯 (레이더 차트 스타일 -> 바 그래프)

@@ -39,6 +39,8 @@ export class SaveManager {
       karma: gameState.karma || 0,
       completedQuests: gameState.completedQuests || [],
       dailyChallenge: gameState.dailyChallenge || null,
+      defeatedLog: gameState.defeatedLog || {},
+      winStreak: gameState.winStreak || 0,
     };
 
     try {

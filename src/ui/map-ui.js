@@ -95,6 +95,10 @@ export class MapUI {
 
     // 이동 파티클 트레일
     this._moveTrail = []; // {x, y, timer, maxTimer, color}
+
+    // Fog of war
+    this._explored = new Set(); // 'x,y' strings of explored tiles
+    this._exploreRadius = 3;    // tiles around player that get revealed
   }
 
   setPlayerAppearance(classId, baseColor, accentColor) {
@@ -113,6 +117,7 @@ export class MapUI {
       this.currentMapData = mapData;
       this.currentLocationId = locId;
       this.mapLoaded = true;
+      this._explored = new Set();
 
       // 플레이어 위치 설정
       if (this.transitionSpawn) {
@@ -199,6 +204,19 @@ export class MapUI {
       }
     }
     if (this._moveTrail.length > 20) this._moveTrail.splice(0, this._moveTrail.length - 20);
+
+    // Reveal fog of war
+    if (this.player && this.currentMapData) {
+      const px = this.player.getTileX();
+      const py = this.player.getTileY();
+      for (let dy = -this._exploreRadius; dy <= this._exploreRadius; dy++) {
+        for (let dx = -this._exploreRadius; dx <= this._exploreRadius; dx++) {
+          if (dx*dx + dy*dy <= this._exploreRadius * this._exploreRadius) {
+            this._explored.add(`${px+dx},${py+dy}`);
+          }
+        }
+      }
+    }
 
     // 카메라 추적
     this.tileEngine.setCamera(this.player.getWorldX(), this.player.getWorldY());
@@ -553,6 +571,21 @@ export class MapUI {
       grad.addColorStop(1, 'rgba(0,0,30,0.7)');
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, 800, 600);
+    }
+
+    // Fog of war overlay
+    if (this.currentMapData && this._explored.size > 0) {
+      for (let y = 0; y < this.currentMapData.height; y++) {
+        for (let x = 0; x < this.currentMapData.width; x++) {
+          if (!this._explored.has(`${x},${y}`)) {
+            const screen = this.tileEngine.worldToScreen(x * 64, y * 64);
+            if (screen.x > -64 && screen.x < 864 && screen.y > -64 && screen.y < 664) {
+              ctx.fillStyle = 'rgba(0,0,10,0.6)';
+              ctx.fillRect(screen.x, screen.y, 64, 64);
+            }
+          }
+        }
+      }
     }
 
     // 미니 HUD (위치 이름)

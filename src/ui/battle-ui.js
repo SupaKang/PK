@@ -76,6 +76,9 @@ export class BattleUI {
     this.battleItems = [];
     this._refreshBattleItems();
 
+    // 연승 추적
+    this.winStreak = 0;
+
     // 시간대
     this.timeOfDay = 'day';
 
@@ -408,6 +411,11 @@ export class BattleUI {
       ctx.globalAlpha = alpha;
       r.drawPixelText(`${this._comboCount} COMBO!`, 320, 140, color, scale);
       ctx.globalAlpha = 1;
+    }
+
+    // 연승 표시
+    if (this.winStreak >= 3) {
+      r.drawPixelText(`${this.winStreak}연승 중!`, 650, 285, '#ffcc44', 1);
     }
 
     // Weather indicator
