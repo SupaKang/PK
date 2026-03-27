@@ -69,6 +69,7 @@ export class MapUI {
     this.onHeal = null;
     this.onBox = null;
     this.onBoss = null;
+    this.onQuest = null;
     this.onHiddenEvent = null;
 
     // 계약자 레벨 (감응 타일용)
@@ -832,8 +833,14 @@ export class MapUI {
       case 'box':
         if (this.onBox) this.onBox(npc);
         break;
+      case 'craft':
+        if (this.onCraft) this.onCraft(npc);
+        break;
       case 'boss':
         if (this.onBoss) this.onBoss(npc);
+        break;
+      case 'quest':
+        if (this.onQuest) this.onQuest(npc);
         break;
       case 'trainer':
       case 'gym_leader':

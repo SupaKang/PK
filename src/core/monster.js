@@ -83,6 +83,7 @@ export function createMonster(monsterId, level, isWild = false) {
     expYield: data.expYield,
     spriteConfig: data.spriteConfig,
     description: data.description,
+    bond: 0, // 유대도 (0-255)
   };
 
   // 스탯 계산

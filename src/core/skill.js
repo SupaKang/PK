@@ -46,6 +46,11 @@ export function calcDamage(attacker, defender, skill, isCritical = false, partyB
     damage = Math.floor(damage * 1.5);
   }
 
+  // 유대도 보너스 (bond damage bonus)
+  const bond = attacker.bond || 0;
+  if (bond >= 200) damage = Math.floor(damage * 1.1);      // +10% at max bond
+  else if (bond >= 100) damage = Math.floor(damage * 1.05); // +5% at high bond
+
   // 타입 상성
   const effectiveness = getEffectiveness(skill.type, defender.type);
   damage = Math.floor(damage * effectiveness);
@@ -82,9 +87,11 @@ export function checkAccuracy(attacker, defender, skill, partyBuffs = null) {
 /**
  * 크리티컬 판정
  */
-export function checkCritical(skill, partyBuffs = null) {
+export function checkCritical(skill, partyBuffs = null, attackerBond = 0) {
   const highCrit = skill?.effect?.type === 'high_crit';
-  const rate = applyCritBuff(highCrit ? 25 : 6.25, partyBuffs) / 100;
+  let rate = applyCritBuff(highCrit ? 25 : 6.25, partyBuffs) / 100;
+  // 유대도 크리티컬 보너스
+  if (attackerBond >= 150) rate += 0.03; // +3% crit
   return Math.random() < rate;
 }
 

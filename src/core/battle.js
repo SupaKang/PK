@@ -397,7 +397,7 @@ export class Battle {
         for (let hit = 0; hit < hitCount; hit++) {
           if (defender.currentHp <= 0) break;
 
-          const isCrit = checkCritical(skill, attackerBuffs);
+          const isCrit = checkCritical(skill, attackerBuffs, attacker.bond || 0);
           const damage = calcDamage(attacker, defender, skill, isCrit, attackerBuffs);
 
           if (hit === 0 || hitCount > 1) {

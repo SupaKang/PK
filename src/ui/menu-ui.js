@@ -422,6 +422,13 @@ export class GameMenuUI {
         135, y + 40, '#777799', 1
       );
 
+      // 유대도 표시
+      const bond = mon.bond || 0;
+      const hearts = bond >= 200 ? '♥♥♥' : bond >= 100 ? '♥♥' : bond >= 50 ? '♥' : '';
+      if (hearts) {
+        r.drawPixelText(hearts, 600, y + 40, '#ff6688', 1);
+      }
+
       // 기술 목록
       const skillStr = mon.skills.map(s => s.name).join(', ');
       r.drawPixelText(skillStr.substring(0, 60), 135, y + 52, '#666688', 1);

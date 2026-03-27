@@ -24,6 +24,7 @@ import { ExpeditionManager } from './core/expedition.js';
 import { CampingManager, FOOD_ITEMS } from './core/camping.js';
 import { TimeEncounterManager } from './core/time-encounter.js';
 import { AchievementManager } from './core/achievements.js';
+import { RECIPES, canCraft, craft } from './core/crafting.js';
 
 import { ExpeditionHUD } from './ui/expedition-hud.js';
 import { ExpeditionSummary } from './ui/expedition-summary.js';
@@ -95,6 +96,9 @@ class Game {
     this._expeditionSuccessCount = 0;
     this._tutorialShown = false;
 
+    // 완료된 퀘스트
+    this._completedQuests = new Set();
+
     // 카르마/성향 시스템 (-100 어둠 ~ +100 빛)
     this._karma = 0;
 
@@ -141,6 +145,18 @@ class Game {
 
   _adjustKarma(amount) {
     this._karma = Math.max(-100, Math.min(100, this._karma + amount));
+  }
+
+  _isQuestComplete(quest) {
+    if (quest.task.includes('보스 격파')) {
+      const zoneId = quest.task.split(' ')[0];
+      return this.trainerManager.isDefeated('boss_' + zoneId);
+    }
+    if (quest.task.includes('방문')) {
+      const locId = quest.task.split(' ')[0];
+      return this.mapManager.hasVisited(locId);
+    }
+    return false;
   }
 
   async init() {
@@ -411,6 +427,21 @@ class Game {
       this.mapUI.onBox = () => {
         this._openBoxUI();
       };
+      this.mapUI.onCraft = (npc) => {
+        const available = RECIPES.filter(r => canCraft(r, this.inventory));
+        if (available.length === 0) {
+          this.showDialog(npc.name, '조합할 수 있는 레시피가 없다. 재료를 모아오자.');
+          return;
+        }
+        const options = available.map(r => ({ text: r.name + ' — ' + r.description.substring(0, 20), recipe: r }));
+        options.push({ text: '취소', recipe: null });
+        this.showChoice('어떤 아이템을 조합할까?', options, (opt) => {
+          if (!opt.recipe) return;
+          craft(opt.recipe, this.inventory);
+          this.audio.playSfx('level_up');
+          this.showDialog(null, `${opt.recipe.result.itemId} 조합 성공!`);
+        });
+      };
       this.mapUI.onBoss = (npc) => {
         this.audio.playSfx('evolve');
         this.showDialog(npc.name, npc.dialog, () => {
@@ -427,6 +458,30 @@ class Game {
             });
           }
         });
+      };
+      this.mapUI.onQuest = (npc) => {
+        const quest = npc.quest;
+        if (!quest) return;
+
+        // Check if quest already completed
+        if (this._completedQuests?.has(quest.id)) {
+          this.showDialog(npc.name, '고마워! 이미 보상을 줬잖아.');
+          return;
+        }
+
+        // Check if quest condition met
+        const questDone = this._isQuestComplete(quest);
+        if (questDone) {
+          // Give reward
+          if (quest.reward.itemId) this.inventory.addItem(quest.reward.itemId, quest.reward.count || 1);
+          if (quest.reward.money) this.inventory.money += quest.reward.money;
+          if (!this._completedQuests) this._completedQuests = new Set();
+          this._completedQuests.add(quest.id);
+          this.audio.playSfx('level_up');
+          this.showDialog(npc.name, `감사합니다! 보상을 드리겠습니다!`);
+        } else {
+          this.showDialog(npc.name, npc.dialog);
+        }
       };
       this.mapUI.onHiddenEvent = (event) => {
         const eventDef = HIDDEN_EVENT_TYPES[event.type];
@@ -708,6 +763,13 @@ class Game {
     // 파티 회복 (pass food bonuses to camping manager)
     const party = this.partyManager.getBattleParty();
     const result = this.campingManager.executeCamp(party, actualAPCost, { healBonus, ppBonus });
+
+    // 유대도 증가 (캠핑)
+    for (const m of this.partyManager.getBattleParty()) {
+      if (!m.isContractor) {
+        m.bond = Math.min(255, (m.bond || 0) + 5);
+      }
+    }
 
     this._syncExpeditionHUD();
     this.audio.playSfx('select');
@@ -1086,6 +1148,13 @@ class Game {
           }
         }
 
+        // 유대도 증가 (전투 승리)
+        for (const m of this.partyManager.getBattleParty()) {
+          if (m.currentHp > 0 && !m.isContractor) {
+            m.bond = Math.min(255, (m.bond || 0) + 3);
+          }
+        }
+
         if (config.trainerId) this.trainerManager.markDefeated(config.trainerId);
         // 그림자단 승리 — 정의 성향
         if (config.trainerName && config.trainerName.includes('그림자단')) {
@@ -1440,6 +1509,7 @@ class Game {
       difficultySettings: this._difficultySettings,
       playStats: this._playStats,
       karma: this._karma,
+      completedQuests: [...this._completedQuests],
     });
   }
 
@@ -1472,6 +1542,7 @@ class Game {
       this._playStats = state.playStats;
     }
     this._karma = state.karma || 0;
+    this._completedQuests = new Set(state.completedQuests || []);
     this.enterMapState();
     return true;
   }
