@@ -403,12 +403,15 @@ export class Renderer {
     ctx.fillStyle = '#222244';
     ctx.fillRect(x + 1, y + 1, w - 2, h - 2);
 
-    // EXP 바
+    // EXP 바 (gradient: dark blue → light blue)
     const barW = Math.floor((w - 2) * ratio);
     if (barW > 0) {
-      ctx.fillStyle = '#4488ff';
+      const grad = ctx.createLinearGradient(x + 1, y, x + 1 + barW, y);
+      grad.addColorStop(0, '#2255aa');
+      grad.addColorStop(1, '#66bbff');
+      ctx.fillStyle = grad;
       ctx.fillRect(x + 1, y + 1, barW, h - 2);
-      ctx.fillStyle = 'rgba(255,255,255,0.15)';
+      ctx.fillStyle = 'rgba(255,255,255,0.18)';
       ctx.fillRect(x + 1, y + 1, barW, Math.floor((h - 2) / 2));
     }
   }

@@ -92,6 +92,9 @@ export class MapUI {
 
     // 플레이어 외형 (직업)
     this.playerAppearance = { classId: 'warrior', baseColor: '#CC4444', accentColor: '#882222' };
+
+    // 이동 파티클 트레일
+    this._moveTrail = []; // {x, y, timer, maxTimer, color}
   }
 
   setPlayerAppearance(classId, baseColor, accentColor) {
@@ -181,6 +184,21 @@ export class MapUI {
 
     // 플레이어 이동
     this.player.update(dt, this._keys);
+
+    // Move trail particles
+    if (this.player?.isMoving()) {
+      const wx = this.player.getWorldX();
+      const wy = this.player.getWorldY();
+      const trailColor = this.playerAppearance?.baseColor || '#ffffff';
+      this._moveTrail.push({ x: wx + 24, y: wy + 48, timer: 0, maxTimer: 0.4, color: trailColor });
+    }
+    for (let i = this._moveTrail.length - 1; i >= 0; i--) {
+      this._moveTrail[i].timer += dt;
+      if (this._moveTrail[i].timer >= this._moveTrail[i].maxTimer) {
+        this._moveTrail.splice(i, 1);
+      }
+    }
+    if (this._moveTrail.length > 20) this._moveTrail.splice(0, this._moveTrail.length - 20);
 
     // 카메라 추적
     this.tileEngine.setCamera(this.player.getWorldX(), this.player.getWorldY());
@@ -486,6 +504,16 @@ export class MapUI {
         }
       }
     }
+
+    // Player move trail
+    for (const t of this._moveTrail) {
+      const screen = this.tileEngine.worldToScreen(t.x, t.y);
+      const alpha = 0.3 * (1 - t.timer / t.maxTimer);
+      ctx.fillStyle = t.color;
+      ctx.globalAlpha = alpha;
+      ctx.fillRect(screen.x, screen.y, 4, 4);
+    }
+    ctx.globalAlpha = 1;
 
     // 플레이어 렌더링
     const playerScreen = this.tileEngine.worldToScreen(this.player.getWorldX(), this.player.getWorldY());
@@ -841,6 +869,9 @@ export class MapUI {
         break;
       case 'quest':
         if (this.onQuest) this.onQuest(npc);
+        break;
+      case 'egg':
+        if (this.onEgg) this.onEgg(npc);
         break;
       case 'trainer':
       case 'gym_leader':

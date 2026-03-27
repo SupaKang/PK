@@ -26,6 +26,7 @@ import { TimeEncounterManager } from './core/time-encounter.js';
 import { AchievementManager } from './core/achievements.js';
 import { RECIPES, canCraft, craft } from './core/crafting.js';
 import { DailyChallenge } from './core/daily-challenge.js';
+import { checkEggAvailable } from './core/egg-system.js';
 
 import { ExpeditionHUD } from './ui/expedition-hud.js';
 import { ExpeditionSummary } from './ui/expedition-summary.js';
@@ -460,6 +461,21 @@ class Game {
             });
           }
         });
+      };
+      this.mapUI.onEgg = () => {
+        const party = this.partyManager.getBattleParty();
+        const egg = checkEggAvailable(party);
+        if (egg) {
+          this.audio.playSfx('evolve');
+          this.showDialog(null, `${egg.name}을(를) 발견했다! 새로운 몬스터가 태어났다!`, () => {
+            const baby = createMonster(egg.result, 1);
+            this.partyManager.addMonster(baby);
+            this.dexTracker.markCaught(baby.id);
+            this.showDialog(null, `${baby.name}이(가) 파티에 합류했다!`);
+          });
+        } else {
+          this.showDialog('몬스터 연구가', '몬스터들의 유대가 깊어지면 놀라운 일이 일어난다네. 파티의 유대도를 높여봐.');
+        }
       };
       this.mapUI.onQuest = (npc) => {
         const quest = npc.quest;

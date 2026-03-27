@@ -587,11 +587,20 @@ export class BattleUI {
       );
 
       // EXP 바
-      r.drawPixelText('EXP', 475, 260, '#4488ff', 1);
-      const expCurrent = pm.exp;
+      r.drawPixelText('EXP', 470, 258, '#66aaff', 2);
       const expForLv = pm.level >= 100 ? 1 : this._expForLevel(pm.level + 1, pm.growthRate) - this._expForLevel(pm.level, pm.growthRate);
       const expProgress = pm.level >= 100 ? 0 : pm.exp - this._expForLevel(pm.level, pm.growthRate);
-      r.drawExpBar(504, 259, 214, 8, Math.max(0, expProgress), Math.max(1, expForLv));
+      r.drawExpBar(504, 259, 220, 10, Math.max(0, expProgress), Math.max(1, expForLv));
+
+      // EXP percentage
+      const expPct = Math.floor((expProgress / Math.max(1, expForLv)) * 100);
+      r.drawPixelText(`${expPct}%`, 724, 260, '#4488ff', 1);
+
+      // Level-up proximity indicator
+      if (expPct >= 90) {
+        const blink = Math.floor(Date.now() / 400) % 2;
+        if (blink) r.drawPixelText('\u2191', 740, 252, '#ffcc44', 1);
+      }
 
       // 상태이상
       if (pm.status) {
