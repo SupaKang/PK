@@ -642,6 +642,8 @@ class Game {
     }
     if (em.getRemainingAP() > 30) this._apWarningShown = false;
 
+    this.expeditionHUD.playtime = this.playtime;
+
     // Estimate return AP (manhattan distance from current tile to start)
     if (this.mapUI && this.expeditionHUD && this.expeditionManager?.isActive) {
       // Simple estimate based on map width (rough distance to town)
@@ -1177,7 +1179,16 @@ class Game {
       this._checkAchievement('champion_defeat');
       this.showDialog(null, '모든 사천왕을 물리쳤다! 축하합니다!', () => {
         this.storyManager.advanceChapter();
-        this.enterMapState();
+        this.showChoice('게임을 클리어했습니다! 어떻게 하시겠습니까?', [
+          { text: '계속 플레이 (엔드게임)', value: 'continue' },
+          { text: '뉴게임+ (스토리 리셋, 파티 유지)', value: 'newgame_plus' },
+        ], (opt) => {
+          if (opt.value === 'newgame_plus') {
+            this._startNewGamePlus();
+          } else {
+            this.enterMapState();
+          }
+        });
       });
       return;
     }
@@ -1189,6 +1200,24 @@ class Game {
       this.startBattle(config, (result) => {
         // On gauntlet loss, main onBattleEnd handles it
       });
+    });
+  }
+
+  _startNewGamePlus() {
+    // Keep: party, contractor, inventory, dex, achievements, playStats
+    // Reset: story, map position, trainer defeats, expedition
+    this.storyManager = new StoryManager();
+    this.mapManager = new MapManager();
+    this.trainerManager = new TrainerManager();
+    this.expeditionManager = null;
+    this._difficulty = this._difficulty; // keep difficulty
+
+    // Bonus for NG+: slightly higher levels on enemies
+    this._difficultySettings.enemyLevelBonus += 5;
+
+    this.showDialog(null, '뉴게임+를 시작합니다! 모든 적이 더 강해집니다!', () => {
+      this.enterMapState();
+      this.triggerStoryEvents();
     });
   }
 
@@ -1284,10 +1313,11 @@ class Game {
   // ─── 업적 ───
 
   _checkAchievement(type, value) {
-    const ach = this.achievementManager?.check(type, value);
-    if (ach) {
+    const results = this.achievementManager?.check(type, value);
+    if (results && results.length > 0) {
       this.audio.playSfx('level_up');
-      this.showDialog(null, `🏆 업적 달성: ${ach.name}\n${ach.description}`);
+      const msgs = results.map(a => `🏆 ${a.name}: ${a.description}`).join('\n');
+      this.showDialog(null, `업적 달성!\n${msgs}`);
     }
   }
 

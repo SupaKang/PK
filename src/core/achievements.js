@@ -5,14 +5,16 @@ export class AchievementManager {
   }
 
   check(eventType, value, gameState) {
+    // 동시에 여러 업적 달성 가능하도록 전부 체크 후 배열 반환
+    const newlyUnlocked = [];
     for (const ach of this._definitions) {
       if (this.unlocked.has(ach.id)) continue;
       if (ach.condition(eventType, value, gameState)) {
         this.unlocked.add(ach.id);
-        return ach; // return newly unlocked achievement
+        newlyUnlocked.push(ach);
       }
     }
-    return null;
+    return newlyUnlocked.length > 0 ? newlyUnlocked : null;
   }
 
   getAll() { return this._definitions; }

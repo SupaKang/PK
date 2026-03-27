@@ -22,6 +22,7 @@ export class ExpeditionHUD {
     this.isExpeditionActive = false;
     this.objectiveText = '';
     this.objectiveComplete = false;
+    this.playtime = 0;
 
     // 캠핑 메뉴
     this.showCampMenu = false;
@@ -121,6 +122,13 @@ export class ExpeditionHUD {
       const objColor = this.objectiveComplete ? '#44cc66' : '#ffcc44';
       const prefix = this.objectiveComplete ? '✓ ' : '▶ ';
       r.drawPixelText(`${prefix}${this.objectiveText}`, 10, 22, objColor, 1);
+    }
+
+    // Playtime display (bottom-right of HUD)
+    if (this.playtime > 0) {
+      const hrs = Math.floor(this.playtime / 3600);
+      const mins = Math.floor((this.playtime % 3600) / 60);
+      r.drawPixelText(`${hrs}:${String(mins).padStart(2,'0')}`, 760, 22, '#555566', 1);
     }
 
     // ─── 캠핑 메뉴 ───
