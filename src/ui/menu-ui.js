@@ -255,6 +255,7 @@ export class GameMenuUI {
     this.onSettingsChange = null; // (settings) => apply settings
     this.onClassChange = null; // () => handle class change scroll
     this.onCredits = null; // () => show credits
+    this.onBossRush = null; // () => start boss rush mode
     this.onAchievements = null;
     this.onNicknameEdit = null; // (mon) => edit nickname
 
@@ -710,6 +711,9 @@ export class GameMenuUI {
         break;
       case 'credits':
         if (this.onCredits) this.onCredits();
+        break;
+      case 'boss_rush':
+        if (this.onBossRush) this.onBossRush();
         break;
     }
   }

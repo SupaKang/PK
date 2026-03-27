@@ -19,7 +19,7 @@ import { DialogUI } from './ui/dialog-ui.js';
 import { MapUI } from './ui/map-ui.js';
 import { DexUI, DexTracker } from './ui/dex-ui.js';
 import { AssetLoader } from './ui/asset-loader.js';
-import { getZoneBoss, getBossRewards } from './core/zone-boss.js';
+import { getZoneBoss, getBossRewards, ZONE_BOSSES } from './core/zone-boss.js';
 import { ExpeditionManager } from './core/expedition.js';
 import { CampingManager, FOOD_ITEMS } from './core/camping.js';
 import { TimeEncounterManager } from './core/time-encounter.js';
@@ -1103,14 +1103,30 @@ class Game {
       case 'capture': {
         this._playStats.monstersContracted++;
         const captured = config.enemyParty[0];
+        const isNewDex = !this.dexTracker.isCaught(captured.id);
         const loc = this.partyManager.addMonster(captured);
         this.dexTracker.markCaught(captured.id);
+
         const msg = loc.location === 'party'
           ? `${captured.name}과(와) 계약했다! 파티에 추가되었다!`
           : `${captured.name}과(와) 계약했다! 보관함으로 보내졌다!`;
-        this._checkAchievement('contract');
-        this._checkAchievement('dex', this.dexTracker.getCaughtCount());
-        this.showDialog(null, msg, () => this.processPostBattle(callback));
+
+        if (isNewDex) {
+          this.audio.playSfx('level_up');
+          this.renderer.screenShake(200, 3);
+          this.showDialog(null, msg, () => {
+            this.showDialog(null, `📖 도감에 ${captured.name}이(가) 등록되었다! (${this.dexTracker.getCaughtCount()}/102)`, () => {
+              this._checkAchievement('contract');
+              this._checkAchievement('dex', this.dexTracker.getCaughtCount());
+              this.processPostBattle(callback);
+            });
+          });
+        } else {
+          this._checkAchievement('contract');
+          this.showDialog(null, msg, () => {
+            this.processPostBattle(callback);
+          });
+        }
         break;
       }
       case 'flee':
@@ -1218,6 +1234,28 @@ class Game {
     this.showDialog(null, '뉴게임+를 시작합니다! 모든 적이 더 강해집니다!', () => {
       this.enterMapState();
       this.triggerStoryEvents();
+    });
+  }
+
+  _startBossRush() {
+    const bossIds = Object.keys(ZONE_BOSSES);
+    const allBosses = bossIds.map(id => ({
+      ...ZONE_BOSSES[id],
+      zoneId: id,
+    }));
+
+    this._gauntletQueue = allBosses.map(boss => ({
+      enemyParty: boss.team.map(t => createMonster(t.monsterId, t.level + 10)),
+      isWild: false,
+      trainerName: boss.name,
+      reward: boss.rewards.money,
+      isGauntlet: true,
+      isBoss: true,
+    }));
+    this._gauntletHealBetween = false;
+
+    this.showDialog(null, `보스 러시! ${allBosses.length}명의 보스와 연속 배틀!`, () => {
+      this._nextGauntletBattle();
     });
   }
 
@@ -1454,6 +1492,13 @@ class Game {
       this.creditsUI.show();
       this.state = GameState.CREDITS;
     };
+    if (this.storyManager.getBadgeCount() >= 8) {
+      this.menuUI.menuItems.push({ id: 'boss_rush', label: '보스 러시' });
+      this.menuUI.onBossRush = () => {
+        this.closeMenu();
+        this._startBossRush();
+      };
+    }
     this.menuUI.onUseEscapeRope = () => {
       this.closeMenu();
       if (this.expeditionManager?.isActive) {

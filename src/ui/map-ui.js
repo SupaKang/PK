@@ -516,6 +516,19 @@ export class MapUI {
       hudR.drawPixelText(`인장: ${this.badgeCount}/8`, 650, 6, '#ffcc44', 2);
     }
 
+    // Encounter zone indicator
+    if (this.currentMapData && this.player) {
+      const tx = this.player.getTileX();
+      const ty = this.player.getTileY();
+      const groundTile = this.tileEngine.getTileAt('ground', tx, ty);
+      if (groundTile === 1 || groundTile === 9) { // grass tiles = encounter zone
+        const blink = Math.floor(Date.now() / 600) % 2;
+        if (blink) {
+          hudR.drawPixelText('⚠ 마물 출현 지역', 250, 8, '#ff8844', 1);
+        }
+      }
+    }
+
     // Low HP warning
     if (this._partyLowHP) {
       const blink = Math.floor(Date.now() / 500) % 2;

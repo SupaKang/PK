@@ -1,6 +1,7 @@
 // 배틀 화면 UI
 import { generateSprite, generateSpriteBack, getHybridSprite } from './sprite-generator.js';
 import { TYPE_COLORS, STATUS_COLORS, STATUS_LABELS } from './renderer.js';
+import { getEffectiveness } from '../core/type.js';
 
 // 상태 상수
 const STATE = {
@@ -653,8 +654,19 @@ export class BattleUI {
       r.drawPixelText(skill.name, 60, y + 2, selected ? '#ffffff' : '#ccccdd', 2);
 
       // PP
-      const ppColor = skill.pp <= 0 ? '#ff4444' : skill.pp <= Math.floor(skill.maxPp / 4) ? '#ffaa00' : '#88cc88';
+      let ppColor;
+      if (skill.pp <= 0) {
+        const blink = Math.floor(Date.now() / 300) % 2;
+        ppColor = blink ? '#ff4444' : '#882222';
+      } else if (skill.pp <= Math.floor(skill.maxPp / 4)) {
+        ppColor = '#ffaa00';
+      } else {
+        ppColor = '#88cc88';
+      }
       r.drawPixelText(`PP ${skill.pp}/${skill.maxPp}`, 60, y + 22, ppColor, 1);
+      if (skill.pp <= 0) {
+        r.drawPixelText('PP 없음!', 280, y + 22, '#ff4444', 1);
+      }
 
       // 카테고리 + 위력
       if (skill.category !== 'status') {
@@ -683,12 +695,24 @@ export class BattleUI {
       if (skill.power) r.drawPixelText(`위력: ${skill.power}`, 565, 400, '#aaaacc', 2);
       r.drawPixelText(`명중: ${skill.accuracy}%`, 565, 422, '#aaaacc', 2);
 
+      // Effectiveness
+      if (this.battle.enemyActive) {
+        const eff = getEffectiveness(skill.type, this.battle.enemyActive?.type || []);
+        let effLabel, effColor;
+        if (eff >= 2) { effLabel = '효과 굉장!'; effColor = '#44ff44'; }
+        else if (eff > 1) { effLabel = '효과적'; effColor = '#88ff88'; }
+        else if (eff === 1) { effLabel = '보통'; effColor = '#aaaaaa'; }
+        else if (eff > 0) { effLabel = '별로...'; effColor = '#ff8844'; }
+        else { effLabel = '효과 없음'; effColor = '#ff4444'; }
+        r.drawPixelText(effLabel, 565, 444, effColor, 2);
+      }
+
       // 설명
       if (skill.description) {
         const desc = skill.description;
         // 줄 바꿈 처리 (25자마다)
         for (let j = 0; j < desc.length; j += 20) {
-          r.drawPixelText(desc.substring(j, j + 20), 565, 450 + Math.floor(j / 20) * 18, '#888899', 1);
+          r.drawPixelText(desc.substring(j, j + 20), 565, 470 + Math.floor(j / 20) * 18, '#888899', 1);
         }
       }
     }
