@@ -94,6 +94,15 @@ class Game {
     this._expeditionSuccessCount = 0;
     this._tutorialShown = false;
 
+    // 플레이 통계
+    this._playStats = {
+      battlesWon: 0,
+      battlesLost: 0,
+      monstersContracted: 0,
+      stepsWalked: 0,
+      campingCount: 0,
+    };
+
     this.lastTime = 0;
     this.dt = 0;
     this.keys = {};
@@ -484,6 +493,7 @@ class Game {
         });
       };
       this.mapUI.onEncounterCheck = () => {
+        this._playStats.stepsWalked++;
         // AP 소모 (이동 1타일 = 1AP)
         if (this.expeditionManager?.isActive) {
           if (!this.expeditionManager.spendAP(1)) {
@@ -524,6 +534,7 @@ class Game {
               if (wildMonster.id >= 91 && wildMonster.id <= 100) {
                 this.audio.playSfx('evolve');
                 this.renderer.screenShake(600, 6);
+                this._checkAchievement('legendary_encounter');
                 this.showDialog(null, '...! 강대한 기운이 느껴진다!', () => {
                   this.showDialog(null, `전설의 ${wildMonster.name}이(가) 나타났다!`, () => {
                     this.startBattle({ enemyParty: [wildMonster], isWild: true });
@@ -646,6 +657,8 @@ class Game {
   /** 캠핑 실행 */
   _executeCamp(campOption) {
     if (!this.expeditionManager) return;
+    this._playStats.campingCount++;
+    this._checkAchievement('camp', this._playStats.campingCount);
 
     // Collect food bonuses BEFORE AP check (consume one of each type only)
     let apSave = 0, healBonus = 0, ppBonus = 0;
@@ -994,6 +1007,7 @@ class Game {
 
     switch (result) {
       case 'win': {
+        this._playStats.battlesWon++;
         this.renderer.screenShake(200, 3);
         this.audio.playSfx('victory_fanfare');
         const rewards = [];
@@ -1085,6 +1099,7 @@ class Game {
         break;
       }
       case 'capture': {
+        this._playStats.monstersContracted++;
         const captured = config.enemyParty[0];
         const loc = this.partyManager.addMonster(captured);
         this.dexTracker.markCaught(captured.id);
@@ -1100,6 +1115,7 @@ class Game {
         this.processPostBattle(callback);
         break;
       case 'lose':
+        this._playStats.battlesLost++;
         // Expedition wipe: trigger expedition failure
         if (this.expeditionManager?.isActive) {
           this._onExpeditionFail();
@@ -1158,6 +1174,7 @@ class Game {
   _nextGauntletBattle() {
     if (this._gauntletQueue.length === 0) {
       // All defeated — gauntlet complete
+      this._checkAchievement('champion_defeat');
       this.showDialog(null, '모든 사천왕을 물리쳤다! 축하합니다!', () => {
         this.storyManager.advanceChapter();
         this.enterMapState();
@@ -1292,6 +1309,7 @@ class Game {
       expeditionSuccessCount: this._expeditionSuccessCount,
       difficulty: this._difficulty,
       difficultySettings: this._difficultySettings,
+      playStats: this._playStats,
     });
   }
 
@@ -1320,6 +1338,9 @@ class Game {
       this.achievementManager = new AchievementManager();
     }
     this._expeditionSuccessCount = state.expeditionSuccessCount || 0;
+    if (state.playStats) {
+      this._playStats = state.playStats;
+    }
     this.enterMapState();
     return true;
   }
@@ -1336,6 +1357,7 @@ class Game {
       playTime: this.playtime,
       money: this.inventory.money,
     };
+    this.menuUI._playStats = this._playStats;
     this.menuUI.onOpenDex = () => {
       const allMonsters = getAllMonsters();
       this.dexUI = new DexUI(this.renderer, this.dexTracker, allMonsters);
@@ -1365,6 +1387,31 @@ class Game {
       const newName = prompt(`${mon.name}의 새 닉네임을 입력하세요:`, mon.nickname || mon.name);
       if (newName && newName.trim()) {
         mon.nickname = newName.trim().substring(0, 8);
+      }
+    };
+    this.menuUI.onAchievements = () => {
+      const all = this.achievementManager.getAll();
+      const unlocked = this.achievementManager.getUnlocked();
+
+      // Show achievement list as a series of dialogs
+      let text = `업적: ${unlocked.length}/${all.length} 달성\n\n`;
+      for (const ach of all) {
+        const done = this.achievementManager.unlocked.has(ach.id);
+        text += `${done ? '✅' : '⬜'} ${ach.name}\n`;
+      }
+
+      this.closeMenu();
+      // Split into pages if too long
+      const lines = text.split('\n');
+      const page1 = lines.slice(0, 10).join('\n');
+      const page2 = lines.slice(10).join('\n');
+
+      if (page2.trim()) {
+        this.showDialog(null, page1, () => {
+          this.showDialog(null, page2);
+        });
+      } else {
+        this.showDialog(null, page1);
       }
     };
     this.menuUI.onCredits = () => {

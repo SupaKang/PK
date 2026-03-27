@@ -95,6 +95,12 @@ export class BattleUI {
     this._itemTargetMode = false;
     this._itemToUse = null;
 
+    // 플로팅 데미지 숫자
+    this._floatingNumbers = []; // {text, x, y, color, timer, maxTimer}
+
+    // 자동 전투
+    this.autoBattle = false;
+
     // 콜백
     this.onBattleEnd = null;
   }
@@ -153,6 +159,10 @@ export class BattleUI {
         this.state = STATE.ACTION_SELECT;
         this.cursor = 0;
       }
+    }
+    // 자동 전투 시 자동 행동 선택
+    if (this.autoBattle && this.state === STATE.ACTION_SELECT) {
+      setTimeout(() => this._autoSelectAction(), 100);
     }
   }
 
@@ -223,6 +233,16 @@ export class BattleUI {
     // 플래시 감쇠
     if (this.flashEnemy > 0) this.flashEnemy = Math.max(0, this.flashEnemy - dt * 5);
     if (this.flashPlayer > 0) this.flashPlayer = Math.max(0, this.flashPlayer - dt * 5);
+
+    // Floating damage numbers
+    for (let i = this._floatingNumbers.length - 1; i >= 0; i--) {
+      const fn = this._floatingNumbers[i];
+      fn.timer += dt * this.battleSpeed;
+      fn.y -= 40 * dt * this.battleSpeed; // float upward
+      if (fn.timer >= fn.maxTimer) {
+        this._floatingNumbers.splice(i, 1);
+      }
+    }
   }
 
   /**
@@ -343,6 +363,15 @@ export class BattleUI {
       r.drawSprite(this._playerSprite, this.playerSpriteX, 80, 3);
       ctx.restore();
     }
+
+    // Floating damage numbers
+    for (const fn of this._floatingNumbers) {
+      const alpha = Math.max(0, 1 - fn.timer / fn.maxTimer);
+      const scale = fn.timer < 0.1 ? 3 : 2; // brief pop-in
+      ctx.globalAlpha = alpha;
+      r.drawPixelText(fn.text, fn.x, fn.y, fn.color, scale);
+    }
+    ctx.globalAlpha = 1;
 
     // ===== 적 정보 패널 (좌상단) =====
     if (this.battle.enemyActive) {
@@ -591,7 +620,8 @@ export class BattleUI {
       r.drawPixelText('(불가)', 620, 382, '#664444', 1);
     }
 
-    r.drawPixelText(`[I] 적 정보  [L] 기록  [S] 속도: x${this.battleSpeed}`, 440, 430, '#666688', 1);
+    const autoLabel = this.autoBattle ? '[A] 자동:ON' : '[A] 자동';
+    r.drawPixelText(`[I] 적 정보  [L] 기록  [S] 속도: x${this.battleSpeed}  ${autoLabel}`, 440, 430, '#666688', 1);
   }
 
   _renderSkillSelect(r, ctx) {
@@ -826,8 +856,34 @@ export class BattleUI {
       case 'l': case 'L':
         this._showLog = !this._showLog;
         return true;
+      case 'a': case 'A':
+        this.autoBattle = !this.autoBattle;
+        if (this.autoBattle) {
+          this.queueMessage('자동 전투 ON');
+          this._autoSelectAction();
+        } else {
+          this.queueMessage('자동 전투 OFF');
+        }
+        return true;
     }
     return false;
+  }
+
+  _autoSelectAction() {
+    if (!this.autoBattle) return;
+    const pm = this.battle.playerActive;
+    if (!pm || pm.currentHp <= 0) return;
+
+    // Simple AI: pick highest power skill with PP
+    let bestIdx = 0;
+    let bestScore = -1;
+    for (let i = 0; i < pm.skills.length; i++) {
+      const s = pm.skills[i];
+      if (s.pp <= 0) continue;
+      const score = (s.power || 20) * (s.accuracy / 100);
+      if (score > bestScore) { bestScore = score; bestIdx = i; }
+    }
+    this._executeTurn({ type: 'fight', skillIndex: bestIdx });
   }
 
   _selectAction(index) {
@@ -1061,8 +1117,43 @@ export class BattleUI {
     this._advanceMessage();
   }
 
+  _spawnDamageNumber(text, isEnemy, color = '#ffffff') {
+    const x = isEnemy ? 560 + Math.random() * 40 - 20 : 200 + Math.random() * 40 - 20;
+    const y = isEnemy ? 100 : 180;
+    this._floatingNumbers.push({
+      text: String(text),
+      x, y,
+      color,
+      timer: 0,
+      maxTimer: 1.0,
+    });
+  }
+
   _executeTurn(action) {
+    // Detect HP changes for damage numbers
+    const enemyHpBefore = this.animHpEnemyTarget;
+    const playerHpBefore = this.animHpPlayerTarget;
+
     const result = this.battle.selectAction(action);
+
+    const enemyHpAfter = this.battle.enemyActive?.currentHp ?? 0;
+    const playerHpAfter = this.battle.playerActive?.currentHp ?? 0;
+
+    if (enemyHpAfter < enemyHpBefore) {
+      const dmg = Math.round(enemyHpBefore - enemyHpAfter);
+      this._spawnDamageNumber(dmg, true, '#ff4444');
+    }
+    if (playerHpAfter < playerHpBefore) {
+      const dmg = Math.round(playerHpBefore - playerHpAfter);
+      this._spawnDamageNumber(dmg, false, '#ff4444');
+    }
+    // Healing numbers
+    if (enemyHpAfter > enemyHpBefore) {
+      this._spawnDamageNumber('+' + Math.round(enemyHpAfter - enemyHpBefore), true, '#44cc44');
+    }
+    if (playerHpAfter > playerHpBefore) {
+      this._spawnDamageNumber('+' + Math.round(playerHpAfter - playerHpBefore), false, '#44cc44');
+    }
 
     // 결과 메시지 큐
     for (const msg of result.messages) {

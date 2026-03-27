@@ -232,6 +232,7 @@ export class GameMenuUI {
       { id: 'party', label: '파티' },
       { id: 'bag', label: '가방' },
       { id: 'dex', label: '도감' },
+      { id: 'achievements', label: '업적' },
       { id: 'trainer', label: '계약자 카드' },
       { id: 'save', label: '저장' },
       { id: 'settings', label: '설정' },
@@ -254,6 +255,7 @@ export class GameMenuUI {
     this.onSettingsChange = null; // (settings) => apply settings
     this.onClassChange = null; // () => handle class change scroll
     this.onCredits = null; // () => show credits
+    this.onAchievements = null;
     this.onNicknameEdit = null; // (mon) => edit nickname
 
     // 설정
@@ -547,11 +549,11 @@ export class GameMenuUI {
   _renderTrainer(r, ctx) {
     const pd = this.playerData || {};
 
-    r.drawPanel(150, 80, 500, 440, '#0d0d1e', '#3a3a5a');
-    r.drawPixelText('계약자 카드', 200, 100, '#ffcc44', 3);
+    r.drawPanel(150, 50, 500, 530, '#0d0d1e', '#3a3a5a');
+    r.drawPixelText('계약자 카드', 200, 68, '#ffcc44', 3);
 
     const labelX = 190, valX = 400;
-    let y = 160;
+    let y = 120;
 
     const contractor = this.partyManager?.contractor;
     const rows = [
@@ -562,12 +564,15 @@ export class GameMenuUI {
       ['도감', `${pd.dexCaught || 0} / 100 계약`],
       ['플레이 시간', pd.playTime || '0:00:00'],
       ['파티', `계약자 + ${this.partyManager?.party?.length || 0}마리`],
+      ['전투 승리', `${this._playStats?.battlesWon || 0}회`],
+      ['계약 성공', `${this._playStats?.monstersContracted || 0}회`],
+      ['캠핑 횟수', `${this._playStats?.campingCount || 0}회`],
     ];
 
     for (const [label, value] of rows) {
       r.drawPixelText(label, labelX, y, '#8888aa', 2);
       r.drawPixelText(value, valX, y, '#ffffff', 2);
-      y += 40;
+      y += 34;
     }
 
     // 뱃지 아이콘 (간단한 사각형)
@@ -592,7 +597,7 @@ export class GameMenuUI {
       }
     }
 
-    r.drawPixelText('[ESC] 뒤로', 200, 500, '#666688', 1);
+    r.drawPixelText('[ESC] 뒤로', 200, 555, '#666688', 1);
   }
 
   _renderSave(r, ctx) {
@@ -699,6 +704,9 @@ export class GameMenuUI {
       case 'settings':
         this.subMenu = 'settings';
         this.settingsCursor = 0;
+        break;
+      case 'achievements':
+        if (this.onAchievements) this.onAchievements();
         break;
       case 'credits':
         if (this.onCredits) this.onCredits();

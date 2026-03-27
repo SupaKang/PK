@@ -327,6 +327,46 @@ export class MapUI {
       }
     }
 
+    // Weather effects based on location type
+    if (this.currentMapData?.tileset) {
+      const ctx2 = ctx; // already have ctx
+      const time = Date.now() * 0.001;
+      const locType = this.mapManager?.getCurrentLocation()?.type;
+
+      if (locType === 'cave' || locType === 'dungeon') {
+        // Dripping water particles
+        for (let i = 0; i < 5; i++) {
+          const dx = (i * 173 + Math.floor(time * 50)) % 800;
+          const dy = (time * 40 + i * 97) % 600;
+          ctx2.fillStyle = 'rgba(100,150,200,0.3)';
+          ctx2.fillRect(dx, dy, 1, 4);
+        }
+      } else if (this.expeditionTimeOfDay === 'night') {
+        // Firefly particles at night
+        for (let i = 0; i < 8; i++) {
+          const fx = 400 + Math.sin(time * 0.7 + i * 1.3) * 350;
+          const fy = 300 + Math.cos(time * 0.5 + i * 1.7) * 250;
+          const fa = 0.2 + Math.sin(time * 2 + i) * 0.2;
+          ctx2.fillStyle = `rgba(200,255,100,${fa})`;
+          ctx2.beginPath();
+          ctx2.arc(fx, fy, 2, 0, Math.PI * 2);
+          ctx2.fill();
+        }
+      }
+
+      // Snow for ice locations
+      const locId = this.mapManager?.currentLocation || '';
+      if (locId.includes('cave_02') || locId.includes('town_07') || locId.includes('gym_06')) {
+        for (let i = 0; i < 15; i++) {
+          const sx = (i * 57 + Math.floor(time * 20 + i * 30)) % 820 - 10;
+          const sy = (time * 30 + i * 43) % 620 - 10;
+          const sa = 0.3 + Math.sin(time + i) * 0.15;
+          ctx2.fillStyle = `rgba(220,230,255,${sa})`;
+          ctx2.fillRect(sx, sy, 3, 3);
+        }
+      }
+    }
+
     // NPC 렌더링
     for (const npc of this.npcSprites) {
       const screen = this.tileEngine.worldToScreen(npc.x * 64, npc.y * 64);
