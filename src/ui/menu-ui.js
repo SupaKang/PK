@@ -2,6 +2,7 @@
 import { generateSprite } from './sprite-generator.js';
 import { generateItemIcon } from './item-icon-generator.js';
 import { TYPE_COLORS, STATUS_COLORS, STATUS_LABELS } from './renderer.js';
+import { getAbilityName } from '../core/abilities.js';
 
 // ==========================================
 // 타이틀 화면
@@ -291,6 +292,9 @@ export class GameMenuUI {
     this.bagTargetCursor = 0;
     this.bagSelectedItem = null;
 
+    // 가방 정렬
+    this._bagSortMode = 'name';
+
     // 설정 서브
     this.settingsCursor = 0;
   }
@@ -433,6 +437,9 @@ export class GameMenuUI {
         r.drawPixelText(hearts, 600, y + 40, '#ff6688', 1);
       }
 
+      // 특성 표시
+      r.drawPixelText(`특성: ${getAbilityName(mon)}`, 450, y + 52, '#8888aa', 1);
+
       // 기술 목록
       const skillStr = mon.skills.map(s => s.name).join(', ');
       r.drawPixelText(skillStr.substring(0, 60), 135, y + 52, '#666688', 1);
@@ -480,6 +487,14 @@ export class GameMenuUI {
 
     // 아이템 목록
     const items = inv.getItemsByCategory(this.bagCategories[this.bagCategory].id);
+
+    // Sort items
+    if (this._bagSortMode === 'name') items.sort((a,b) => a.name.localeCompare(b.name));
+    else if (this._bagSortMode === 'price') items.sort((a,b) => (b.price||0) - (a.price||0));
+    else if (this._bagSortMode === 'count') items.sort((a,b) => b.count - a.count);
+
+    r.drawPixelText(`${items.length}종`, 650, 50, '#888899', 1);
+
     if (items.length === 0) {
       r.drawPixelText('아이템이 없습니다.', 100, 150, '#666688', 2);
     } else {
@@ -515,6 +530,7 @@ export class GameMenuUI {
     }
 
     r.drawPixelText('[ESC] 뒤로  [Tab] 카테고리  [Enter] 사용', 75, 555, '#666688', 1);
+    r.drawPixelText(`[R] 정렬: ${this._bagSortMode === 'name' ? '이름' : this._bagSortMode === 'price' ? '가격' : '수량'}`, 500, 555, '#666688', 1);
   }
 
   _renderBagTargetSelect(r, ctx) {
@@ -809,6 +825,9 @@ export class GameMenuUI {
       case 'Tab':
         this.bagCategory = (this.bagCategory + 1) % this.bagCategories.length;
         this.bagCursor = 0;
+        return true;
+      case 'r': case 'R':
+        this._bagSortMode = this._bagSortMode === 'name' ? 'price' : this._bagSortMode === 'price' ? 'count' : 'name';
         return true;
       case 'ArrowUp':
         this.bagCursor = Math.max(0, this.bagCursor - 1);

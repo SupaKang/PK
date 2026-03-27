@@ -113,6 +113,7 @@ class Game {
       monstersContracted: 0,
       stepsWalked: 0,
       campingCount: 0,
+      dailyClearCount: 0,
     };
 
     this.lastTime = 0;
@@ -443,6 +444,7 @@ class Game {
           if (!opt.recipe) return;
           craft(opt.recipe, this.inventory);
           this.audio.playSfx('level_up');
+          this._checkAchievement('craft');
           this.showDialog(null, `${opt.recipe.result.itemId} 조합 성공!`);
         });
       };
@@ -482,6 +484,7 @@ class Game {
             this.partyManager.addMonster(fused);
             this.audio.playSfx('evolve');
             this.renderer.screenShake(400, 5);
+            this._checkAchievement('fusion');
             this.showDialog(null, `합성 성공! ${fused.name}이(가) 더 강해졌다! (Lv${fused.level})`);
           }
         });
@@ -512,6 +515,7 @@ class Game {
             const baby = createMonster(egg.result, 1);
             this.partyManager.addMonster(baby);
             this.dexTracker.markCaught(baby.id);
+            this._checkAchievement('egg');
             this.showDialog(null, `${baby.name}이(가) 파티에 합류했다!`);
           });
         } else {
@@ -533,10 +537,14 @@ class Game {
         if (questDone) {
           // Give reward
           if (quest.reward.itemId) this.inventory.addItem(quest.reward.itemId, quest.reward.count || 1);
-          if (quest.reward.money) this.inventory.money += quest.reward.money;
+          if (quest.reward.money) {
+            this.inventory.money += quest.reward.money;
+            this._checkAchievement('money', this.inventory.money);
+          }
           if (!this._completedQuests) this._completedQuests = new Set();
           this._completedQuests.add(quest.id);
           this.audio.playSfx('level_up');
+          this._checkAchievement('quest', this._completedQuests.size);
           this.showDialog(npc.name, `감사합니다! 보상을 드리겠습니다!`);
         } else {
           this.showDialog(npc.name, npc.dialog);
@@ -1096,6 +1104,36 @@ class Game {
       this._startExpedition();
     }
 
+    // Hidden superboss: appears when 5+ legendaries caught
+    if (loc.type === 'elite_four' || loc.id === 'elite_four') {
+      const legendsCaught = [91,92,93,94,95,96,97,98,99,100].filter(id => this.dexTracker.isCaught(id)).length;
+      if (legendsCaught >= 5 && !this.trainerManager.isDefeated('superboss_origin')) {
+        this.audio.playSfx('evolve');
+        this.renderer.screenShake(800, 8);
+        this.showDialog(null, '...!! 공간이 왜곡된다. 강대한 존재가 나타났다!', () => {
+          this.showDialog(null, '근원신이 계약자를 시험하러 나타났다!', () => {
+            const bossTeam = [
+              createMonster(99, 70),  // 근원신
+              createMonster(95, 65),  // 시간신
+              createMonster(96, 65),  // 공간신
+              createMonster(97, 68),  // 광룡
+              createMonster(98, 68),  // 암룡
+              createMonster(100, 70), // 조화의울림
+            ];
+            this.startBattle({
+              enemyParty: bossTeam,
+              isWild: false,
+              trainerName: '근원신 — 최강의 시련',
+              reward: 50000,
+              trainerId: 'superboss_origin',
+              isBoss: true,
+            });
+          });
+        });
+        return;
+      }
+    }
+
     // 스토리 이벤트 체크 (사천왕 가운틀릿보다 먼저 실행)
     // triggerStoryEvents will call _checkGauntlet() after all story events complete
     this.triggerStoryEvents();
@@ -1159,6 +1197,7 @@ class Game {
         if (config.reward) {
           this.inventory.money += config.reward;
           this._expTracker.moneyEarned += config.reward;
+          this._checkAchievement('money', this.inventory.money);
           rewards.push(`${config.reward}원 획득! (소지금: ${this.inventory.money}원)`);
         }
         // 탐험 추적
@@ -1216,6 +1255,7 @@ class Game {
         }
 
         if (config.trainerId) this.trainerManager.markDefeated(config.trainerId);
+        if (config.trainerId === 'superboss_origin') this._checkAchievement('superboss_defeat');
         // 그림자단 승리 — 정의 성향
         if (config.trainerName && config.trainerName.includes('그림자단')) {
           this._adjustKarma(5);
@@ -1420,6 +1460,7 @@ class Game {
     // Bonus for NG+: slightly higher levels on enemies
     this._difficultySettings.enemyLevelBonus += 5;
 
+    this._checkAchievement('new_game_plus');
     this.showDialog(null, '뉴게임+를 시작합니다! 모든 적이 더 강해집니다!', () => {
       this.enterMapState();
       this.triggerStoryEvents();
@@ -1721,6 +1762,8 @@ class Game {
           isDaily: true,
         }, () => {
           this.dailyChallenge.markCompleted();
+          this._playStats.dailyClearCount++;
+          this._checkAchievement('daily', this._playStats.dailyClearCount);
           this.inventory.addItem(challenge.reward.itemId, challenge.reward.count);
           this.showDialog(null, `일일 도전 클리어! ${challenge.reward.itemId} x${challenge.reward.count} 획득!`);
         });

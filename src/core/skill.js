@@ -1,6 +1,7 @@
 // 스킬 효과 처리 시스템
 import { getEffectiveness, getEffectivenessText } from './type.js';
 import { applyDamageBuff, applyAccuracyBuff, applyCritBuff, applyDrainBuff, applyHealBuff, applyStatBuff, checkStatusResist } from './party-buffs.js';
+import { getMonsterAbility } from './abilities.js';
 
 /**
  * 데미지 계산 (포켓몬 공식 기반)
@@ -41,9 +42,11 @@ export function calcDamage(attacker, defender, skill, isCritical = false, partyB
     damage = Math.floor(damage * 1.5);
   }
 
-  // 자속 보정 (STAB)
+  // 자속 보정 (STAB) — 적응력 특성 시 2.0x
   if (attacker.type.includes(skill.type)) {
-    damage = Math.floor(damage * 1.5);
+    const ability = getMonsterAbility(attacker);
+    const stabMultiplier = (ability && ability.effect === 'adaptability') ? 2.0 : 1.5;
+    damage = Math.floor(damage * stabMultiplier);
   }
 
   // 유대도 보너스 (bond damage bonus)
@@ -55,8 +58,14 @@ export function calcDamage(attacker, defender, skill, isCritical = false, partyB
   const effectiveness = getEffectiveness(skill.type, defender.type);
   damage = Math.floor(damage * effectiveness);
 
-  // 화상 상태: 물리 공격력 50% 감소
-  if (attacker.status === 'burn' && skill.category === 'physical') {
+  // 근성(guts) 특성: 상태이상 시 물리 공격력 +50%, 화상 감소 무효
+  const attackerAbility = getMonsterAbility(attacker);
+  const hasGuts = attackerAbility && attackerAbility.effect === 'guts';
+
+  if (attacker.status && hasGuts && skill.category === 'physical') {
+    damage = Math.floor(damage * 1.5);
+  } else if (attacker.status === 'burn' && skill.category === 'physical') {
+    // 화상 상태: 물리 공격력 50% 감소
     damage = Math.floor(damage * 0.5);
   }
 
