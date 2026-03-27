@@ -78,6 +78,10 @@ export class BattleUI {
     // 시간대
     this.timeOfDay = 'day';
 
+    // 전투 기록
+    this._battleLog = [];
+    this._showLog = false;
+
     // 적 정보 표시 토글
     this._showEnemyInfo = false;
 
@@ -121,6 +125,8 @@ export class BattleUI {
 
   queueMessage(msg) {
     this.messageQueue.push(msg);
+    this._battleLog.push(msg);
+    if (this._battleLog.length > 50) this._battleLog.shift();
   }
 
   _advanceMessage() {
@@ -356,6 +362,45 @@ export class BattleUI {
         ctx.fillStyle = sColor;
         ctx.fillRect(258, 47, 34, 12);
         r.drawPixelText(sLabel, 260, 49, '#ffffff', 1);
+
+        // Status icon (small pixel art)
+        const iconX = 248;
+        const iconY = 47;
+        const t = Date.now() * 0.005;
+        switch(em.status) {
+          case 'burn':
+            ctx.fillStyle = `rgba(255,100,0,${0.5 + Math.sin(t*3)*0.3})`;
+            ctx.fillRect(iconX, iconY, 3, 6);
+            ctx.fillRect(iconX+1, iconY-2, 2, 3);
+            break;
+          case 'poison':
+            ctx.fillStyle = `rgba(160,0,200,${0.5 + Math.sin(t*2)*0.3})`;
+            ctx.beginPath();
+            ctx.arc(iconX+3, iconY+4, 3, 0, Math.PI*2);
+            ctx.fill();
+            break;
+          case 'paralyze':
+            ctx.fillStyle = `rgba(255,255,0,${0.3 + Math.sin(t*5)*0.4})`;
+            ctx.fillRect(iconX, iconY+1, 6, 2);
+            ctx.fillRect(iconX+2, iconY-1, 2, 6);
+            break;
+          case 'sleep':
+            ctx.fillStyle = '#aaaaff';
+            r.drawPixelText('z', iconX, iconY + Math.sin(t)*2, '#aaaaff', 1);
+            break;
+          case 'freeze':
+            ctx.fillStyle = `rgba(150,200,255,${0.6 + Math.sin(t)*0.2})`;
+            ctx.fillRect(iconX+1, iconY, 4, 6);
+            ctx.fillRect(iconX, iconY+2, 6, 2);
+            break;
+          case 'confuse': {
+            ctx.fillStyle = '#ffff44';
+            const angle = t * 3;
+            ctx.fillRect(iconX + Math.cos(angle)*3 + 3, iconY + Math.sin(angle)*3 + 3, 2, 2);
+            ctx.fillRect(iconX + Math.cos(angle+2)*3 + 3, iconY + Math.sin(angle+2)*3 + 3, 2, 2);
+            break;
+          }
+        }
       }
     }
 
@@ -415,6 +460,45 @@ export class BattleUI {
         ctx.fillStyle = sColor;
         ctx.fillRect(735, 229, 34, 12);
         r.drawPixelText(sLabel, 737, 231, '#ffffff', 1);
+
+        // Status icon (small pixel art)
+        const iconX = 725;
+        const iconY = 229;
+        const t = Date.now() * 0.005;
+        switch(pm.status) {
+          case 'burn':
+            ctx.fillStyle = `rgba(255,100,0,${0.5 + Math.sin(t*3)*0.3})`;
+            ctx.fillRect(iconX, iconY, 3, 6);
+            ctx.fillRect(iconX+1, iconY-2, 2, 3);
+            break;
+          case 'poison':
+            ctx.fillStyle = `rgba(160,0,200,${0.5 + Math.sin(t*2)*0.3})`;
+            ctx.beginPath();
+            ctx.arc(iconX+3, iconY+4, 3, 0, Math.PI*2);
+            ctx.fill();
+            break;
+          case 'paralyze':
+            ctx.fillStyle = `rgba(255,255,0,${0.3 + Math.sin(t*5)*0.4})`;
+            ctx.fillRect(iconX, iconY+1, 6, 2);
+            ctx.fillRect(iconX+2, iconY-1, 2, 6);
+            break;
+          case 'sleep':
+            ctx.fillStyle = '#aaaaff';
+            r.drawPixelText('z', iconX, iconY + Math.sin(t)*2, '#aaaaff', 1);
+            break;
+          case 'freeze':
+            ctx.fillStyle = `rgba(150,200,255,${0.6 + Math.sin(t)*0.2})`;
+            ctx.fillRect(iconX+1, iconY, 4, 6);
+            ctx.fillRect(iconX, iconY+2, 6, 2);
+            break;
+          case 'confuse': {
+            ctx.fillStyle = '#ffff44';
+            const angle = t * 3;
+            ctx.fillRect(iconX + Math.cos(angle)*3 + 3, iconY + Math.sin(angle)*3 + 3, 2, 2);
+            ctx.fillRect(iconX + Math.cos(angle+2)*3 + 3, iconY + Math.sin(angle+2)*3 + 3, 2, 2);
+            break;
+          }
+        }
       }
     }
   }
@@ -438,6 +522,17 @@ export class BattleUI {
         this._renderMessage(r, ctx);
         break;
       case STATE.ACTION_SELECT:
+        if (this._showLog) {
+          r.drawPanel(20, 315, 760, 270, '#0a0a16', '#3a3a5a');
+          r.drawPixelText('전투 기록 [L]', 40, 325, '#ffcc44', 2);
+          const start = Math.max(0, this._battleLog.length - 10);
+          for (let i = start; i < this._battleLog.length; i++) {
+            const y = 350 + (i - start) * 22;
+            r.drawPixelText(this._battleLog[i].substring(0, 45), 40, y, '#aaaacc', 1);
+          }
+          r.drawPixelText('[L] 닫기', 40, 570, '#666688', 1);
+          return; // skip normal panel rendering
+        }
         this._renderActionSelect(r, ctx);
         break;
       case STATE.SKILL_SELECT:
@@ -496,8 +591,7 @@ export class BattleUI {
       r.drawPixelText('(불가)', 620, 382, '#664444', 1);
     }
 
-    r.drawPixelText('[S] 속도: x' + this.battleSpeed, 440, 430, '#666688', 1);
-    r.drawPixelText('[I] 적 정보', 600, 430, '#666688', 1);
+    r.drawPixelText(`[I] 적 정보  [L] 기록  [S] 속도: x${this.battleSpeed}`, 440, 430, '#666688', 1);
   }
 
   _renderSkillSelect(r, ctx) {
@@ -728,6 +822,9 @@ export class BattleUI {
       case 's':
       case 'S':
         this.battleSpeed = this.battleSpeed >= 3 ? 1 : this.battleSpeed + 1;
+        return true;
+      case 'l': case 'L':
+        this._showLog = !this._showLog;
         return true;
     }
     return false;

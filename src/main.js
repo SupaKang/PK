@@ -1319,6 +1319,7 @@ class Game {
     } else {
       this.achievementManager = new AchievementManager();
     }
+    this._expeditionSuccessCount = state.expeditionSuccessCount || 0;
     this.enterMapState();
     return true;
   }

@@ -262,6 +262,9 @@ export class GameMenuUI {
       volume: 5,    // 0~10
     };
 
+    // 파티 교체 선택
+    this._swapFrom = null;
+
     // 세이브 슬롯 커서
     this.saveCursor = 0;
 
@@ -421,7 +424,16 @@ export class GameMenuUI {
       r.drawPixelText(skillStr.substring(0, 60), 135, y + 52, '#666688', 1);
     }
 
-    r.drawPixelText('[ESC] 뒤로  [Enter] 순서 교체 (몬스터만)  [N] 닉네임 변경', 75, 555, '#666688', 1);
+    // Swap source highlight
+    if (this._swapFrom !== null) {
+      const contractorOffset = this.partyManager?.contractor ? 1 : 0;
+      const swapY = 85 + (this._swapFrom + contractorOffset) * 72;
+      ctx.strokeStyle = '#ffcc44';
+      ctx.lineWidth = 2;
+      ctx.strokeRect(65, swapY - 5, 670, 67);
+    }
+
+    r.drawPixelText('[ESC] 뒤로  [Enter] 교체 선택  [N] 닉네임 변경', 75, 555, '#666688', 1);
   }
 
   _renderBag(r, ctx) {
@@ -721,16 +733,21 @@ export class GameMenuUI {
         this.cursor = Math.min(totalLen - 1, this.cursor + 1);
         return true;
       case 'Enter':
-      case ' ':
-        // 계약자는 교체 불가, 몬스터만 순서 교체
-        if (this.cursor >= contractorOffset + 1 && this.partyManager) {
-          const monIdx = this.cursor - contractorOffset;
-          if (monIdx > 0) {
-            this.partyManager.swapPartySlots(monIdx, monIdx - 1);
-            this.cursor--;
+      case ' ': {
+        const monIdx = this.cursor - contractorOffset;
+
+        if (monIdx < 0) return true; // Can't swap contractor
+
+        if (this._swapFrom === null || this._swapFrom === undefined) {
+          this._swapFrom = monIdx;
+        } else {
+          if (this._swapFrom !== monIdx) {
+            this.partyManager.swapPartySlots(this._swapFrom, monIdx);
           }
+          this._swapFrom = null;
         }
         return true;
+      }
       case 'n':
       case 'N': {
         // Nickname edit — use prompt (simple approach)
@@ -744,6 +761,7 @@ export class GameMenuUI {
         return true;
       }
       case 'Escape':
+        this._swapFrom = null;
         this.subMenu = null;
         this.cursor = 0;
         return true;
