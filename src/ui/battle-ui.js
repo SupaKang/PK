@@ -99,6 +99,9 @@ export class BattleUI {
     // 플로팅 데미지 숫자
     this._floatingNumbers = []; // {text, x, y, color, timer, maxTimer}
 
+    // 스킬 이펙트 파티클
+    this._skillEffects = []; // {type, x, y, timer, maxTimer, color}
+
     // 자동 전투
     this.autoBattle = false;
 
@@ -244,6 +247,16 @@ export class BattleUI {
         this._floatingNumbers.splice(i, 1);
       }
     }
+
+    // Skill effect particles
+    for (let i = this._skillEffects.length - 1; i >= 0; i--) {
+      const p = this._skillEffects[i];
+      p.timer += dt * this.battleSpeed;
+      p.x += p.vx * dt * this.battleSpeed;
+      p.y += p.vy * dt * this.battleSpeed;
+      p.vy += 100 * dt * this.battleSpeed; // gravity
+      if (p.timer >= p.maxTimer) this._skillEffects.splice(i, 1);
+    }
   }
 
   /**
@@ -371,6 +384,15 @@ export class BattleUI {
       const scale = fn.timer < 0.1 ? 3 : 2; // brief pop-in
       ctx.globalAlpha = alpha;
       r.drawPixelText(fn.text, fn.x, fn.y, fn.color, scale);
+    }
+    ctx.globalAlpha = 1;
+
+    // Skill effect particles
+    for (const p of this._skillEffects) {
+      const alpha = Math.max(0, 1 - p.timer / p.maxTimer);
+      ctx.globalAlpha = alpha;
+      ctx.fillStyle = p.color;
+      ctx.fillRect(p.x, p.y, p.size, p.size);
     }
     ctx.globalAlpha = 1;
 
@@ -1153,12 +1175,46 @@ export class BattleUI {
     });
   }
 
+  _spawnSkillEffect(skillType, isEnemy) {
+    const x = isEnemy ? 560 : 200;
+    const y = isEnemy ? 120 : 200;
+    const colors = {
+      fire: '#ff4400', water: '#4488ff', grass: '#44cc44', electric: '#ffff00',
+      ice: '#88ddff', dark: '#8844cc', light: '#ffee88', fighting: '#cc6644',
+      dragon: '#6644cc', poison: '#aa44aa', metal: '#aaaacc', rock: '#886644',
+      wind: '#88ccaa', spirit: '#aa88ff', earth: '#aa8844', sound: '#44aaaa',
+      cosmic: '#cc88ff', normal: '#aaaaaa',
+    };
+    const color = colors[skillType] || '#ffffff';
+
+    // Spawn 5-8 particles
+    const count = 5 + Math.floor(Math.random() * 4);
+    for (let i = 0; i < count; i++) {
+      this._skillEffects.push({
+        x: x + Math.random() * 60 - 30,
+        y: y + Math.random() * 40 - 20,
+        vx: (Math.random() - 0.5) * 100,
+        vy: -50 - Math.random() * 50,
+        timer: 0,
+        maxTimer: 0.5 + Math.random() * 0.3,
+        color,
+        size: 3 + Math.random() * 4,
+      });
+    }
+  }
+
   _executeTurn(action) {
     // Detect HP changes for damage numbers
     const enemyHpBefore = this.animHpEnemyTarget;
     const playerHpBefore = this.animHpPlayerTarget;
 
     const result = this.battle.selectAction(action);
+
+    // Spawn skill effect for the action
+    if (action.type === 'fight' && action.skillIndex >= 0) {
+      const skill = this.battle.playerActive?.skills?.[action.skillIndex];
+      if (skill) this._spawnSkillEffect(skill.type, true); // effect on enemy
+    }
 
     const enemyHpAfter = this.battle.enemyActive?.currentHp ?? 0;
     const playerHpAfter = this.battle.playerActive?.currentHp ?? 0;

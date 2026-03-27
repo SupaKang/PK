@@ -42,6 +42,78 @@ class AudioManagerClass {
     if (this.ctx.state === 'suspended') this.ctx.resume();
   }
 
+  // ─── 환경음 재생 ─────────────────────────────────
+
+  playAmbient(type) {
+    this.stopAmbient();
+    if (!this._initialized) this.init();
+    if (!this.ctx) return;
+
+    const now = this.ctx.currentTime;
+
+    switch(type) {
+      case 'forest': {
+        // Gentle bird chirps every few seconds
+        this._ambientInterval = setInterval(() => {
+          if (!this.ctx) return;
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.frequency.value = 2000 + Math.random() * 1000;
+          osc.type = 'sine';
+          gain.gain.setValueAtTime(0, this.ctx.currentTime);
+          gain.gain.linearRampToValueAtTime(0.02, this.ctx.currentTime + 0.05);
+          gain.gain.linearRampToValueAtTime(0, this.ctx.currentTime + 0.15);
+          osc.connect(gain);
+          gain.connect(this.masterGain);
+          osc.start(this.ctx.currentTime);
+          osc.stop(this.ctx.currentTime + 0.2);
+        }, 3000 + Math.random() * 4000);
+        break;
+      }
+      case 'cave': {
+        // Dripping water
+        this._ambientInterval = setInterval(() => {
+          if (!this.ctx) return;
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.frequency.value = 800 + Math.random() * 400;
+          osc.type = 'sine';
+          gain.gain.setValueAtTime(0.015, this.ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.3);
+          osc.connect(gain);
+          gain.connect(this.masterGain);
+          osc.start(this.ctx.currentTime);
+          osc.stop(this.ctx.currentTime + 0.3);
+        }, 2000 + Math.random() * 3000);
+        break;
+      }
+      case 'water': {
+        // Gentle waves (noise)
+        this._ambientInterval = setInterval(() => {
+          if (!this.ctx) return;
+          const bufferSize = this.ctx.sampleRate * 0.5;
+          const buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
+          const data = buffer.getChannelData(0);
+          for (let i = 0; i < bufferSize; i++) {
+            data[i] = (Math.random() * 2 - 1) * 0.005 * Math.sin(i / bufferSize * Math.PI);
+          }
+          const src = this.ctx.createBufferSource();
+          src.buffer = buffer;
+          src.connect(this.masterGain);
+          src.start();
+        }, 4000);
+        break;
+      }
+    }
+  }
+
+  stopAmbient() {
+    if (this._ambientInterval) {
+      clearInterval(this._ambientInterval);
+      this._ambientInterval = null;
+    }
+  }
+
   // ─── 볼륨 제어 ─────────────────────────────────
 
   setVolume(bgm, sfx) {

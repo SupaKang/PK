@@ -81,6 +81,7 @@ class Game {
     this._battleConfig = null;
     this._gauntletQueue = [];
     this._gauntletHealBetween = false;
+    this._isBossRush = false;
 
     // 탐험 시스템
     this.expeditionManager = null;
@@ -93,6 +94,9 @@ class Game {
     this._expTracker = { monstersDefeated: 0, expGained: 0, moneyEarned: 0 };
     this._expeditionSuccessCount = 0;
     this._tutorialShown = false;
+
+    // 카르마/성향 시스템 (-100 어둠 ~ +100 빛)
+    this._karma = 0;
 
     // 플레이 통계
     this._playStats = {
@@ -133,6 +137,10 @@ class Game {
     window.addEventListener('keyup', (e) => {
       this.keys[e.key] = false;
     });
+  }
+
+  _adjustKarma(amount) {
+    this._karma = Math.max(-100, Math.min(100, this._karma + amount));
   }
 
   async init() {
@@ -397,6 +405,7 @@ class Game {
       };
       this.mapUI.onHeal = () => {
         this.partyManager.healAll();
+        this._adjustKarma(1); // 치유사 이용 — 빛 성향
         this.showDialog(null, '파티의 체력이 모두 회복되었다!');
       };
       this.mapUI.onBox = () => {
@@ -427,6 +436,7 @@ class Game {
           switch (eventDef.reward) {
             case 'heal_full':
               this.partyManager.healAll();
+              if (event.type === 'fairy_tea_party') this._adjustKarma(5); // 요정의 차 — 자연 성향
               this.showDialog(null, '파티가 완전 회복되었다!');
               break;
             case 'item': {
@@ -464,6 +474,7 @@ class Game {
               break;
             }
             case 'stat_boost': {
+              if (event.type === 'dark_altar') this._adjustKarma(-10); // 어둠의 제단 — 어둠 성향
               const c = this.partyManager.contractor;
               if (c) {
                 const stat = eventDef.statBoost?.stat || 'atk';
@@ -602,6 +613,11 @@ class Game {
     if (loc) {
       const bgm = loc.type === 'town' ? 'town_bgm' : loc.type === 'gym' ? 'boss_bgm' : 'route_bgm';
       this.audio.playBgm(bgm);
+
+      const ambientMap = { cave: 'cave', forest: 'forest', route: 'forest', dungeon: 'cave' };
+      const ambient = ambientMap[loc?.type];
+      if (ambient) this.audio.playAmbient(ambient);
+      else this.audio.stopAmbient();
 
       // 마을 진입 시 자동으로 탐험 시작 (마을이 아닌 곳으로 이동할 때)
       if (loc.type === 'town' && this.expeditionManager?.isActive) {
@@ -907,6 +923,11 @@ class Game {
     const bgm = loc.type === 'town' ? 'town_bgm' : loc.type === 'gym' ? 'boss_bgm' : 'route_bgm';
     this.audio.playBgm(bgm);
 
+    const ambientMap = { cave: 'cave', forest: 'forest', route: 'forest', dungeon: 'cave' };
+    const ambient = ambientMap[loc?.type];
+    if (ambient) this.audio.playAmbient(ambient);
+    else this.audio.stopAmbient();
+
     // 마을 진입 시
     if (loc.type === 'town') {
       this.partyManager.healAll();
@@ -1066,6 +1087,10 @@ class Game {
         }
 
         if (config.trainerId) this.trainerManager.markDefeated(config.trainerId);
+        // 그림자단 승리 — 정의 성향
+        if (config.trainerName && config.trainerName.includes('그림자단')) {
+          this._adjustKarma(5);
+        }
         if (config.isBoss) {
           const bossReward = getBossRewards(this.mapManager.currentLocation);
           if (bossReward.items) {
@@ -1102,6 +1127,7 @@ class Game {
       }
       case 'capture': {
         this._playStats.monstersContracted++;
+        this._adjustKarma(2); // 몬스터와 계약 — 빛 성향
         const captured = config.enemyParty[0];
         const isNewDex = !this.dexTracker.isCaught(captured.id);
         const loc = this.partyManager.addMonster(captured);
@@ -1183,6 +1209,7 @@ class Game {
       isGauntlet: true,
     }));
     this._gauntletHealBetween = healBetween;
+    this._isBossRush = false;
 
     this.showDialog(null, '사천왕과의 연속 배틀이 시작된다! 준비하라!', () => {
       this._nextGauntletBattle();
@@ -1192,18 +1219,51 @@ class Game {
   _nextGauntletBattle() {
     if (this._gauntletQueue.length === 0) {
       // All defeated — gauntlet complete
+
+      // 보스 러시 완료 시 카르마 감소
+      if (this._isBossRush) {
+        this._adjustKarma(-5); // 보스 러시 — 폭력 성향
+        this._isBossRush = false;
+        this._checkAchievement('champion_defeat');
+        this.showDialog(null, '보스 러시를 클리어했다!', () => {
+          this.enterMapState();
+        });
+        return;
+      }
+
       this._checkAchievement('champion_defeat');
+
+      // 카르마에 따른 엔딩 분기
+      const karma = this._karma;
+      let endingType, endingDialog;
+      if (karma >= 30) {
+        endingType = '빛의 결말';
+        endingDialog = '마왕이 쓰러지자, 세계에 빛이 돌아왔다.\n인간과 몬스터, 그리고 마족까지... 모두가 공존하는 새 시대가 시작되었다.';
+      } else if (karma <= -30) {
+        endingType = '어둠의 결말';
+        endingDialog = '마왕을 쓰러뜨렸다. 하지만... 그 어둠의 힘이 계약자에게 스며들었다.\n새로운 마왕이 탄생했다.';
+      } else {
+        endingType = '균형의 결말';
+        endingDialog = '마왕이 쓰러졌다. 어둠은 걷혔지만, 완전히 사라진 것은 아니다.\n계약자의 여정은 계속된다.';
+      }
+
       this.showDialog(null, '모든 사천왕을 물리쳤다! 축하합니다!', () => {
-        this.storyManager.advanceChapter();
-        this.showChoice('게임을 클리어했습니다! 어떻게 하시겠습니까?', [
-          { text: '계속 플레이 (엔드게임)', value: 'continue' },
-          { text: '뉴게임+ (스토리 리셋, 파티 유지)', value: 'newgame_plus' },
-        ], (opt) => {
-          if (opt.value === 'newgame_plus') {
-            this._startNewGamePlus();
-          } else {
-            this.enterMapState();
-          }
+        this.showDialog(null, endingDialog, () => {
+          this.showDialog(null, `── ${endingType} ──`, () => {
+            this.showDialog(null, '── THE END ──', () => {
+              this.storyManager.advanceChapter();
+              this.showChoice('게임을 클리어했습니다! 어떻게 하시겠습니까?', [
+                { text: '계속 플레이 (엔드게임)', value: 'continue' },
+                { text: '뉴게임+ (스토리 리셋, 파티 유지)', value: 'newgame_plus' },
+              ], (opt) => {
+                if (opt.value === 'newgame_plus') {
+                  this._startNewGamePlus();
+                } else {
+                  this.enterMapState();
+                }
+              });
+            });
+          });
         });
       });
       return;
@@ -1253,6 +1313,7 @@ class Game {
       isBoss: true,
     }));
     this._gauntletHealBetween = false;
+    this._isBossRush = true;
 
     this.showDialog(null, `보스 러시! ${allBosses.length}명의 보스와 연속 배틀!`, () => {
       this._nextGauntletBattle();
@@ -1378,6 +1439,7 @@ class Game {
       difficulty: this._difficulty,
       difficultySettings: this._difficultySettings,
       playStats: this._playStats,
+      karma: this._karma,
     });
   }
 
@@ -1409,6 +1471,7 @@ class Game {
     if (state.playStats) {
       this._playStats = state.playStats;
     }
+    this._karma = state.karma || 0;
     this.enterMapState();
     return true;
   }
