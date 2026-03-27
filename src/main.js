@@ -29,6 +29,7 @@ import { DailyChallenge } from './core/daily-challenge.js';
 import { checkEggAvailable } from './core/egg-system.js';
 import { canFuse, fuseMonsters } from './core/fusion.js';
 import { getLocationWeather } from './core/weather.js';
+import { getActiveFormation } from './core/formation.js';
 
 import { ExpeditionHUD } from './ui/expedition-hud.js';
 import { ExpeditionSummary } from './ui/expedition-summary.js';
@@ -1231,6 +1232,9 @@ class Game {
         // 탐험 추적
         this._expTracker.monstersDefeated += config.enemyParty.filter(e => e.currentHp <= 0).length;
 
+        const formation = getActiveFormation(this.partyManager.getBattleParty());
+        const formationExpMult = formation?.bonus?.exp || 1;
+
         for (const enemy of config.enemyParty) {
           if (enemy.currentHp <= 0) {
             const expAmount = Math.floor((enemy.expYield * enemy.level) / 7);
@@ -1241,6 +1245,8 @@ class Game {
                 let share = Math.max(1, Math.floor(expAmount / aliveCount));
                 // 난이도 경험치 배율 적용
                 share = Math.floor(share * this._difficultySettings.expMultiplier);
+                // 편성 보너스 경험치 배율 적용
+                share = Math.floor(share * formationExpMult);
                 // Bonus exp from magi density during expeditions
                 let magiBonus = 0;
                 if (this.expeditionManager?.isActive) {

@@ -782,10 +782,30 @@ export class MapUI {
       this._renderBanner(ctx);
     }
 
-    // 트랜지션 페이드
+    // Transition effect
     if (this.fadeAlpha > 0) {
-      ctx.fillStyle = `rgba(0,0,0,${Math.min(1, this.fadeAlpha)})`;
-      ctx.fillRect(0, 0, 800, 600);
+      const locType = this.mapManager?.getCurrentLocation()?.type;
+
+      if (locType === 'cave' || locType === 'dungeon') {
+        // Cave: circular iris close/open
+        const radius = (1 - this.fadeAlpha) * 500;
+        ctx.fillStyle = '#000000';
+        ctx.fillRect(0, 0, 800, 600);
+        ctx.globalCompositeOperation = 'destination-out';
+        ctx.beginPath();
+        ctx.arc(400, 300, Math.max(0, radius), 0, Math.PI * 2);
+        ctx.fill();
+        ctx.globalCompositeOperation = 'source-over';
+      } else if (locType === 'gym' || locType === 'elite_four') {
+        // Gym: horizontal wipe
+        const wipeX = this.fadeAlpha * 800;
+        ctx.fillStyle = 'rgba(0,0,0,1)';
+        ctx.fillRect(0, 0, wipeX, 600);
+      } else {
+        // Default: fade to black
+        ctx.fillStyle = `rgba(0,0,0,${Math.min(1, this.fadeAlpha)})`;
+        ctx.fillRect(0, 0, 800, 600);
+      }
     }
   }
 

@@ -96,6 +96,10 @@ export class BattleUI {
     this._itemTargetMode = false;
     this._itemToUse = null;
 
+    // 콤보 카운터
+    this._comboCount = 0;
+    this._comboTimer = 0;
+
     // 플로팅 데미지 숫자
     this._floatingNumbers = []; // {text, x, y, color, timer, maxTimer}
 
@@ -240,6 +244,12 @@ export class BattleUI {
     // 플래시 감쇠
     if (this.flashEnemy > 0) this.flashEnemy = Math.max(0, this.flashEnemy - dt * 5);
     if (this.flashPlayer > 0) this.flashPlayer = Math.max(0, this.flashPlayer - dt * 5);
+
+    // 콤보 타이머 감쇠
+    if (this._comboTimer > 0) {
+      this._comboTimer -= dt;
+      if (this._comboTimer <= 0) this._comboCount = 0;
+    }
 
     // Floating damage numbers
     for (let i = this._floatingNumbers.length - 1; i >= 0; i--) {
@@ -389,6 +399,16 @@ export class BattleUI {
       r.drawPixelText(fn.text, fn.x, fn.y, fn.color, scale);
     }
     ctx.globalAlpha = 1;
+
+    // Combo counter
+    if (this._comboCount >= 2 && this._comboTimer > 0) {
+      const scale = this._comboCount >= 5 ? 4 : 3;
+      const color = this._comboCount >= 5 ? '#ff4444' : this._comboCount >= 3 ? '#ffcc44' : '#ffffff';
+      const alpha = Math.min(1, this._comboTimer);
+      ctx.globalAlpha = alpha;
+      r.drawPixelText(`${this._comboCount} COMBO!`, 320, 140, color, scale);
+      ctx.globalAlpha = 1;
+    }
 
     // Weather indicator
     if (this.battle.weather && this.battle.weather !== 'clear') {
@@ -978,7 +998,14 @@ export class BattleUI {
           const target = this.battle.enemyActive;
           const mult = {magic_stone: 1, high_stone: 1.5, ultra_stone: 2, domination_stone: 255}[item.id] || 1;
           const rate = Math.min(100, Math.floor(((3 * target.stats.hp - 2 * target.currentHp) * target.catchRate * mult) / (3 * target.stats.hp) / 255 * 100));
-          r.drawPixelText(`계약 확률: ~${rate}%`, 50, y + 20, '#88cc88', 1);
+
+          // Enhanced display
+          r.drawPixelText(`계약 확률: ~${rate}%`, 50, y + 20, rate > 50 ? '#44cc44' : rate > 20 ? '#cccc44' : '#cc4444', 1);
+
+          // Status bonus hint
+          if (target.status) {
+            r.drawPixelText('(상태이상 보너스!)', 200, y + 20, '#88cc88', 1);
+          }
         }
       }
 
@@ -1299,6 +1326,15 @@ export class BattleUI {
     this.inventory.removeItem(item.id);
 
     this.queueMessage(`${item.name}을(를) 사용했다!`);
+
+    // Monster preview
+    const target = this.battle.enemyActive;
+    if (target) {
+      const hpPct = Math.floor((target.currentHp / target.stats.hp) * 100);
+      const typeStr = target.type?.join('/') || '???';
+      this.queueMessage(`대상: ${target.name} (Lv${target.level}, ${typeStr}, HP ${hpPct}%)`);
+    }
+
     for (const msg of result.messages) {
       this.queueMessage(msg);
     }
@@ -1386,6 +1422,17 @@ export class BattleUI {
     if (enemyHpAfter < enemyHpBefore) {
       const dmg = Math.round(enemyHpBefore - enemyHpAfter);
       this._spawnDamageNumber(dmg, true, '#ff4444');
+      // Combo tracking
+      this._comboCount++;
+      this._comboTimer = 1.5;
+      // Critical hit detection & enhanced visual
+      const hasCrit = result.messages?.some(m => m.includes('급소'));
+      if (hasCrit) {
+        this.flashEnemy = 1.5;
+        this._spawnDamageNumber('CRITICAL!', true, '#ffff00');
+      }
+    } else {
+      this._comboCount = 0;
     }
     if (playerHpAfter < playerHpBefore) {
       const dmg = Math.round(playerHpBefore - playerHpAfter);

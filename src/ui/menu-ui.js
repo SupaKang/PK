@@ -3,6 +3,7 @@ import { generateSprite } from './sprite-generator.js';
 import { generateItemIcon } from './item-icon-generator.js';
 import { TYPE_COLORS, STATUS_COLORS, STATUS_LABELS } from './renderer.js';
 import { getAbilityName } from '../core/abilities.js';
+import { getActiveFormation } from '../core/formation.js';
 
 // ==========================================
 // 타이틀 화면
@@ -452,6 +453,12 @@ export class GameMenuUI {
       ctx.strokeStyle = '#ffcc44';
       ctx.lineWidth = 2;
       ctx.strokeRect(65, swapY - 5, 670, 67);
+    }
+
+    const formation = getActiveFormation(displayList);
+    if (formation) {
+      r.drawPixelText(`편성 보너스: ${formation.name}`, 75, 540, '#ffcc44', 2);
+      r.drawPixelText(formation.description, 350, 540, '#aaaacc', 1);
     }
 
     r.drawPixelText('[ESC] 뒤로  [Enter] 교체 선택  [N] 닉네임 변경', 75, 555, '#666688', 1);
