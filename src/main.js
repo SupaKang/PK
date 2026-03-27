@@ -69,6 +69,8 @@ class Game {
     this.dexTracker = null;
     this.playerName = '주인공';
     this.playtime = 0;
+    this._lastPlaytimeMilestone = 0;
+    this._pendingPlaytimeMsg = null;
 
     // UI
     this.titleUI = null;
@@ -1665,10 +1667,19 @@ class Game {
         evolve(monster);
         this.dexTracker.markCaught(monster.id);
         this.audio.playSfx('evolve');
-        this.renderer.screenShake(500, 5);
-        this.showDialog(null, `...! ${oldName}의 모습이 변하기 시작한다!`, () => {
-          this.renderer.screenShake(300, 3);
-          this.showDialog(null, `축하합니다! ${oldName}이(가) ${monster.name}(으)로 진화했다!`, () => this.processPostBattle(callback));
+        this.renderer.screenShake(600, 6);
+        this.showDialog(null, `...! ${oldName}의 몸에서 빛이 나기 시작한다!`, () => {
+          this.renderer.screenShake(400, 5);
+          this.showDialog(null, `${oldName}의 모습이 변하고 있다...!`, () => {
+            this.renderer.screenShake(300, 4);
+            this.audio.playSfx('level_up');
+            this.showDialog(null, `축하합니다! ${oldName}이(가) ${monster.name}(으)로 진화했다!`, () => {
+              const newStats = monster.stats;
+              this.showDialog(null, `HP:${newStats.hp} 공:${newStats.atk} 방:${newStats.def} 속:${newStats.speed}`, () => {
+                this.processPostBattle(callback);
+              });
+            });
+          });
         });
         return;
       }
@@ -2024,6 +2035,15 @@ class Game {
 
     if (this.state === GameState.MAP || this.state === GameState.BATTLE) {
       this.playtime += this.dt;
+      // Playtime milestones (every 30 minutes)
+      const minutes = Math.floor(this.playtime / 60);
+      if (minutes > 0 && minutes % 30 === 0 && this._lastPlaytimeMilestone !== minutes) {
+        this._lastPlaytimeMilestone = minutes;
+        const hours = Math.floor(minutes / 60);
+        const mins = minutes % 60;
+        // Don't interrupt battle/dialog - just set flag
+        this._pendingPlaytimeMsg = `플레이 시간 ${hours}시간 ${mins}분 경과!`;
+      }
     }
 
     this.update(this.dt);
@@ -2050,6 +2070,11 @@ class Game {
         this.handleInput(this.titleUI);
         break;
       case GameState.MAP:
+        if (this._pendingPlaytimeMsg && this.state === GameState.MAP) {
+          const msg = this._pendingPlaytimeMsg;
+          this._pendingPlaytimeMsg = null;
+          this.showDialog(null, msg);
+        }
         if (this.mapUI) {
           this.mapUI.syncKeys(this.keys);
           this.mapUI.update(dt);
