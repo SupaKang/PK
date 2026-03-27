@@ -243,12 +243,17 @@ export function replaceSkill(monster, slotIndex, skillData) {
 /**
  * 진화 체크
  */
-export function checkEvolution(monster) {
+export function checkEvolution(monster, timeOfDay = 'day') {
   if (!monster.evolution) return null;
-  if (monster.level >= monster.evolution.level) {
-    return monster.evolution.to;
-  }
-  return null;
+  if (monster.level < (monster.evolution.level || 999)) return null;
+
+  // Check conditional evolution requirements
+  const cond = monster.evolution.condition;
+  if (cond === 'day' && timeOfDay !== 'day' && timeOfDay !== 'morning') return null;
+  if (cond === 'night' && timeOfDay !== 'night' && timeOfDay !== 'evening') return null;
+  if (cond === 'high_bond' && (monster.bond || 0) < 150) return null;
+
+  return monster.evolution.to;
 }
 
 /**

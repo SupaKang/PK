@@ -1138,7 +1138,8 @@ class Game {
                     if (evt.type === 'level_up') {
                       rewards.push(`${m.name}은(는) 레벨 ${evt.level}이(가) 되었다!`);
                       this.audio.playSfx('level_up');
-                      if (checkEvolution(m) !== null) this.evolutionQueue.push(m);
+                      const timeOfDay = this.expeditionManager?.getTimeOfDay() || 'day';
+                      if (checkEvolution(m, timeOfDay) !== null) this.evolutionQueue.push(m);
                       for (const ns of evt.newSkills) this.skillLearnQueue.push({ monster: m, skill: ns });
                     }
                   }
@@ -1431,7 +1432,8 @@ class Game {
 
     if (this.evolutionQueue.length > 0) {
       const monster = this.evolutionQueue.shift();
-      if (checkEvolution(monster) !== null) {
+      const timeOfDay = this.expeditionManager?.getTimeOfDay() || 'day';
+      if (checkEvolution(monster, timeOfDay) !== null) {
         const oldName = monster.name;
         evolve(monster);
         this.dexTracker.markCaught(monster.id);
