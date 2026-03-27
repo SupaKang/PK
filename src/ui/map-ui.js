@@ -736,6 +736,17 @@ export class MapUI {
 
     const tw = r.measureText(this.banner, 3);
     r.drawPixelText(this.banner, (800 - tw) / 2, 270, `rgba(255,255,255,${alpha})`, 3);
+
+    // Location description (below name)
+    const loc = this.mapManager?.getCurrentLocation();
+    if (loc?.description && this.bannerTimer > 0) {
+      const descAlpha = alpha * 0.8;
+      ctx.fillStyle = `rgba(10,10,30,${0.7 * descAlpha})`;
+      ctx.fillRect(0, 320, 800, 30);
+      const desc = loc.description.substring(0, 50);
+      const dw = r.measureText(desc, 1);
+      r.drawPixelText(desc, (800 - dw) / 2, 328, `rgba(170,170,204,${descAlpha})`, 1);
+    }
   }
 
   handleInput(key) {

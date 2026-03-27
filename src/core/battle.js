@@ -570,7 +570,7 @@ export class Battle {
       return { success: true, messages: ['계약 성립!', `${target.name}과(와) 계약했다!`], shakes: 3 };
     }
 
-    // 포획 확률 계산
+    // 계약 확률 계산
     const a = ((3 * maxHp - 2 * currentHp) * catchRate * ballMultiplier) / (3 * maxHp);
     const shakeChance = 1048560 / Math.sqrt(Math.sqrt(16711680 / Math.max(1, a)));
 

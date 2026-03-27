@@ -3,12 +3,12 @@ import { generateSprite, generateSilhouette, getHybridSprite } from './sprite-ge
 import { TYPE_COLORS } from './renderer.js';
 
 // ==========================================
-// 도감 추적기 (포획/목격 상태 관리)
+// 도감 추적기 (계약/목격 상태 관리)
 // ==========================================
 export class DexTracker {
   constructor() {
     this.seen = new Set();    // 목격한 몬스터 ID
-    this.caught = new Set();  // 포획한 몬스터 ID
+    this.caught = new Set();  // 계약한 몬스터 ID
   }
 
   markSeen(id) {
@@ -211,7 +211,7 @@ export class DexUI {
           r.drawPixelText('?', x + cellSize / 2 - 4, y + 28, '#333344', 3);
         }
 
-        // 이름 (포획한 경우만)
+        // 이름 (계약한 경우만)
         if (isCaught) {
           const name = monster.name.substring(0, 4);
           const nw = r.measureText(name, 1);
@@ -222,7 +222,7 @@ export class DexUI {
           r.drawPixelText(name, x + (cellSize - nw) / 2, y + cellSize - 12, '#444466', 1);
         }
 
-        // 포획 마크
+        // 계약 마크
         if (isCaught) {
           ctx.fillStyle = '#44cc66';
           ctx.fillRect(x + cellSize - 10, y + 4, 6, 6);
