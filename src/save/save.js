@@ -36,6 +36,8 @@ export class SaveManager {
       difficulty: gameState.difficulty || 'normal',
       difficultySettings: gameState.difficultySettings || null,
       playStats: gameState.playStats || null,
+      karma: gameState.karma || 0,
+      completedQuests: gameState.completedQuests || [],
     };
 
     try {

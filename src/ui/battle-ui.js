@@ -395,7 +395,40 @@ export class BattleUI {
       const alpha = Math.max(0, 1 - p.timer / p.maxTimer);
       ctx.globalAlpha = alpha;
       ctx.fillStyle = p.color;
-      ctx.fillRect(p.x, p.y, p.size, p.size);
+
+      switch(p.shape) {
+        case 'circle':
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.size/2, 0, Math.PI*2);
+          ctx.fill();
+          break;
+        case 'diamond':
+          ctx.save();
+          ctx.translate(p.x, p.y);
+          ctx.rotate(Math.PI/4);
+          ctx.fillRect(-p.size/2, -p.size/2, p.size, p.size);
+          ctx.restore();
+          break;
+        case 'star':
+          ctx.beginPath();
+          for (let i = 0; i < 5; i++) {
+            const a = (i * 4 * Math.PI / 5) - Math.PI/2;
+            const r = p.size/2;
+            ctx.lineTo(p.x + Math.cos(a)*r, p.y + Math.sin(a)*r);
+          }
+          ctx.fill();
+          break;
+        case 'line':
+          ctx.fillRect(p.x - p.size, p.y, p.size*2, 2);
+          break;
+        case 'leaf':
+          ctx.beginPath();
+          ctx.ellipse(p.x, p.y, p.size/2, p.size/4, p.timer*3, 0, Math.PI*2);
+          ctx.fill();
+          break;
+        default: // square
+          ctx.fillRect(p.x - p.size/2, p.y - p.size/2, p.size, p.size);
+      }
     }
     ctx.globalAlpha = 1;
 
@@ -1268,6 +1301,14 @@ export class BattleUI {
       wind: '#88ccaa', spirit: '#aa88ff', earth: '#aa8844', sound: '#44aaaa',
       cosmic: '#cc88ff', normal: '#aaaaaa',
     };
+    const shapes = {
+      fire: 'circle', water: 'circle', ice: 'diamond',
+      electric: 'line', grass: 'leaf', dark: 'circle',
+      light: 'star', dragon: 'diamond', fighting: 'square',
+      poison: 'circle', metal: 'square', rock: 'square',
+      wind: 'line', spirit: 'circle', earth: 'square',
+      sound: 'line', cosmic: 'star', normal: 'square',
+    };
     const color = colors[skillType] || '#ffffff';
 
     // Spawn 5-8 particles
@@ -1282,6 +1323,7 @@ export class BattleUI {
         maxTimer: 0.5 + Math.random() * 0.3,
         color,
         size: 3 + Math.random() * 4,
+        shape: shapes[skillType] || 'square',
       });
     }
   }

@@ -25,6 +25,7 @@ import { CampingManager, FOOD_ITEMS } from './core/camping.js';
 import { TimeEncounterManager } from './core/time-encounter.js';
 import { AchievementManager } from './core/achievements.js';
 import { RECIPES, canCraft, craft } from './core/crafting.js';
+import { DailyChallenge } from './core/daily-challenge.js';
 
 import { ExpeditionHUD } from './ui/expedition-hud.js';
 import { ExpeditionSummary } from './ui/expedition-summary.js';
@@ -89,6 +90,7 @@ class Game {
     this.campingManager = new CampingManager();
     this.timeEncounterManager = new TimeEncounterManager();
     this.achievementManager = new AchievementManager();
+    this.dailyChallenge = new DailyChallenge();
     this.expeditionHUD = null;
     this.expeditionSummary = null;
     // 탐험 중 추적 데이터
@@ -1512,6 +1514,7 @@ class Game {
       playStats: this._playStats,
       karma: this._karma,
       completedQuests: [...this._completedQuests],
+      dailyChallenge: this.dailyChallenge.serialize(),
     });
   }
 
@@ -1545,6 +1548,11 @@ class Game {
     }
     this._karma = state.karma || 0;
     this._completedQuests = new Set(state.completedQuests || []);
+    if (state.dailyChallenge) {
+      this.dailyChallenge = DailyChallenge.deserialize(state.dailyChallenge);
+    } else {
+      this.dailyChallenge = new DailyChallenge();
+    }
     this.enterMapState();
     return true;
   }
@@ -1638,6 +1646,28 @@ class Game {
     this.menuUI.onPvP = () => {
       this.closeMenu();
       this._startPvPSimulation();
+    };
+    this.menuUI.onDaily = () => {
+      this.closeMenu();
+      if (this.dailyChallenge.isCompleted()) {
+        this.showDialog(null, '오늘의 도전은 이미 완료했다! 내일 다시 도전하자.');
+        return;
+      }
+      const challenge = this.dailyChallenge.getChallenge();
+      this.showDialog(null, challenge.description, () => {
+        const team = challenge.team.map(t => createMonster(t.monsterId, t.level));
+        this.startBattle({
+          enemyParty: team,
+          isWild: false,
+          trainerName: challenge.name,
+          reward: challenge.reward.money,
+          isDaily: true,
+        }, () => {
+          this.dailyChallenge.markCompleted();
+          this.inventory.addItem(challenge.reward.itemId, challenge.reward.count);
+          this.showDialog(null, `일일 도전 클리어! ${challenge.reward.itemId} x${challenge.reward.count} 획득!`);
+        });
+      });
     };
     this.menuUI.onUseEscapeRope = () => {
       this.closeMenu();
