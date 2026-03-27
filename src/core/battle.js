@@ -440,7 +440,21 @@ export class Battle {
         const newMonster = party[action.monsterIndex];
         if (newMonster && newMonster.currentHp > 0) {
           const old = action.side === 'player' ? this.playerActive : this.enemyActive;
-          const recallMsg = old.isContractor ? `${old.name}이(가) 뒤로 물러났다!` : `${old.name}, 돌아와!`;
+          const recallLines = [
+            `${old.name}, 돌아와!`,
+            `${old.name}, 수고했어!`,
+            `${old.name}, 잠깐 쉬어!`,
+            `잘 싸웠어, ${old.name}!`,
+          ];
+          const sendLines = [
+            `가라, ${newMonster.name}!`,
+            `${newMonster.name}, 네 차례다!`,
+            `${newMonster.name}, 힘을 보여줘!`,
+            `부탁해, ${newMonster.name}!`,
+          ];
+          // Deterministic selection based on turn number
+          const recallMsg = old.isContractor ? `${old.name}이(가) 뒤로 물러났다!` : recallLines[this.turn % recallLines.length];
+          const sendMsg = newMonster.isContractor ? `${newMonster.name}이(가) 전투에 나섰다!` : sendLines[this.turn % sendLines.length];
           messages.push(recallMsg);
           this.initBattleState(newMonster);
           if (action.side === 'player') {
@@ -448,7 +462,6 @@ export class Battle {
           } else {
             this.enemyActive = newMonster;
           }
-          const sendMsg = newMonster.isContractor ? `${newMonster.name}이(가) 전투에 나섰다!` : `가라, ${newMonster.name}!`;
           messages.push(sendMsg);
         }
         break;
@@ -528,9 +541,15 @@ export class Battle {
       this.initBattleState(newMonster);
       this.playerActive = newMonster;
       this.state = 'select_action';
+      const forceSendLines = [
+        `가라, ${newMonster.name}!`,
+        `${newMonster.name}, 네 차례다!`,
+        `${newMonster.name}, 힘을 보여줘!`,
+        `부탁해, ${newMonster.name}!`,
+      ];
       const msg = newMonster.isContractor
         ? `${newMonster.name}이(가) 전투에 나섰다!`
-        : `가라, ${newMonster.name}!`;
+        : forceSendLines[this.turn % forceSendLines.length];
       return [msg];
     }
     return [];

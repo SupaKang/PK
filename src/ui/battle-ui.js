@@ -105,6 +105,9 @@ export class BattleUI {
     // 자동 전투
     this.autoBattle = false;
 
+    // 전투 도움말
+    this._showBattleHelp = false;
+
     // 콜백
     this.onBattleEnd = null;
   }
@@ -574,6 +577,31 @@ export class BattleUI {
         this._renderMessage(r, ctx);
         break;
       case STATE.ACTION_SELECT:
+        if (this._showBattleHelp) {
+          r.drawPanel(50, 310, 700, 280, '#0a0a16', '#4a4a6a');
+          r.drawPixelText('전투 조작법', 250, 320, '#ffcc44', 3);
+
+          const helps = [
+            ['방향키', '메뉴/스킬 선택'],
+            ['Enter/Space', '확인/실행'],
+            ['Escape', '뒤로가기'],
+            ['I', '적 정보 표시'],
+            ['S', '전투 속도 (1x/2x/3x)'],
+            ['L', '전투 기록'],
+            ['A', '자동 전투 토글'],
+            ['?', '이 도움말'],
+          ];
+
+          let y = 360;
+          for (const [key, desc] of helps) {
+            r.drawPixelText(key, 100, y, '#ffcc44', 2);
+            r.drawPixelText(desc, 300, y, '#ccccdd', 2);
+            y += 28;
+          }
+
+          r.drawPixelText('[?] 닫기', 300, 570, '#666688', 1);
+          return; // skip normal panel
+        }
         if (this._showLog) {
           r.drawPanel(20, 315, 760, 270, '#0a0a16', '#3a3a5a');
           r.drawPixelText('전투 기록 [L]', 40, 325, '#ffcc44', 2);
@@ -644,7 +672,7 @@ export class BattleUI {
     }
 
     const autoLabel = this.autoBattle ? '[A] 자동:ON' : '[A] 자동';
-    r.drawPixelText(`[I] 적 정보  [L] 기록  [S] 속도: x${this.battleSpeed}  ${autoLabel}`, 440, 430, '#666688', 1);
+    r.drawPixelText(`[I] 적 정보  [L] 기록  [S] 속도: x${this.battleSpeed}  ${autoLabel}  [?] 도움말`, 440, 430, '#666688', 1);
   }
 
   _renderSkillSelect(r, ctx) {
@@ -901,6 +929,9 @@ export class BattleUI {
         return true;
       case 'l': case 'L':
         this._showLog = !this._showLog;
+        return true;
+      case '?': case '/':
+        this._showBattleHelp = !this._showBattleHelp;
         return true;
       case 'a': case 'A':
         this.autoBattle = !this.autoBattle;

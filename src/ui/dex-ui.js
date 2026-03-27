@@ -347,6 +347,33 @@ export class DexUI {
       r.drawPixelText('상세 정보 미확인', infoX, 158, '#555566', 2);
     }
 
+    // Habitat info (based on type)
+    if (isCaught && mon.type) {
+      const typeHabitats = {
+        fire: '화염촌 주변, 화산 지대',
+        water: '해류항 주변, 수변 지역',
+        grass: '자연마을 주변, 숲',
+        electric: '전격시티 주변',
+        earth: '바위동굴, 산악 지대',
+        ice: '빙결마을, 빙하동굴',
+        wind: '고지대, 루트',
+        poison: '독 늪, 어둠 지역',
+        metal: '도시, 유적',
+        light: '성지, 고원',
+        dark: '그림자단 기지, 동굴 심부',
+        spirit: '유적, 밤의 숲',
+        dragon: '용린시티 주변, 산맥',
+        fighting: '투지시티, 격투 도장',
+        rock: '바위동굴, 사막',
+        sound: '울리는 계곡',
+        cosmic: '별의 고원',
+        normal: '초원, 일반 루트',
+      };
+      const habitat = mon.type.map(t => typeHabitats[t] || '알 수 없음').join(' / ');
+      r.drawPixelText('서식지', infoX, 210, '#ffcc44', 2);
+      r.drawPixelText(habitat.substring(0, 35), infoX, 230, '#aaaacc', 1);
+    }
+
     // 기본 스탯 (레이더 차트 스타일 -> 바 그래프)
     if (isCaught && mon.baseStats) {
       r.drawPixelText('기본 스탯', 40, 300, '#ffcc44', 2);
