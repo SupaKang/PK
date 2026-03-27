@@ -1635,6 +1635,10 @@ class Game {
         this._startBossRush();
       };
     }
+    this.menuUI.onPvP = () => {
+      this.closeMenu();
+      this._startPvPSimulation();
+    };
     this.menuUI.onUseEscapeRope = () => {
       this.closeMenu();
       if (this.expeditionManager?.isActive) {
@@ -1667,6 +1671,48 @@ class Game {
     if (this.menuUI) this.menuUI.visible = false;
     this.menuUI = null;
     this.state = GameState.MAP;
+  }
+
+  // ─── PvP 시뮬레이션 ───
+
+  _startPvPSimulation() {
+    // Generate two random AI teams
+    const teamSize = 3;
+    const team1 = [];
+    const team2 = [];
+    const playerLevel = this.partyManager.contractor?.level || 20;
+
+    for (let i = 0; i < teamSize; i++) {
+      const id1 = 1 + Math.floor(Math.random() * 100);
+      const id2 = 1 + Math.floor(Math.random() * 100);
+      team1.push(createMonster(id1, playerLevel + Math.floor(Math.random() * 5)));
+      team2.push(createMonster(id2, playerLevel + Math.floor(Math.random() * 5)));
+    }
+
+    // Start battle with AI controlling both sides
+    const battle = new Battle({
+      playerParty: team1,
+      enemyParty: team2,
+      isWild: false,
+      trainerName: 'AI 챌린저',
+    });
+
+    this.currentBattle = battle;
+    this._battleConfig = { enemyParty: team2, isWild: false, trainerName: 'AI 챌린저', isPvP: true };
+    this._battleEndCallback = null;
+
+    this.battleUI = new BattleUI(this.renderer, battle, this.inventory);
+    this.battleUI.autoBattle = true; // Force auto-battle for player side too
+    this.battleUI.onBattleEnd = (result) => {
+      this.currentBattle = null;
+      this.battleUI = null;
+      this._battleConfig = null;
+      const msg = result === 'win' ? 'AI 팀 1 승리!' : 'AI 팀 2 승리!';
+      this.showDialog(null, `AI 대전 결과: ${msg}`);
+    };
+
+    this.audio.playBgm('battle_bgm');
+    this.state = GameState.BATTLE;
   }
 
   // ─── 설정 ───

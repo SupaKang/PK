@@ -233,6 +233,7 @@ export class GameMenuUI {
       { id: 'bag', label: '가방' },
       { id: 'dex', label: '도감' },
       { id: 'achievements', label: '업적' },
+      { id: 'pvp', label: 'AI 대전' },
       { id: 'trainer', label: '계약자 카드' },
       { id: 'save', label: '저장' },
       { id: 'settings', label: '설정' },
@@ -257,6 +258,7 @@ export class GameMenuUI {
     this.onCredits = null; // () => show credits
     this.onBossRush = null; // () => start boss rush mode
     this.onAchievements = null;
+    this.onPvP = null;
     this.onNicknameEdit = null; // (mon) => edit nickname
 
     // 설정
@@ -715,6 +717,9 @@ export class GameMenuUI {
         break;
       case 'achievements':
         if (this.onAchievements) this.onAchievements();
+        break;
+      case 'pvp':
+        if (this.onPvP) this.onPvP();
         break;
       case 'credits':
         if (this.onCredits) this.onCredits();
