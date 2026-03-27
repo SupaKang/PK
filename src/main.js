@@ -28,6 +28,7 @@ import { RECIPES, canCraft, craft } from './core/crafting.js';
 import { DailyChallenge } from './core/daily-challenge.js';
 import { checkEggAvailable } from './core/egg-system.js';
 import { canFuse, fuseMonsters } from './core/fusion.js';
+import { getLocationWeather } from './core/weather.js';
 
 import { ExpeditionHUD } from './ui/expedition-hud.js';
 import { ExpeditionSummary } from './ui/expedition-summary.js';
@@ -1037,9 +1038,28 @@ class Game {
       return;
     }
 
-    // 일반 대화
+    // 일반 대화 (진행도에 따라 대사 변화)
     if (npc.dialog) {
-      this.showDialog(npc.name, npc.dialog);
+      let dialog = npc.dialog;
+      const badges = this.storyManager.getBadgeCount();
+
+      // Add contextual suffix based on progress
+      if (badges >= 8 && npc.type === 'dialog') {
+        const suffixes = [
+          ' ...너, 혹시 8개 인장을 모두 모은 거야?!',
+          ' 마왕성에 갈 수 있다니... 대단해.',
+          ' 세계의 희망이 보여.',
+        ];
+        dialog += suffixes[npc.id.charCodeAt(0) % suffixes.length];
+      } else if (badges >= 4 && npc.type === 'dialog') {
+        const mids = [
+          ' 인장을 꽤 모았구나!',
+          ' 점점 강해지고 있어.',
+        ];
+        dialog += mids[npc.id.charCodeAt(0) % mids.length];
+      }
+
+      this.showDialog(npc.name, dialog);
     }
   }
 
@@ -1151,6 +1171,13 @@ class Game {
       trainerName: config.trainerName || null,
       reward: config.reward || 0,
     });
+
+    // Determine battle weather
+    const locType = this.mapManager.getCurrentLocation()?.type || 'route';
+    const timeOfDay = this.expeditionManager?.getTimeOfDay() || 'day';
+    const magiDensity = this.expeditionManager?.getMagiDensity() || 0;
+    this._currentWeather = getLocationWeather(locType, timeOfDay, magiDensity);
+    battle.weather = this._currentWeather;
 
     this.currentBattle = battle;
     this._battleConfig = config;

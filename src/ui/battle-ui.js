@@ -390,6 +390,12 @@ export class BattleUI {
     }
     ctx.globalAlpha = 1;
 
+    // Weather indicator
+    if (this.battle.weather && this.battle.weather !== 'clear') {
+      const weatherNames = { rain: '\u{1F327} \uBE44', sun: '\u2600 \uC7D8\uCCAD', snow: '\u2744 \uB208', sandstorm: '\u{1F32A} \uBAA8\uB798\uBC14\uB78C', fog: '\u{1F32B} \uC548\uAC1C' };
+      r.drawPixelText(weatherNames[this.battle.weather] || '', 350, 5, '#aaaacc', 1);
+    }
+
     // Skill effect particles
     for (const p of this._skillEffects) {
       const alpha = Math.max(0, 1 - p.timer / p.maxTimer);

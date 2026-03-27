@@ -2,11 +2,12 @@
 import { getEffectiveness, getEffectivenessText } from './type.js';
 import { applyDamageBuff, applyAccuracyBuff, applyCritBuff, applyDrainBuff, applyHealBuff, applyStatBuff, checkStatusResist } from './party-buffs.js';
 import { getMonsterAbility } from './abilities.js';
+import { getWeatherDamageMultiplier } from './weather.js';
 
 /**
  * 데미지 계산 (포켓몬 공식 기반)
  */
-export function calcDamage(attacker, defender, skill, isCritical = false, partyBuffs = null) {
+export function calcDamage(attacker, defender, skill, isCritical = false, partyBuffs = null, weather = 'clear') {
   if (skill.category === 'status') return 0;
 
   const level = attacker.level;
@@ -57,6 +58,11 @@ export function calcDamage(attacker, defender, skill, isCritical = false, partyB
   // 타입 상성
   const effectiveness = getEffectiveness(skill.type, defender.type);
   damage = Math.floor(damage * effectiveness);
+
+  // Weather modifier
+  if (weather && weather !== 'clear') {
+    damage = Math.floor(damage * getWeatherDamageMultiplier(weather, skill.type));
+  }
 
   // 근성(guts) 특성: 상태이상 시 물리 공격력 +50%, 화상 감소 무효
   const attackerAbility = getMonsterAbility(attacker);

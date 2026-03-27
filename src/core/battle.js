@@ -416,7 +416,7 @@ export class Battle {
           if (defender.currentHp <= 0) break;
 
           const isCrit = checkCritical(skill, attackerBuffs, attacker.bond || 0);
-          const damage = calcDamage(attacker, defender, skill, isCrit, attackerBuffs);
+          const damage = calcDamage(attacker, defender, skill, isCrit, attackerBuffs, this.weather || 'clear');
 
           if (hit === 0 || hitCount > 1) {
             if (isCrit && damage > 0) messages.push('급소에 맞았다!');
