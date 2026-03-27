@@ -27,6 +27,7 @@ import { AchievementManager } from './core/achievements.js';
 import { RECIPES, canCraft, craft } from './core/crafting.js';
 import { DailyChallenge } from './core/daily-challenge.js';
 import { checkEggAvailable } from './core/egg-system.js';
+import { canFuse, fuseMonsters } from './core/fusion.js';
 
 import { ExpeditionHUD } from './ui/expedition-hud.js';
 import { ExpeditionSummary } from './ui/expedition-summary.js';
@@ -443,6 +444,46 @@ class Game {
           craft(opt.recipe, this.inventory);
           this.audio.playSfx('level_up');
           this.showDialog(null, `${opt.recipe.result.itemId} 조합 성공!`);
+        });
+      };
+      this.mapUI.onFusion = () => {
+        const party = this.partyManager.party;
+        // Find fuseable pairs (same species, non-contractor)
+        const pairs = [];
+        for (let i = 0; i < party.length; i++) {
+          for (let j = i+1; j < party.length; j++) {
+            if (canFuse(party[i], party[j])) {
+              pairs.push({ i, j, name: party[i].name });
+            }
+          }
+        }
+        if (pairs.length === 0) {
+          this.showDialog('합성술사', '같은 종의 몬스터 2마리가 파티에 있어야 합성할 수 있어.');
+          return;
+        }
+        const options = pairs.map(p => ({
+          text: `${p.name} 합성 (슬롯 ${p.i+1} + ${p.j+1})`,
+          pair: p,
+        }));
+        options.push({ text: '취소', pair: null });
+        this.showChoice('어떤 몬스터를 합성할까?', options, (opt) => {
+          if (!opt.pair) return;
+          const result = fuseMonsters(party[opt.pair.i], party[opt.pair.j]);
+          if (result) {
+            // Remove both, create fused monster
+            // Remove higher index first to avoid shifting
+            const [hi, lo] = opt.pair.i > opt.pair.j ? [opt.pair.i, opt.pair.j] : [opt.pair.j, opt.pair.i];
+            this.partyManager.party.splice(hi, 1);
+            this.partyManager.party.splice(lo, 1);
+            const fused = createMonster(result.monsterId, result.level);
+            fused.iv = result.iv;
+            fused.bond = result.bond;
+            fused.nickname = result.nickname;
+            this.partyManager.addMonster(fused);
+            this.audio.playSfx('evolve');
+            this.renderer.screenShake(400, 5);
+            this.showDialog(null, `합성 성공! ${fused.name}이(가) 더 강해졌다! (Lv${fused.level})`);
+          }
         });
       };
       this.mapUI.onBoss = (npc) => {

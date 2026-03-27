@@ -519,6 +519,26 @@ export class MapUI {
     const playerScreen = this.tileEngine.worldToScreen(this.player.getWorldX(), this.player.getWorldY());
     this.player.render(ctx, playerScreen.x, playerScreen.y);
 
+    // Compass indicator (top-left when no minimap)
+    if (!this.showMinimap) {
+      const cx = 760, cy = 50;
+      ctx.fillStyle = 'rgba(0,0,0,0.4)';
+      ctx.beginPath();
+      ctx.arc(cx, cy, 18, 0, Math.PI * 2);
+      ctx.fill();
+
+      const dirs = [
+        { label: 'N', x: cx, y: cy - 12 },
+        { label: 'S', x: cx, y: cy + 12 },
+        { label: 'E', x: cx + 12, y: cy },
+        { label: 'W', x: cx - 12, y: cy },
+      ];
+      for (const d of dirs) {
+        const r2 = this.renderer;
+        r2.drawPixelText(d.label, d.x - 3, d.y - 3, d.label === 'N' ? '#ff4444' : '#888899', 1);
+      }
+    }
+
     // 타일맵 상단 레이어 (플레이어 위에 그려질 것)
     this.tileEngine.renderAbove(ctx);
 
@@ -642,6 +662,25 @@ export class MapUI {
             ctx.fillRect(mmX + ev.x * mmScale, mapY + ev.y * mmScale, mmScale, mmScale);
           }
         }
+      }
+
+      // Minimap legend
+      const legendY = mapY + this.currentMapData.height * mmScale + 5;
+      r.drawPixelText('범례:', mmX, legendY, '#888899', 1);
+      const legends = [
+        { color: '#44aa55', label: '상점' },
+        { color: '#88aaff', label: '치유' },
+        { color: '#cc4444', label: '전투' },
+        { color: '#ddaa22', label: '수호자' },
+        { color: '#ffcc44', label: '출구' },
+        { color: 'rgba(200,180,255,0.7)', label: '감응' },
+      ];
+      let lx = mmX + 35;
+      for (const lg of legends) {
+        ctx.fillStyle = lg.color;
+        ctx.fillRect(lx, legendY, 6, 6);
+        r.drawPixelText(lg.label, lx + 8, legendY, '#777788', 1);
+        lx += 45;
       }
     }
 
@@ -872,6 +911,9 @@ export class MapUI {
         break;
       case 'egg':
         if (this.onEgg) this.onEgg(npc);
+        break;
+      case 'fusion':
+        if (this.onFusion) this.onFusion(npc);
         break;
       case 'trainer':
       case 'gym_leader':
