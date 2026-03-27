@@ -1020,7 +1020,19 @@ class Game {
           '좋은 승부였어!',
         ];
         const dialogIdx = npc.trainerId.split('').reduce((s,c) => s + c.charCodeAt(0), 0) % defeatDialogs.length;
-        this.showDialog(npc.name, defeatDialogs[dialogIdx]);
+
+        // Show team preview after defeat dialog
+        const loc = this.mapManager.getCurrentLocation();
+        const trainerData = loc?.trainers?.find(t => t.id === npc.trainerId);
+        let teamInfo = '';
+        if (trainerData?.team) {
+          teamInfo = '\n팀: ' + trainerData.team.map(t => {
+            const mData = getAllMonsters().find(m => m.id === t.monsterId);
+            return `${mData?.name || '???'} Lv${t.level}`;
+          }).join(', ');
+        }
+
+        this.showDialog(npc.name, defeatDialogs[dialogIdx] + teamInfo);
       }
       return;
     }
@@ -1039,6 +1051,8 @@ class Game {
             badge: loc.gym.badge,
           });
         });
+      } else if (loc?.gym && this.storyManager.hasBadge(loc.gym.badge)) {
+        this.showDialog(npc.name, `네 실력은 인정했다. ${loc.gym.badge}의 인장은 네 것이다.`);
       } else {
         this.showDialog(npc.name, '네 실력은 인정했다. 더 강해져라.');
       }
