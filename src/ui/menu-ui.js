@@ -238,6 +238,7 @@ export class GameMenuUI {
       { id: 'daily', label: '일일 도전' },
       { id: 'pvp', label: 'AI 대전' },
       { id: 'trainer', label: '계약자 카드' },
+      { id: 'lore', label: '기억의 서' },
       { id: 'save', label: '저장' },
       { id: 'settings', label: '설정' },
       { id: 'credits', label: '크레딧' },
@@ -261,8 +262,10 @@ export class GameMenuUI {
     this.onCredits = null; // () => show credits
     this.onBossRush = null; // () => start boss rush mode
     this.onAchievements = null;
+    this.onLore = null;
     this.onPvP = null;
     this.onDaily = null; // () => start daily challenge
+    this.onEndurance = null; // () => start endurance mode
     this.onNicknameEdit = null; // (mon) => edit nickname
 
     // 설정
@@ -743,6 +746,9 @@ export class GameMenuUI {
       case 'achievements':
         if (this.onAchievements) this.onAchievements();
         break;
+      case 'lore':
+        if (this.onLore) this.onLore();
+        break;
       case 'daily':
         if (this.onDaily) this.onDaily();
         break;
@@ -754,6 +760,9 @@ export class GameMenuUI {
         break;
       case 'boss_rush':
         if (this.onBossRush) this.onBossRush();
+        break;
+      case 'endurance':
+        if (this.onEndurance) this.onEndurance();
         break;
     }
   }

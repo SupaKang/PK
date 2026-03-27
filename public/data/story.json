@@ -94,6 +94,20 @@
             {
               "type": "dialog",
               "speaker": "할아버지",
+              "text": "그리고... 이 마석들 중 하나를 골라라. 네 첫 파트너가 될 몬스터란다."
+            },
+            {
+              "type": "choice",
+              "text": "어떤 파트너를 선택하겠는가?",
+              "options": [
+                { "text": "불꽃냥 (화염) — 공격적 성장, 화상 특성", "result": { "give_monster": 1 } },
+                { "text": "물방울이 (해류) — 균형 성장, 빗물받이 특성", "result": { "give_monster": 4 } },
+                { "text": "새싹이 (자연) — 회복 성장, 광합성 특성", "result": { "give_monster": 7 } }
+              ]
+            },
+            {
+              "type": "dialog",
+              "speaker": "할아버지",
               "text": "수호자들의 인장을 모아라. 그들이 너를 시험할 거다."
             },
             {

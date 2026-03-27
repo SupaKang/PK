@@ -708,6 +708,9 @@ export class BattleUI {
         }
       }
     }
+
+    // Turn counter
+    r.drawPixelText(`Turn ${this.battle.turn}`, 380, 285, '#555566', 1);
   }
 
   _expForLevel(level, growthRate) {

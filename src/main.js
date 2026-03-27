@@ -30,6 +30,7 @@ import { checkEggAvailable } from './core/egg-system.js';
 import { canFuse, fuseMonsters } from './core/fusion.js';
 import { getLocationWeather } from './core/weather.js';
 import { getActiveFormation } from './core/formation.js';
+import { LoreManager } from './core/lore.js';
 
 import { ExpeditionHUD } from './ui/expedition-hud.js';
 import { ExpeditionSummary } from './ui/expedition-summary.js';
@@ -94,6 +95,7 @@ class Game {
     this.campingManager = new CampingManager();
     this.timeEncounterManager = new TimeEncounterManager();
     this.achievementManager = new AchievementManager();
+    this.loreManager = new LoreManager();
     this.dailyChallenge = new DailyChallenge();
     this.expeditionHUD = null;
     this.expeditionSummary = null;
@@ -252,7 +254,7 @@ class Game {
   _showClassSelection(onComplete) {
     const classes = getAllClasses();
     const options = classes.map(c => ({
-      text: `${c.name} - ${c.description.substring(0, 25)}`,
+      text: `${c.name} [${c.type.join('/')}] — HP:${c.baseStats.hp} 공:${c.baseStats.atk} 속:${c.baseStats.speed}`,
       classId: c.id,
     }));
 
@@ -630,6 +632,12 @@ class Game {
             }
             default:
               break;
+          }
+          // 로어 해금
+          const newLore = this.loreManager.unlock(event.type);
+          if (newLore.length > 0) {
+            const lore = newLore[0];
+            this.showDialog(null, `\ud83d\udcdc \uae30\uc5b5 \ubc1c\uacac: ${lore.title}\n${lore.text}`);
           }
         });
       };
@@ -1542,6 +1550,50 @@ class Game {
     });
   }
 
+  _startEndurance() {
+    this._enduranceWave = 0;
+    this._enduranceActive = true;
+    this._nextEnduranceWave();
+  }
+
+  _nextEnduranceWave() {
+    this._enduranceWave++;
+    const baseLevel = (this.partyManager.contractor?.level || 10) + this._enduranceWave * 2;
+    const teamSize = Math.min(6, 1 + Math.floor(this._enduranceWave / 2));
+
+    const team = [];
+    for (let i = 0; i < teamSize; i++) {
+      const id = 1 + Math.floor(Math.random() * 100);
+      team.push(createMonster(id, baseLevel + Math.floor(Math.random() * 3)));
+    }
+
+    this.showDialog(null, `내구전 Wave ${this._enduranceWave}! (${teamSize}마리, Lv${baseLevel})`, () => {
+      this.startBattle({
+        enemyParty: team,
+        isWild: false,
+        trainerName: `Wave ${this._enduranceWave}`,
+        reward: this._enduranceWave * 200,
+      }, () => {
+        // After win, ask continue or stop
+        this.showChoice(`Wave ${this._enduranceWave} 클리어! 계속할까?`, [
+          { text: '다음 웨이브!', value: 'continue' },
+          { text: '여기서 그만', value: 'stop' },
+        ], (opt) => {
+          if (opt.value === 'continue') {
+            // Partial heal between waves
+            this.partyManager.getBattleParty().forEach(m => {
+              m.currentHp = Math.min(m.stats.hp, m.currentHp + Math.floor(m.stats.hp * 0.3));
+            });
+            this._nextEnduranceWave();
+          } else {
+            this._enduranceActive = false;
+            this.showDialog(null, `내구전 종료! 최고 기록: Wave ${this._enduranceWave}`);
+          }
+        });
+      });
+    });
+  }
+
   _startBossRush() {
     const bossIds = Object.keys(ZONE_BOSSES);
     const allBosses = bossIds.map(id => ({
@@ -1690,6 +1742,7 @@ class Game {
       dailyChallenge: this.dailyChallenge.serialize(),
       defeatedLog: this._defeatedLog,
       winStreak: this._winStreak,
+      lore: this.loreManager.serialize(),
     });
   }
 
@@ -1725,6 +1778,11 @@ class Game {
     this._completedQuests = new Set(state.completedQuests || []);
     this._defeatedLog = state.defeatedLog || {};
     this._winStreak = state.winStreak || 0;
+    if (state.lore) {
+      this.loreManager = LoreManager.deserialize(state.lore);
+    } else {
+      this.loreManager = new LoreManager();
+    }
     if (state.dailyChallenge) {
       this.dailyChallenge = DailyChallenge.deserialize(state.dailyChallenge);
     } else {
@@ -1779,6 +1837,18 @@ class Game {
         mon.nickname = newName.trim().substring(0, 8);
       }
     };
+    this.menuUI.onLore = () => {
+      const unlocked = this.loreManager.getUnlocked();
+      const total = this.loreManager.getAll().length;
+      if (unlocked.length === 0) {
+        this.closeMenu();
+        this.showDialog(null, '아직 발견한 기억이 없다. 세계를 탐험하자.');
+        return;
+      }
+      this.closeMenu();
+      const text = `기억의 서 (${unlocked.length}/${total})\n\n` + unlocked.map(l => `• ${l.title}`).join('\n');
+      this.showDialog(null, text);
+    };
     this.menuUI.onAchievements = () => {
       const all = this.achievementManager.getAll();
       const unlocked = this.achievementManager.getUnlocked();
@@ -1814,6 +1884,14 @@ class Game {
       this.creditsUI.show();
       this.state = GameState.CREDITS;
     };
+    if (this.storyManager.getBadgeCount() >= 4) {
+      this.menuUI.menuItems.push({ id: 'endurance', label: '내구전' });
+      this.menuUI.onEndurance = () => {
+        if (this.storyManager.getBadgeCount() < 4) return;
+        this.closeMenu();
+        this._startEndurance();
+      };
+    }
     if (this.storyManager.getBadgeCount() >= 8) {
       this.menuUI.menuItems.push({ id: 'boss_rush', label: '보스 러시' });
       this.menuUI.onBossRush = () => {

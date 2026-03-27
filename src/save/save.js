@@ -41,6 +41,7 @@ export class SaveManager {
       dailyChallenge: gameState.dailyChallenge || null,
       defeatedLog: gameState.defeatedLog || {},
       winStreak: gameState.winStreak || 0,
+      lore: gameState.lore || null,
     };
 
     try {
