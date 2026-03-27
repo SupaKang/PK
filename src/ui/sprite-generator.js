@@ -898,7 +898,6 @@ export function clearSpriteCache() {
 // ─── 하이브리드 스프라이트 시스템 ───
 // 외부 PNG가 있으면 사용, 없으면 프로시저럴 폴백
 
-import { AssetLoader } from './asset-loader.js';
 
 /**
  * 하이브리드 스프라이트 가져오기 (외부 에셋 우선)
@@ -912,7 +911,6 @@ export function getHybridSprite(monsterId, spriteConfig, view = 'front', size = 
   // 외부 에셋 체크 (몬스터만, 계약자는 프로시저럴 전용)
   if (monsterId && !spriteConfig?.isPlayer) {
     const key = `monster_${monsterId}_${view}`;
-    const external = AssetLoader.get(key);
     if (external) return external;
   }
 

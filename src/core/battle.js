@@ -5,8 +5,6 @@ import {
   processStatusDamage, checkStatusAction, STRUGGLE_SKILL
 } from './skill.js';
 import { getEffectiveness, getEffectivenessText } from './type.js';
-import { calculatePartyBuffs } from './party-buffs.js';
-import { getMonsterAbility } from './abilities.js';
 
 /**
  * 배틀 상태 머신
@@ -34,7 +32,7 @@ export class Battle {
     this.playerBuffs = null;
     const contractor = playerParty.find(m => m.isContractor);
     if (contractor) {
-      this.playerBuffs = calculatePartyBuffs(contractor);
+      this.playerBuffs = null;
     }
 
     // 스탯 초기화
@@ -48,23 +46,6 @@ export class Battle {
     monster._flinched = false;
     monster._protected = false;
     monster._leech = null;
-  }
-
-  /** 등장 시 패시브 특성 발동 */
-  applyEntryAbility(monster, opponent) {
-    const messages = [];
-    if (!monster || !opponent) return messages;
-    const ability = getMonsterAbility(monster);
-    if (!ability) return messages;
-
-    if (ability.effect === 'intimidate') {
-      if (opponent._statStages) {
-        opponent._statStages.atk = Math.max(-6, opponent._statStages.atk - 1);
-        messages.push(`${monster.name}의 위압! ${opponent.name}의 공격이 떨어졌다!`);
-      }
-    }
-
-    return messages;
   }
 
   getFirstAlive(party) {
@@ -484,7 +465,6 @@ export class Battle {
 
           // 등장 특성 발동
           const opponent = action.side === 'player' ? this.enemyActive : this.playerActive;
-          messages.push(...this.applyEntryAbility(newMonster, opponent));
         }
         break;
       }
@@ -542,7 +522,6 @@ export class Battle {
           this.messageQueue.push(`상대는 ${next.name}을(를) 내보냈다!`);
         }
         // 등장 특성 발동
-        this.messageQueue.push(...this.applyEntryAbility(next, this.playerActive));
       }
     }
 
@@ -576,7 +555,6 @@ export class Battle {
         : forceSendLines[this.turn % forceSendLines.length];
       const msgs = [msg];
       // 등장 특성 발동
-      msgs.push(...this.applyEntryAbility(newMonster, this.enemyActive));
       return msgs;
     }
     return [];

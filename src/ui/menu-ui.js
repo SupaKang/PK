@@ -1,9 +1,6 @@
 // 메인 메뉴 및 게임 내 메뉴 오버레이
 import { generateSprite } from './sprite-generator.js';
-import { generateItemIcon } from './item-icon-generator.js';
 import { TYPE_COLORS, STATUS_COLORS, STATUS_LABELS } from './renderer.js';
-import { getAbilityName } from '../core/abilities.js';
-import { getActiveFormation } from '../core/formation.js';
 
 // ==========================================
 // 타이틀 화면
@@ -442,7 +439,6 @@ export class GameMenuUI {
       }
 
       // 특성 표시
-      r.drawPixelText(`특성: ${getAbilityName(mon)}`, 450, y + 52, '#8888aa', 1);
 
       // 기술 목록
       const skillStr = mon.skills.map(s => s.name).join(', ');
@@ -458,7 +454,6 @@ export class GameMenuUI {
       ctx.strokeRect(65, swapY - 5, 670, 67);
     }
 
-    const formation = getActiveFormation(displayList);
     if (formation) {
       r.drawPixelText(`편성 보너스: ${formation.name}`, 75, 540, '#ffcc44', 2);
       r.drawPixelText(formation.description, 350, 540, '#aaaacc', 1);
@@ -526,7 +521,6 @@ export class GameMenuUI {
 
         // 아이템 아이콘
         try {
-          const icon = generateItemIcon(item.category, item.id, 24);
           if (icon) ctx.drawImage(icon, 68, y + 2, 24, 24);
         } catch(e) { /* 아이콘 실패 무시 */ }
 

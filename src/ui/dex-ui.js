@@ -1,5 +1,5 @@
 // 몬스터 도감 (포켓덱스) UI
-import { generateSprite, generateSilhouette, getHybridSprite } from './sprite-generator.js';
+import { generateSprite, generateSilhouette } from './sprite-generator.js';
 import { TYPE_COLORS } from './renderer.js';
 
 // ==========================================
@@ -126,7 +126,7 @@ export class DexUI {
 
     let sprite;
     if (isCaught) {
-      sprite = getHybridSprite(monster.id, monster.spriteConfig, 'front', 32);
+      sprite = generateSprite(spriteConfig, size);
     } else if (isSeen) {
       sprite = generateSilhouette(monster.spriteConfig, 32);
     } else {
@@ -310,7 +310,7 @@ export class DexUI {
 
     // 스프라이트 (큰 버전)
     if (isCaught && mon.spriteConfig) {
-      const sprite = getHybridSprite(mon.id, mon.spriteConfig, 'front', 64);
+      const sprite = generateSprite(spriteConfig, size);
       if (sprite) {
         r.drawPanel(40, 70, 210, 210, '#111122', '#3a3a5a');
         r.drawSprite(sprite, 60, 80, 3);

@@ -71,7 +71,13 @@
       "Bash(ls -la dist/assets/*.js)",
       "Read(//c/Users/seank/Downloads/PK/**)",
       "Bash(ls scripts/*.mjs)",
-      "Bash(grep -n '수호자 \\\\${loc.gym.leader}' src/main.js)"
+      "Bash(grep -n '수호자 \\\\${loc.gym.leader}' src/main.js)",
+      "Bash(ls:*)",
+      "Bash(sed -i \"/import.*party-buffs/d\" src/core/battle.js src/core/skill.js)",
+      "Bash(sed -i \"/import.*abilities/d\" src/core/battle.js src/core/skill.js src/ui/menu-ui.js)",
+      "Bash(sed -i \"/import.*weather/d\" src/core/skill.js)",
+      "Bash(sed -i \"/import.*item-icon-generator/d\" src/ui/menu-ui.js)",
+      "Bash(sed -i \"/import.*formation/d\" src/ui/menu-ui.js)"
     ]
   }
 }

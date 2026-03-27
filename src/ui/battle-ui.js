@@ -1,5 +1,5 @@
 // 배틀 화면 UI
-import { generateSprite, generateSpriteBack, getHybridSprite } from './sprite-generator.js';
+import { generateSprite, generateSpriteBack } from './sprite-generator.js';
 import { TYPE_COLORS, STATUS_COLORS, STATUS_LABELS } from './renderer.js';
 import { getEffectiveness } from '../core/type.js';
 

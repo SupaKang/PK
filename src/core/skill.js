@@ -1,8 +1,5 @@
 // 스킬 효과 처리 시스템
 import { getEffectiveness, getEffectivenessText } from './type.js';
-import { applyDamageBuff, applyAccuracyBuff, applyCritBuff, applyDrainBuff, applyHealBuff, applyStatBuff, checkStatusResist } from './party-buffs.js';
-import { getMonsterAbility } from './abilities.js';
-import { getWeatherDamageMultiplier } from './weather.js';
 
 /**
  * 데미지 계산 (포켓몬 공식 기반)
@@ -45,7 +42,6 @@ export function calcDamage(attacker, defender, skill, isCritical = false, partyB
 
   // 자속 보정 (STAB) — 적응력 특성 시 2.0x
   if (attacker.type.includes(skill.type)) {
-    const ability = getMonsterAbility(attacker);
     const stabMultiplier = (ability && ability.effect === 'adaptability') ? 2.0 : 1.5;
     damage = Math.floor(damage * stabMultiplier);
   }
@@ -61,11 +57,9 @@ export function calcDamage(attacker, defender, skill, isCritical = false, partyB
 
   // Weather modifier
   if (weather && weather !== 'clear') {
-    damage = Math.floor(damage * getWeatherDamageMultiplier(weather, skill.type));
   }
 
   // 근성(guts) 특성: 상태이상 시 물리 공격력 +50%, 화상 감소 무효
-  const attackerAbility = getMonsterAbility(attacker);
   const hasGuts = attackerAbility && attackerAbility.effect === 'guts';
 
   if (attacker.status && hasGuts && skill.category === 'physical') {
@@ -83,7 +77,7 @@ export function calcDamage(attacker, defender, skill, isCritical = false, partyB
   if (effectiveness === 0) damage = 0;
 
   // 파티 버프 적용
-  damage = applyDamageBuff(damage, skill.category, partyBuffs);
+  
 
   return damage;
 }
@@ -94,7 +88,7 @@ export function calcDamage(attacker, defender, skill, isCritical = false, partyB
 export function checkAccuracy(attacker, defender, skill, partyBuffs = null) {
   if (skill.accuracy === true || skill.accuracy >= 999) return true; // 필중기
   let accuracy = skill.accuracy;
-  accuracy = applyAccuracyBuff(accuracy, skill.category, partyBuffs);
+  
   const roll = Math.random() * 100;
   return roll < accuracy;
 }
@@ -104,7 +98,7 @@ export function checkAccuracy(attacker, defender, skill, partyBuffs = null) {
  */
 export function checkCritical(skill, partyBuffs = null, attackerBond = 0) {
   const highCrit = skill?.effect?.type === 'high_crit';
-  let rate = applyCritBuff(highCrit ? 25 : 6.25, partyBuffs) / 100;
+  let rate = (highCrit ? 25 : 6.25) / 100;
   // 유대도 크리티컬 보너스
   if (attackerBond >= 150) rate += 0.03; // +3% crit
   return Math.random() < rate;
@@ -156,28 +150,24 @@ export function applySkillEffect(skill, attacker, defender, damage, attackerBuff
 
   switch (eff.type) {
     case 'burn':
-      if (checkStatusResist(defenderBuffs)) break;
       if (!target.status) {
         target.status = 'burn';
         messages.push(`${target.name}은(는) 화상을 입었다!`);
       }
       break;
     case 'poison':
-      if (checkStatusResist(defenderBuffs)) break;
       if (!target.status) {
         target.status = 'poison';
         messages.push(`${target.name}은(는) 독에 걸렸다!`);
       }
       break;
     case 'paralyze':
-      if (checkStatusResist(defenderBuffs)) break;
       if (!target.status) {
         target.status = 'paralyze';
         messages.push(`${target.name}은(는) 마비되었다!`);
       }
       break;
     case 'sleep':
-      if (checkStatusResist(defenderBuffs)) break;
       if (!target.status) {
         target.status = 'sleep';
         target.statusTurns = Math.floor(Math.random() * 3) + 1;
@@ -185,7 +175,6 @@ export function applySkillEffect(skill, attacker, defender, damage, attackerBuff
       }
       break;
     case 'confuse':
-      if (checkStatusResist(defenderBuffs)) break;
       if (!target.status) {
         target.status = 'confuse';
         target.statusTurns = Math.floor(Math.random() * 4) + 1;
@@ -193,7 +182,6 @@ export function applySkillEffect(skill, attacker, defender, damage, attackerBuff
       }
       break;
     case 'freeze':
-      if (checkStatusResist(defenderBuffs)) break;
       if (!target.status) {
         target.status = 'freeze';
         messages.push(`${target.name}은(는) 얼어붙었다!`);
@@ -224,7 +212,7 @@ export function applySkillEffect(skill, attacker, defender, damage, attackerBuff
 
     case 'heal': {
       let healAmount = Math.floor(attacker.stats.hp * (eff.value || 0.5));
-      healAmount = applyHealBuff(healAmount, attackerBuffs);
+      
       attacker.currentHp = Math.min(attacker.stats.hp, attacker.currentHp + healAmount);
       messages.push(`${attacker.name}은(는) 체력을 회복했다!`);
       break;
@@ -239,7 +227,7 @@ export function applySkillEffect(skill, attacker, defender, damage, attackerBuff
 
     case 'drain': {
       let drainAmount = Math.max(1, Math.floor(damage * (eff.value || 0.5)));
-      drainAmount = applyDrainBuff(drainAmount, attackerBuffs);
+      
       attacker.currentHp = Math.min(attacker.stats.hp, attacker.currentHp + drainAmount);
       messages.push(`${attacker.name}은(는) 체력을 흡수했다!`);
       break;
@@ -312,7 +300,7 @@ export function getEffectiveStat(monster, statName, partyBuffs = null) {
   const stage = monster._statStages?.[statName] || 0;
   let result = Math.floor(base * getStatMultiplier(stage));
   // 파티 버프 (궁수 속도, 마법사 특방 등)
-  result = applyStatBuff(result, statName, partyBuffs);
+  
   return result;
 }
 
