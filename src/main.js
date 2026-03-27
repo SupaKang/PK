@@ -1190,7 +1190,8 @@ class Game {
       this._syncExpeditionHUD();
     }
 
-    this.audio.playBgm(config.isGym ? 'boss_bgm' : 'battle_bgm');
+    const bgmType = config.isGym || config.isBoss || config.isGauntlet ? 'boss_battle_bgm' : 'battle_bgm';
+    this.audio.playBgm(bgmType);
 
     this.battleUI = new BattleUI(this.renderer, battle, this.inventory);
     // After creating battleUI, set location type

@@ -394,6 +394,30 @@ export class BattleUI {
     if (this.battle.weather && this.battle.weather !== 'clear') {
       const weatherNames = { rain: '\u{1F327} \uBE44', sun: '\u2600 \uC7D8\uCCAD', snow: '\u2744 \uB208', sandstorm: '\u{1F32A} \uBAA8\uB798\uBC14\uB78C', fog: '\u{1F32B} \uC548\uAC1C' };
       r.drawPixelText(weatherNames[this.battle.weather] || '', 350, 5, '#aaaacc', 1);
+
+      // Weather visual particles
+      if (this.battle.weather === 'rain') {
+        ctx.strokeStyle = 'rgba(100,150,255,0.3)';
+        ctx.lineWidth = 1;
+        for (let i = 0; i < 20; i++) {
+          const rx = (Date.now() * 0.3 + i * 43) % 800;
+          const ry = (Date.now() * 0.5 + i * 67) % 300;
+          ctx.beginPath(); ctx.moveTo(rx, ry); ctx.lineTo(rx - 3, ry + 8); ctx.stroke();
+        }
+      } else if (this.battle.weather === 'snow') {
+        ctx.fillStyle = 'rgba(220,230,255,0.4)';
+        for (let i = 0; i < 15; i++) {
+          const sx = (Date.now() * 0.1 + i * 57) % 800;
+          const sy = (Date.now() * 0.15 + i * 41) % 300;
+          ctx.fillRect(sx, sy, 3, 3);
+        }
+      } else if (this.battle.weather === 'sandstorm') {
+        ctx.fillStyle = 'rgba(200,180,120,0.15)';
+        ctx.fillRect(0, 0, 800, 300);
+      } else if (this.battle.weather === 'fog') {
+        ctx.fillStyle = 'rgba(200,200,220,0.2)';
+        ctx.fillRect(0, 0, 800, 300);
+      }
     }
 
     // Skill effect particles

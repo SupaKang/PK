@@ -304,6 +304,29 @@ const BGM_TRACKS = {
     ],
   },
 
+  boss_battle_bgm: {
+    bpm: 200,
+    waveform: 'sawtooth',
+    notes: [
+      // Intense minor key pattern — diminished intervals, fast staccato
+      n(NOTE.E4, 0.25), n(NOTE.F4, 0.25), n(NOTE.E4, 0.25), n(NOTE.F4, 0.25),
+      n(NOTE.A4, 0.5, true), n(NOTE.G4, 0.25), n(NOTE.F4, 0.25),
+      n(NOTE.E4, 0.25), n(NOTE.D4, 0.25), n(NOTE.E4, 0.25), n(NOTE.F4, 0.25),
+      n(NOTE.G4, 0.5, true), n(NOTE.E4, 0.5),
+      rest(0.25),
+      n(NOTE.B4, 0.25), n(NOTE.A4, 0.25), n(NOTE.G4, 0.25), n(NOTE.F4, 0.25),
+      n(NOTE.E4, 0.25), n(NOTE.F4, 0.25), n(NOTE.G4, 0.25),
+      n(NOTE.A4, 0.5, true), n(NOTE.B4, 0.5, true),
+      n(NOTE.E5, 0.25), n(NOTE.D5, 0.25), n(NOTE.C5, 0.25), n(NOTE.B4, 0.25),
+      n(NOTE.A4, 0.25), n(NOTE.G4, 0.25), n(NOTE.F4, 0.25), n(NOTE.E4, 0.25),
+      n(NOTE.F4, 0.5, true), n(NOTE.E4, 0.5),
+      rest(0.25),
+      n(NOTE.E4, 0.25), n(NOTE.G4, 0.25), n(NOTE.B4, 0.25), n(NOTE.E5, 0.5, true),
+      n(NOTE.D5, 0.25), n(NOTE.C5, 0.25), n(NOTE.B4, 0.5),
+      n(NOTE.A4, 0.25), n(NOTE.F4, 0.25), n(NOTE.E4, 1),
+    ],
+  },
+
   victory_fanfare: {
     bpm: 140,
     waveform: 'square',
