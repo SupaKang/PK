@@ -2,7 +2,7 @@
 import { loadTypes } from './core/type.js';
 import { loadMonsterDB, createMonster, gainExp, checkEvolution, evolve, learnSkill, replaceSkill, getAllMonsters } from './core/monster.js';
 import { loadClasses, getAllClasses, createContractor, gainContractorExp, recalcContractorStats } from './core/player-class.js';
-import { loadItems, Inventory, getItemData } from './core/item.js';
+import { loadItems, Inventory } from './core/item.js';
 import { Battle } from './core/battle.js';
 import { PartyManager } from './core/party.js';
 

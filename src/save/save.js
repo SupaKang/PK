@@ -31,6 +31,11 @@ export class SaveManager {
       dex: gameState.dex || [],
       settings: gameState.settings || {},
       expedition: gameState.expedition || null,
+      achievements: gameState.achievements || null,
+      expeditionSuccessCount: gameState.expeditionSuccessCount || 0,
+      difficulty: gameState.difficulty || 'normal',
+      difficultySettings: gameState.difficultySettings || null,
+      playStats: gameState.playStats || null,
     };
 
     try {
