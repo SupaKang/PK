@@ -1,0 +1,58 @@
+{
+  "checkpoint_id": "cp-007",
+  "sprint": "sprint-007",
+  "status": "complete",
+  "created_at": "2026-03-28T11:30:00Z",
+  "project_state": {
+    "completed_features": ["F-001", "F-002", "F-003", "F-004", "F-005", "F-006", "F-008", "F-024", "F-025", "F-026", "F-027"],
+    "current_file_tree": [
+      "index.html", "vite.config.js", "playwright.config.js", "package.json",
+      "src/main.js",
+      "src/ui/renderer.js", "src/ui/sprite-generator.js", "src/ui/asset-loader.js",
+      "src/ui/spritesheet.js", "src/ui/tilemap-engine.js", "src/ui/map-ui.js",
+      "src/ui/battle-ui.js", "src/ui/menu-ui.js", "src/ui/dialog-ui.js",
+      "src/core/type.js", "src/core/monster.js", "src/core/skill.js",
+      "src/core/battle.js", "src/core/item.js", "src/core/party.js", "src/core/player-class.js",
+      "src/world/map.js", "src/world/encounter.js", "src/world/npc.js",
+      "src/save/save.js"
+    ],
+    "total_source_files": 21,
+    "known_issues": [
+      "Playwright keyboard.press()가 게임 루프의 keysJustPressed와 동기화 불안정 — 일부 키(P, I)가 MAP 상태에서 간헐적으로 감지 안됨. eval 테스트는 page.evaluate()로 우회",
+      "세이브 메뉴 UI에서 키보드 입력 확인 필요 (수동 테스트에서는 동작)",
+      "로드 시 PlayerClass 인스턴스 재생성이 동적 import 미지원으로 제한적"
+    ],
+    "next_sprint_context": "Sprint 008은 NPC 트레이너/체육관. 세이브 스키마에 trainerDefeated, badgesEarned 플래그 추가. 전투 시스템(battle.js)과 NPC 시스템(npc.js) 확장. 세이브 스키마 version은 1 유지, flags 객체에 필드 추가만으로 대응."
+  },
+  "asset_state": {
+    "generated_ui": [
+      { "id": "f3324365-470e-4d5d-8afe-9a66785f5e8b", "name": "save_slot", "local_path": "src/assets/ui/save_slot.png" },
+      { "id": "16cff25e-3461-47cb-bd12-5470d6ca3f68", "name": "inventory_frame", "local_path": "src/assets/ui/inventory_frame.png" }
+    ],
+    "reused_assets": ["potion.png", "antidote.png", "revive.png", "magic_stone.png", "high_stone.png", "ultra_stone.png"],
+    "style_keywords_used": "16-bit retro RPG, pixel art, GBA pokemon style"
+  },
+  "save_system": {
+    "schema_version": 1,
+    "serialized_fields": ["playerPosition", "party", "inventory", "flags", "playTime", "playerClass", "savedAt", "version"],
+    "extensible_fields_planned": ["trainerDefeated", "storyProgress", "pokedex", "shopPurchases", "achievements", "badgesEarned"],
+    "storage_key_pattern": "pk_save_slot_{0|1|2}",
+    "max_slots": 3,
+    "migration_support": true
+  },
+  "eval_summary": {
+    "last_eval": "eval-sprint-007.js",
+    "status": "pass",
+    "tests_passed": 10,
+    "tests_total": 10,
+    "remaining_minors": [
+      "세이브 메뉴 키보드 입력 Playwright 동기화 이슈 (수동 동작 확인됨)"
+    ]
+  },
+  "game_state": {
+    "implemented_states": ["LOADING", "TITLE", "MAP", "BATTLE", "MENU", "DIALOG", "SAVE_MENU", "INVENTORY"],
+    "save_features": ["3_slot_save", "versioned_schema", "full_state_serialization", "localStorage", "load_from_title", "schema_migration"],
+    "inventory_features": ["4_category_tabs", "item_list", "field_use_healing", "item_description"],
+    "debug_keys": { "B": "Force battle", "M": "Party menu", "P": "Save menu", "I": "Inventory" }
+  }
+}

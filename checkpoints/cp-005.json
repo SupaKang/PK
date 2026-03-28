@@ -1,0 +1,59 @@
+{
+  "checkpoint_id": "cp-005",
+  "sprint": "sprint-005",
+  "status": "complete",
+  "created_at": "2026-03-28T10:45:00Z",
+  "project_state": {
+    "completed_features": ["F-001", "F-002", "F-003", "F-004", "F-005", "F-006"],
+    "current_file_tree": [
+      "index.html", "vite.config.js", "playwright.config.js", "package.json",
+      "src/main.js",
+      "src/ui/renderer.js", "src/ui/sprite-generator.js", "src/ui/asset-loader.js",
+      "src/ui/spritesheet.js", "src/ui/tilemap-engine.js", "src/ui/map-ui.js",
+      "src/ui/battle-ui.js", "src/ui/menu-ui.js",
+      "src/core/type.js", "src/core/monster.js", "src/core/skill.js",
+      "src/core/battle.js", "src/core/item.js", "src/core/party.js",
+      "src/world/map.js", "src/world/encounter.js"
+    ],
+    "known_issues": [
+      "한글 폰트 미지원 (ASCII 전용 5x7 비트맵)",
+      "유대(Bond) 시스템 미구현 — 전투 참여 카운터만 향후 추가",
+      "포획 연출 미구현 — 즉시 결과 표시 (흔들림 애니메이션 없음)",
+      "파티 메뉴에서 몬스터 상세 정보 뷰 미구현"
+    ],
+    "next_sprint_context": "Sprint 006에서 NPC, 대화 시스템, 상점, 세이브/로드를 구현한다. party는 main.js의 this.party, inventory는 this.inventory. 파티 메뉴는 M키로 진입. 전투 승리 시 자동 EXP 부여 + 레벨업/진화. 포획 시 파티 자동 추가 (6마리 제한)."
+  },
+  "asset_state": {
+    "generated_characters": [
+      { "id": "54696141-1128-49c4-b563-7668a24db5b8", "name": "Blazel (염수사자, id=2)", "local_path": "src/assets/sprites/monsters/2/" },
+      { "id": "17b60a97-ce43-4bc5-acb2-6c8b4d53780e", "name": "Tidal (해류수달, id=5)", "local_path": "src/assets/sprites/monsters/5/" },
+      { "id": "17687df6-9f25-4b07-9829-63a291da43b1", "name": "Eldertree (숲지기, id=8)", "local_path": "src/assets/sprites/monsters/8/" },
+      { "id": "9085effa-c9e0-4eee-8972-1ecb0cba8500", "name": "Voltagefox (번개여우, id=11)", "local_path": "src/assets/sprites/monsters/11/" }
+    ],
+    "generated_items": [
+      { "id": "b8b5ab72-d441-403b-ac63-a9251a82b059", "name": "magic_stone", "local_path": "src/assets/items/magic_stone.png" },
+      { "id": "8dc67422-75ca-40d0-862b-bfc41c5fbc2a", "name": "high_stone", "local_path": "src/assets/items/high_stone.png" },
+      { "id": "d19e9a5e-0a35-4fad-a252-22ac113d6d0c", "name": "ultra_stone", "local_path": "src/assets/items/ultra_stone.png" }
+    ]
+  },
+  "eval_summary": {
+    "last_eval": "eval-sprint-005.js",
+    "status": "pass",
+    "tests_passed": 8,
+    "tests_total": 8
+  },
+  "game_state": {
+    "implemented_states": ["LOADING", "TITLE", "MAP", "BATTLE", "MENU"],
+    "battle_features": [
+      "turn_based_1v1", "18_type_matchups", "STAB", "critical_hits", "accuracy",
+      "flee", "damage_formula", "wild_encounters",
+      "6_status_effects", "status_damage_per_turn", "action_prevention",
+      "party_swap", "item_use_in_battle", "stat_stage_modifiers",
+      "floating_damage_numbers", "status_icons_ui", "4_option_main_menu",
+      "capture_system", "exp_gain", "level_up", "evolution", "new_skill_learn",
+      "party_menu_6_slots", "party_reorder"
+    ],
+    "debug_keys": { "B": "Force battle", "M": "Open party menu" },
+    "monster_sprites": [1, 2, 4, 5, 7, 8, 10, 11]
+  }
+}

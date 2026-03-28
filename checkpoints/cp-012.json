@@ -1,0 +1,59 @@
+{
+  "checkpoint_id": "cp-012",
+  "sprint": "sprint-012",
+  "status": "complete",
+  "created_at": "2026-03-28T13:00:00Z",
+  "project_state": {
+    "completed_features": ["F-001","F-002","F-003","F-004","F-005","F-006","F-008","F-009","F-010","F-011","F-012","F-018","F-024","F-025","F-026","F-027"],
+    "current_file_tree": [
+      "index.html", "public/manifest.json",
+      "src/main.js",
+      "src/ui/renderer.js", "src/ui/sprite-generator.js", "src/ui/asset-loader.js",
+      "src/ui/spritesheet.js", "src/ui/tilemap-engine.js", "src/ui/map-ui.js",
+      "src/ui/battle-ui.js", "src/ui/menu-ui.js", "src/ui/dialog-ui.js",
+      "src/ui/dex-ui.js", "src/ui/touch-controls.js",
+      "src/core/type.js", "src/core/monster.js", "src/core/skill.js",
+      "src/core/battle.js", "src/core/item.js", "src/core/party.js",
+      "src/core/player-class.js", "src/core/achievement.js",
+      "src/world/map.js", "src/world/encounter.js", "src/world/npc.js", "src/world/story.js",
+      "src/save/save.js", "src/audio/audio.js"
+    ],
+    "total_source_files": 26,
+    "bundle_size_kb": 95.9,
+    "total_pixellab_assets": 100,
+    "total_eval_tests_passed": 106
+  },
+  "eval_summary": {
+    "last_eval": "eval-sprint-012.js",
+    "status": "pass",
+    "tests_passed": 10,
+    "tests_total": 10,
+    "all_sprints_pass": true,
+    "sprint_results": {
+      "001": "8/8", "002": "8/8", "003": "7/7", "004": "8/8",
+      "005": "8/8", "006": "8/8", "007": "10/10", "008": "9/9",
+      "009": "9/9", "010": "9/9", "011": "9/9", "012": "10/10"
+    }
+  },
+  "game_state": {
+    "implemented_states": ["LOADING","TITLE","MAP","BATTLE","MENU","DIALOG","SAVE_MENU","INVENTORY","SHOP","DEX"],
+    "all_features": [
+      "canvas_2d_renderer", "bitmap_font", "60fps_loop", "keyboard_input",
+      "asset_loader", "spritesheet", "pixellab_assets",
+      "tilemap_engine", "camera_follow", "3_maps", "area_transitions", "badge_gates",
+      "turn_based_battle", "18_type_matchups", "STAB", "critical_hits", "damage_formula",
+      "6_status_effects", "stat_stages", "party_swap", "battle_items",
+      "capture_system", "exp_levelup", "evolution", "new_skill_learn",
+      "party_menu_6_slots", "dialog_typewriter", "choice_branching", "npc_interaction",
+      "prologue_flow", "5_class_selection", "starter_selection",
+      "3_slot_save_load", "versioned_schema", "auto_save",
+      "gold_currency", "shop_buy_sell", "shop_npcs",
+      "10_chapter_story", "rival_scaling", "karma_3_endings",
+      "102_monster_dex", "15_achievements", "toast_notifications",
+      "chiptune_bgm", "sfx", "volume_control",
+      "3_difficulty_levels", "battle_speed_1x_2x_4x", "auto_battle",
+      "mobile_touch_dpad", "responsive_scaling", "pwa_manifest"
+    ],
+    "debug_keys": {"B":"Battle","M":"Party","P":"Save","I":"Inventory","D":"Dex","F":"Speed","G":"Auto"}
+  }
+}

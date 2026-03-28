@@ -1,178 +1,343 @@
 /**
- * map-ui.js — 타일맵 맵 화면 (핵심 재작성)
+ * map-ui.js — Map screen: player movement, camera, map transitions
+ * Handles the MAP game state
  */
-import { TilemapEngine } from './tilemap-engine.js';
 
-const TILE = 64;
-const cache = new Map();
+import { RENDER_TILE } from '../world/map.js';
 
-async function loadTilemap(id) {
-  if (cache.has(id)) return cache.get(id);
-  try {
-    const r = await fetch(`./data/tilemaps/${id}.json`);
-    if (!r.ok) return null;
-    const d = await r.json(); cache.set(id, d); return d;
-  } catch { return null; }
-}
+// Direction vectors for 4-way grid movement
+const DIR = {
+  ArrowUp:    { dx: 0, dy: -1, facing: 'north' },
+  ArrowDown:  { dx: 0, dy: 1,  facing: 'south' },
+  ArrowLeft:  { dx: -1, dy: 0, facing: 'west' },
+  ArrowRight: { dx: 1, dy: 0,  facing: 'east' },
+  KeyW:       { dx: 0, dy: -1, facing: 'north' },
+  KeyS:       { dx: 0, dy: 1,  facing: 'south' },
+  KeyA:       { dx: -1, dy: 0, facing: 'west' },
+  KeyD:       { dx: 1, dy: 0,  facing: 'east' },
+};
 
 export class MapUI {
-  constructor(renderer, mapManager) {
-    this.renderer = renderer;
+  /**
+   * @param {import('./tilemap-engine.js').TilemapEngine} tilemapEngine
+   * @param {import('../world/map.js').MapManager} mapManager
+   */
+  constructor(tilemapEngine, mapManager) {
+    this.tilemapEngine = tilemapEngine;
     this.mapManager = mapManager;
-    this.engine = new TilemapEngine();
-    this.visible = false;
-    this.mapLoaded = false;
-    this.currentMapData = null;
-    this._locId = null;
 
-    this.px = 8; this.py = 8;
-    this.worldX = 0; this.worldY = 0;
-    this.targetX = 0; this.targetY = 0;
-    this.moving = false;
-    this.dir = 'down';
+    // Player state (tile coords)
+    this.playerX = 7;
+    this.playerY = 7;
+    this.playerFacing = 'south';
+
+    // Movement cooldown (grid-based, not pixel-based)
+    this.moveCooldown = 0;
+    this.moveSpeed = 0.15; // seconds between moves when holding key
+
+    // Smooth movement interpolation
+    this.renderX = this.playerX;
+    this.renderY = this.playerY;
+    this.moveProgress = 1; // 0..1 interpolation
+    this.prevX = this.playerX;
+    this.prevY = this.playerY;
+    this.lerpSpeed = 8; // interpolation speed
+
+    // NPCs
+    this.npcs = [];
+
+    // Player sprite
+    this.assetLoader = null;
+    this.walkFrameTimer = 0;
     this.walkFrame = 0;
-    this._walkTimer = 0;
+    this.walkFrameCount = 6; // PixelLab walk frames (6 for old, 2+ for GBC)
+    this.isMoving = false;
 
+    // Transition state
     this.transitioning = false;
-    this.fadeAlpha = 0;
-    this.transitionTimer = 0;
-    this._transTarget = null;
-    this._transSpawn = null;
+    this.transitionAlpha = 0;
+    this.transitionTarget = null;
+    this.transitionPhase = 'fadeOut';
+    this.lastTransitionMapId = null;
 
-    this.onMove = null;
-    this.onInteract = null;
-    this.onShop = null;
-    this.onHeal = null;
-    this.onEncounterCheck = null;
-    this.badgeCount = 0;
-    this._stepCount = 0;
-    this._keys = {};
+    // Gate message
+    this.gateMessage = null;
+    this.gateMessageTimer = 0;
   }
 
-  async loadCurrentMap() {
-    const id = this.mapManager.currentLocation;
-    if (id === this._locId && this.mapLoaded) return;
-    const data = await loadTilemap(id);
-    if (data) {
-      this.engine.loadMap(data);
-      this.currentMapData = data;
-      this._locId = id;
-      this.mapLoaded = true;
-      if (this._transSpawn) {
-        this.px = this._transSpawn.x; this.py = this._transSpawn.y;
-        this._transSpawn = null;
-      } else if (data.playerSpawn) {
-        this.px = data.playerSpawn.x; this.py = data.playerSpawn.y;
-      }
-      this.worldX = this.targetX = this.px * TILE;
-      this.worldY = this.targetY = this.py * TILE;
-    } else { this.mapLoaded = false; }
+  /**
+   * Set asset loader for frame-based player sprites
+   */
+  setAssetLoader(loader) {
+    this.assetLoader = loader;
   }
 
-  _refresh() { this.loadCurrentMap(); }
-  syncKeys(keys) { this._keys = keys; }
+  /**
+   * Spawn player at a specific tile
+   */
+  spawn(tileX, tileY) {
+    this.playerX = tileX;
+    this.playerY = tileY;
+    this.renderX = tileX;
+    this.renderY = tileY;
+    this.prevX = tileX;
+    this.prevY = tileY;
+    this.moveProgress = 1;
+  }
 
-  update(dt) {
-    if (!this.visible) return;
+  /**
+   * Update map state
+   * @param {number} dt
+   * @param {Object} keys - Current key state
+   * @param {Object} keysJustPressed
+   * @returns {Object|null} State change request {type, data}
+   */
+  update(dt, keys, keysJustPressed) {
+    // Handle map transition fade
     if (this.transitioning) {
-      this.transitionTimer += dt;
-      if (this.transitionTimer < 0.3) this.fadeAlpha = this.transitionTimer / 0.3;
-      else if (this._transTarget) { this._execTransition(); this._transTarget = null; this.fadeAlpha = 1; }
-      else this.fadeAlpha = Math.max(0, 1 - (this.transitionTimer - 0.3) / 0.3);
-      if (this.transitionTimer >= 0.6) { this.transitioning = false; this.fadeAlpha = 0; }
-      return;
+      return this._updateTransition(dt);
     }
-    if (!this.mapLoaded) { this.loadCurrentMap(); return; }
 
-    const spd = 300 * dt;
-    if (this.worldX !== this.targetX || this.worldY !== this.targetY) {
-      this.moving = true; this._walkTimer += dt;
-      this.walkFrame = Math.floor(this._walkTimer * 6) % 2;
-      const dx = this.targetX - this.worldX, dy = this.targetY - this.worldY;
-      if (Math.abs(dx) <= spd) this.worldX = this.targetX; else this.worldX += Math.sign(dx) * spd;
-      if (Math.abs(dy) <= spd) this.worldY = this.targetY; else this.worldY += Math.sign(dy) * spd;
-    } else {
-      this.moving = false; this.walkFrame = 0;
-      let nx = this.px, ny = this.py, moved = false;
-      if (this._keys['ArrowUp']) { ny--; this.dir = 'up'; moved = true; }
-      else if (this._keys['ArrowDown']) { ny++; this.dir = 'down'; moved = true; }
-      else if (this._keys['ArrowLeft']) { nx--; this.dir = 'left'; moved = true; }
-      else if (this._keys['ArrowRight']) { nx++; this.dir = 'right'; moved = true; }
-      if (moved && !this.engine.isBlocked(nx, ny)) {
-        this.px = nx; this.py = ny;
-        this.targetX = nx * TILE; this.targetY = ny * TILE;
-        const exit = this.engine.getExitAt(nx, ny);
-        if (exit) { this._startTrans(exit.to, exit.spawnX, exit.spawnY); return; }
-        const gt = this.engine.getTileAt('ground', nx, ny);
-        if ((gt === 1 || gt === 9) && ++this._stepCount >= 4 && this.onEncounterCheck) {
-          this._stepCount = 0; this.onEncounterCheck();
+    // Gate message timer
+    if (this.gateMessageTimer > 0) {
+      this.gateMessageTimer -= dt;
+      if (this.gateMessageTimer <= 0) {
+        this.gateMessage = null;
+      }
+    }
+
+    // Smooth movement interpolation
+    if (this.moveProgress < 1) {
+      this.moveProgress = Math.min(1, this.moveProgress + dt * this.lerpSpeed);
+      this.renderX = this.prevX + (this.playerX - this.prevX) * this.moveProgress;
+      this.renderY = this.prevY + (this.playerY - this.prevY) * this.moveProgress;
+    }
+
+    // Movement cooldown
+    this.moveCooldown = Math.max(0, this.moveCooldown - dt);
+
+    // Check for movement input (keys = held, keysJustPressed = tap)
+    this.isMoving = false;
+    if (this.moveCooldown <= 0) {
+      for (const [key, dir] of Object.entries(DIR)) {
+        if (keys[key] || keysJustPressed[key]) {
+          this.playerFacing = dir.facing;
+          const newX = this.playerX + dir.dx;
+          const newY = this.playerY + dir.dy;
+
+          const map = this.mapManager.currentMap;
+          if (map && map.isPassable(newX, newY)) {
+            this.prevX = this.playerX;
+            this.prevY = this.playerY;
+            this.playerX = newX;
+            this.playerY = newY;
+            this.moveProgress = 0;
+            this.moveCooldown = this.moveSpeed;
+            this.isMoving = true;
+
+            // Check for exit
+            const exit = map.getExitAt(newX, newY);
+            if (exit) {
+              this._startTransition(exit);
+            }
+          }
+          break; // Only process first active direction
         }
       }
     }
-    this.engine.setCamera(this.worldX + TILE/2, this.worldY + TILE/2);
-  }
 
-  _startTrans(to, sx, sy) {
-    this.transitioning = true; this.transitionTimer = 0;
-    this._transTarget = to; this._transSpawn = { x: sx||1, y: sy||1 };
-  }
-  _execTransition() {
-    const r = this.mapManager.moveTo(this._transTarget, this.badgeCount);
-    if (r.success) { this._locId = null; this.mapLoaded = false; this.loadCurrentMap(); if (this.onMove) this.onMove(this._transTarget); }
-  }
-
-  render() {
-    if (!this.visible) return;
-    const ctx = this.renderer.getContext();
-    if (!this.mapLoaded) { this.renderer.clear('#1a2a1a'); this.renderer.drawPixelText('로딩...', 360, 280, '#888', 2); return; }
-
-    this.engine.renderBelow(ctx);
-
-    // NPC
-    if (this.currentMapData?.npcs) for (const n of this.currentMapData.npcs) {
-      const s = this.engine.worldToScreen(n.x * TILE, n.y * TILE);
-      if (s.x < -TILE || s.x > 864 || s.y < -TILE || s.y > 664) continue;
-      const c = { shop:'#44aa55', heal:'#88aaff', trainer:'#cc4444', gym_leader:'#ddaa22', boss:'#992266' }[n.type] || '#4488cc';
-      ctx.fillStyle = c;
-      ctx.fillRect(s.x+20, s.y+16, 24, 32);
-      ctx.fillStyle = '#ffdcb0';
-      ctx.fillRect(s.x+22, s.y+4, 20, 16);
-      this.renderer.drawPixelText(n.name?.substring(0,4)||'', s.x+4, s.y-8, '#fff', 1);
-    }
-
-    // 플레이어
-    const ps = this.engine.worldToScreen(this.worldX, this.worldY);
-    ctx.fillStyle = '#cc4444'; ctx.fillRect(ps.x+20, ps.y+20, 24, 28);
-    ctx.fillStyle = '#ffdcb0'; ctx.fillRect(ps.x+22, ps.y+4, 20, 18);
-    ctx.fillStyle = '#4a3728'; ctx.fillRect(ps.x+22, ps.y+4, 20, 6);
-    if (this.dir !== 'up') { ctx.fillStyle='#222'; ctx.fillRect(ps.x+26,ps.y+12,4,4); ctx.fillRect(ps.x+34,ps.y+12,4,4); }
-    ctx.fillStyle = '#882222';
-    const lo = this.walkFrame ? 4 : 0;
-    ctx.fillRect(ps.x+22, ps.y+48, 10, 14+lo); ctx.fillRect(ps.x+34, ps.y+48+lo, 10, 14-lo);
-
-    // HUD
-    const loc = this.mapManager.getCurrentLocation();
-    if (loc) {
-      ctx.fillStyle = 'rgba(0,0,0,0.6)'; ctx.fillRect(0, 0, 800, 22);
-      this.renderer.drawPixelText(loc.name, 8, 4, '#fff', 2);
-      this.renderer.drawPixelText(`인장:${this.badgeCount}/8`, 660, 4, '#ffcc44', 1);
-    }
-
-    if (this.fadeAlpha > 0) { ctx.fillStyle = `rgba(0,0,0,${this.fadeAlpha})`; ctx.fillRect(0, 0, 800, 600); }
-  }
-
-  handleInput(key) {
-    if (!this.visible || this.transitioning) return false;
-    if (key === 'Enter' || key === ' ') {
-      const f = {up:[0,-1],down:[0,1],left:[-1,0],right:[1,0]}[this.dir]||[0,1];
-      const npc = this.engine.getNpcAt(this.px+f[0], this.py+f[1]);
-      if (npc) {
-        if (npc.type === 'shop' && this.onShop) this.onShop(npc);
-        else if (npc.type === 'heal' && this.onHeal) this.onHeal(npc);
-        else if (this.onInteract) this.onInteract(npc);
+    // Walk animation
+    if (this.isMoving || this.moveProgress < 1) {
+      this.walkFrameTimer += dt;
+      if (this.walkFrameTimer >= 0.12) {
+        this.walkFrameTimer -= 0.12;
+        this.walkFrame = (this.walkFrame + 1) % this.walkFrameCount;
       }
-      return true;
+    } else {
+      this.walkFrame = 0;
+      this.walkFrameTimer = 0;
     }
-    return false;
+
+    // Update camera
+    if (this.mapManager.currentMap) {
+      this.tilemapEngine.followTarget(
+        this.renderX, this.renderY,
+        this.mapManager.currentMap.width,
+        this.mapManager.currentMap.height
+      );
+    }
+
+    // Return 'moved' event when player stepped to a new tile
+    return this.isMoving ? 'moved' : null;
+  }
+
+  /**
+   * Render the map screen
+   * @param {import('./renderer.js').Renderer} renderer
+   */
+  render(renderer) {
+    const ctx = renderer.ctx;
+    const map = this.mapManager.currentMap;
+    if (!map) return;
+
+    renderer.clear('#0a0a16');
+
+    // Render tilemap + objects
+    this.tilemapEngine.render(ctx, map);
+
+    // Render NPCs (4-direction, face toward player)
+    if (this.npcs) {
+      const CHAR_SIZE = 32; // GBC character sprite size
+      const CHAR_RENDER = RENDER_TILE * 2; // 32px on 480×270 canvas (2 tiles tall)
+      for (const npc of this.npcs) {
+        const sx = npc.x * RENDER_TILE - this.tilemapEngine.cameraX;
+        const sy = npc.y * RENDER_TILE - this.tilemapEngine.cameraY - (CHAR_RENDER - RENDER_TILE);
+        if (sx < -CHAR_RENDER || sy < -CHAR_RENDER || sx > renderer.width || sy > renderer.height) continue;
+
+        // NPC faces player when nearby
+        let npcFacing = npc.facing || 'south';
+        const dx = this.playerX - npc.x;
+        const dy = this.playerY - npc.y;
+        const dist = Math.abs(dx) + Math.abs(dy);
+        if (dist <= 3) {
+          if (Math.abs(dx) > Math.abs(dy)) npcFacing = dx > 0 ? 'east' : 'west';
+          else npcFacing = dy > 0 ? 'south' : 'north';
+        }
+
+        const img = this.assetLoader ? this.assetLoader.get(npc.sprite + '_' + npcFacing) : null;
+        if (img && img.complete && (img.naturalWidth > 0 || img.width > 0)) {
+          ctx.imageSmoothingEnabled = false;
+          ctx.drawImage(img, sx | 0, sy | 0, CHAR_RENDER, CHAR_RENDER);
+        } else {
+          // Try south fallback
+          const fallback = this.assetLoader ? this.assetLoader.get(npc.sprite + '_south') : null;
+          if (fallback && fallback.complete && (fallback.naturalWidth > 0 || fallback.width > 0)) {
+            ctx.imageSmoothingEnabled = false;
+            ctx.drawImage(fallback, sx | 0, sy | 0, CHAR_RENDER, CHAR_RENDER);
+          } else {
+            ctx.fillStyle = '#DD88AA';
+            ctx.fillRect((sx + 4) | 0, (sy + 4) | 0, CHAR_RENDER - 8, CHAR_RENDER - 8);
+            ctx.fillStyle = '#FFFFFF';
+            ctx.fillRect((sx + 8) | 0, (sy + 8) | 0, 2, 2);
+            ctx.fillRect((sx + 14) | 0, (sy + 8) | 0, 2, 2);
+          }
+        }
+      }
+    }
+
+    // Render player
+    this._renderPlayer(ctx);
+
+    // Map name overlay
+    renderer.setAlpha(0.7);
+    renderer.fillRect(0, 0, renderer.width, 10, '#000000');
+    renderer.resetAlpha();
+    renderer.drawText(map.name, 2, 2, '#FFFFFF', 1);
+
+    // Gate message
+    if (this.gateMessage) {
+      const msgW = renderer.measureText(this.gateMessage, 1) + 10;
+      const msgX = (renderer.width - msgW) / 2;
+      renderer.fillRect(msgX, 120, msgW, 16, '#000000');
+      renderer.strokeRect(msgX, 120, msgW, 16, '#FFD700');
+      renderer.drawTextCentered(this.gateMessage, 124, '#FFD700', 1);
+    }
+
+    // Transition fade
+    if (this.transitioning) {
+      renderer.setAlpha(this.transitionAlpha);
+      renderer.fillRect(0, 0, renderer.width, renderer.height, '#000000');
+      renderer.resetAlpha();
+    }
+
+    // Debug: player tile coords
+    renderer.drawText(
+      `[${this.playerX},${this.playerY}]`, renderer.width - 80, 6, '#888888', 1
+    );
+  }
+
+  // === Private ===
+
+  _renderPlayer(ctx) {
+    const CHAR_RENDER = RENDER_TILE * 2; // 32px character on 16px grid
+    const screenX = this.renderX * RENDER_TILE - this.tilemapEngine.cameraX;
+    const screenY = this.renderY * RENDER_TILE - this.tilemapEngine.cameraY - (CHAR_RENDER - RENDER_TILE);
+    const size = CHAR_RENDER;
+    const dirName = this.playerFacing || 'south';
+
+    if (this.assetLoader) {
+      let img = null;
+
+      // Try walk frame if moving
+      if (this.isMoving || this.moveProgress < 1) {
+        img = this.assetLoader.get(`player_walk_${dirName}_${this.walkFrame}`);
+      }
+      // Fall back to idle rotation
+      if (!img) {
+        img = this.assetLoader.get(`player_${dirName}`);
+      }
+
+      if (img && img.complete && (img.naturalWidth > 0 || img.width > 0)) {
+        ctx.imageSmoothingEnabled = false;
+        ctx.drawImage(img, screenX | 0, screenY | 0, size, size);
+        return;
+      }
+    }
+
+    // Fallback: colored rectangle
+    ctx.fillStyle = '#44aaff';
+    ctx.fillRect((screenX + 8) | 0, (screenY + 4) | 0, size - 16, size - 8);
+    ctx.fillStyle = '#ffffff';
+    const cx = screenX + size / 2;
+    const cy = screenY + size / 2;
+    switch (this.playerFacing) {
+      case 'north': ctx.fillRect(cx - 2, cy - 12, 4, 4); break;
+      case 'south': ctx.fillRect(cx - 2, cy + 8, 4, 4); break;
+      case 'left':  ctx.fillRect(cx - 12, cy - 2, 4, 4); break;
+      case 'right': ctx.fillRect(cx + 8, cy - 2, 4, 4); break;
+    }
+  }
+
+  _startTransition(exit) {
+    // Check badge gate
+    const targetData = this.mapManager.mapsData.find(m => m.id === exit.targetMap);
+    if (targetData && (targetData.requiredBadges || 0) > this.mapManager.playerBadges) {
+      this.gateMessage = `BADGE ${targetData.requiredBadges} REQUIRED`;
+      this.gateMessageTimer = 2;
+      // Revert position
+      this.playerX = this.prevX;
+      this.playerY = this.prevY;
+      this.renderX = this.prevX;
+      this.renderY = this.prevY;
+      this.moveProgress = 1;
+      return;
+    }
+
+    this.transitioning = true;
+    this.transitionAlpha = 0;
+    this.transitionTarget = exit;
+    this.transitionPhase = 'fadeOut';
+  }
+
+  _updateTransition(dt) {
+    if (this.transitionPhase === 'fadeOut') {
+      this.transitionAlpha = Math.min(1, this.transitionAlpha + dt * 3);
+      if (this.transitionAlpha >= 1) {
+        // Load new map
+        const result = this.mapManager.loadMap(this.transitionTarget.targetMap);
+        if (result) {
+          this.spawn(this.transitionTarget.targetX, this.transitionTarget.targetY);
+        }
+        this.lastTransitionMapId = this.transitionTarget.targetMap;
+        this.transitionPhase = 'fadeIn';
+      }
+    } else if (this.transitionPhase === 'fadeIn') {
+      this.transitionAlpha = Math.max(0, this.transitionAlpha - dt * 3);
+      if (this.transitionAlpha <= 0) {
+        this.transitioning = false;
+        this.transitionTarget = null;
+      }
+    }
+    return null;
   }
 }

@@ -1,0 +1,56 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import BattleSystem from '../components/guide/BattleSystem.astro';
+import ClassCards from '../components/guide/ClassCards.astro';
+import ItemTable from '../components/guide/ItemTable.astro';
+import CaptureExplainer from '../components/guide/CaptureExplainer.astro';
+import TypeChart from '../components/guide/TypeChart.tsx';
+import SkillBrowser from '../components/guide/SkillBrowser.tsx';
+import { types, matchups } from '../data/types';
+import { skills } from '../data/skills';
+---
+
+<BaseLayout title="시스템 가이드 — 포켓 왕국">
+  <section class="relative py-16 px-4 text-center scanline-overlay" aria-label="가이드 헤더">
+    <div class="absolute inset-0 bg-gradient-to-b from-[#1a2030] via-pk-bg to-pk-bg" aria-hidden="true"></div>
+    <div class="relative z-10 max-w-3xl mx-auto">
+      <p class="text-pk-text-secondary text-xs tracking-[0.3em] uppercase mb-4 animate-fade-up">SYSTEM GUIDE</p>
+      <h1 class="text-pk-accent crt-glow animate-fade-up-delay-1 mb-4">
+        시스템 가이드
+      </h1>
+      <p class="text-pk-text-secondary text-sm animate-fade-up-delay-2 text-balance">
+        전투, 타입 상성, 클래스, 스킬, 아이템 시스템 총정리
+      </p>
+    </div>
+  </section>
+
+  <div class="max-w-5xl mx-auto px-4 py-12">
+    <BattleSystem />
+    <div class="pixel-divider" aria-hidden="true"></div>
+
+    <section class="mb-12 reveal" id="type-chart" aria-label="타입 상성표">
+      <h2 class="section-title">타입 상성표</h2>
+      <p class="text-sm text-pk-text-secondary mb-6">
+        타입을 클릭하면 해당 타입의 공격/방어 상성을 하이라이트합니다.
+      </p>
+      <TypeChart types={types} matchups={matchups} client:visible />
+    </section>
+    <div class="pixel-divider" aria-hidden="true"></div>
+
+    <ClassCards />
+    <div class="pixel-divider" aria-hidden="true"></div>
+
+    <section class="mb-12 reveal" id="skills" aria-label="스킬 브라우저">
+      <h2 class="section-title">스킬 브라우저</h2>
+      <p class="text-sm text-pk-text-secondary mb-6">
+        346가지 스킬을 타입, 분류, 위력으로 검색하세요.
+      </p>
+      <SkillBrowser skills={skills} types={types} client:visible />
+    </section>
+    <div class="pixel-divider" aria-hidden="true"></div>
+
+    <CaptureExplainer />
+    <div class="pixel-divider" aria-hidden="true"></div>
+    <ItemTable />
+  </div>
+</BaseLayout>

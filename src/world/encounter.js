@@ -1,67 +1,88 @@
-// 야생 몬스터 인카운터 시스템
+/**
+ * encounter.js — Wild monster encounter system
+ * Triggers random encounters based on map data
+ */
 
 import { createMonster } from '../core/monster.js';
 
-/**
- * 야생 몬스터 조우 판정
- * @param {Object} location - 현재 위치 데이터 (encounters, wildEncounterRate 포함)
- * @returns {boolean} 조우 발생 여부
- */
-export function checkEncounter(location) {
-  if (!location) return false;
-  if (!location.encounters || location.encounters.length === 0) return false;
-
-  const rate = location.wildEncounterRate || 0;
-  return Math.random() < rate;
-}
-
-/**
- * 가중치 기반 랜덤 선택
- * @param {Array} encounters - { monsterId, weight, minLevel, maxLevel } 배열
- * @returns {Object|null} 선택된 인카운터 항목
- */
-function weightedRandom(encounters) {
-  if (!encounters || encounters.length === 0) return null;
-
-  const totalWeight = encounters.reduce((sum, e) => sum + (e.weight || 1), 0);
-  let roll = Math.random() * totalWeight;
-
-  for (const entry of encounters) {
-    roll -= (entry.weight || 1);
-    if (roll <= 0) return entry;
-  }
-  return encounters[encounters.length - 1];
-}
-
-/**
- * 야생 몬스터 생성
- * @param {Object} location - 위치 데이터
- * @param {number} badgeCount - 현재 획득한 배지 수 (전설 몬스터 필터용)
- * @returns {Object|null} 생성된 몬스터 인스턴스
- */
-export function generateWildMonster(location, badgeCount = 0) {
-  if (!location || !location.encounters || location.encounters.length === 0) {
-    return null;
+export class EncounterSystem {
+  /**
+   * @param {Array} monstersData - Full monsters.json array
+   * @param {Array} skillsData - Full skills.json array
+   */
+  constructor(monstersData, skillsData) {
+    this.monstersData = monstersData;
+    this.skillsData = skillsData;
+    this.stepCounter = 0;
+    this.encounterCooldown = 0; // Prevent instant re-encounter after battle
   }
 
-  // requiredBadges 조건을 충족하지 못하는 인카운터 필터링
-  const filteredEncounters = location.encounters.filter(
-    e => !e.requiredBadges || badgeCount >= e.requiredBadges
-  );
+  /**
+   * Called when player moves a tile on the map
+   * @param {import('../world/map.js').GameMap} map
+   * @returns {Object|null} Wild monster instance or null
+   */
+  checkEncounter(map) {
+    if (this.encounterCooldown > 0) {
+      this.encounterCooldown--;
+      return null;
+    }
 
-  if (filteredEncounters.length === 0) {
-    return null;
+    // Check map encounter rate
+    const rate = map.wildEncounterRate || 0;
+    if (rate <= 0 || !map.encounters || map.encounters.length === 0) {
+      return null;
+    }
+
+    this.stepCounter++;
+
+    // Encounter chance per step
+    // rate is 0-1 (e.g., 0.1 = 10% per step)
+    const chance = rate > 1 ? rate / 256 : rate;
+    if (Math.random() >= chance) {
+      return null;
+    }
+
+    // Weighted random selection
+    const encounter = this._selectEncounter(map.encounters);
+    if (!encounter) return null;
+
+    // Find monster base data
+    const baseData = this.monstersData.find(m => m.id === encounter.monsterId);
+    if (!baseData) return null;
+
+    // Random level within range
+    const level = encounter.minLevel +
+      Math.floor(Math.random() * (encounter.maxLevel - encounter.minLevel + 1));
+
+    // Create monster instance
+    const monster = createMonster(baseData, level, this.skillsData);
+    monster.isWild = true;
+
+    // Set cooldown to prevent instant re-encounter
+    this.encounterCooldown = 3;
+
+    return monster;
   }
 
-  const entry = weightedRandom(filteredEncounters);
-  if (!entry) return null;
+  /**
+   * Weighted random selection from encounter table
+   */
+  _selectEncounter(encounters) {
+    const totalWeight = encounters.reduce((sum, e) => sum + (e.weight || 1), 0);
+    let roll = Math.random() * totalWeight;
 
-  // minLevel ~ maxLevel 사이 랜덤 레벨
-  const minLv = entry.minLevel || 2;
-  const maxLv = entry.maxLevel || minLv + 3;
-  const level = minLv + Math.floor(Math.random() * (maxLv - minLv + 1));
+    for (const enc of encounters) {
+      roll -= (enc.weight || 1);
+      if (roll <= 0) return enc;
+    }
+    return encounters[0];
+  }
 
-  const monster = createMonster(entry.monsterId, level, true);
-  return monster;
+  /**
+   * Reset cooldown (e.g., after entering a new map)
+   */
+  resetCooldown() {
+    this.encounterCooldown = 5;
+  }
 }
-

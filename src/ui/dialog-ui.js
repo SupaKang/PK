@@ -1,339 +1,193 @@
-// 다이얼로그 / 텍스트 박스 시스템
-import { generateSprite } from './sprite-generator.js';
-
 /**
- * 다이얼로그 씬 정의
- * @typedef {Object} DialogScene
- * @property {string} text - 대사 텍스트
- * @property {string} [speaker] - 화자 이름
- * @property {Object} [portrait] - spriteConfig (초상화용)
- * @property {Array<{text:string, value:*}>} [choices] - 선택지
- * @property {Function} [onComplete] - 완료 콜백
- * @property {Function} [onChoice] - 선택 콜백 (choiceValue)
+ * dialog-ui.js — Dialog engine with typewriter effect, choices, speaker name
  */
 
 export class DialogUI {
+  constructor() {
+    this.active = false;
+    this.lines = [];        // [{speaker, text, choices}]
+    this.lineIndex = 0;
+    this.charIndex = 0;     // Typewriter position
+    this.typeSpeed = 0.03;  // Seconds per character
+    this.typeTimer = 0;
+    this.finished = false;  // Current line fully displayed
+
+    // Choice state
+    this.selectedChoice = 0;
+    this.choiceResult = null; // Set when a choice is made
+
+    // Callback when dialog ends
+    this.onEnd = null;
+    this.onChoice = null;
+  }
+
   /**
+   * Start a dialog sequence
+   * @param {Array} lines - [{speaker: 'NAME', text: '...', choices: ['A','B']}]
+   * @param {Function} [onEnd] - Called when dialog completes
+   * @param {Function} [onChoice] - Called with (lineIndex, choiceIndex)
+   */
+  start(lines, onEnd, onChoice) {
+    this.lines = lines;
+    this.lineIndex = 0;
+    this.charIndex = 0;
+    this.typeTimer = 0;
+    this.finished = false;
+    this.active = true;
+    this.selectedChoice = 0;
+    this.choiceResult = null;
+    this.onEnd = onEnd || null;
+    this.onChoice = onChoice || null;
+  }
+
+  /**
+   * Update dialog state
+   * @param {number} dt
+   * @param {Object} keysJustPressed
+   * @returns {string|null} 'done' when dialog ends
+   */
+  update(dt, keysJustPressed) {
+    if (!this.active || this.lines.length === 0) return null;
+
+    const line = this.lines[this.lineIndex];
+    if (!line) { this._end(); return 'done'; }
+
+    // Typewriter effect
+    if (!this.finished) {
+      this.typeTimer += dt;
+      while (this.typeTimer >= this.typeSpeed && this.charIndex < line.text.length) {
+        this.typeTimer -= this.typeSpeed;
+        this.charIndex++;
+      }
+      if (this.charIndex >= line.text.length) {
+        this.finished = true;
+      }
+    }
+
+    // Input handling
+    if (keysJustPressed.Enter || keysJustPressed.Space || keysJustPressed.KeyZ) {
+      if (!this.finished) {
+        // Skip typewriter — show full text
+        this.charIndex = line.text.length;
+        this.finished = true;
+      } else if (line.choices && line.choices.length > 0) {
+        // Select choice
+        this.choiceResult = this.selectedChoice;
+        if (this.onChoice) this.onChoice(this.lineIndex, this.selectedChoice);
+        this._advance();
+      } else {
+        // Next line
+        this._advance();
+      }
+    }
+
+    // Choice navigation
+    if (this.finished && line.choices && line.choices.length > 0) {
+      if (keysJustPressed.ArrowUp || keysJustPressed.KeyW) {
+        this.selectedChoice = (this.selectedChoice - 1 + line.choices.length) % line.choices.length;
+      }
+      if (keysJustPressed.ArrowDown || keysJustPressed.KeyS) {
+        this.selectedChoice = (this.selectedChoice + 1) % line.choices.length;
+      }
+    }
+
+    return null;
+  }
+
+  /**
+   * Render dialog box
    * @param {import('./renderer.js').Renderer} renderer
    */
-  constructor(renderer) {
-    this.renderer = renderer;
-    this.active = false;
+  render(renderer) {
+    if (!this.active || this.lines.length === 0) return;
 
-    // 씬 큐
-    this.sceneQueue = [];
-    this.currentScene = null;
+    const line = this.lines[this.lineIndex];
+    if (!line) return;
 
-    // 타이프라이터 상태
-    this.displayedChars = 0;
-    this.typewriterTimer = 0;
-    this.typewriterSpeeds = [15, 30, 60]; // 느림/보통/빠름
-    this.speedSetting = 1; // 0=느림, 1=보통, 2=빠름
-    this.textComplete = false;
+    const W = renderer.width;  // 480
+    const boxH = 60;
+    const boxY = renderer.height - boxH - 5; // 205
+    const boxX = 5;
+    const boxW = W - 10;  // 470
 
-    // 선택지 상태
-    this.choiceCursor = 0;
-    this.showingChoices = false;
+    // Dialog box background
+    renderer.setAlpha(0.9);
+    renderer.fillRect(boxX, boxY, boxW, boxH, '#0a0a2e');
+    renderer.resetAlpha();
+    renderer.strokeRect(boxX, boxY, boxW, boxH, '#4466aa');
 
-    // 초상화 캐시
-    this._portraitCache = new Map();
-
-    // 레이아웃
-    this.boxX = 20;
-    this.boxY = 430;
-    this.boxW = 760;
-    this.boxH = 150;
-    this.textX = 30;
-    this.textY = 465;
-    this.portraitSize = 80;
-    this.maxCharsPerLine = 38;
-    this.maxLines = 3;
-
-    // 콜백
-    this.onAllComplete = null;
-  }
-
-  /**
-   * 텍스트 속도 설정
-   */
-  setSpeed(speed) {
-    this.speedSetting = Math.max(0, Math.min(2, speed));
-  }
-
-  /**
-   * 다이얼로그 씬 큐에 추가
-   */
-  queue(scenes) {
-    if (!Array.isArray(scenes)) scenes = [scenes];
-    for (const scene of scenes) {
-      this.sceneQueue.push(scene);
-    }
-    if (!this.active) {
-      this._advanceScene();
-    }
-  }
-
-  /**
-   * 단일 메시지 (편의 메서드)
-   */
-  show(text, speaker = null, onComplete = null) {
-    this.queue([{ text, speaker, onComplete }]);
-  }
-
-  /**
-   * 선택지 다이얼로그
-   */
-  showChoice(text, choices, speaker = null, onChoice = null) {
-    this.queue([{ text, speaker, choices, onChoice }]);
-  }
-
-  /**
-   * 활성 여부
-   */
-  isActive() {
-    return this.active;
-  }
-
-  /**
-   * 씬 진행
-   */
-  _advanceScene() {
-    if (this.sceneQueue.length === 0) {
-      this.active = false;
-      this.currentScene = null;
-      if (this.onAllComplete) {
-        const cb = this.onAllComplete;
-        this.onAllComplete = null;  // 먼저 클리어 (콜백 안에서 새 onAllComplete 설정 가능)
-        cb();
-      }
-      return;
+    // Speaker name
+    if (line.speaker) {
+      renderer.fillRect(boxX + 10, boxY - 14, renderer.measureText(line.speaker, 1) + 16, 16, '#0a0a2e');
+      renderer.strokeRect(boxX + 10, boxY - 14, renderer.measureText(line.speaker, 1) + 16, 16, '#4466aa');
+      renderer.drawText(line.speaker, boxX + 18, boxY - 12, '#FFD700', 1);
     }
 
-    this.currentScene = this.sceneQueue.shift();
-    this.active = true;
-    this.displayedChars = 0;
-    this.typewriterTimer = 0;
-    this.textComplete = false;
-    this.showingChoices = false;
-    this.choiceCursor = 0;
+    // Text with typewriter
+    const displayText = line.text.substring(0, this.charIndex);
+    this._drawWrappedText(renderer, displayText, boxX + 20, boxY + 15, boxW - 40, '#FFFFFF', 2);
 
-    // 초상화 텍스트 오프셋 조정
-    if (this.currentScene.portrait) {
-      this.textX = this.boxX + this.portraitSize + 20;
-    } else {
-      this.textX = this.boxX + 15;
-    }
-  }
+    // Choices
+    if (this.finished && line.choices && line.choices.length > 0) {
+      const choiceX = boxX + boxW - 160;
+      const choiceY = boxY - line.choices.length * 12 - 5;
 
-  /**
-   * 텍스트 줄바꿈 처리
-   */
-  _wrapText(text) {
-    const lines = [];
-    let currentLine = '';
-    const maxW = this.currentScene?.portrait ? this.maxCharsPerLine - 8 : this.maxCharsPerLine;
+      renderer.fillRect(choiceX, choiceY, 155, line.choices.length * 12 + 5, '#0a0a2e');
+      renderer.strokeRect(choiceX, choiceY, 155, line.choices.length * 12 + 5, '#FFD700');
 
-    for (let i = 0; i < text.length; i++) {
-      const ch = text[i];
-      if (ch === '\n') {
-        lines.push(currentLine);
-        currentLine = '';
-        continue;
-      }
-
-      currentLine += ch;
-      // 간단한 문자폭 추정 (한글은 약 1.5배)
-      const isK = ch.charCodeAt(0) >= 0xAC00;
-      const lineLen = [...currentLine].reduce((acc, c) => acc + (c.charCodeAt(0) >= 0xAC00 ? 1.5 : 1), 0);
-
-      if (lineLen >= maxW) {
-        lines.push(currentLine);
-        currentLine = '';
-      }
-    }
-    if (currentLine) lines.push(currentLine);
-    return lines;
-  }
-
-  /**
-   * 업데이트
-   */
-  update(dt) {
-    if (!this.active || !this.currentScene) return;
-
-    if (!this.textComplete) {
-      this.typewriterTimer += dt;
-      const speed = this.typewriterSpeeds[this.speedSetting];
-      const charsToShow = Math.floor(this.typewriterTimer * speed);
-
-      if (charsToShow >= this.currentScene.text.length) {
-        this.displayedChars = this.currentScene.text.length;
-        this.textComplete = true;
-        // 선택지가 있으면 표시
-        if (this.currentScene.choices) {
-          this.showingChoices = true;
-          this.choiceCursor = 0;
-        }
-      } else {
-        this.displayedChars = charsToShow;
-      }
-    }
-  }
-
-  /**
-   * 렌더링
-   */
-  render() {
-    if (!this.active || !this.currentScene) return;
-
-    const r = this.renderer;
-    const ctx = r.getContext();
-    const scene = this.currentScene;
-
-    // 반투명 상단 오버레이 (선택적)
-    ctx.fillStyle = 'rgba(0,0,0,0.15)';
-    ctx.fillRect(0, 0, 800, this.boxY);
-
-    // 다이얼로그 박스
-    r.drawPanel(this.boxX, this.boxY, this.boxW, this.boxH, '#0d0d1e', '#4a4a6a');
-
-    // 화자 이름 라벨
-    if (scene.speaker) {
-      const nameW = r.measureText(scene.speaker, 2) + 20;
-      r.drawPanel(this.boxX + 10, this.boxY - 22, nameW, 28, '#1a1a3e', '#6666aa');
-      let nameColor = '#ffcc44'; // default gold
-      if (scene.speaker === '은하') nameColor = '#44aaff'; // rival = blue
-      else if (scene.speaker === '할아버지') nameColor = '#88dd88'; // grandfather = green
-      else if (scene.speaker?.includes('그림자단')) nameColor = '#cc44cc'; // shadow clan = purple
-      else if (scene.speaker?.includes('수호자')) nameColor = '#ffaa44'; // guardian = orange
-      else if (scene.speaker === '고랭이') nameColor = '#ddbb88'; // cat = warm brown
-      r.drawPixelText(scene.speaker, this.boxX + 20, this.boxY - 16, nameColor, 2);
-    }
-
-    // 초상화
-    if (scene.portrait) {
-      const key = JSON.stringify(scene.portrait);
-      let portrait = this._portraitCache.get(key);
-      if (!portrait) {
-        portrait = generateSprite(scene.portrait, 64);
-        this._portraitCache.set(key, portrait);
-      }
-      if (portrait) {
-        // 초상화 배경
-        r.drawPanel(this.boxX + 8, this.boxY + 10, this.portraitSize + 8, this.portraitSize + 8, '#111122', '#3a3a5a');
-        r.drawSprite(portrait, this.boxX + 12, this.boxY + 14, this.portraitSize / 64);
-      }
-    }
-
-    // 텍스트 (타이프라이터)
-    const displayText = scene.text.substring(0, this.displayedChars);
-    const lines = this._wrapText(displayText);
-    const lineHeight = 20;
-    const startY = this.boxY + 18;
-
-    for (let i = 0; i < Math.min(lines.length, this.maxLines); i++) {
-      r.drawPixelText(lines[i], this.textX, startY + i * lineHeight, '#ffffff', 2);
-    }
-
-    // 선택지
-    if (this.showingChoices && scene.choices) {
-      const choiceX = this.boxX + this.boxW - 200;
-      const choiceY = this.boxY - scene.choices.length * 35 - 10;
-
-      r.drawPanel(choiceX - 10, choiceY - 5, 210, scene.choices.length * 35 + 15, '#0d0d1e', '#4a4a6a');
-
-      for (let i = 0; i < scene.choices.length; i++) {
-        const cy = choiceY + i * 35;
-        const selected = this.choiceCursor === i;
-
+      for (let i = 0; i < line.choices.length; i++) {
+        const selected = i === this.selectedChoice;
+        const cy = choiceY + 4 + i * 12;
         if (selected) {
-          ctx.fillStyle = 'rgba(100,100,200,0.2)';
-          ctx.fillRect(choiceX, cy, 190, 30);
-          ctx.fillStyle = '#ffcc44';
-          ctx.fillRect(choiceX + 6, cy + 10, 6, 6);
-          r.drawPixelText(scene.choices[i].text, choiceX + 18, cy + 6, '#ffffff', 2);
-        } else {
-          r.drawPixelText(scene.choices[i].text, choiceX + 18, cy + 6, '#aaaacc', 2);
+          renderer.fillRect(choiceX + 3, cy - 1, 149, 10, '#222244');
         }
+        const prefix = selected ? '> ' : '  ';
+        const color = selected ? '#FFD700' : '#AAAAAA';
+        renderer.drawText(prefix + line.choices[i], choiceX + 6, cy, color, 1);
       }
     }
 
-    // 진행 인디케이터
-    if (this.textComplete && !this.showingChoices) {
-      const blink = Math.floor(Date.now() / 400) % 2;
+    // Continue indicator
+    if (this.finished && (!line.choices || line.choices.length === 0)) {
+      const blink = Math.sin(performance.now() / 300) > 0;
       if (blink) {
-        const indX = this.boxX + this.boxW - 30;
-        const indY = this.boxY + this.boxH - 25;
-        ctx.fillStyle = '#ffcc44';
-        ctx.fillRect(indX, indY, 8, 4);
-        ctx.fillRect(indX + 2, indY + 4, 4, 4);
+        renderer.drawText('V', boxX + boxW - 25, boxY + boxH - 20, '#FFD700', 2);
       }
     }
   }
 
-  /**
-   * 입력 처리
-   * @returns {boolean} consumed
-   */
-  handleInput(key) {
-    if (!this.active) return false;
+  _advance() {
+    this.lineIndex++;
+    this.charIndex = 0;
+    this.typeTimer = 0;
+    this.finished = false;
+    this.selectedChoice = 0;
+    this.choiceResult = null;
 
-    if (this.showingChoices) {
-      return this._handleChoiceInput(key);
+    if (this.lineIndex >= this.lines.length) {
+      this._end();
     }
-
-    switch (key) {
-      case 'Enter':
-      case ' ':
-        if (!this.textComplete) {
-          // 즉시 전체 표시
-          this.displayedChars = this.currentScene.text.length;
-          this.textComplete = true;
-          if (this.currentScene.choices) {
-            this.showingChoices = true;
-            this.choiceCursor = 0;
-          }
-        } else {
-          // 다음 씬으로
-          if (this.currentScene.onComplete) {
-            this.currentScene.onComplete();
-          }
-          this._advanceScene();
-        }
-        return true;
-    }
-    return true; // 다이얼로그 활성 시 모든 입력 소비
   }
 
-  _handleChoiceInput(key) {
-    const choices = this.currentScene.choices;
-    if (!choices) return true;
-
-    switch (key) {
-      case 'ArrowUp':
-        this.choiceCursor = (this.choiceCursor - 1 + choices.length) % choices.length;
-        return true;
-      case 'ArrowDown':
-        this.choiceCursor = (this.choiceCursor + 1) % choices.length;
-        return true;
-      case 'Enter':
-      case ' ':
-        const choice = choices[this.choiceCursor];
-        if (this.currentScene.onChoice) {
-          this.currentScene.onChoice(choice.value);
-        }
-        this._advanceScene();
-        return true;
-    }
-    return true;
-  }
-
-  /**
-   * 큐 비우기
-   */
-  clear() {
-    this.sceneQueue = [];
+  _end() {
     this.active = false;
-    this.currentScene = null;
+    if (this.onEnd) this.onEnd();
+  }
+
+  /**
+   * Word-wrapped text rendering
+   */
+  _drawWrappedText(renderer, text, x, y, maxWidth, color, scale) {
+    const charW = 6 * scale; // 5px font + 1px gap at scale
+    const lineH = 8 * scale + 4;
+    const maxChars = Math.floor(maxWidth / charW);
+    let curY = y;
+
+    // Simple character-based wrapping
+    for (let i = 0; i < text.length; i += maxChars) {
+      const segment = text.substring(i, i + maxChars);
+      renderer.drawText(segment, x, curY, color, scale);
+      curY += lineH;
+    }
   }
 }

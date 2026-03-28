@@ -1,39 +1,64 @@
-// 타입 상성 시스템
-let typesData = null;
-
-export async function loadTypes() {
-  const res = await fetch('./data/types.json');
-  typesData = await res.json();
-  return typesData;
-}
-
-export function getTypes() {
-  return typesData;
-}
-
-export function getType(id) {
-  return typesData?.types.find(t => t.id === id);
-}
-
 /**
- * 타입 상성 배율 계산
- * @returns {number} 0, 0.5, 1, 2 (무효, 별로, 보통, 효과적)
+ * type.js — 18-type matchup system
+ * Reads types.json matchups matrix for damage multipliers
  */
-export function getEffectiveness(attackType, defendTypes) {
-  if (!typesData) return 1;
-  let multiplier = 1;
-  for (const defType of defendTypes) {
-    const val = typesData.matchups[attackType]?.[defType];
-    if (val !== undefined) {
-      multiplier *= val;
+
+export class TypeChart {
+  /**
+   * @param {Object} typesData - Parsed types.json
+   */
+  constructor(typesData) {
+    this.types = typesData.types || typesData;
+    this.matchups = typesData.matchups || {};
+    // Build lookup map: id → {name, color}
+    this.typeMap = {};
+    for (const t of this.types) {
+      this.typeMap[t.id] = t;
     }
   }
-  return multiplier;
-}
 
-export function getEffectivenessText(multiplier) {
-  if (multiplier === 0) return '효과가 없다...';
-  if (multiplier < 1) return '효과가 별로인 것 같다...';
-  if (multiplier > 1) return '효과가 굉장했다!';
-  return null;
+  /**
+   * Get damage multiplier: attackType vs defenderTypes
+   * @param {string} atkType - Attacking skill type id
+   * @param {string[]} defTypes - Defender's type array
+   * @returns {number} Combined multiplier
+   */
+  getMultiplier(atkType, defTypes) {
+    let mult = 1;
+    const row = this.matchups[atkType];
+    if (!row) return 1;
+
+    for (const defType of defTypes) {
+      const val = row[defType];
+      if (val !== undefined) {
+        mult *= val;
+      }
+    }
+    return mult;
+  }
+
+  /**
+   * Get type info by id
+   */
+  getType(typeId) {
+    return this.typeMap[typeId] || { id: typeId, name: typeId, color: '#BBBBAA' };
+  }
+
+  /**
+   * Get type color
+   */
+  getColor(typeId) {
+    return this.getType(typeId).color;
+  }
+
+  /**
+   * Get effectiveness label
+   */
+  getEffectivenessLabel(multiplier) {
+    if (multiplier === 0) return 'NO EFFECT';
+    if (multiplier >= 2) return 'SUPER EFFECTIVE';
+    if (multiplier > 1) return 'EFFECTIVE';
+    if (multiplier < 1) return 'NOT VERY EFFECTIVE';
+    return '';
+  }
 }

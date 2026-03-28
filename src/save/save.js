@@ -1,170 +1,281 @@
-// 세이브/로드 시스템 — LocalStorage 기반 3슬롯
+/**
+ * save.js — Save/Load system with localStorage
+ * 3 save slots, versioned JSON schema, extensible fields
+ */
 
-const SAVE_KEY = 'pocket_kingdom_save_';
-const MAX_SLOTS = 3;
+const SAVE_KEY_PREFIX = 'pk_save_slot_';
+const SCHEMA_VERSION = 1;
 
 /**
- * 세이브 매니저
+ * Serialize the current game state into a saveable object
+ * @param {Object} game - Game instance
+ * @returns {Object} Save data
  */
-export class SaveManager {
-  /**
-   * 게임 상태를 슬롯에 저장
-   * @param {number} slot - 슬롯 번호 (0, 1, 2)
-   * @param {Object} gameState - 전체 게임 상태
-   */
-  static save(slot, gameState) {
-    if (slot < 0 || slot >= MAX_SLOTS) {
-      throw new Error(`유효하지 않은 슬롯 번호입니다: ${slot}`);
-    }
+export function serializeGameState(game) {
+  return {
+    version: SCHEMA_VERSION,
+    savedAt: new Date().toISOString(),
+    playTime: game.playTime || 0,
 
-    const saveData = {
-      version: 1,
-      timestamp: Date.now(),
-      playerName: gameState.playerName || '계약자',
-      playtime: gameState.playtime || 0,
+    playerPosition: {
+      mapId: game.mapManager?.currentMap?.id || 'town_01',
+      x: game.mapUI?.playerX || 7,
+      y: game.mapUI?.playerY || 7,
+    },
 
-      party: gameState.party,        // PartyManager.serialize()
-      inventory: gameState.inventory, // Inventory.serialize() or raw data
-      story: gameState.story,         // StoryManager.serialize()
-      map: gameState.map,             // MapManager.serialize()
-      trainers: gameState.trainers,   // TrainerManager.serialize()
-      dex: gameState.dex || [],
-      settings: gameState.settings || {},
-      expedition: gameState.expedition || null,
-      achievements: gameState.achievements || null,
-      expeditionSuccessCount: gameState.expeditionSuccessCount || 0,
-      difficulty: gameState.difficulty || 'normal',
-      difficultySettings: gameState.difficultySettings || null,
-      playStats: gameState.playStats || null,
-      karma: gameState.karma || 0,
-      completedQuests: gameState.completedQuests || [],
-      dailyChallenge: gameState.dailyChallenge || null,
-      defeatedLog: gameState.defeatedLog || {},
-      winStreak: gameState.winStreak || 0,
-      lore: gameState.lore || null,
-    };
+    playerClass: game.playerClass ? {
+      id: game.playerClass.id,
+      name: game.playerClass.name,
+    } : null,
 
-    try {
-      const json = JSON.stringify(saveData);
-      localStorage.setItem(SAVE_KEY + slot, json);
-      return { success: true, message: '저장 완료!' };
-    } catch (e) {
-      console.error('세이브 실패:', e);
-      return { success: false, message: '저장에 실패했습니다. 저장 공간이 부족할 수 있습니다.' };
-    }
-  }
+    party: (game.party || []).map(mon => serializeMonster(mon)),
 
-  /**
-   * 슬롯에서 게임 상태 불러오기
-   * @param {number} slot - 슬롯 번호
-   * @returns {Object|null} 게임 상태 또는 null
-   */
-  static load(slot) {
-    if (slot < 0 || slot >= MAX_SLOTS) {
-      throw new Error(`유효하지 않은 슬롯 번호입니다: ${slot}`);
-    }
+    inventory: (game.inventory || []).map(slot => ({
+      itemId: slot.item.id,
+      count: slot.count,
+    })),
 
-    try {
-      const json = localStorage.getItem(SAVE_KEY + slot);
-      if (!json) return null;
+    gold: game.gold || 0,
 
-      const saveData = JSON.parse(json);
+    flags: {
+      prologueComplete: true,
+      classSelected: game.playerClass?.id || null,
+    },
 
-      // 버전 호환성 체크
-      if (!saveData.version) {
-        console.warn('구 버전 세이브 데이터입니다.');
+    story: game.storyEngine ? game.storyEngine.serialize() : null,
+
+    dex: {
+      seen: [...(game.dex?.seen || [])],
+      caught: [...(game.dex?.caught || [])],
+    },
+    achievements: game.achievements ? game.achievements.serialize() : [],
+    battleWins: game._battleWins || 0,
+    evolveCount: game._evolveCount || 0,
+    difficulty: game.difficulty || 'normal',
+  };
+}
+
+/**
+ * Serialize a monster instance
+ */
+function serializeMonster(mon) {
+  return {
+    id: mon.id,
+    name: mon.name,
+    type: mon.type,
+    level: mon.level,
+    hp: mon.hp,
+    maxHp: mon.maxHp,
+    exp: mon.exp || 0,
+    expToNext: mon.expToNext || 0,
+    baseStats: mon.baseStats,
+    iv: mon.iv,
+    stats: mon.stats,
+    skills: (mon.skills || []).map(s => ({
+      id: s.id,
+      name: s.name,
+      type: s.type,
+      category: s.category,
+      power: s.power,
+      accuracy: s.accuracy,
+      pp: s.pp,
+      ppLeft: s.ppLeft,
+      effect: s.effect || null,
+    })),
+    status: mon.status,
+    isWild: false,
+    spriteConfig: mon.spriteConfig || null,
+  };
+}
+
+/**
+ * Deserialize save data into a live game state
+ * @param {Object} data - Parsed save JSON
+ * @param {Object} game - Game instance to restore into
+ * @param {Array} itemsData - Full items.json array
+ */
+export function deserializeGameState(data, game, itemsData) {
+  // Migrate if needed
+  const migrated = migrateSchema(data);
+
+  // Restore play time
+  game.playTime = migrated.playTime || 0;
+
+  // Restore player class
+  if (migrated.playerClass && game.classesData) {
+    const classData = game.classesData.find(c => c.id === migrated.playerClass.id);
+    if (classData) {
+      const { PlayerClass } = game._PlayerClass || {};
+      if (PlayerClass) {
+        game.playerClass = new PlayerClass(classData);
       }
-
-      return saveData;
-    } catch (e) {
-      console.error('로드 실패:', e);
-      return null;
     }
   }
 
-  /**
-   * 슬롯 삭제
-   * @param {number} slot - 슬롯 번호
-   */
-  static delete(slot) {
-    if (slot < 0 || slot >= MAX_SLOTS) {
-      throw new Error(`유효하지 않은 슬롯 번호입니다: ${slot}`);
-    }
+  // Restore party
+  game.party = migrated.party.map(mon => deserializeMonster(mon));
+  game.playerMonster = game.party[0] || null;
 
-    localStorage.removeItem(SAVE_KEY + slot);
-    return { success: true, message: '데이터가 삭제되었습니다.' };
+  // Restore inventory
+  game.inventory = migrated.inventory.map(slot => {
+    const itemData = (itemsData || []).find(i => i.id === slot.itemId);
+    return {
+      item: itemData || { id: slot.itemId, name: slot.itemId, effect: null },
+      count: slot.count,
+    };
+  });
+
+  // Restore gold
+  game.gold = migrated.gold || 0;
+
+  // Restore story progress
+  if (migrated.story && game.storyEngine) {
+    game.storyEngine.deserialize(migrated.story);
   }
 
-  /**
-   * 슬롯 미리보기 정보
-   * @param {number} slot - 슬롯 번호
-   * @returns {Object|null} 미리보기 정보
-   */
-  static getSlotInfo(slot) {
-    if (slot < 0 || slot >= MAX_SLOTS) return null;
+  // Restore dex
+  if (migrated.dex) {
+    game.dex = {
+      seen: new Set(migrated.dex.seen || []),
+      caught: new Set(migrated.dex.caught || []),
+    };
+  }
+  if (migrated.achievements && game.achievements) {
+    game.achievements.deserialize(migrated.achievements);
+  }
+  game._battleWins = migrated.battleWins || 0;
+  game._evolveCount = migrated.evolveCount || 0;
+  game.difficulty = migrated.difficulty || 'normal';
 
-    try {
-      const json = localStorage.getItem(SAVE_KEY + slot);
-      if (!json) return null;
-
-      const data = JSON.parse(json);
-      const badgeCount = data.story?.badges?.length || 0;
-      const partyCount = data.party?.party?.length || 0;
-
-      // 계약자 클래스 정보
-      const contractor = data.party?.contractor;
-      const className = contractor?.className || '';
-      const chapter = data.story?.currentChapter || 1;
-      const location = data.map?.currentLocation || '';
-
-      // 플레이타임 포맷
-      const totalSec = Math.floor(data.playtime || 0);
-      const hours = Math.floor(totalSec / 3600);
-      const minutes = Math.floor((totalSec % 3600) / 60);
-      const playtimeStr = `${hours}시간 ${minutes}분`;
-      const playtimeShort = `${hours}:${String(minutes).padStart(2, '0')}`;
-
-      return {
-        playerName: data.playerName || '계약자',
-        playtime: data.playtime || 0,
-        playtimeFormatted: playtimeStr,
-        playtimeShort,
-        badgeCount,
-        chapter,
-        className,
-        location,
-        partyCount,
-        timestamp: data.timestamp,
-        timestampFormatted: new Date(data.timestamp).toLocaleString('ko-KR'),
-      };
-    } catch (e) {
-      return null;
+  // Restore map position
+  const pos = migrated.playerPosition;
+  if (pos && game.mapManager) {
+    game.mapManager.loadMap(pos.mapId);
+    if (game.mapUI) {
+      game.mapUI.spawn(pos.x, pos.y);
+      // Load NPCs for this map
+      if (game._getNPCsForMap) {
+        game.currentNPCs = game._getNPCsForMap(pos.mapId);
+        game.mapUI.npcs = game.currentNPCs;
+      }
     }
   }
+}
 
-  /**
-   * 슬롯에 세이브 데이터가 있는지 확인
-   * @param {number} slot - 슬롯 번호
-   * @returns {boolean}
-   */
-  static hasSave(slot) {
-    if (slot < 0 || slot >= MAX_SLOTS) return false;
-    return localStorage.getItem(SAVE_KEY + slot) !== null;
+/**
+ * Deserialize a monster from save data
+ */
+function deserializeMonster(data) {
+  return {
+    id: data.id,
+    name: data.name,
+    type: data.type || ['normal'],
+    level: data.level,
+    hp: data.hp,
+    maxHp: data.maxHp,
+    exp: data.exp || 0,
+    expToNext: data.expToNext || 0,
+    baseStats: data.baseStats,
+    iv: data.iv,
+    stats: data.stats,
+    skills: data.skills || [],
+    status: data.status || null,
+    isWild: false,
+    spriteConfig: data.spriteConfig || null,
+    statStages: {},
+  };
+}
+
+/**
+ * Migrate save data from older schema versions
+ */
+function migrateSchema(data) {
+  let d = { ...data };
+
+  // Version 0 → 1 (or missing version)
+  if (!d.version || d.version < 1) {
+    d.version = 1;
+    if (!d.flags) d.flags = {};
+    if (!d.playTime) d.playTime = 0;
   }
 
-  /**
-   * 모든 슬롯 정보 목록
-   * @returns {Array} 3개 슬롯의 정보 배열
-   */
-  static getAllSlots() {
-    const slots = [];
-    for (let i = 0; i < MAX_SLOTS; i++) {
+  // Future: if (d.version < 2) { ... migrate to v2 ... }
+
+  return d;
+}
+
+/**
+ * Save game state to a slot (0, 1, or 2)
+ * @returns {boolean} Success
+ */
+export function saveToSlot(slotIndex, game) {
+  try {
+    const data = serializeGameState(game);
+    const key = SAVE_KEY_PREFIX + slotIndex;
+    localStorage.setItem(key, JSON.stringify(data));
+    console.log(`[PK] Game saved to slot ${slotIndex}`);
+    return true;
+  } catch (e) {
+    console.error('[PK] Save failed:', e);
+    return false;
+  }
+}
+
+/**
+ * Load game state from a slot
+ * @returns {Object|null} Save data or null
+ */
+export function loadFromSlot(slotIndex) {
+  try {
+    const key = SAVE_KEY_PREFIX + slotIndex;
+    const raw = localStorage.getItem(key);
+    if (!raw) return null;
+    return JSON.parse(raw);
+  } catch (e) {
+    console.error('[PK] Load failed:', e);
+    return null;
+  }
+}
+
+/**
+ * Get save slot summaries for UI display
+ * @returns {Array} [{slot, exists, summary}]
+ */
+export function getSaveSlotSummaries() {
+  const slots = [];
+  for (let i = 0; i < 3; i++) {
+    const data = loadFromSlot(i);
+    if (data) {
+      const leadMon = data.party?.[0];
       slots.push({
         slot: i,
-        exists: SaveManager.hasSave(i),
-        info: SaveManager.getSlotInfo(i),
+        exists: true,
+        playerClass: data.playerClass?.name || '---',
+        playTime: formatPlayTime(data.playTime || 0),
+        leadMonster: leadMon ? `${leadMon.name} Lv.${leadMon.level}` : '---',
+        savedAt: data.savedAt || '',
+        partySize: data.party?.length || 0,
       });
+    } else {
+      slots.push({ slot: i, exists: false });
     }
-    return slots;
   }
+  return slots;
+}
+
+/**
+ * Delete a save slot
+ */
+export function deleteSlot(slotIndex) {
+  localStorage.removeItem(SAVE_KEY_PREFIX + slotIndex);
+}
+
+/**
+ * Format play time (seconds) as HH:MM:SS
+ */
+export function formatPlayTime(seconds) {
+  const h = Math.floor(seconds / 3600);
+  const m = Math.floor((seconds % 3600) / 60);
+  const s = Math.floor(seconds % 60);
+  return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
 }

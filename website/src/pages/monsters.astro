@@ -1,0 +1,26 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import MonsterDex from '../components/monsters/MonsterDex.tsx';
+import { monsters } from '../data/monsters';
+import { types } from '../data/types';
+import { skills } from '../data/skills';
+---
+
+<BaseLayout title="몬스터 도감 — 포켓 왕국">
+  <section class="relative py-16 px-4 text-center scanline-overlay" aria-label="도감 헤더">
+    <div class="absolute inset-0 bg-gradient-to-b from-[#102010] via-pk-bg to-pk-bg" aria-hidden="true"></div>
+    <div class="relative z-10 max-w-3xl mx-auto">
+      <p class="text-pk-text-secondary text-xs tracking-[0.3em] uppercase mb-4 animate-fade-up">MONSTER DEX</p>
+      <h1 class="text-pk-accent crt-glow animate-fade-up-delay-1 mb-4">
+        몬스터 도감
+      </h1>
+      <p class="text-pk-text-secondary text-sm animate-fade-up-delay-2 text-balance">
+        102종의 몬스터를 검색하고, 스탯과 진화 정보를 확인하세요.
+      </p>
+    </div>
+  </section>
+
+  <div class="max-w-6xl mx-auto px-4 py-12">
+    <MonsterDex monsters={monsters} types={types} skills={skills} client:load />
+  </div>
+</BaseLayout>

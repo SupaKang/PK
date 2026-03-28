@@ -1,0 +1,51 @@
+---
+---
+<section class="mb-12 reveal" aria-label="카르마 시스템">
+  <h2 class="section-title">카르마 시스템</h2>
+
+  <div class="pixel-card">
+    <p class="text-sm text-pk-text-secondary mb-6 leading-relaxed max-w-2xl">
+      모험 중 마주치는 선택에 따라 카르마 수치가 변동합니다.
+      카르마는 <strong class="text-[#AA88CC]">-100(어둠)</strong>부터
+      <strong class="text-[#FFEE88]">+100(빛)</strong>까지의 범위를 가지며,
+      최종 엔딩을 결정하는 핵심 요소입니다.
+    </p>
+
+    <!-- Karma bar -->
+    <div
+      class="relative h-10 bg-pk-bg border-2 border-pk-border overflow-hidden mb-6"
+      role="img"
+      aria-label="카르마 스케일: -100 어둠부터 +100 빛까지"
+    >
+      <div class="absolute inset-0 flex">
+        <div class="flex-1" style="background: linear-gradient(90deg, #2a1a3a, #1a1a30 70%)"></div>
+        <div class="w-px bg-pk-muted/40"></div>
+        <div class="flex-1" style="background: linear-gradient(90deg, #1a1a30 30%, #2a2a1a)"></div>
+      </div>
+      <!-- Glow on edges -->
+      <div class="absolute left-0 top-0 bottom-0 w-8" style="background: linear-gradient(90deg, rgba(170,136,204,0.2), transparent)" aria-hidden="true"></div>
+      <div class="absolute right-0 top-0 bottom-0 w-8" style="background: linear-gradient(270deg, rgba(255,238,136,0.2), transparent)" aria-hidden="true"></div>
+      <div class="absolute inset-0 flex items-center justify-between px-3 text-[10px]">
+        <span class="text-[#AA88CC]">-100 어둠</span>
+        <span class="text-pk-muted/60">|</span>
+        <span class="text-[#FFEE88]">+100 빛</span>
+      </div>
+    </div>
+
+    <!-- Thresholds -->
+    <div class="grid grid-cols-3 gap-3 text-center text-xs reveal-children">
+      <div class="py-3 px-2 border border-[#554466]/40" style="background: rgba(42,26,58,0.4)">
+        <span class="text-[#AA88CC] text-sm">&le; -30</span>
+        <p class="text-pk-muted text-[10px] mt-1">어둠의 엔딩</p>
+      </div>
+      <div class="py-3 px-2 border border-pk-border/30 bg-pk-surface/30">
+        <span class="text-pk-text text-sm">-30 ~ +30</span>
+        <p class="text-pk-muted text-[10px] mt-1">중립 엔딩</p>
+      </div>
+      <div class="py-3 px-2 border border-[#FFEE88]/20" style="background: rgba(42,42,26,0.4)">
+        <span class="text-[#FFEE88] text-sm">&ge; +30</span>
+        <p class="text-pk-muted text-[10px] mt-1">빛의 엔딩</p>
+      </div>
+    </div>
+  </div>
+</section>

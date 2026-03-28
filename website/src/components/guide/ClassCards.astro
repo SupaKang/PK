@@ -1,0 +1,57 @@
+---
+import { classes } from '../../data/classes';
+import { getTypeName, getTypeColor } from '../../data/types';
+
+const statLabels: [string, string][] = [
+  ['hp', 'HP'], ['atk', '공격'], ['def', '방어'],
+  ['spAtk', '특공'], ['spDef', '특방'], ['speed', '속도'],
+];
+---
+
+<section class="mb-12 reveal" aria-label="클래스 시스템">
+  <h2 class="section-title">5가지 클래스</h2>
+  <p class="text-sm text-pk-text-secondary mb-8 max-w-2xl">
+    게임 시작 시 하나의 직업을 선택합니다. 각 클래스는 고유 타입과 스탯 보너스를 제공합니다.
+  </p>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 reveal-children">
+    {classes.map(cls => {
+      const typeColor = getTypeColor(cls.type[0]);
+      const stats = cls.baseStats;
+      return (
+        <article class="pixel-card relative overflow-hidden group" style={`border-top-color: ${typeColor}`}>
+          <div class="absolute top-0 left-0 right-0 h-[2px]" style={`background: ${typeColor}`} aria-hidden="true"></div>
+          <div class="pt-1">
+            <div class="flex items-center justify-between mb-3">
+              <h3 class="text-base" style={`color: ${typeColor}`}>{cls.name}</h3>
+              <span class="type-badge" style={`background: ${typeColor}`}>
+                {getTypeName(cls.type[0])}
+              </span>
+            </div>
+            <p class="text-[11px] text-pk-text-secondary mb-4 leading-relaxed">{cls.description}</p>
+
+            {/* Stat bars */}
+            <div class="space-y-1.5" role="list" aria-label={`${cls.name} 스탯`}>
+              {statLabels.map(([key, label]) => {
+                const val = stats[key as keyof typeof stats];
+                const pct = Math.min((val / 100) * 100, 100);
+                return (
+                  <div role="listitem" class="flex items-center gap-2 text-[10px]">
+                    <span class="w-7 text-right text-pk-muted">{label}</span>
+                    <div class="flex-1 h-2.5 bg-pk-bg border border-pk-border/20 overflow-hidden" role="progressbar" aria-valuenow={val} aria-valuemin={0} aria-valuemax={100}>
+                      <div
+                        class="h-full transition-all"
+                        style={`width: ${pct}%; background: ${val >= 70 ? typeColor : val >= 50 ? '#666688' : '#444455'}`}
+                      />
+                    </div>
+                    <span class="w-5 text-right text-pk-muted">{val}</span>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </article>
+      );
+    })}
+  </div>
+</section>

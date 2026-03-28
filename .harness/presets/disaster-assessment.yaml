@@ -1,0 +1,56 @@
+domain: "disaster-assessment"
+description: "재해영향평가 보고서 생성 — 수치 시뮬레이션, 법규 준수, 보고서 출력"
+
+planner:
+  tech_detail_level: "minimal"
+  template: "planner-regulatory.md"
+  decomposition_hint: "report_sections"
+  required_sections:
+    - data_ingestion
+    - simulation_engine
+    - regulatory_check
+    - report_generation
+    - visualization
+
+generator:
+  sprint_max_tokens: 25000
+  sprint_max_files: 4
+  checkpoint_trigger: "per_sprint"
+  template: "generator-computational.md"
+  conventions:
+    numerical_lib: "numpy"
+    data_format: "pandas.DataFrame"
+    output_format: "pdf"
+    coordinate_system: "EPSG:5186"
+
+evaluator:
+  toolkit: "pytest"
+  secondary_toolkit: "numerical-diff"
+  template: "evaluator-regulatory.md"
+  tolerance:
+    numerical: 0.001
+    area: 0.01
+  regulatory_references:
+    - "자연재해대책법 시행령"
+    - "재해영향평가 실무지침(2024)"
+    - "하천설계기준(KDS)"
+  eval_checks:
+    - type: "unit_test"
+      target: "simulation_engine"
+      cases:
+        - input: "fixtures/sample_rainfall.csv"
+          expected_range: [120.5, 125.0]
+    - type: "schema_validation"
+      target: "report output"
+      required_fields: ["사업개요", "재해유형", "저감대책", "결론"]
+    - type: "regulatory_compliance"
+      rules:
+        - "침수심 > 0.5m 구역에 저감대책 필수"
+        - "100년 빈도 강우 적용 여부"
+
+iteration:
+  max_rounds: 6
+  escalation_schedule:
+    1-2: "functionality"
+    3-4: "accuracy"
+    5-6: "completeness"

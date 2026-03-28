@@ -1,306 +1,229 @@
-// 몬스터 인스턴스 관리
-
-let monstersDB = null;
-let skillsDB = null;
-
-export async function loadMonsterDB() {
-  const [mRes, sRes] = await Promise.all([
-    fetch('./data/monsters.json'),
-    fetch('./data/skills.json'),
-  ]);
-  const mData = await mRes.json();
-  const sData = await sRes.json();
-  monstersDB = Array.isArray(mData) ? mData : mData.monsters || [];
-  skillsDB = Array.isArray(sData) ? sData : sData.skills || [];
-  return { monstersDB, skillsDB };
-}
-
-export function getMonsterData(id) {
-  return monstersDB?.find(m => m.id === id);
-}
-
-export function getSkillData(id) {
-  return skillsDB?.find(s => s.id === id);
-}
-
-export function getAllMonsters() {
-  return monstersDB || [];
-}
-
-export function getAllSkills() {
-  return skillsDB || [];
-}
-
-/** 경험치 테이블 — 레벨 n에 필요한 총 경험치 */
-function expForLevel(level, growthRate) {
-  const base = level * level * level;
-  switch (growthRate) {
-    case 'fast': return Math.floor(base * 0.8);
-    case 'medium': return base;
-    case 'slow': return Math.floor(base * 1.25);
-    default: return base;
-  }
-}
+/**
+ * monster.js — Monster instance creation and stat calculation
+ * Creates battle-ready monster instances from base data
+ */
 
 /**
- * 몬스터 인스턴스 생성
+ * Create a monster instance for battle
+ * @param {Object} baseData - Monster entry from monsters.json
+ * @param {number} level - Monster level
+ * @param {Object} [skillsData] - Full skills.json array for skill lookup
+ * @returns {Object} Monster instance
  */
-export function createMonster(monsterId, level, isWild = false) {
-  const data = getMonsterData(monsterId);
-  if (!data) throw new Error(`Monster ID ${monsterId} not found`);
+export function createMonster(baseData, level, skillsData) {
+  // Generate random IVs (0-31)
+  const iv = {
+    hp: Math.floor(Math.random() * 32),
+    atk: Math.floor(Math.random() * 32),
+    def: Math.floor(Math.random() * 32),
+    spAtk: Math.floor(Math.random() * 32),
+    spDef: Math.floor(Math.random() * 32),
+    speed: Math.floor(Math.random() * 32),
+  };
 
-  const monster = {
-    uid: crypto.randomUUID(),
-    id: data.id,
-    name: data.name,
-    nickname: null,
-    type: [...data.type],
+  const stats = calcStats(baseData.baseStats, iv, level);
+
+  // Determine skills: last 4 learned skills up to this level
+  const learnset = baseData.learnset || baseData.skills || [];
+  const available = learnset
+    .filter(s => s.level <= level)
+    .sort((a, b) => b.level - a.level)
+    .slice(0, 4);
+
+  const skills = available.map(s => {
+    const skillData = skillsData
+      ? (Array.isArray(skillsData) ? skillsData : []).find(sk => sk.id === s.skillId)
+      : null;
+    return {
+      id: s.skillId,
+      ...(skillData || {}),
+      ppLeft: skillData ? skillData.pp : 20,
+    };
+  });
+
+  return {
+    id: baseData.id,
+    name: baseData.name,
+    type: baseData.type || ['normal'],
     level,
-    exp: expForLevel(level, data.growthRate),
-    growthRate: data.growthRate,
-    isWild,
-
-    // 스탯 계산 (개체값 포함)
-    iv: {
-      hp: Math.floor(Math.random() * 32),
-      atk: Math.floor(Math.random() * 32),
-      def: Math.floor(Math.random() * 32),
-      spAtk: Math.floor(Math.random() * 32),
-      spDef: Math.floor(Math.random() * 32),
-      speed: Math.floor(Math.random() * 32),
-    },
-    ev: { hp: 0, atk: 0, def: 0, spAtk: 0, spDef: 0, speed: 0 },
-
-    stats: {},
-    currentHp: 0,
-    status: null, // burn, poison, paralyze, sleep, confuse, freeze
-    statusTurns: 0,
-
-    skills: [],
-    baseStats: { ...data.baseStats },
-    evolution: data.evolution ? { ...data.evolution } : null,
-    catchRate: data.catchRate,
-    expYield: data.expYield,
-    spriteConfig: data.spriteConfig,
-    description: data.description,
-    bond: 0, // 유대도 (0-255)
+    baseStats: baseData.baseStats,
+    iv,
+    stats,
+    hp: stats.hp,
+    maxHp: stats.hp,
+    skills,
+    spriteConfig: baseData.spriteConfig || null,
+    isWild: true,
+    status: null, // poison, burn, etc.
   };
-
-  // 스탯 계산
-  recalcStats(monster);
-  monster.currentHp = monster.stats.hp;
-
-  // 레벨에 맞는 스킬 습득
-  learnSkillsForLevel(monster, data);
-
-  return monster;
-}
-
-/** HP 스탯 계산 */
-function calcHpStat(base, iv, ev, level) {
-  return Math.floor(((2 * base + iv + Math.floor(ev / 4)) * level) / 100) + level + 10;
-}
-
-/** 일반 스탯 계산 */
-function calcStat(base, iv, ev, level) {
-  return Math.floor(((2 * base + iv + Math.floor(ev / 4)) * level) / 100) + 5;
-}
-
-export function recalcStats(monster) {
-  const lv = monster.level;
-  const bs = monster.baseStats;
-  const iv = monster.iv;
-  const ev = monster.ev;
-
-  monster.stats = {
-    hp: calcHpStat(bs.hp, iv.hp, ev.hp, lv),
-    atk: calcStat(bs.atk, iv.atk, ev.atk, lv),
-    def: calcStat(bs.def, iv.def, ev.def, lv),
-    spAtk: calcStat(bs.spAtk, iv.spAtk, ev.spAtk, lv),
-    spDef: calcStat(bs.spDef, iv.spDef, ev.spDef, lv),
-    speed: calcStat(bs.speed, iv.speed, ev.speed, lv),
-  };
-}
-
-function learnSkillsForLevel(monster, data) {
-  const learned = [];
-
-  // 레벨셋에서 현재 레벨 이하의 스킬 수집
-  for (const entry of data.learnset) {
-    if (entry.level <= monster.level) {
-      learned.push(entry.skillId);
-    }
-  }
-
-  // 고유기술 체크
-  if (data.uniqueSkill && data.uniqueSkill.level <= monster.level) {
-    learned.push(data.uniqueSkill.skillId);
-  }
-
-  // 최근 5개 스킬만 장착 (가장 높은 레벨에서 배운 것 우선)
-  const lastFive = learned.slice(-5);
-  monster.skills = lastFive.map(skillId => {
-    const skillData = getSkillData(skillId);
-    return skillData ? {
-      id: skillData.id,
-      name: skillData.name,
-      type: skillData.type,
-      category: skillData.category,
-      power: skillData.power,
-      accuracy: skillData.accuracy,
-      pp: skillData.pp,
-      maxPp: skillData.pp,
-      effect: skillData.effect,
-      description: skillData.description,
-    } : null;
-  }).filter(Boolean);
 }
 
 /**
- * 경험치 획득 및 레벨업 처리
- * @returns {Array} 레벨업 이벤트 목록
+ * Calculate final stats from base + IV + level
+ * Simplified formula inspired by Pokemon gen 3
  */
-export function gainExp(monster, amount) {
+function calcStats(base, iv, level) {
+  const calc = (baseStat, ivVal) => {
+    return Math.floor(((2 * baseStat + ivVal) * level) / 100) + 5;
+  };
+
+  return {
+    hp: Math.floor(((2 * base.hp + iv.hp) * level) / 100) + level + 10,
+    atk: calc(base.atk, iv.atk),
+    def: calc(base.def, iv.def),
+    spAtk: calc(base.spAtk, iv.spAtk),
+    spDef: calc(base.spDef, iv.spDef),
+    speed: calc(base.speed, iv.speed),
+  };
+}
+
+/**
+ * Check if monster is fainted
+ */
+export function isFainted(monster) {
+  return monster.hp <= 0;
+}
+
+/**
+ * Heal monster to full HP
+ */
+export function healFull(monster) {
+  monster.hp = monster.maxHp;
+  monster.status = null;
+  for (const skill of monster.skills) {
+    const base = skill.pp || 20;
+    skill.ppLeft = base;
+  }
+}
+
+/**
+ * Calculate EXP gained from defeating a monster
+ */
+export function calcExpGain(defeated) {
+  const baseExp = defeated.baseStats
+    ? Math.floor((defeated.baseStats.hp + defeated.baseStats.atk + defeated.baseStats.spAtk) / 3)
+    : 50;
+  return Math.floor((baseExp * defeated.level) / 5) + 10;
+}
+
+/**
+ * Add EXP to a monster. Returns level-up events.
+ * @param {Object} monster
+ * @param {number} exp
+ * @param {Array} monstersData - Full monsters.json for evolution lookup
+ * @param {Array} skillsData - Full skills.json for new skill lookup
+ * @returns {Array} events [{type: 'levelup'|'evolution'|'newskill', ...}]
+ */
+export function addExp(monster, exp, monstersData, skillsData) {
+  if (!monster.exp) monster.exp = 0;
+  if (!monster.expToNext) monster.expToNext = calcExpToNext(monster.level);
+
+  monster.exp += exp;
   const events = [];
-  monster.exp += amount;
 
-  while (true) {
-    const nextLevelExp = expForLevel(monster.level + 1, monster.growthRate);
-    if (monster.exp < nextLevelExp || monster.level >= 100) break;
-
+  while (monster.exp >= monster.expToNext) {
+    monster.exp -= monster.expToNext;
     monster.level++;
-    const oldHp = monster.stats.hp;
-    recalcStats(monster);
-    const hpGain = monster.stats.hp - oldHp;
-    monster.currentHp += hpGain;
 
-    const levelEvent = { type: 'level_up', level: monster.level, newSkills: [], evolved: false };
+    // Recalculate stats
+    const oldMaxHp = monster.maxHp;
+    monster.stats = calcStats(monster.baseStats, monster.iv, monster.level);
+    monster.maxHp = monster.stats.hp;
+    monster.hp += (monster.maxHp - oldMaxHp); // Heal the HP difference
+    monster.expToNext = calcExpToNext(monster.level);
 
-    // 새 스킬 습득 체크
-    const data = getMonsterData(monster.id);
-    if (data) {
-      for (const entry of data.learnset) {
-        if (entry.level === monster.level) {
-          const skillData = getSkillData(entry.skillId);
-          if (skillData) {
-            levelEvent.newSkills.push(skillData);
-          }
+    events.push({ type: 'levelup', level: monster.level });
+
+    // Check for new skills
+    const baseData = monstersData ? monstersData.find(m => m.id === monster.id) : null;
+    if (baseData) {
+      const learnset = baseData.learnset || [];
+      const newSkills = learnset.filter(s => s.level === monster.level);
+      for (const ns of newSkills) {
+        if (monster.skills.length < 4) {
+          const skillData = skillsData
+            ? (Array.isArray(skillsData) ? skillsData : []).find(sk => sk.id === ns.skillId)
+            : null;
+          const newSkill = { id: ns.skillId, ...(skillData || {}), ppLeft: skillData ? skillData.pp : 20 };
+          monster.skills.push(newSkill);
+          events.push({ type: 'newskill', skill: newSkill });
         }
       }
-      // 고유기술 체크
-      if (data.uniqueSkill && data.uniqueSkill.level === monster.level) {
-        const skillData = getSkillData(data.uniqueSkill.skillId);
-        if (skillData) {
-          levelEvent.newSkills.push(skillData);
+
+      // Check evolution
+      if (baseData.evolution && monster.level >= baseData.evolution.level) {
+        const evoTarget = monstersData.find(m => m.id === baseData.evolution.to);
+        if (evoTarget) {
+          events.push({
+            type: 'evolution',
+            fromId: monster.id,
+            fromName: monster.name,
+            toId: evoTarget.id,
+            toName: evoTarget.name,
+          });
+          // Apply evolution
+          monster.id = evoTarget.id;
+          monster.name = evoTarget.name;
+          monster.type = evoTarget.type || monster.type;
+          monster.baseStats = evoTarget.baseStats;
+          monster.spriteConfig = evoTarget.spriteConfig || monster.spriteConfig;
+          // Recalculate stats with new base
+          const oldHp = monster.maxHp;
+          monster.stats = calcStats(monster.baseStats, monster.iv, monster.level);
+          monster.maxHp = monster.stats.hp;
+          monster.hp += (monster.maxHp - oldHp);
         }
       }
     }
-
-    events.push(levelEvent);
   }
 
   return events;
 }
 
 /**
- * 스킬 장착 (최대 5개)
+ * EXP needed for next level (cubic growth)
  */
-export function learnSkill(monster, skillData) {
-  if (monster.skills.length < 5) {
-    monster.skills.push({
-      id: skillData.id,
-      name: skillData.name,
-      type: skillData.type,
-      category: skillData.category,
-      power: skillData.power,
-      accuracy: skillData.accuracy,
-      pp: skillData.pp,
-      maxPp: skillData.pp,
-      effect: skillData.effect,
-      description: skillData.description,
-    });
-    return { replaced: false };
+function calcExpToNext(level) {
+  return Math.floor(4 * Math.pow(level, 2.2) / 5) + 10;
+}
+
+/**
+ * Attempt to capture a wild monster
+ * @param {Object} monster - Wild monster instance
+ * @param {Object} item - Contract stone item data
+ * @returns {{ success: boolean, shakes: number }}
+ */
+export function attemptCapture(monster, item) {
+  const catchRate = monster.baseStats
+    ? Math.min(255, Math.floor(150 / (monster.baseStats.hp + monster.baseStats.def)))
+    : 45;
+
+  // HP ratio factor: lower HP = easier catch
+  const hpRatio = monster.hp / monster.maxHp;
+  const hpFactor = (1 - hpRatio * 0.7);
+
+  // Status bonus
+  let statusBonus = 1;
+  if (monster.status === 'sleep' || monster.status === 'freeze') statusBonus = 2.5;
+  else if (monster.status) statusBonus = 1.5;
+
+  // Stone multiplier
+  const stoneMultiplier = item.effect ? item.effect.value : 1;
+
+  // Final catch rate (0-255)
+  const rate = Math.min(255, Math.floor(catchRate * hpFactor * statusBonus * stoneMultiplier));
+
+  // 4 shake checks (like Pokemon gen 3)
+  let shakes = 0;
+  const threshold = Math.floor(65536 / Math.pow(255 / rate, 0.25));
+
+  for (let i = 0; i < 4; i++) {
+    if (Math.random() * 65536 < threshold) {
+      shakes++;
+    } else {
+      break;
+    }
   }
-  // 5개 꽉 참 → UI에서 교체 선택 필요
-  return { replaced: false, needChoice: true, newSkill: skillData };
-}
 
-export function replaceSkill(monster, slotIndex, skillData) {
-  monster.skills[slotIndex] = {
-    id: skillData.id,
-    name: skillData.name,
-    type: skillData.type,
-    category: skillData.category,
-    power: skillData.power,
-    accuracy: skillData.accuracy,
-    pp: skillData.pp,
-    maxPp: skillData.pp,
-    effect: skillData.effect,
-    description: skillData.description,
-  };
-}
-
-/**
- * 진화 체크
- */
-export function checkEvolution(monster, timeOfDay = 'day') {
-  if (!monster.evolution) return null;
-  if (monster.level < (monster.evolution.level || 999)) return null;
-
-  // Check conditional evolution requirements
-  const cond = monster.evolution.condition;
-  if (cond === 'day' && timeOfDay !== 'day' && timeOfDay !== 'morning') return null;
-  if (cond === 'night' && timeOfDay !== 'night' && timeOfDay !== 'evening') return null;
-  if (cond === 'high_bond' && (monster.bond || 0) < 150) return null;
-
-  return monster.evolution.to;
-}
-
-/**
- * 진화 실행
- */
-export function evolve(monster) {
-  const newId = monster.evolution.to;
-  const newData = getMonsterData(newId);
-  if (!newData) return false;
-
-  const oldMaxHp = monster.stats.hp;
-  monster.id = newData.id;
-  monster.name = monster.nickname ? monster.name : newData.name;
-  monster.type = [...newData.type];
-  monster.baseStats = { ...newData.baseStats };
-  monster.evolution = newData.evolution ? { ...newData.evolution } : null;
-  monster.catchRate = newData.catchRate;
-  monster.expYield = newData.expYield;
-  monster.spriteConfig = newData.spriteConfig;
-  monster.description = newData.description;
-
-  recalcStats(monster);
-  // HP 비례 유지
-  const hpGain = monster.stats.hp - oldMaxHp;
-  monster.currentHp = Math.min(monster.currentHp + Math.max(0, hpGain), monster.stats.hp);
-
-  return true;
-}
-
-/**
- * 경험치 필요량
- */
-export function expToNextLevel(monster) {
-  if (monster.level >= 100) return 0;
-  return expForLevel(monster.level + 1, monster.growthRate) - monster.exp;
-}
-
-/**
- * 몬스터 직렬화 (세이브용)
- */
-export function serializeMonster(monster) {
-  return { ...monster };
-}
-
-/**
- * 몬스터 역직렬화 (로드용)
- */
-export function deserializeMonster(data) {
-  return { ...data };
+  return { success: shakes >= 4, shakes };
 }

@@ -1,0 +1,94 @@
+---
+interface Props {
+  currentPath: string;
+}
+
+const { currentPath } = Astro.props;
+
+const links = [
+  { href: '/', label: '게임 소개' },
+  { href: '/story', label: '스토리' },
+  { href: '/guide', label: '시스템 가이드' },
+  { href: '/monsters', label: '몬스터 도감' },
+];
+---
+
+<header>
+  <nav
+    class="sticky top-0 z-50 bg-pk-bg/95 backdrop-blur-sm border-b-2 border-pk-accent/60"
+    aria-label="메인 네비게이션"
+  >
+    <div class="max-w-6xl mx-auto px-4 flex items-center justify-between h-14">
+      <!-- Logo -->
+      <a href="/" class="text-pk-accent font-pixel text-lg crt-glow-sm tracking-widest" aria-label="포켓 왕국 홈">
+        PK
+      </a>
+
+      <!-- Desktop nav -->
+      <div class="hidden md:flex gap-1" role="list">
+        {links.map(link => {
+          const isActive = currentPath === link.href || (link.href !== '/' && currentPath.startsWith(link.href));
+          return (
+            <a
+              href={link.href}
+              role="listitem"
+              class:list={[
+                'px-3 py-1.5 text-sm transition-all relative',
+                isActive
+                  ? 'text-pk-accent'
+                  : 'text-pk-text-secondary hover:text-pk-text',
+              ]}
+              aria-current={isActive ? 'page' : undefined}
+            >
+              {link.label}
+              {isActive && (
+                <span class="absolute bottom-0 left-3 right-3 h-0.5 bg-pk-accent shadow-[0_0_6px_rgba(255,204,0,0.5)]" />
+              )}
+            </a>
+          );
+        })}
+      </div>
+
+      <!-- Mobile hamburger -->
+      <input type="checkbox" id="nav-toggle" class="hidden peer" aria-label="메뉴 열기" />
+      <label
+        for="nav-toggle"
+        class="md:hidden cursor-pointer p-2 text-pk-text-secondary hover:text-pk-text transition-colors"
+        aria-label="메뉴 토글"
+        role="button"
+        tabindex="0"
+      >
+        <svg width="20" height="16" viewBox="0 0 20 16" fill="none" aria-hidden="true">
+          <rect y="0" width="20" height="2" fill="currentColor" />
+          <rect y="7" width="20" height="2" fill="currentColor" />
+          <rect y="14" width="20" height="2" fill="currentColor" />
+        </svg>
+      </label>
+
+      <!-- Mobile menu -->
+      <div
+        class="hidden peer-checked:flex flex-col absolute top-14 left-0 right-0 bg-pk-bg/98 backdrop-blur-sm border-b-2 border-pk-accent/40 md:hidden z-40"
+        role="menu"
+      >
+        {links.map(link => {
+          const isActive = currentPath === link.href || (link.href !== '/' && currentPath.startsWith(link.href));
+          return (
+            <a
+              href={link.href}
+              role="menuitem"
+              class:list={[
+                'text-sm px-6 py-3.5 border-b border-pk-border/30 transition-colors',
+                isActive
+                  ? 'text-pk-accent bg-pk-surface'
+                  : 'text-pk-text-secondary hover:text-pk-text hover:bg-pk-surface/50',
+              ]}
+              aria-current={isActive ? 'page' : undefined}
+            >
+              {link.label}
+            </a>
+          );
+        })}
+      </div>
+    </div>
+  </nav>
+</header>

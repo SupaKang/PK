@@ -1,0 +1,31 @@
+---
+const features = [
+  { number: '102', label: '몬스터', color: '#44BB44', delay: '0' },
+  { number: '346', label: '스킬', color: '#FF4422', delay: '0.08' },
+  { number: '18', label: '타입', color: '#FFCC00', delay: '0.16' },
+  { number: '5', label: '클래스', color: '#AA44CC', delay: '0.24' },
+  { number: '10', label: '챕터', color: '#3399FF', delay: '0.32' },
+  { number: '31', label: '지역', color: '#BB8844', delay: '0.4' },
+];
+---
+
+<section class="max-w-5xl mx-auto px-4 py-20" aria-label="게임 규모">
+  <h2 class="section-title text-center reveal">포켓 왕국의 규모</h2>
+
+  <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 mt-10 reveal-children">
+    {features.map(f => (
+      <div class="pixel-card text-center py-6 group">
+        <div
+          class="text-3xl md:text-4xl mb-2 transition-all group-hover:scale-110"
+          style={`color: ${f.color}; text-shadow: 0 0 12px ${f.color}40`}
+          aria-label={`${f.number}${f.label}`}
+        >
+          {f.number}
+        </div>
+        <div class="text-pk-muted text-xs tracking-wider">{f.label}</div>
+      </div>
+    ))}
+  </div>
+</section>
+
+<div class="pixel-divider max-w-md mx-auto" aria-hidden="true"></div>

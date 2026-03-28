@@ -1,0 +1,70 @@
+---
+const characters = [
+  {
+    name: '계약자',
+    sub: '플레이어',
+    role: '주인공',
+    color: '#FFCC00',
+    icon: '★',
+    desc: '고대 예언에 선택된 자. 할아버지로부터 마석의 비밀을 전해 받고, 마왕에게 빼앗긴 세계를 되찾기 위한 모험을 시작한다.',
+    traits: ['5가지 직업 선택', '카르마 시스템', '최대 6마리 파티'],
+  },
+  {
+    name: '은하',
+    sub: '라이벌',
+    role: '라이벌',
+    color: '#3399FF',
+    icon: '◆',
+    desc: '같은 마을 출신의 경쟁자. 여정을 통해 서로 성장하며 깊은 유대를 형성한다. 4번의 대결을 통해 점점 강해진다.',
+    traits: ['4회 라이벌 배틀', '점진적 성장', '스토리 핵심 인물'],
+  },
+  {
+    name: '마왕 카오스',
+    sub: '최종 보스',
+    role: '최종 보스',
+    color: '#FF4422',
+    icon: '▲',
+    desc: '어둠의 틈에서 나타나 대전쟁을 일으킨 마족의 왕. 세계를 지배하고 있으며, 그의 진정한 목적은 베일에 싸여 있다.',
+    traits: ['최종 보스', '오리진 몬스터 보유', '챕터 8 대결'],
+  },
+];
+---
+
+<section class="mb-12 reveal" aria-label="주요 인물">
+  <h2 class="section-title">주요 인물</h2>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-5 reveal-children">
+    {characters.map(c => (
+      <article class="pixel-card group relative overflow-hidden">
+        <!-- Accent stripe -->
+        <div class="absolute top-0 left-0 right-0 h-[2px]" style={`background: ${c.color}`} aria-hidden="true"></div>
+
+        <div class="pt-2">
+          <div class="flex items-center gap-3 mb-4">
+            <div
+              class="w-10 h-10 border-2 flex items-center justify-center text-lg shrink-0 transition-all group-hover:shadow-[0_0_10px_currentColor]"
+              style={`border-color: ${c.color}; color: ${c.color}`}
+              aria-hidden="true"
+            >
+              {c.icon}
+            </div>
+            <div>
+              <h3 class="text-base leading-tight" style={`color: ${c.color}`}>{c.name}</h3>
+              <p class="text-pk-muted text-[10px] tracking-wider uppercase">{c.sub}</p>
+            </div>
+          </div>
+
+          <p class="text-sm text-pk-text-secondary leading-relaxed mb-4">{c.desc}</p>
+
+          <div class="flex flex-wrap gap-1.5" role="list" aria-label="특성">
+            {c.traits.map(t => (
+              <span role="listitem" class="text-[10px] px-2 py-0.5 bg-pk-bg border border-pk-border/40 text-pk-muted">
+                {t}
+              </span>
+            ))}
+          </div>
+        </div>
+      </article>
+    ))}
+  </div>
+</section>

@@ -1,0 +1,65 @@
+---
+import { ClientRouter } from 'astro:transitions';
+import Navigation from '../components/layout/Navigation.astro';
+import Footer from '../components/layout/Footer.astro';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = '102종 몬스터, 18타입, 10장의 스토리가 펼쳐지는 턴제 몬스터 수집 RPG' } = Astro.props;
+const currentPath = Astro.url.pathname;
+---
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content={description} />
+  <meta name="theme-color" content="#0f0f1a" />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:type" content="website" />
+  <title>{title}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
+  <ClientRouter />
+</head>
+<body class="min-h-screen flex flex-col noise-bg">
+  <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[100] pixel-btn text-xs">
+    본문으로 건너뛰기
+  </a>
+  <Navigation currentPath={currentPath} />
+  <main id="main-content" class="flex-1" role="main">
+    <slot />
+  </main>
+  <Footer />
+
+  <!-- Scroll reveal observer -->
+  <script>
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+    );
+    document.querySelectorAll('.reveal, .reveal-children').forEach((el) => observer.observe(el));
+
+    // Re-observe on Astro page transitions
+    document.addEventListener('astro:page-load', () => {
+      document.querySelectorAll('.reveal, .reveal-children').forEach((el) => {
+        el.classList.remove('visible');
+        observer.observe(el);
+      });
+    });
+  </script>
+</body>
+</html>

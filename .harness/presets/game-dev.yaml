@@ -1,0 +1,48 @@
+domain: "game-dev"
+description: "브라우저/데스크톱 게임 — 레트로, 캐주얼, 퍼즐 등"
+
+planner:
+  tech_detail_level: "none"
+  template: "planner-game.md"
+  decomposition_hint: "gameplay_loop"
+  required_sections:
+    - core_mechanic
+    - win_lose_condition
+    - feedback_systems
+    - level_progression
+
+generator:
+  sprint_max_tokens: 35000
+  sprint_max_files: 8
+  checkpoint_trigger: "per_sprint"
+  template: "generator-game.md"
+  conventions:
+    game_loop: "requestAnimationFrame"
+    state_management: "finite_state_machine"
+    asset_dir: "src/assets/"
+
+evaluator:
+  toolkit: "playwright"
+  secondary_toolkit: "screenshot-diff"
+  template: "evaluator-game.md"
+  eval_actions:
+    - type: "keyboard"
+      keys: ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "Space"]
+      expect: "visual_change"
+    - type: "wait"
+      duration_ms: 5000
+      expect: "no_crash"
+    - type: "click"
+      target: "canvas"
+      expect: "response"
+
+iteration:
+  max_rounds: 10
+  escalation_schedule:
+    1-3: "functionality"
+    4-6: "gameplay_feel"
+    7-9: "polish"
+    10: "pivot_check"
+  pivot_triggers:
+    - "프레임레이트가 3회 연속 30fps 미만"
+    - "핵심 메카닉의 재미 요소가 평가 기준 미달"

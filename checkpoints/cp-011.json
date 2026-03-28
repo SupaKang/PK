@@ -1,0 +1,28 @@
+{
+  "checkpoint_id": "cp-011",
+  "sprint": "sprint-011",
+  "status": "complete",
+  "created_at": "2026-03-28T12:45:00Z",
+  "project_state": {
+    "completed_features": ["F-001","F-002","F-003","F-004","F-005","F-006","F-008","F-009","F-010","F-011","F-012","F-018","F-024","F-025","F-026","F-027"],
+    "current_file_tree": [
+      "src/main.js",
+      "src/ui/renderer.js","src/ui/sprite-generator.js","src/ui/asset-loader.js",
+      "src/ui/spritesheet.js","src/ui/tilemap-engine.js","src/ui/map-ui.js",
+      "src/ui/battle-ui.js","src/ui/menu-ui.js","src/ui/dialog-ui.js","src/ui/dex-ui.js",
+      "src/core/type.js","src/core/monster.js","src/core/skill.js",
+      "src/core/battle.js","src/core/item.js","src/core/party.js",
+      "src/core/player-class.js","src/core/achievement.js",
+      "src/world/map.js","src/world/encounter.js","src/world/npc.js","src/world/story.js",
+      "src/save/save.js","src/audio/audio.js"
+    ],
+    "total_source_files": 25
+  },
+  "eval_summary": { "last_eval": "eval-sprint-011.js", "status": "pass", "tests_passed": 9, "tests_total": 9 },
+  "game_state": {
+    "implemented_states": ["LOADING","TITLE","MAP","BATTLE","MENU","DIALOG","SAVE_MENU","INVENTORY","SHOP","DEX"],
+    "audio_features": ["web_audio_api","chiptune_bgm_5_scenes","sfx_7_types","volume_control","mute_toggle"],
+    "settings_features": ["difficulty_3_levels","battle_speed_1x_2x_4x","auto_battle"],
+    "debug_keys": {"B":"Force battle","M":"Party menu","P":"Save","I":"Inventory","D":"Dex","F":"Speed toggle","G":"Auto-battle"}
+  }
+}

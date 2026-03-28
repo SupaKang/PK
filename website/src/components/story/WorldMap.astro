@@ -1,0 +1,75 @@
+---
+import { maps } from '../../data/maps';
+
+const typeStyles: Record<string, { color: string; label: string }> = {
+  town:       { color: '#3399FF', label: '마을' },
+  route:      { color: '#44BB44', label: '루트' },
+  gym:        { color: '#FF4422', label: '체육관' },
+  cave:       { color: '#BB8844', label: '동굴' },
+  forest:     { color: '#44BB44', label: '숲' },
+  elite_four: { color: '#AA44CC', label: '사천왕' },
+  special:    { color: '#FFCC00', label: '특수' },
+};
+
+const grouped = maps.reduce((acc, m) => {
+  const t = m.type || 'special';
+  if (!acc[t]) acc[t] = [];
+  acc[t].push(m);
+  return acc;
+}, {} as Record<string, typeof maps>);
+
+const order = ['town', 'route', 'gym', 'cave', 'forest', 'elite_four', 'special'];
+---
+
+<section class="mb-12 reveal" aria-label="세계 지도">
+  <h2 class="section-title">세계 지도</h2>
+
+  <p class="text-sm text-pk-text-secondary mb-6">
+    31개의 지역을 탐험하며, 배지를 모아 새로운 영역을 해금하세요.
+  </p>
+
+  <!-- Legend -->
+  <div class="flex flex-wrap gap-3 mb-6" role="list" aria-label="지역 유형 범례">
+    {Object.entries(typeStyles).map(([key, s]) => (
+      <span role="listitem" class="flex items-center gap-1.5 text-[10px] text-pk-muted">
+        <span class="w-2.5 h-2.5 inline-block" style={`background: ${s.color}; box-shadow: 0 0 4px ${s.color}40`} aria-hidden="true"></span>
+        {s.label}
+      </span>
+    ))}
+  </div>
+
+  <!-- Map grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 reveal-children">
+    {order.filter(t => grouped[t]).map(type => {
+      const s = typeStyles[type] || typeStyles.special;
+      const locations = grouped[type];
+      return (
+        <article class="pixel-card" style={`border-left-color: ${s.color}`}>
+          <h3 class="text-sm mb-3 flex items-center gap-2" style={`color: ${s.color}`}>
+            <span class="w-2.5 h-2.5 inline-block" style={`background: ${s.color}`} aria-hidden="true"></span>
+            {s.label}
+            <span class="text-pk-muted text-[10px]">({locations.length})</span>
+          </h3>
+          <div class="space-y-1.5">
+            {locations.map(loc => (
+              <div class="flex items-start gap-2 text-xs">
+                <span class="text-pk-muted shrink-0 w-8 text-right text-[10px]">
+                  {loc.requiredBadges > 0 ? `${loc.requiredBadges}배지` : '—'}
+                </span>
+                <div>
+                  <span class="text-pk-text">{loc.name}</span>
+                  {loc.gym && (
+                    <span class="ml-1.5 type-badge text-[9px]" style={`background: ${typeStyles.gym.color}`}>
+                      {loc.gym.leader}
+                    </span>
+                  )}
+                  <p class="text-pk-muted text-[10px] mt-0.5 leading-relaxed">{loc.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </article>
+      );
+    })}
+  </div>
+</section>

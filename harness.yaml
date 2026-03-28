@@ -1,0 +1,86 @@
+version: "1.1.0"
+project:
+  name: "Pocket Kingdom"
+  domain: "game-dev"
+  description: "몬스터 수집 턴제 RPG — 마석 계약, 수호자 순례, 멀티 엔딩"
+
+tech_stack:
+  language: "JavaScript (순수 JS, 프레임워크 없음)"
+  rendering: "Canvas 2D API"
+  game_loop: "requestAnimationFrame 자체 구현"
+  state_management: "커스텀 FSM"
+  build: "Vite"
+  data: "JSON (monsters, skills, maps, story, items, types, classes)"
+  audio: "Web Audio API (프로시저럴 칩튠)"
+  save: "LocalStorage"
+
+asset_pipeline:
+  tool: "PixelLab MCP"
+  style_keywords: "16-bit retro RPG, pixel art, top-down perspective"
+  size_standards:
+    character_sprite: "32x32 or 48x48"
+    monster_sprite: "32x32 or 64x64"
+    tile: "16x16 or 32x32"
+    item_icon: "16x16"
+    map_object: "auto"
+  directories:
+    sprites: "src/assets/sprites/"
+    tilesets: "src/assets/tilesets/"
+    objects: "src/assets/objects/"
+    items: "src/assets/items/"
+    ui: "src/assets/ui/"
+  migration:
+    from: "src/ui/sprite-generator.js (프로시저럴)"
+    to: "PixelLab MCP 생성 에셋"
+    strategy: "Sprint 002에서 AssetLoader 구축 후 스프린트별 점진 교체"
+
+planner:
+  focus: "what"
+  tech_detail_level: "none"
+  output: "plan/spec.md"
+  template: "planner-game.md"
+  decomposition_hint: "gameplay_loop"
+
+generator:
+  sprint_max_tokens: 35000
+  sprint_max_files: 8
+  checkpoint_trigger: "per_sprint"
+  template: "generator-game.md"
+  conventions:
+    game_loop: "requestAnimationFrame"
+    state_management: "finite_state_machine"
+    asset_dir: "src/assets/"
+  pixellab:
+    enabled: true
+    docs: "@https://api.pixellab.ai/mcp/docs"
+    rule: "프로시저럴 Canvas 도형 에셋 금지 — 모든 시각 에셋은 PixelLab MCP로 생성"
+
+evaluator:
+  execution_mode: "eval_script_separation"
+  description: "현재 대화 내에서 eval 스크립트를 별도 파일로 생성·실행. 스크립트 결과만으로 판정."
+  script_dir: "eval/scripts/"
+  report_dir: "eval/reports/"
+  toolkit: "playwright"
+  secondary_toolkit: "screenshot-diff"
+  template: "evaluator-game.md"
+  asset_checks:
+    - "src/assets/ 내 필수 에셋 파일 존재 + 크기 > 0"
+    - "프로시저럴 폴백 사용 여부 (0이어야 pass)"
+    - "에셋 간 스타일 일관성"
+
+iteration:
+  max_rounds: 10
+  escalation_schedule:
+    1-3: "functionality"
+    4-6: "gameplay_feel"
+    7-9: "polish"
+    10: "pivot_check"
+
+sprints:
+  total: 12
+  mid_replan: "Sprint 6 완료 후"
+  role_transition_marker: "--- ROLE TRANSITION: Generator → Evaluator ---"
+
+overmind:
+  enabled: true
+  auto_devlog: true

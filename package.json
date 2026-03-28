@@ -12,6 +12,8 @@
     "deploy": "vite build && echo 'Build complete. Deploy dist/ folder.'"
   },
   "devDependencies": {
+    "@playwright/test": "^1.58.2",
+    "playwright": "^1.58.2",
     "vite": "^6.2.0"
   }
 }

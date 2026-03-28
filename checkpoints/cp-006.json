@@ -1,0 +1,49 @@
+{
+  "checkpoint_id": "cp-006",
+  "sprint": "sprint-006",
+  "status": "complete",
+  "created_at": "2026-03-28T11:05:00Z",
+  "project_state": {
+    "completed_features": ["F-001", "F-002", "F-003", "F-004", "F-005", "F-006", "F-008"],
+    "current_file_tree": [
+      "index.html", "vite.config.js", "playwright.config.js", "package.json",
+      "src/main.js",
+      "src/ui/renderer.js", "src/ui/sprite-generator.js", "src/ui/asset-loader.js",
+      "src/ui/spritesheet.js", "src/ui/tilemap-engine.js", "src/ui/map-ui.js",
+      "src/ui/battle-ui.js", "src/ui/menu-ui.js", "src/ui/dialog-ui.js",
+      "src/core/type.js", "src/core/monster.js", "src/core/skill.js",
+      "src/core/battle.js", "src/core/item.js", "src/core/party.js", "src/core/player-class.js",
+      "src/world/map.js", "src/world/encounter.js", "src/world/npc.js"
+    ],
+    "total_source_files": 20,
+    "known_issues": [
+      "한글 폰트 미지원 (ASCII 전용 5x7 비트맵)",
+      "NPC 충돌 미구현 — 플레이어가 NPC 위를 걸어갈 수 있음",
+      "클래스 선택이 게임플레이에 아직 영향 없음 (스탯 보너스 미적용)",
+      "상점 시스템 미구현"
+    ],
+    "next_sprint_context": "Sprint 007+에서 세이브/로드, 상점, 도감, 스토리를 구현한다. DialogUI는 start(lines, onEnd, onChoice)로 호출. NPC는 getNPCsForMap(mapId)으로 로드. PlayerClass는 this.playerClass에 저장. DIALOG 상태는 MAP 위에 오버레이 렌더링."
+  },
+  "asset_state": {
+    "generated_characters": [
+      { "id": "e58baf01-5680-46cc-90b7-96c2e7eee199", "name": "Professor NPC", "local_path": "src/assets/sprites/npcs/professor/" },
+      { "id": "d933b435-8dba-4729-a5f3-9e1c126f6da0", "name": "Villager NPC", "local_path": "src/assets/sprites/npcs/villager/" }
+    ],
+    "generated_ui": [
+      { "id": "d29a9fcf-7a4d-4165-b2ed-b5078875b6f4", "name": "dialog_box", "local_path": "src/assets/ui/dialog_box.png" }
+    ]
+  },
+  "eval_summary": {
+    "last_eval": "eval-sprint-006.js",
+    "status": "pass",
+    "tests_passed": 8,
+    "tests_total": 8
+  },
+  "game_state": {
+    "implemented_states": ["LOADING", "TITLE", "MAP", "BATTLE", "MENU", "DIALOG"],
+    "dialog_features": ["typewriter_effect", "speaker_name", "choice_branching", "word_wrap", "continue_indicator"],
+    "npc_features": ["map_placement", "facing_direction", "enter_interaction", "per_map_registry"],
+    "prologue_flow": "TITLE→Enter→DIALOG(prologue 7 lines)→class_choice→starter→MAP",
+    "debug_keys": { "B": "Force battle", "M": "Open party menu" }
+  }
+}

@@ -1,0 +1,55 @@
+domain: "crawler-pipeline"
+description: "웹 크롤러, 데이터 수집·정제·적재 파이프라인"
+
+planner:
+  tech_detail_level: "minimal"
+  template: "planner-data.md"
+  decomposition_hint: "etl_stages"
+  required_sections:
+    - source_definition
+    - extraction_logic
+    - transformation_rules
+    - storage_target
+    - scheduling
+    - error_recovery
+
+generator:
+  sprint_max_tokens: 20000
+  sprint_max_files: 3
+  checkpoint_trigger: "per_sprint"
+  template: "generator-crawler.md"
+  conventions:
+    http_client: "httpx"
+    parser: "beautifulsoup4 | selectolax"
+    async_pattern: "asyncio"
+    rate_limit: "respectful"
+    retry_strategy: "exponential_backoff"
+
+evaluator:
+  toolkit: "pytest"
+  secondary_toolkit: "mock-server"
+  template: "evaluator-pipeline.md"
+  eval_checks:
+    - type: "unit_test"
+      target: "parser"
+      method: "fixture_html → expected_dict 비교"
+    - type: "integration_test"
+      target: "full_pipeline"
+      method: "mock 서버로 E2E 실행"
+    - type: "resilience_test"
+      scenarios:
+        - "HTTP 429 응답 시 재시도"
+        - "HTML 구조 변경 시 graceful failure"
+        - "빈 응답 시 스킵 처리"
+    - type: "data_quality"
+      checks:
+        - "null 비율 < 5%"
+        - "중복 레코드 0건"
+        - "날짜 형식 통일 (ISO 8601)"
+
+iteration:
+  max_rounds: 5
+  escalation_schedule:
+    1-2: "functionality"
+    3: "resilience"
+    4-5: "data_quality"

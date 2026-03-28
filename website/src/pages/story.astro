@@ -1,0 +1,34 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ChapterTimeline from '../components/story/ChapterTimeline.astro';
+import CharacterCards from '../components/story/CharacterCards.astro';
+import KarmaSystem from '../components/story/KarmaSystem.astro';
+import EndingsSection from '../components/story/EndingsSection.astro';
+import WorldMap from '../components/story/WorldMap.astro';
+---
+
+<BaseLayout title="스토리 & 세계관 — 포켓 왕국">
+  <section class="relative py-16 px-4 text-center scanline-overlay" aria-label="스토리 헤더">
+    <div class="absolute inset-0 bg-gradient-to-b from-[#1a1030] via-pk-bg to-pk-bg" aria-hidden="true"></div>
+    <div class="relative z-10 max-w-3xl mx-auto">
+      <p class="text-pk-text-secondary text-xs tracking-[0.3em] uppercase mb-4 animate-fade-up">STORY & WORLD</p>
+      <h1 class="text-pk-accent crt-glow animate-fade-up-delay-1 mb-4">
+        스토리 & 세계관
+      </h1>
+      <p class="text-pk-text-secondary text-sm animate-fade-up-delay-2 text-balance">
+        어둠에 물든 세계를 되찾는 계약자의 여정
+      </p>
+    </div>
+  </section>
+
+  <div class="max-w-5xl mx-auto px-4 py-12">
+    <CharacterCards />
+    <div class="pixel-divider" aria-hidden="true"></div>
+    <ChapterTimeline />
+    <div class="pixel-divider" aria-hidden="true"></div>
+    <KarmaSystem />
+    <EndingsSection />
+    <div class="pixel-divider" aria-hidden="true"></div>
+    <WorldMap />
+  </div>
+</BaseLayout>

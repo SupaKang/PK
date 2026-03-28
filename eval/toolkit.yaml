@@ -1,0 +1,56 @@
+# 도메인별 Eval Toolkit 매핑
+
+toolkits:
+  playwright:
+    description: "브라우저 자동화 기반 검증"
+    install: "npm install -D playwright @playwright/test"
+    domains: ["game-dev", "ui-app", "drawing-editor"]
+    capabilities:
+      - keyboard_input
+      - mouse_input
+      - screenshot
+      - console_monitoring
+      - fps_measurement
+
+  pytest:
+    description: "Python 단위/통합 테스트"
+    install: "pip install pytest pytest-cov"
+    domains: ["disaster-assessment", "crawler-pipeline", "weather-data", "data-pipeline"]
+    capabilities:
+      - unit_test
+      - integration_test
+      - fixture_based
+      - coverage_report
+
+  screenshot-diff:
+    description: "스크린샷 비교 기반 시각 검증"
+    install: "npm install -D pixelmatch pngjs"
+    domains: ["game-dev", "ui-app"]
+    capabilities:
+      - visual_regression
+      - pixel_comparison
+
+  numerical-diff:
+    description: "수치 비교 검증"
+    install: "pip install numpy"
+    domains: ["disaster-assessment", "weather-data"]
+    capabilities:
+      - tolerance_comparison
+      - statistical_validation
+
+  visual-diff:
+    description: "차트/시각화 출력 검증"
+    install: "pip install matplotlib pillow"
+    domains: ["weather-data"]
+    capabilities:
+      - image_existence
+      - axis_label_check
+
+  mock-server:
+    description: "목 서버 기반 통합 테스트"
+    install: "pip install respx httpx"
+    domains: ["crawler-pipeline"]
+    capabilities:
+      - http_mocking
+      - response_simulation
+      - error_injection

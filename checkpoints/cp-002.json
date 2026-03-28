@@ -1,0 +1,100 @@
+{
+  "checkpoint_id": "cp-002",
+  "sprint": "sprint-002",
+  "status": "complete",
+  "created_at": "2026-03-28T09:10:00Z",
+  "project_state": {
+    "completed_features": ["F-001", "F-002", "F-003"],
+    "current_file_tree": [
+      "index.html",
+      "vite.config.js",
+      "playwright.config.js",
+      "package.json",
+      "src/main.js",
+      "src/ui/renderer.js",
+      "src/ui/sprite-generator.js",
+      "src/ui/asset-loader.js",
+      "src/ui/spritesheet.js",
+      "src/ui/tilemap-engine.js",
+      "src/ui/map-ui.js",
+      "src/world/map.js"
+    ],
+    "known_issues": [
+      "한글 폰트 미지원 (ASCII 전용 5x7 비트맵)",
+      "Wang tileset 전환 타일 미사용 — 현재 base/full 타일만 렌더링 (경계 전환 미구현)",
+      "대각선 이동 미지원 — 4방향 그리드 이동만 가능",
+      "맵 오브젝트 충돌 미구현 — 오브젝트 위를 걸어 지나갈 수 있음"
+    ],
+    "next_sprint_context": "Sprint 003에서 전투 시스템을 구현한다. MAP 상태에서 풀밭 이동 시 랜덤 인카운터 → BATTLE 상태 전환. 전투 UI, 턴제 전투 로직, 몬스터 스프라이트 표시. keys/keysJustPressed는 main.js에서 관리. AssetLoader는 this.assetLoader에서 접근 가능. tilemap-engine의 fallback 렌더링이 잘 동작하므로 PixelLab 에셋 로드 실패에도 게임이 동작함."
+  },
+  "asset_state": {
+    "generated_characters": [
+      {
+        "id": "23dc5e96-597a-43f9-9d79-fcaaca6e37ee",
+        "name": "Player Hero",
+        "directions": 8,
+        "animations": ["walk"],
+        "local_path": "src/assets/sprites/player/"
+      }
+    ],
+    "generated_tilesets": [
+      {
+        "id": "78d554eb-ac00-417d-8dba-43691097017e",
+        "name": "grass_dirt",
+        "lower": "green grass field",
+        "upper": "brown dirt path",
+        "lower_base_tile_id": "a9a57a42-fc58-481f-b0c2-ada5ba30daff",
+        "upper_base_tile_id": "0067ffda-bed9-4ba7-95e7-7f894ab21248",
+        "local_path": "src/assets/tilesets/grass_dirt.png"
+      },
+      {
+        "id": "7c94f0e2-8365-471c-8ed2-f5d337e70c9a",
+        "name": "grass_water",
+        "lower": "green grass field",
+        "upper": "blue water pond",
+        "lower_base_tile_id": "39f9b6ad-9022-4679-823a-13d22a82668a",
+        "upper_base_tile_id": "bdefd74a-f80f-4546-a1cc-18064bd19332",
+        "local_path": "src/assets/tilesets/grass_water.png"
+      },
+      {
+        "id": "6c2eaae7-70c9-436e-bee0-4eadf3c72de6",
+        "name": "dirt_stone",
+        "lower": "brown dirt path",
+        "upper": "grey cobblestone",
+        "lower_base_tile_id": "41448a80-b894-499e-9a9d-55b7de5b0a28",
+        "upper_base_tile_id": "ce3c9462-ba89-4aad-a9c5-7b1ceae1ba5a",
+        "local_path": "src/assets/tilesets/dirt_stone.png"
+      }
+    ],
+    "generated_objects": [
+      { "id": "94ca9fd6-5c9a-434a-a301-d3a24db6a854", "name": "tree", "local_path": "src/assets/objects/tree.png" },
+      { "id": "b0980a04-d26f-40db-900b-7037c8b9112e", "name": "fence", "local_path": "src/assets/objects/fence.png" },
+      { "id": "c84118bb-1e48-4e53-a562-d0775d13a555", "name": "house", "local_path": "src/assets/objects/house.png" },
+      { "id": "636527af-14b2-4612-a7a2-27cea5dbe9b0", "name": "signpost", "local_path": "src/assets/objects/signpost.png" }
+    ],
+    "generated_items": [],
+    "generated_ui": [],
+    "style_keywords_used": "16-bit retro RPG, pixel art, low top-down, medium shading",
+    "pixellab_api_failures": [],
+    "migration_note": "Sprint 002에서 PixelLab 에셋 도입. 개별 프레임 로딩 방식 (스프라이트시트 미조합). AssetLoader fallback으로 에셋 로드 실패 시에도 게임이 동작."
+  },
+  "eval_summary": {
+    "last_eval": "eval-sprint-002.js",
+    "status": "pass",
+    "tests_passed": 8,
+    "tests_total": 8,
+    "remaining_minors": [
+      "Wang tileset transition tiles not yet used for border blending",
+      "Map objects lack collision detection"
+    ]
+  },
+  "game_state": {
+    "implemented_states": ["LOADING", "TITLE", "MAP"],
+    "entity_types": ["Monster(sprite-procedural)", "Player(pixellab-8dir)"],
+    "collision_pairs": ["player-wall"],
+    "fps_target": 60,
+    "canvas_size": [800, 600],
+    "maps_implemented": ["town_01", "route_01", "town_02"],
+    "map_features": ["grid_movement", "camera_follow", "fade_transition", "badge_gate", "fallback_rendering"]
+  }
+}

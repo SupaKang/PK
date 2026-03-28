@@ -1,165 +1,249 @@
-// 스토리 및 이벤트 진행 시스템
+/**
+ * story.js — Story engine, event triggers, rival/boss battles, karma system
+ * Reads story.json chapters and executes scene sequences
+ */
 
-let storyDB = null;
-
-export async function loadStory() {
-  const res = await fetch('./data/story.json');
-  storyDB = await res.json();
-  return storyDB;
-}
-
-export function getStoryData() {
-  return storyDB;
-}
+import { createMonster } from '../core/monster.js';
 
 /**
- * 스토리 매니저 — 챕터 진행, 이벤트, 뱃지 관리
+ * Story engine — manages chapter progression, event triggers, karma
  */
-export class StoryManager {
-  constructor() {
+export class StoryEngine {
+  /**
+   * @param {Array} chaptersData - story.json chapters array
+   * @param {Array} monstersData - monsters.json array
+   * @param {Array} skillsData - skills.json array
+   */
+  constructor(chaptersData, monstersData, skillsData) {
+    this.chapters = chaptersData || [];
+    this.monstersData = monstersData;
+    this.skillsData = skillsData;
+
+    // Progress tracking
     this.currentChapter = 0;
     this.completedEvents = new Set();
-    this.completedTriggers = new Set(); // defeat_gym_gym_01 등
-    this.badges = new Set();
-  }
+    this.karma = 0; // -100 (dark) to +100 (light)
 
-  /** 챕터 데이터에서 ID 필드 추출 (id 또는 chapter) */
-  _getChapterId(ch) {
-    return ch.id !== undefined ? ch.id : ch.chapter;
-  }
+    // Rival tracking
+    this.rivalBattleCount = 0;
+    this.rivalDefeated = false;
 
-  /** 챕터 찾기 (id 또는 chapter 필드 모두 지원) */
-  _findChapter(chapterId) {
-    if (!storyDB || !storyDB.chapters) return null;
-    return storyDB.chapters.find(c =>
-      (c.id !== undefined && c.id === chapterId) ||
-      (c.chapter !== undefined && c.chapter === chapterId)
-    ) || null;
+    // Gym/boss tracking
+    this.gymsDefeated = [];
+    this.shadowBossDefeated = false;
+    this.eliteFourDefeated = 0;
+    this.championDefeated = false;
   }
 
   /**
-   * 현재 위치에서 발동해야 할 이벤트 목록
-   * @param {string} locationId - 현재 위치 ID
-   * @returns {Array} 활성 이벤트 배열
+   * Check if an event should trigger
+   * @param {string} triggerType - 'arrive', 'defeat_gym', etc.
+   * @param {string} location - Current map ID
+   * @returns {Object|null} Event to execute, or null
    */
-  getActiveEvents(locationId) {
-    const chapter = this._findChapter(this.currentChapter);
-    if (!chapter || !chapter.events) return [];
+  checkTrigger(triggerType, location) {
+    for (const chapter of this.chapters) {
+      if (chapter.id > this.currentChapter + 1) break; // Only check current + next chapter
 
-    return chapter.events.filter(event => {
-      // 이미 완료된 이벤트 제외
-      if (this.completedEvents.has(event.id)) return false;
+      for (const event of (chapter.events || [])) {
+        if (this.completedEvents.has(event.id)) continue;
 
-      // 위치 일치 확인 — location 또는 locationId 필드 모두 지원
-      const eventLoc = event.location || event.locationId;
-      if (eventLoc && eventLoc !== locationId) return false;
-
-      // 선행 이벤트 완료 여부 확인
-      if (event.requires) {
-        for (const reqId of event.requires) {
-          if (!this.completedEvents.has(reqId)) return false;
+        // Check trigger match
+        if (event.trigger === triggerType && event.location === location) {
+          // Check requirements
+          if (this._meetsRequirements(event)) {
+            return event;
+          }
         }
       }
-
-      // 뱃지 요구사항 확인
-      if (event.requiredBadges && this.getBadgeCount() < event.requiredBadges) {
-        return false;
-      }
-
-      // 트리거 조건 확인 — 특수 트리거는 해당 조건 충족 시에만 발동
-      const trigger = event.trigger;
-      if (trigger === 'defeat_gym' || trigger === 'defeat_champion' || trigger === 'defeat_shadow_boss') {
-        // 이 트리거들은 completedTriggers에 등록되어야만 발동
-        if (!this.completedTriggers?.has(trigger + '_' + eventLoc)) return false;
-      }
-
-      return true;
-    });
-  }
-
-  /** 이벤트 완료 처리 */
-  completeEvent(eventId) {
-    this.completedEvents.add(eventId);
-  }
-
-  /** 트리거 완료 등록 (defeat_gym, defeat_champion 등) */
-  completeTrigger(triggerKey) {
-    this.completedTriggers.add(triggerKey);
-  }
-
-  /** 뱃지 획득 */
-  addBadge(badgeId) {
-    this.badges.add(badgeId);
-  }
-
-  /** 뱃지 수 */
-  getBadgeCount() {
-    return this.badges.size;
-  }
-
-  /** 특정 뱃지 보유 여부 */
-  hasBadge(badgeId) {
-    return this.badges.has(badgeId);
-  }
-
-  /** 전체 뱃지 목록 */
-  getBadges() {
-    return [...this.badges];
+    }
+    return null;
   }
 
   /**
-   * 현재 챕터의 모든 이벤트가 완료되었는지 확인
+   * Mark an event as completed
    */
-  isChapterComplete(chapterId = this.currentChapter) {
-    const ch = this._findChapter(chapterId);
-    if (!ch || !ch.events) return false;
+  completeEvent(eventId) {
+    this.completedEvents.add(eventId);
 
-    const requiredEvents = ch.events.filter(e => !e.optional);
-    return requiredEvents.every(e => this.completedEvents.has(e.id));
+    // Auto-advance chapter when all events in current chapter are done
+    const currentChapterData = this.chapters[this.currentChapter];
+    if (currentChapterData) {
+      const allDone = currentChapterData.events.every(e => this.completedEvents.has(e.id));
+      if (allDone && this.currentChapter < this.chapters.length - 1) {
+        this.currentChapter++;
+        console.log(`[PK] Story advanced to Chapter ${this.currentChapter}: ${this.chapters[this.currentChapter]?.title}`);
+      }
+    }
   }
 
-  /** 다음 챕터로 진행 */
-  advanceChapter() {
-    const nextChapter = this.currentChapter + 1;
-    if (!storyDB || !storyDB.chapters) {
-      return { success: false, message: '스토리 데이터가 없습니다.' };
+  /**
+   * Process scenes from an event into dialog lines + battle triggers
+   * @param {Object} event
+   * @returns {Array} Processed actions [{type, ...}]
+   */
+  processEvent(event) {
+    const actions = [];
+
+    for (const scene of (event.scenes || [])) {
+      switch (scene.type) {
+        case 'dialog':
+          actions.push({
+            type: 'dialog',
+            speaker: scene.speaker || '',
+            text: scene.text || '',
+            choices: scene.choices || null,
+          });
+          break;
+
+        case 'choice':
+          actions.push({
+            type: 'dialog',
+            speaker: scene.speaker || '',
+            text: scene.text || 'CHOOSE:',
+            choices: (scene.options || []).map(o => o.text || o),
+          });
+          break;
+
+        case 'battle':
+        case 'rival_battle':
+          actions.push({
+            type: 'battle',
+            trainerName: scene.trainer || scene.speaker || 'TRAINER',
+            team: this._buildTeam(scene),
+            isRival: scene.type === 'rival_battle',
+            isBoss: scene.boss || false,
+          });
+          break;
+
+        case 'heal':
+          actions.push({ type: 'heal' });
+          break;
+
+        case 'give_monster':
+          actions.push({
+            type: 'give_monster',
+            monsterId: scene.monsterId,
+            level: scene.level || 5,
+          });
+          break;
+
+        case 'give_item':
+          actions.push({
+            type: 'give_item',
+            itemId: scene.itemId,
+            count: scene.count || 1,
+          });
+          break;
+
+        case 'karma':
+          actions.push({
+            type: 'karma',
+            value: scene.value || 0,
+          });
+          break;
+
+        default:
+          // Treat unknown as dialog
+          if (scene.text) {
+            actions.push({ type: 'dialog', speaker: scene.speaker || '', text: scene.text });
+          }
+          break;
+      }
     }
 
-    const next = this._findChapter(nextChapter);
-    if (!next) {
-      return { success: false, message: '마지막 챕터입니다. 축하합니다!' };
+    return actions;
+  }
+
+  /**
+   * Build a trainer team for battle
+   */
+  _buildTeam(scene) {
+    const team = scene.team || scene.monsters || [];
+    return team.map(entry => {
+      const baseData = this.monstersData.find(m => m.id === entry.monsterId || m.id === entry.id);
+      if (!baseData) return null;
+      return createMonster(baseData, entry.level || 10, this.skillsData);
+    }).filter(Boolean);
+  }
+
+  /**
+   * Get rival team scaled to player level
+   */
+  getRivalTeam(playerLevel) {
+    this.rivalBattleCount++;
+    const level = playerLevel + 2; // Rival is slightly ahead
+
+    // Rival team grows each encounter
+    const teamSize = Math.min(this.rivalBattleCount + 1, 4);
+    const monsterIds = [4, 10, 7, 2]; // water, electric, grass, fire evos
+
+    return monsterIds.slice(0, teamSize).map(id => {
+      const baseData = this.monstersData.find(m => m.id === id);
+      if (!baseData) return null;
+      const mon = createMonster(baseData, level, this.skillsData);
+      mon.isWild = false;
+      return mon;
+    }).filter(Boolean);
+  }
+
+  /**
+   * Adjust karma
+   */
+  adjustKarma(value) {
+    this.karma = Math.max(-100, Math.min(100, this.karma + value));
+    console.log(`[PK] Karma: ${this.karma}`);
+  }
+
+  /**
+   * Get ending type based on karma
+   * @returns {'light'|'dark'|'balance'}
+   */
+  getEndingType() {
+    if (this.karma >= 30) return 'light';
+    if (this.karma <= -30) return 'dark';
+    return 'balance';
+  }
+
+  /**
+   * Check event requirements
+   */
+  _meetsRequirements(event) {
+    if (event.requires) {
+      if (event.requires.badges && this.gymsDefeated.length < event.requires.badges) return false;
+      if (event.requires.event && !this.completedEvents.has(event.requires.event)) return false;
     }
-
-    this.currentChapter = nextChapter;
-    return {
-      success: true,
-      message: `제${nextChapter}장: ${next.title}`,
-      chapter: next,
-    };
+    return true;
   }
 
-  /** 현재 챕터 정보 */
-  getCurrentChapterInfo() {
-    return this._findChapter(this.currentChapter);
-  }
-
-  /** 직렬화 */
+  /**
+   * Serialize for save
+   */
   serialize() {
     return {
       currentChapter: this.currentChapter,
       completedEvents: [...this.completedEvents],
-      completedTriggers: [...this.completedTriggers],
-      badges: [...this.badges],
+      karma: this.karma,
+      rivalBattleCount: this.rivalBattleCount,
+      gymsDefeated: this.gymsDefeated,
+      shadowBossDefeated: this.shadowBossDefeated,
+      eliteFourDefeated: this.eliteFourDefeated,
+      championDefeated: this.championDefeated,
     };
   }
 
-  /** 역직렬화 */
-  static deserialize(data) {
-    const sm = new StoryManager();
-    sm.currentChapter = data.currentChapter ?? 0;
-    sm.completedEvents = new Set(data.completedEvents || []);
-    sm.completedTriggers = new Set(data.completedTriggers || []);
-    sm.badges = new Set(data.badges || []);
-    return sm;
+  /**
+   * Deserialize from save
+   */
+  deserialize(data) {
+    if (!data) return;
+    this.currentChapter = data.currentChapter || 0;
+    this.completedEvents = new Set(data.completedEvents || []);
+    this.karma = data.karma || 0;
+    this.rivalBattleCount = data.rivalBattleCount || 0;
+    this.gymsDefeated = data.gymsDefeated || [];
+    this.shadowBossDefeated = data.shadowBossDefeated || false;
+    this.eliteFourDefeated = data.eliteFourDefeated || 0;
+    this.championDefeated = data.championDefeated || false;
   }
 }

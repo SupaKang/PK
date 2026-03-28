@@ -1,0 +1,52 @@
+{
+  "checkpoint_id": "cp-004",
+  "sprint": "sprint-004",
+  "status": "complete",
+  "created_at": "2026-03-28T10:30:00Z",
+  "project_state": {
+    "completed_features": ["F-001", "F-002", "F-003", "F-004", "F-005"],
+    "current_file_tree": [
+      "index.html", "vite.config.js", "playwright.config.js", "package.json",
+      "src/main.js",
+      "src/ui/renderer.js", "src/ui/sprite-generator.js", "src/ui/asset-loader.js",
+      "src/ui/spritesheet.js", "src/ui/tilemap-engine.js", "src/ui/map-ui.js", "src/ui/battle-ui.js",
+      "src/core/type.js", "src/core/monster.js", "src/core/skill.js", "src/core/battle.js", "src/core/item.js",
+      "src/world/map.js", "src/world/encounter.js"
+    ],
+    "known_issues": [
+      "한글 폰트 미지원 (ASCII 전용 5x7 비트맵)",
+      "파티 교체 시 1마리뿐이면 SWAP 메뉴 사용 불가 — 파티에 몬스터 추가 수단 미구현 (계약 시스템 필요)",
+      "아이템 아이콘이 전투 UI에 표시되지 않음 — 텍스트로만 표시",
+      "능력치 변화 스킬 (stat_change effect)이 data에 있지만 사용 가능한 스킬이 제한적",
+      "배틀 로그 UI 미구현 — 메시지 큐로만 표시"
+    ],
+    "next_sprint_context": "Sprint 005에서 경험치, 레벨업, 진화, 몬스터 계약(잡기) 시스템을 구현한다. party 배열은 main.js의 this.party에서 관리. inventory는 this.inventory [{item, count}] 형태. BattleEngine.battleResult가 'win'이면 경험치 부여 가능."
+  },
+  "asset_state": {
+    "generated_items": [
+      { "id": "40f9f44d-05ad-4371-925f-180d24067aa8", "name": "potion", "local_path": "src/assets/items/potion.png" },
+      { "id": "75c33ced-9045-4b10-a808-d09067ba3a1c", "name": "antidote", "local_path": "src/assets/items/antidote.png" },
+      { "id": "ca6e7fb7-0c8a-44a6-9282-90dcbcd897e3", "name": "revive", "local_path": "src/assets/items/revive.png" }
+    ],
+    "style_keywords_used": "GBA pokemon item style, side view, pixel art"
+  },
+  "eval_summary": {
+    "last_eval": "eval-sprint-004.js",
+    "status": "pass",
+    "tests_passed": 8,
+    "tests_total": 8,
+    "remaining_minors": []
+  },
+  "game_state": {
+    "implemented_states": ["LOADING", "TITLE", "MAP", "BATTLE"],
+    "battle_sub_states": ["INTRO", "SELECT_ACTION", "SELECT_SKILL", "SELECT_ITEM", "SELECT_SWAP", "EXECUTE", "END"],
+    "battle_features": [
+      "turn_based_1v1", "18_type_matchups", "STAB", "critical_hits", "accuracy",
+      "flee", "damage_formula", "wild_encounters",
+      "6_status_effects", "status_damage_per_turn", "action_prevention",
+      "party_swap", "item_use_in_battle", "stat_stage_modifiers",
+      "floating_damage_numbers", "status_icons_ui", "4_option_main_menu"
+    ],
+    "status_effects": ["burn", "poison", "paralyze", "sleep", "confusion", "freeze"]
+  }
+}

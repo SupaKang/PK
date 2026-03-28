@@ -1,0 +1,11 @@
+{
+  "name": "Pocket Kingdom",
+  "short_name": "PK",
+  "description": "Monster Collection Turn-based RPG",
+  "start_url": "./",
+  "display": "fullscreen",
+  "orientation": "landscape",
+  "background_color": "#0a0a16",
+  "theme_color": "#FFD700",
+  "icons": []
+}

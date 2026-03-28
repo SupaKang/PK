@@ -1,143 +1,356 @@
-// 월드 맵 시스템 — 노드 기반 이동
+/**
+ * map.js — Map metadata, connections, badge gates
+ * Manages map definitions and transition logic
+ */
 
-let mapsDB = null;
+// Tile size in pixels (internal canvas, no scaling)
+export const TILE_SIZE = 16;
+export const RENDER_TILE = 16; // 1:1 on internal 480×270 canvas
 
-export async function loadMaps() {
-  const res = await fetch('./data/maps.json');
-  mapsDB = await res.json();
-  return mapsDB;
-}
+// Map tile types
+export const TILE = {
+  GRASS: 0,
+  DIRT: 1,
+  WATER: 2,
+  STONE: 3,
+  WALL: 4,    // Collision — impassable
+  EXIT: 5,    // Triggers map transition
+};
 
-export function getMapData() {
-  return mapsDB;
+// Which tiles block movement
+const SOLID_TILES = new Set([TILE.WATER, TILE.WALL]);
+
+/**
+ * Map definition loaded from data + tilemap
+ */
+export class GameMap {
+  /**
+   * @param {Object} mapData - From maps.json
+   * @param {number[][]} tilemap - 2D tile grid
+   * @param {number[][]} collisionMap - 2D collision grid (0=passable, 1=solid)
+   * @param {Array} objects - Placed map objects [{id, type, x, y, w, h}]
+   * @param {Array} exits - [{x, y, targetMap, targetX, targetY}]
+   */
+  constructor(mapData, tilemap, collisionMap, objects, exits) {
+    this.id = mapData.id;
+    this.name = mapData.name;
+    this.type = mapData.type;
+    this.connections = mapData.connections || [];
+    this.requiredBadges = mapData.requiredBadges || 0;
+    this.wildEncounterRate = mapData.wildEncounterRate || 0;
+    this.encounters = mapData.encounters || [];
+    this.tilemap = tilemap;
+    this.collisionMap = collisionMap;
+    this.objects = objects;
+    this.exits = exits;
+    this.width = tilemap[0]?.length || 0;
+    this.height = tilemap.length;
+  }
+
+  /**
+   * Check if a tile position is passable
+   */
+  isPassable(tileX, tileY) {
+    if (tileX < 0 || tileY < 0 || tileX >= this.width || tileY >= this.height) {
+      return false;
+    }
+    return this.collisionMap[tileY][tileX] === 0;
+  }
+
+  /**
+   * Get tile type at position
+   */
+  getTile(tileX, tileY) {
+    if (tileX < 0 || tileY < 0 || tileX >= this.width || tileY >= this.height) {
+      return TILE.WALL;
+    }
+    return this.tilemap[tileY][tileX];
+  }
+
+  /**
+   * Find exit at tile position
+   * @returns {Object|null} Exit data or null
+   */
+  getExitAt(tileX, tileY) {
+    return this.exits.find(e => e.x === tileX && e.y === tileY) || null;
+  }
+
+  /**
+   * Check badge gate — can player enter this map?
+   */
+  canEnter(playerBadges) {
+    return playerBadges >= this.requiredBadges;
+  }
 }
 
 /**
- * 맵 매니저 — 플레이어의 현재 위치와 이동을 관리
+ * Map manager — handles loading maps and transitions
  */
 export class MapManager {
-  constructor() {
-    this.currentLocation = 'town_01'; // 시작 마을
-    this.visitedLocations = new Set(['town_01']);
+  /**
+   * @param {Array} mapsData - Full maps.json array
+   */
+  constructor(mapsData) {
+    this.mapsData = mapsData;
+    /** @type {GameMap|null} */
+    this.currentMap = null;
+    this.playerBadges = 0;
   }
 
-  /** 위치 데이터 가져오기 */
-  getLocation(locationId) {
-    if (!mapsDB) return null;
-    return ( mapsDB.locations || mapsDB.maps || [] ).find(loc => loc.id === locationId) || null;
-  }
-
-  /** 현재 위치 데이터 */
-  getCurrentLocation() {
-    return this.getLocation(this.currentLocation);
-  }
-
-  /** 연결 데이터 정규화 — 문자열이면 객체로 변환 */
-  _normalizeConnection(conn) {
-    if (typeof conn === 'string') {
-      return { to: conn, requiredBadges: 0 };
-    }
-    return { to: conn.to, requiredBadges: conn.requiredBadges || 0, description: conn.description || '' };
-  }
-
-  /** 현재 위치에서 이동 가능한 연결 목록 */
-  getConnections() {
-    const location = this.getCurrentLocation();
-    if (!location || !location.connections) return [];
-    return location.connections.map(raw => {
-      const conn = this._normalizeConnection(raw);
-      const target = this.getLocation(conn.to);
-      const targetRequiredBadges = target ? (target.requiredBadges || 0) : 0;
-      const maxRequired = Math.max(conn.requiredBadges, targetRequiredBadges);
-      return {
-        id: conn.to,
-        name: target ? target.name : conn.to,
-        requiredBadges: maxRequired,
-        description: conn.description || '',
-      };
-    });
-  }
-
-  /** 뱃지 요구사항 확인 */
-  canAccess(locationId, badgeCount = 0) {
-    const current = this.getCurrentLocation();
-    if (!current || !current.connections) return false;
-
-    const normalized = current.connections.map(c => this._normalizeConnection(c));
-    const conn = normalized.find(c => c.to === locationId);
-    if (!conn) return false;
-
-    const target = this.getLocation(locationId);
-    const targetRequiredBadges = target ? (target.requiredBadges || 0) : 0;
-    const required = Math.max(conn.requiredBadges, targetRequiredBadges);
-    return badgeCount >= required;
-  }
-
-  /** 이동 시도 — 연결돼있고 뱃지 조건 충족 시 이동 */
-  moveTo(locationId, badgeCount = 0) {
-    if (!this.canAccess(locationId, badgeCount)) {
-      const rawConns = this.getCurrentLocation()?.connections;
-      const normalized = rawConns ? rawConns.map(c => this._normalizeConnection(c)) : [];
-      const conn = normalized.find(c => c.to === locationId);
-      if (!conn) {
-        return { success: false, message: '이 장소로 갈 수 없습니다.' };
-      }
-      const target = this.getLocation(locationId);
-      const targetRequiredBadges = target ? (target.requiredBadges || 0) : 0;
-      const needed = Math.max(conn.requiredBadges, targetRequiredBadges);
-      return {
-        success: false,
-        message: `이 길을 지나려면 뱃지 ${needed}개가 필요합니다.`,
-      };
+  /**
+   * Build a GameMap from a map ID using hardcoded tilemaps
+   */
+  loadMap(mapId) {
+    const mapData = this.mapsData.find(m => m.id === mapId);
+    if (!mapData) {
+      console.error(`[MapManager] Map not found: ${mapId}`);
+      return null;
     }
 
-    this.currentLocation = locationId;
-    this.visitedLocations.add(locationId);
-    const loc = this.getCurrentLocation();
+    const layout = MAP_LAYOUTS[mapId];
+    if (!layout) {
+      console.warn(`[MapManager] No layout for: ${mapId}, using default`);
+      return this._buildDefaultMap(mapData);
+    }
+
+    const map = new GameMap(
+      mapData,
+      layout.tilemap,
+      layout.collisionMap,
+      layout.objects || [],
+      layout.exits || []
+    );
+    this.currentMap = map;
+    return map;
+  }
+
+  /**
+   * Attempt map transition
+   * @returns {{map: GameMap, spawnX: number, spawnY: number}|null}
+   */
+  tryTransition(tileX, tileY) {
+    if (!this.currentMap) return null;
+    const exit = this.currentMap.getExitAt(tileX, tileY);
+    if (!exit) return null;
+
+    // Badge gate check
+    const targetData = this.mapsData.find(m => m.id === exit.targetMap);
+    if (targetData && (targetData.requiredBadges || 0) > this.playerBadges) {
+      return { blocked: true, required: targetData.requiredBadges };
+    }
+
+    const newMap = this.loadMap(exit.targetMap);
+    if (!newMap) return null;
+
     return {
-      success: true,
-      message: `${loc?.name || locationId}에 도착했습니다!`,
-      location: loc,
+      map: newMap,
+      spawnX: exit.targetX,
+      spawnY: exit.targetY,
     };
   }
 
-  /** 방문 여부 확인 */
-  hasVisited(locationId) {
-    return this.visitedLocations.has(locationId);
-  }
+  _buildDefaultMap(mapData) {
+    const w = 20, h = 15;
+    const tilemap = [];
+    const collisionMap = [];
 
-  /** 모든 위치 목록 */
-  getAllLocations() {
-    if (!mapsDB) return [];
-    return ( mapsDB.locations || mapsDB.maps || [] );
-  }
-
-  /** 마지막 방문한 마을로 복귀 (전멸 시 사용) */
-  returnToLastTown() {
-    const visited = [...this.visitedLocations];
-    for (let i = visited.length - 1; i >= 0; i--) {
-      const loc = this.getLocation(visited[i]);
-      if (loc && loc.type === 'town') {
-        this.currentLocation = loc.id;
-        return;
+    for (let y = 0; y < h; y++) {
+      const row = [];
+      const cRow = [];
+      for (let x = 0; x < w; x++) {
+        // Border walls
+        if (x === 0 || y === 0 || x === w - 1 || y === h - 1) {
+          row.push(TILE.WALL);
+          cRow.push(1);
+        } else {
+          row.push(TILE.GRASS);
+          cRow.push(0);
+        }
       }
+      tilemap.push(row);
+      collisionMap.push(cRow);
     }
-    this.currentLocation = 'town_01';
-  }
 
-  /** 직렬화 */
-  serialize() {
-    return {
-      currentLocation: this.currentLocation,
-      visitedLocations: [...this.visitedLocations],
-    };
-  }
-
-  /** 역직렬화 */
-  static deserialize(data) {
-    const mm = new MapManager();
-    mm.currentLocation = data.currentLocation || 'town_01';
-    mm.visitedLocations = new Set(data.visitedLocations || ['town_01']);
-    return mm;
+    const map = new GameMap(mapData, tilemap, collisionMap, [], []);
+    this.currentMap = map;
+    return map;
   }
 }
+
+// ============================
+// Hardcoded map layouts
+// ============================
+
+const MAP_LAYOUTS = {
+  town_01: {
+    // 20x15 town map
+    tilemap: [
+      [4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],
+      [4,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,4],
+      [4,0,0,0,0,0,1,3,1,0,0,0,0,0,0,0,0,0,0,4],
+      [4,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,4],
+      [4,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,4],
+      [4,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,4],
+      [4,0,0,0,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,4],
+      [4,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,4],
+      [4,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,4],
+      [4,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,4],
+      [4,0,0,0,0,0,1,3,1,0,0,0,0,0,0,0,0,0,0,4],
+      [4,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,4],
+      [4,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,4],
+      [4,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,4],
+      [4,4,4,4,4,4,4,5,4,4,4,4,4,4,4,4,4,4,4,4],
+    ],
+    collisionMap: [
+      [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+      [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+      [1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1],
+      [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+      [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+      [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+      [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+      [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+      [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+      [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+      [1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1],
+      [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+      [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+      [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+      [1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1],
+    ],
+    objects: [
+      { type: 'house', x: 6, y: 2, w: 3, h: 3 },
+      { type: 'house', x: 6, y: 10, w: 3, h: 3 },
+      { type: 'tree', x: 2, y: 2, w: 1, h: 1 },
+      { type: 'tree', x: 3, y: 4, w: 1, h: 1 },
+      { type: 'tree', x: 15, y: 3, w: 1, h: 1 },
+      { type: 'tree', x: 16, y: 5, w: 1, h: 1 },
+      { type: 'tree', x: 14, y: 8, w: 1, h: 1 },
+      { type: 'signpost', x: 5, y: 7, w: 1, h: 1 },
+      { type: 'fence', x: 11, y: 6, w: 1, h: 1 },
+      { type: 'fence', x: 12, y: 6, w: 1, h: 1 },
+      { type: 'fence', x: 13, y: 6, w: 1, h: 1 },
+    ],
+    exits: [
+      { x: 7, y: 14, targetMap: 'route_01', targetX: 7, targetY: 1 },
+    ],
+  },
+
+  route_01: {
+    // 20x20 route map
+    tilemap: (() => {
+      const m = [];
+      for (let y = 0; y < 20; y++) {
+        const row = [];
+        for (let x = 0; x < 20; x++) {
+          if (x === 0 || x === 19 || y === 19) {
+            row.push(TILE.WALL);
+          } else if (y === 0) {
+            row.push(x === 7 ? TILE.EXIT : TILE.WALL);
+          } else if (x >= 6 && x <= 8) {
+            row.push(TILE.DIRT);
+          } else if (x >= 3 && x <= 5 && y >= 8 && y <= 12) {
+            row.push(TILE.WATER);
+          } else {
+            row.push(TILE.GRASS);
+          }
+        }
+        m.push(row);
+      }
+      // Bottom exit to town_02
+      m[19][7] = TILE.EXIT;
+      return m;
+    })(),
+    collisionMap: (() => {
+      const m = [];
+      for (let y = 0; y < 20; y++) {
+        const row = [];
+        for (let x = 0; x < 20; x++) {
+          if (x === 0 || x === 19) {
+            row.push(1);
+          } else if (y === 0 && x !== 7) {
+            row.push(1);
+          } else if (y === 19 && x !== 7) {
+            row.push(1);
+          } else if (x >= 3 && x <= 5 && y >= 8 && y <= 12) {
+            row.push(1); // water is impassable
+          } else {
+            row.push(0);
+          }
+        }
+        m.push(row);
+      }
+      return m;
+    })(),
+    objects: [
+      { type: 'tree', x: 2, y: 3, w: 1, h: 1 },
+      { type: 'tree', x: 1, y: 6, w: 1, h: 1 },
+      { type: 'tree', x: 12, y: 4, w: 1, h: 1 },
+      { type: 'tree', x: 15, y: 7, w: 1, h: 1 },
+      { type: 'tree', x: 10, y: 14, w: 1, h: 1 },
+      { type: 'tree', x: 16, y: 16, w: 1, h: 1 },
+      { type: 'signpost', x: 9, y: 2, w: 1, h: 1 },
+    ],
+    exits: [
+      { x: 7, y: 0, targetMap: 'town_01', targetX: 7, targetY: 13 },
+      { x: 7, y: 19, targetMap: 'town_02', targetX: 7, targetY: 1 },
+    ],
+  },
+
+  town_02: {
+    // 20x15 second town
+    tilemap: (() => {
+      const m = [];
+      for (let y = 0; y < 15; y++) {
+        const row = [];
+        for (let x = 0; x < 20; x++) {
+          if (x === 0 || x === 19 || y === 14) {
+            row.push(TILE.WALL);
+          } else if (y === 0) {
+            row.push(x === 7 ? TILE.EXIT : TILE.WALL);
+          } else if (x >= 6 && x <= 8) {
+            row.push(TILE.DIRT);
+          } else if (x >= 10 && x <= 14 && y >= 2 && y <= 6) {
+            row.push(TILE.STONE);
+          } else {
+            row.push(TILE.GRASS);
+          }
+        }
+        m.push(row);
+      }
+      return m;
+    })(),
+    collisionMap: (() => {
+      const m = [];
+      for (let y = 0; y < 15; y++) {
+        const row = [];
+        for (let x = 0; x < 20; x++) {
+          if (x === 0 || x === 19 || y === 14) {
+            row.push(1);
+          } else if (y === 0 && x !== 7) {
+            row.push(1);
+          } else {
+            row.push(0);
+          }
+        }
+        m.push(row);
+      }
+      return m;
+    })(),
+    objects: [
+      { type: 'house', x: 10, y: 2, w: 3, h: 3 },
+      { type: 'house', x: 2, y: 8, w: 3, h: 3 },
+      { type: 'tree', x: 15, y: 9, w: 1, h: 1 },
+      { type: 'tree', x: 17, y: 4, w: 1, h: 1 },
+      { type: 'fence', x: 10, y: 7, w: 1, h: 1 },
+      { type: 'fence', x: 11, y: 7, w: 1, h: 1 },
+      { type: 'fence', x: 12, y: 7, w: 1, h: 1 },
+      { type: 'fence', x: 13, y: 7, w: 1, h: 1 },
+      { type: 'fence', x: 14, y: 7, w: 1, h: 1 },
+      { type: 'signpost', x: 5, y: 4, w: 1, h: 1 },
+    ],
+    exits: [
+      { x: 7, y: 0, targetMap: 'route_01', targetX: 7, targetY: 18 },
+    ],
+  },
+};

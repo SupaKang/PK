@@ -1,0 +1,15 @@
+{
+  "harness_prompts": {
+    "version": "1.1.0",
+    "project": "PK",
+    "description": "하네스 프레임워크 3-에이전트 + PixelLab MCP 통합 프롬프트. PK 프로젝트 충돌 4건 해소 반영.",
+    "changelog": {
+      "1.1.0": [
+        "충돌1 해소: PixelLab MCP 설정 확정 (API 키 보유). Sprint 001 프로시저럴 에셋을 단계적으로 교체하는 마이그레이션 전략 추가.",
+        "충돌2 해소: Phaser.js 참조 전체 제거. 순수 JS + Canvas 2D + requestAnimationFrame + 커스텀 FSM.",
+        "충돌3 해소: 12개 스프린트 유지. Sprint 6 완료 후 중간 리플래닝.",
+        "충돌4 해소: 현재 대화 내 eval 스크립트 분리 방식 채택."
+      ]
+    }
+  }
+}

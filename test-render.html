@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head><title>PK 렌더링 테스트</title></head>
+<body style="background:#000; margin:0; display:flex; justify-content:center; align-items:center; height:100vh;">
+<canvas id="test" width="800" height="600" style="border:2px solid #444; image-rendering:pixelated;"></canvas>
+<script>
+const canvas = document.getElementById('test');
+const ctx = canvas.getContext('2d');
+
+// 1단계: 스프라이트시트 로드 테스트
+const sheet = new Image();
+sheet.onload = () => {
+  document.title = '시트 로드 성공!';
+
+  // 2단계: 시트에서 타일 추출해서 그리기
+  // rpg_base_sheet.png = 1280x832, 64x64 타일, 20열x13행
+  const TILE = 64;
+
+  // 3단계: 타일 9종 그려보기
+  const tiles = [
+    { name: '풀', col: 3, row: 0 },
+    { name: '흙', col: 1, row: 0 },
+    { name: '물', col: 4, row: 0 },
+    { name: '벽', col: 0, row: 2 },
+    { name: '나무', col: 0, row: 6 },
+    { name: '지붕', col: 0, row: 3 },
+    { name: '문', col: 3, row: 4 },
+    { name: '바닥', col: 0, row: 1 },
+    { name: '덤불', col: 5, row: 6 },
+  ];
+
+  ctx.fillStyle = '#1a2a1a';
+  ctx.fillRect(0, 0, 800, 600);
+
+  ctx.fillStyle = '#ffcc44';
+  ctx.font = '20px monospace';
+  ctx.fillText('스프라이트시트 렌더링 테스트', 10, 25);
+  ctx.fillStyle = '#888';
+  ctx.font = '14px monospace';
+  ctx.fillText(`시트: ${sheet.width}x${sheet.height}px (${sheet.width/TILE}x${sheet.height/TILE} 타일)`, 10, 50);
+
+  // 타일 9종 표시
+  tiles.forEach((t, i) => {
+    const dx = 30 + (i % 5) * 140;
+    const dy = 80 + Math.floor(i / 5) * 140;
+
+    // 시트에서 추출
+    ctx.drawImage(sheet, t.col * TILE, t.row * TILE, TILE, TILE, dx, dy, TILE*1.5, TILE*1.5);
+
+    ctx.fillStyle = '#fff';
+    ctx.font = '12px monospace';
+    ctx.fillText(`${t.name} (${t.col},${t.row})`, dx, dy + TILE*1.5 + 15);
+  });
+
+  // 4단계: 미니 맵 테스트 (5x4 타일)
+  ctx.fillStyle = '#ffcc44';
+  ctx.font = '16px monospace';
+  ctx.fillText('미니 맵 테스트 (5x4 타일):', 30, 380);
+
+  const miniMap = [
+    [7,7,1,1,7],
+    [1,1,2,1,1],
+    [1,4,5,4,1],
+    [7,1,2,1,7],
+  ];
+  const tileRef = {
+    1: [3,0], // 풀
+    2: [1,0], // 흙
+    4: [0,1], // 바닥
+    5: [3,4], // 문
+    7: [0,6], // 나무
+  };
+
+  miniMap.forEach((row, y) => {
+    row.forEach((id, x) => {
+      const ref = tileRef[id];
+      if (ref) {
+        ctx.drawImage(sheet, ref[0]*TILE, ref[1]*TILE, TILE, TILE,
+          30 + x*TILE, 400 + y*TILE, TILE, TILE);
+      }
+    });
+  });
+
+  // 5단계: 간단한 캐릭터
+  ctx.fillStyle = '#ffcc44';
+  ctx.font = '16px monospace';
+  ctx.fillText('캐릭터:', 400, 380);
+
+  // 캐릭터 (큰 버전)
+  const cx = 420, cy = 400;
+  ctx.fillStyle = '#ffdcb0'; ctx.fillRect(cx+12, cy+4, 24, 20);   // 머리
+  ctx.fillStyle = '#4a3728'; ctx.fillRect(cx+12, cy+4, 24, 8);    // 머리카락
+  ctx.fillStyle = '#222';    ctx.fillRect(cx+16, cy+16, 4, 4);    // 왼눈
+                             ctx.fillRect(cx+28, cy+16, 4, 4);    // 오른눈
+  ctx.fillStyle = '#cc4444'; ctx.fillRect(cx+8, cy+24, 32, 24);   // 몸통
+  ctx.fillStyle = '#cc4444'; ctx.fillRect(cx+0, cy+24, 8, 20);    // 왼팔
+                             ctx.fillRect(cx+40, cy+24, 8, 20);   // 오른팔
+  ctx.fillStyle = '#882222'; ctx.fillRect(cx+12, cy+48, 10, 16);  // 왼다리
+                             ctx.fillRect(cx+26, cy+48, 10, 16);  // 오른다리
+  ctx.fillStyle = '#333';    ctx.fillRect(cx+10, cy+62, 14, 4);   // 왼신발
+                             ctx.fillRect(cx+24, cy+62, 14, 4);   // 오른신발
+
+  ctx.fillStyle = '#44ff44';
+  ctx.font = '14px monospace';
+  ctx.fillText('✓ 렌더링 성공!', 400, 490);
+  ctx.fillText('이 테스트가 보이면 파이프라인 작동 확인.', 400, 510);
+};
+
+sheet.onerror = () => {
+  ctx.fillStyle = '#ff4444';
+  ctx.font = '24px monospace';
+  ctx.fillText('❌ 스프라이트시트 로드 실패!', 100, 300);
+  ctx.font = '16px monospace';
+  ctx.fillText('경로: ./assets/tiles/rpg_base_sheet.png', 100, 340);
+};
+
+sheet.src = './assets/tiles/rpg_base_sheet.png';
+
+// 로딩 표시
+ctx.fillStyle = '#888';
+ctx.font = '16px monospace';
+ctx.fillText('스프라이트시트 로딩 중...', 300, 300);
+</script>
+</body>
+</html>

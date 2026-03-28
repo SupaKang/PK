@@ -1,0 +1,49 @@
+{
+  "checkpoint_id": "cp-008",
+  "sprint": "sprint-008",
+  "status": "complete",
+  "created_at": "2026-03-28T11:50:00Z",
+  "project_state": {
+    "completed_features": ["F-001", "F-002", "F-003", "F-004", "F-005", "F-006", "F-008", "F-009", "F-024", "F-025", "F-026", "F-027"],
+    "current_file_tree": [
+      "index.html", "vite.config.js", "playwright.config.js", "package.json",
+      "src/main.js",
+      "src/ui/renderer.js", "src/ui/sprite-generator.js", "src/ui/asset-loader.js",
+      "src/ui/spritesheet.js", "src/ui/tilemap-engine.js", "src/ui/map-ui.js",
+      "src/ui/battle-ui.js", "src/ui/menu-ui.js", "src/ui/dialog-ui.js",
+      "src/core/type.js", "src/core/monster.js", "src/core/skill.js",
+      "src/core/battle.js", "src/core/item.js", "src/core/party.js", "src/core/player-class.js",
+      "src/world/map.js", "src/world/encounter.js", "src/world/npc.js", "src/world/story.js",
+      "src/save/save.js"
+    ],
+    "total_source_files": 22,
+    "known_issues": [
+      "스토리 이벤트 트리거가 arrive에만 동작 — defeat_gym 등 다른 트리거는 체육관 시스템 구현 후 연결 필요",
+      "라이벌/보스 전투가 스토리 이벤트에서 자동 트리거되나, 실제 사천왕 4연전 UI는 미구현",
+      "카르마 선택이 스토리 대화 선택지 순서(첫번째=+10, 마지막=-10)로 고정"
+    ],
+    "next_sprint_context": "Sprint 009+에서 체육관 리더, 트레이너 전투, 상점, 도감을 구현한다. storyEngine.gymsDefeated에 체육관 ID를 push하고, storyEngine.checkTrigger('defeat_gym', gymId)로 스토리 이벤트를 발동시킨다."
+  },
+  "asset_state": {
+    "generated_characters": [
+      { "id": "80fbbaae-326f-4d65-9909-5db2bb55b7fe", "name": "Rival", "local_path": "src/assets/sprites/npcs/rival/" },
+      { "id": "e9b51714-5c5c-49e7-8205-7adf7dd851fd", "name": "Shadow Boss", "local_path": "src/assets/sprites/npcs/shadow_boss/" }
+    ]
+  },
+  "eval_summary": {
+    "last_eval": "eval-sprint-008.js",
+    "status": "pass",
+    "tests_passed": 9,
+    "tests_total": 9
+  },
+  "game_state": {
+    "implemented_states": ["LOADING", "TITLE", "MAP", "BATTLE", "MENU", "DIALOG", "SAVE_MENU", "INVENTORY"],
+    "story_features": [
+      "10_chapter_story_engine", "event_triggers", "scene_processing",
+      "rival_team_scaling", "karma_system", "3_ending_types",
+      "story_save_load", "arrive_trigger", "dialog_scenes", "battle_scenes",
+      "choice_branching", "heal_scenes"
+    ],
+    "debug_keys": { "B": "Force battle", "M": "Party menu", "P": "Save menu", "I": "Inventory" }
+  }
+}

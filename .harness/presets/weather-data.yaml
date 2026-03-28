@@ -1,0 +1,53 @@
+domain: "weather-data"
+description: "기상 관측 데이터 수집, 분석, 시각화 — 기상청 API 연동 포함"
+
+planner:
+  tech_detail_level: "minimal"
+  template: "planner-analytical.md"
+  decomposition_hint: "analysis_pipeline"
+  required_sections:
+    - data_acquisition
+    - preprocessing
+    - analysis
+    - visualization
+    - export
+
+generator:
+  sprint_max_tokens: 22000
+  sprint_max_files: 4
+  checkpoint_trigger: "per_sprint"
+  template: "generator-data-pipeline.md"
+  conventions:
+    data_lib: "pandas"
+    viz_lib: "matplotlib | plotly"
+    api_client: "httpx"
+    datetime_handling: "KST (UTC+9) → UTC 변환 명시"
+    coordinate_system: "WGS84"
+
+evaluator:
+  toolkit: "pytest"
+  secondary_toolkit: "visual-diff"
+  template: "evaluator-accuracy.md"
+  tolerance:
+    temperature: 0.1
+    precipitation: 0.5
+    wind_speed: 0.1
+  eval_checks:
+    - type: "unit_test"
+      target: "preprocessing"
+      cases:
+        - "결측치 보간 결과 검증"
+        - "단위 변환 정확도 (mm→m, hPa→kPa)"
+    - type: "regression_test"
+      target: "analysis"
+      method: "known 데이터셋 → expected 통계값 비교"
+    - type: "visual_sanity"
+      target: "charts"
+      method: "차트 생성 후 빈 이미지 여부, 축 라벨 존재 여부"
+
+iteration:
+  max_rounds: 5
+  escalation_schedule:
+    1-2: "functionality"
+    3: "accuracy"
+    4-5: "visualization_quality"

@@ -1,0 +1,45 @@
+{
+  "checkpoint_id": "cp-009",
+  "sprint": "sprint-009",
+  "status": "complete",
+  "created_at": "2026-03-28T12:20:00Z",
+  "project_state": {
+    "completed_features": ["F-001", "F-002", "F-003", "F-004", "F-005", "F-006", "F-008", "F-009", "F-010", "F-024", "F-025", "F-026", "F-027"],
+    "current_file_tree": [
+      "index.html", "vite.config.js", "playwright.config.js", "package.json",
+      "src/main.js",
+      "src/ui/renderer.js", "src/ui/sprite-generator.js", "src/ui/asset-loader.js",
+      "src/ui/spritesheet.js", "src/ui/tilemap-engine.js", "src/ui/map-ui.js",
+      "src/ui/battle-ui.js", "src/ui/menu-ui.js", "src/ui/dialog-ui.js",
+      "src/core/type.js", "src/core/monster.js", "src/core/skill.js",
+      "src/core/battle.js", "src/core/item.js", "src/core/party.js", "src/core/player-class.js",
+      "src/world/map.js", "src/world/encounter.js", "src/world/npc.js", "src/world/story.js",
+      "src/save/save.js"
+    ],
+    "total_source_files": 22,
+    "known_issues": [
+      "상점 건물이 맵 오브젝트에 추가되지 않음 — NPC만 배치됨",
+      "판매 시 키 아이템 판매 방지 미구현"
+    ],
+    "next_sprint_context": "Sprint 010에서 도감, 업적, 체육관을 구현한다. 골드 시스템은 this.gold, 상점은 NPC.shop 배열로 관리. 세이브에 gold 필드 포함됨."
+  },
+  "asset_state": {
+    "generated_characters": [
+      { "id": "e2630c09-d022-48ba-8b42-4dba3de368d4", "name": "Shopkeeper NPC", "local_path": "src/assets/sprites/npcs/shopkeeper/" }
+    ],
+    "generated_objects": [
+      { "id": "25a85f63-003e-4a39-9ada-fc035566c3c1", "name": "shop building", "local_path": "src/assets/objects/shop.png" }
+    ]
+  },
+  "eval_summary": {
+    "last_eval": "eval-sprint-009.js",
+    "status": "pass",
+    "tests_passed": 9,
+    "tests_total": 9
+  },
+  "game_state": {
+    "implemented_states": ["LOADING", "TITLE", "MAP", "BATTLE", "MENU", "DIALOG", "SAVE_MENU", "INVENTORY", "SHOP"],
+    "shop_features": ["buy_items", "sell_items_half_price", "gold_currency", "shop_npc", "item_cap_99", "auto_save_town_entry", "battle_gold_reward"],
+    "debug_keys": { "B": "Force battle", "M": "Party menu", "P": "Save menu", "I": "Inventory" }
+  }
+}

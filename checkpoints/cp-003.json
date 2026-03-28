@@ -1,0 +1,113 @@
+{
+  "checkpoint_id": "cp-003",
+  "sprint": "sprint-003",
+  "status": "complete",
+  "created_at": "2026-03-28T09:50:00Z",
+  "project_state": {
+    "completed_features": ["F-001", "F-002", "F-003", "F-004"],
+    "current_file_tree": [
+      "index.html",
+      "vite.config.js",
+      "playwright.config.js",
+      "package.json",
+      "src/main.js",
+      "src/ui/renderer.js",
+      "src/ui/sprite-generator.js",
+      "src/ui/asset-loader.js",
+      "src/ui/spritesheet.js",
+      "src/ui/tilemap-engine.js",
+      "src/ui/map-ui.js",
+      "src/ui/battle-ui.js",
+      "src/core/type.js",
+      "src/core/monster.js",
+      "src/core/skill.js",
+      "src/core/battle.js",
+      "src/world/map.js",
+      "src/world/encounter.js"
+    ],
+    "known_issues": [
+      "한글 폰트 미지원 (ASCII 전용 5x7 비트맵)",
+      "Wang tileset 전환 타일 미사용 — base/full 타일만 렌더링",
+      "야생 조우가 Playwright keyboard.press()에서 안정적으로 동작하지 않음 — keysJustPressed 기반 이동은 동작하나, 맵 이동 중 인카운터 발생이 불안정",
+      "전투 AI가 랜덤 스킬 선택만 지원 — 상성 기반 AI 미구현",
+      "경험치/레벨업 미구현",
+      "디버그 키 B로 강제 전투 트리거 가능"
+    ],
+    "next_sprint_context": "Sprint 004에서 파티 시스템, 잡기 시스템, 몬스터 도감을 구현한다. createMonster는 src/core/monster.js에서 사용. BattleEngine은 playerMon/enemyMon을 직접 참조. typeChart는 this.typeChart. assetLoader의 monster_{id}_east 키로 몬스터 스프라이트 접근."
+  },
+  "asset_state": {
+    "generated_characters": [
+      {
+        "id": "23dc5e96-597a-43f9-9d79-fcaaca6e37ee",
+        "name": "Player Hero",
+        "directions": 8,
+        "animations": ["walk"],
+        "local_path": "src/assets/sprites/player/"
+      },
+      {
+        "id": "7a2cd860-7dba-4f0d-b108-8c5531646b26",
+        "name": "Embercat (불꽃냥, id=1)",
+        "directions": 4,
+        "animations": ["idle"],
+        "local_path": "src/assets/sprites/monsters/1/"
+      },
+      {
+        "id": "0497ca1a-d7f3-4def-8eb1-79fbeeb37754",
+        "name": "Aquadrop (물방울이, id=4)",
+        "directions": 4,
+        "animations": ["breathing-idle"],
+        "local_path": "src/assets/sprites/monsters/4/"
+      },
+      {
+        "id": "a6bf9ca9-9cf5-4144-920b-afa2e52f288b",
+        "name": "Spring (새싹이, id=7)",
+        "directions": 4,
+        "animations": ["breathing-idle"],
+        "local_path": "src/assets/sprites/monsters/7/"
+      },
+      {
+        "id": "b45fe141-b1a9-4bb2-9936-2326624805ff",
+        "name": "Sparky (찌릿쥐, id=10)",
+        "directions": 4,
+        "animations": [],
+        "local_path": "src/assets/sprites/monsters/10/"
+      }
+    ],
+    "generated_tilesets": [
+      { "id": "78d554eb-ac00-417d-8dba-43691097017e", "name": "grass_dirt" },
+      { "id": "7c94f0e2-8365-471c-8ed2-f5d337e70c9a", "name": "grass_water" },
+      { "id": "6c2eaae7-70c9-436e-bee0-4eadf3c72de6", "name": "dirt_stone" }
+    ],
+    "generated_objects": [
+      { "id": "94ca9fd6-5c9a-434a-a301-d3a24db6a854", "name": "tree" },
+      { "id": "b0980a04-d26f-40db-900b-7037c8b9112e", "name": "fence" },
+      { "id": "c84118bb-1e48-4e53-a562-d0775d13a555", "name": "house" },
+      { "id": "636527af-14b2-4612-a7a2-27cea5dbe9b0", "name": "signpost" }
+    ],
+    "generated_ui": [
+      { "id": "af223400-2bc6-4fb2-88e9-ebf4e453afd8", "name": "battle_frame", "local_path": "src/assets/ui/battle_frame.png" }
+    ],
+    "style_keywords_used": "16-bit retro RPG, pixel art, GBA pokemon style, side view battle sprites",
+    "pixellab_api_failures": ["bafc5c75 (Sparky v1 failed, retried as b45fe141)"]
+  },
+  "eval_summary": {
+    "last_eval": "eval-sprint-003.js",
+    "status": "pass",
+    "tests_passed": 7,
+    "tests_total": 7,
+    "remaining_minors": [
+      "Wild encounter trigger unreliable in automated tests — debug key B added as workaround",
+      "No EXP/level system yet"
+    ]
+  },
+  "game_state": {
+    "implemented_states": ["LOADING", "TITLE", "MAP", "BATTLE"],
+    "entity_types": ["Monster(sprite-procedural)", "Monster(pixellab-side)", "Player(pixellab-8dir)"],
+    "collision_pairs": ["player-wall"],
+    "fps_target": 60,
+    "canvas_size": [800, 600],
+    "maps_implemented": ["town_01", "route_01", "town_02"],
+    "battle_features": ["turn_based_1v1", "18_type_matchups", "STAB", "critical_hits", "accuracy", "flee", "damage_formula", "wild_encounters"],
+    "debug_keys": { "B": "Force battle on current map" }
+  }
+}

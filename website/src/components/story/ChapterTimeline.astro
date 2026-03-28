@@ -1,0 +1,58 @@
+---
+import { chapters } from '../../data/story';
+
+const chapterMeta = [
+  { icon: '🌙', color: '#9999bb', summary: '할아버지의 이야기와 고대 예언. 계약자의 운명이 시작된다.' },
+  { icon: '🔥', color: '#FF4422', summary: '화염의 마을에서 첫 번째 시련. 화염 수호자와의 대결.' },
+  { icon: '🌊', color: '#3399FF', summary: '해류의 동굴을 지나 물의 수호자에게 도전한다.' },
+  { icon: '⚡', color: '#FFCC00', summary: '전격의 도시와 자연의 숲을 거치며 힘을 키운다.' },
+  { icon: '⚔', color: '#CC4444', summary: '투지의 수호자와 싸우며 그림자단의 존재를 알게 된다.' },
+  { icon: '❄', color: '#66CCEE', summary: '빙하의 도시와 용의 계곡. 전설의 몬스터가 깨어난다.' },
+  { icon: '🌑', color: '#554466', summary: '그림자단의 비밀 기지 침입. 마왕성으로 가는 길을 연다.' },
+  { icon: '👑', color: '#FFCC00', summary: '사천왕과의 연속 배틀, 그리고 마왕 카오스와의 최종 대결.' },
+  { icon: '✨', color: '#FFEE88', summary: '카르마에 따라 세계의 운명이 갈린다. 세 가지 엔딩.' },
+  { icon: '🌟', color: '#AA44CC', summary: '전설의 몬스터 사냥과 도감 완성. 새로운 도전의 시작.' },
+];
+---
+
+<section class="mb-12" aria-label="10장의 여정">
+  <h2 class="section-title reveal">10장의 여정</h2>
+
+  <ol class="relative ml-4 md:ml-0">
+    <!-- Timeline line -->
+    <div class="absolute left-3 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-pk-accent/40 via-pk-border/30 to-transparent" aria-hidden="true"></div>
+
+    {chapters.map((ch, i) => {
+      const meta = chapterMeta[i];
+      return (
+        <li class:list={[
+          'relative mb-6 pl-10 md:pl-0 reveal',
+          i % 2 === 0 ? 'md:pr-[52%]' : 'md:pl-[52%]',
+        ]}>
+          {/* Timeline dot */}
+          <div
+            class="absolute left-1 md:left-1/2 top-3 w-5 h-5 border-2 bg-pk-bg flex items-center justify-center text-[9px] -translate-x-1/2 z-10"
+            style={`border-color: ${meta?.color}; color: ${meta?.color}`}
+            aria-hidden="true"
+          >
+            {i}
+          </div>
+
+          {/* Card */}
+          <article class="pixel-card" style={`border-left-color: ${meta?.color}`}>
+            <div class="flex items-center gap-2 mb-2">
+              <span class="text-base" aria-hidden="true">{meta?.icon}</span>
+              <div>
+                <span class="text-pk-muted text-[10px] tracking-wider">CHAPTER {ch.id}</span>
+                <h3 class="text-sm" style={`color: ${meta?.color}`}>{ch.title}</h3>
+              </div>
+            </div>
+            <p class="text-xs text-pk-text-secondary leading-relaxed">
+              {meta?.summary}
+            </p>
+          </article>
+        </li>
+      );
+    })}
+  </ol>
+</section>

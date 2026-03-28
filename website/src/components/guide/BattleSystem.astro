@@ -1,0 +1,99 @@
+---
+const steps = [
+  { label: '전투 개시', color: '#3399FF' },
+  { label: '행동 선택', color: '#FFCC00' },
+  { label: '스킬 선택', color: '#FF4422' },
+  { label: '데미지 계산', color: '#AA44CC' },
+  { label: '효과 적용', color: '#44BB44' },
+  { label: '상태 체크', color: '#66CCEE' },
+  { label: '턴 종료', color: '#BB8844' },
+];
+
+const actions = [
+  { action: '싸우기', desc: '4개의 스킬 중 하나를 선택하여 공격', icon: '⚔' },
+  { action: '가방', desc: '포션, 마석 등 아이템 사용', icon: '🎒' },
+  { action: '교대', desc: '다른 파티 몬스터로 교체', icon: '🔄' },
+  { action: '도망', desc: '야생 전투에서만 가능. 속도 기반 확률', icon: '💨' },
+];
+
+const statuses = [
+  { name: '화상', color: '#FF4422', effect: '매 턴 1/16 HP 감소, 물리공격 절반' },
+  { name: '독', color: '#AA44CC', effect: '매 턴 1/8 HP 감소' },
+  { name: '마비', color: '#FFCC00', effect: '25% 확률로 행동 불가' },
+  { name: '수면', color: '#3399FF', effect: '행동 불가, 33% 확률로 기상' },
+  { name: '빙결', color: '#66CCEE', effect: '행동 불가, 20% 확률로 해동' },
+  { name: '혼란', color: '#DD77AA', effect: '33% 확률로 자해 (공격력/4)' },
+  { name: '풀죽음', color: '#887744', effect: '해당 턴 행동 불가' },
+];
+---
+
+<section class="mb-12 reveal" aria-label="전투 시스템">
+  <h2 class="section-title">전투 시스템</h2>
+
+  <!-- Battle flow -->
+  <div class="pixel-card mb-6">
+    <h3 class="text-sm text-pk-accent mb-4">턴 기반 전투 흐름</h3>
+    <nav class="flex flex-wrap items-center gap-1.5" aria-label="전투 흐름도">
+      {steps.map((step, i) => (
+        <>
+          <div
+            class="px-2.5 py-1.5 border-2 text-[10px] text-center shrink-0"
+            style={`border-color: ${step.color}; color: ${step.color}; box-shadow: 0 0 6px ${step.color}20`}
+          >
+            {step.label}
+          </div>
+          {i < steps.length - 1 && <span class="text-pk-muted/40 text-xs" aria-hidden="true">→</span>}
+        </>
+      ))}
+    </nav>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-5 reveal-children">
+    <!-- Damage formula -->
+    <div class="pixel-card">
+      <h3 class="text-sm text-pk-accent mb-3">데미지 공식</h3>
+      <div class="bg-pk-bg p-3 border border-pk-border/30 mb-3">
+        <code class="text-[11px] text-pk-text leading-relaxed block">
+          기본 = ((2 x 레벨 / 5 + 2) x 위력 x 공/방) / 50 + 2
+        </code>
+        <code class="text-[10px] text-pk-muted block mt-1">
+          x STAB x 상성배율 x 급소 x 랜덤(0.85~1.0)
+        </code>
+      </div>
+      <dl class="space-y-1.5 text-xs text-pk-text-secondary">
+        <div class="flex gap-2"><dt class="text-pk-accent shrink-0">STAB</dt><dd>자속성 보너스 x1.5</dd></div>
+        <div class="flex gap-2"><dt class="text-pk-accent shrink-0">급소</dt><dd>6.25% 확률로 x1.5</dd></div>
+        <div class="flex gap-2"><dt class="text-pk-accent shrink-0">랜덤</dt><dd>85~100% 범위 보정</dd></div>
+      </dl>
+    </div>
+
+    <!-- Battle actions -->
+    <div class="pixel-card">
+      <h3 class="text-sm text-pk-accent mb-3">행동 선택지</h3>
+      <div class="space-y-2.5">
+        {actions.map(a => (
+          <div class="flex items-start gap-2.5 text-xs">
+            <span class="text-base shrink-0" aria-hidden="true">{a.icon}</span>
+            <div>
+              <span class="text-pk-text">{a.action}</span>
+              <p class="text-pk-muted text-[10px] mt-0.5">{a.desc}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <!-- Status effects -->
+  <div class="pixel-card mt-5">
+    <h3 class="text-sm text-pk-accent mb-4">상태 이상</h3>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-2.5 reveal-children">
+      {statuses.map(s => (
+        <div class="bg-pk-bg p-2.5 border border-pk-border/20">
+          <span class="text-xs" style={`color: ${s.color}`}>{s.name}</span>
+          <p class="text-pk-muted text-[10px] mt-1 leading-relaxed">{s.effect}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

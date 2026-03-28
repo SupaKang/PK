@@ -1,0 +1,48 @@
+---
+const endings = [
+  {
+    title: '빛의 엔딩',
+    condition: '카르마 +30 이상',
+    color: '#FFEE88',
+    glow: 'rgba(255,238,136,0.1)',
+    borderColor: 'rgba(255,238,136,0.25)',
+    desc: '계약자는 마왕을 물리치고 인간과 몬스터의 공존의 시대를 연다. 마석의 빛이 세계를 밝히고, 새로운 평화의 시대가 시작된다.',
+  },
+  {
+    title: '중립 엔딩',
+    condition: '카르마 -30 ~ +30',
+    color: '#9999bb',
+    glow: 'rgba(153,153,187,0.06)',
+    borderColor: 'rgba(153,153,187,0.2)',
+    desc: '마왕은 쓰러졌지만, 세계의 균형은 완전히 회복되지 않았다. 계약자는 남은 혼돈을 바로잡기 위해 새로운 여정을 떠난다.',
+  },
+  {
+    title: '어둠의 엔딩',
+    condition: '카르마 -30 이하',
+    color: '#AA88CC',
+    glow: 'rgba(170,136,204,0.1)',
+    borderColor: 'rgba(85,68,102,0.4)',
+    desc: '마왕을 쓰러뜨린 계약자가 스스로 새로운 마왕이 된다. 어둠의 힘에 삼켜진 세계에 또 다른 예언이 시작된다.',
+  },
+];
+---
+
+<section class="mb-12 reveal" aria-label="세 가지 엔딩">
+  <h2 class="section-title">세 가지 엔딩</h2>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-5 reveal-children">
+    {endings.map(e => (
+      <article
+        class="pixel-card relative overflow-hidden group"
+        style={`background: ${e.glow}; border-color: ${e.borderColor}`}
+      >
+        <div class="absolute top-0 left-0 right-0 h-[2px]" style={`background: ${e.color}; opacity: 0.6`} aria-hidden="true"></div>
+        <div class="pt-1">
+          <h3 class="text-base mb-1" style={`color: ${e.color}`}>{e.title}</h3>
+          <p class="text-[10px] text-pk-muted tracking-wider mb-3">{e.condition}</p>
+          <p class="text-xs text-pk-text-secondary leading-relaxed">{e.desc}</p>
+        </div>
+      </article>
+    ))}
+  </div>
+</section>
