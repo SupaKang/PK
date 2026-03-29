@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>PK — Town Map Generator</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:#0a0a16;color:#fff;font-family:monospace;padding:16px}
+  h1{font-size:16px;color:#FFD700;text-align:center;margin-bottom:4px}
+  .sub{font-size:11px;color:#888;text-align:center;margin-bottom:14px}
+  .toolbar{display:flex;gap:6px;justify-content:center;margin-bottom:14px;flex-wrap:wrap}
+  button{background:#1a1a2e;color:#ccc;border:1px solid #444;padding:5px 14px;cursor:pointer;font-family:monospace;font-size:11px;border-radius:2px}
+  button:hover{background:#2a2a4e;color:#fff;border-color:#88f}
+  .btn-regen{background:#2a1a1a;border-color:#a44;color:#faa}
+  .maps{display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
+  .card{background:#111;border:1px solid #333;padding:10px;border-radius:4px}
+  .card h2{font-size:13px;color:#aaf;margin-bottom:2px}
+  .card .desc{font-size:10px;color:#666;margin-bottom:6px}
+  .card .stats{font-size:9px;color:#555;margin-top:4px}
+  canvas{image-rendering:pixelated;image-rendering:crisp-edges;border:1px solid #222;display:block;max-width:100%;height:auto}
+  .legend{display:flex;gap:12px;justify-content:center;margin-top:10px;flex-wrap:wrap}
+  .legend span{font-size:9px;color:#888}
+  .legend span b{display:inline-block;width:10px;height:10px;border:1px solid #555;vertical-align:middle;margin-right:3px}
+</style>
+</head>
+<body>
+<h1>Pocket Kingdom — Town Map Generator</h1>
+<div class="sub">WFC + Wang Autotiling + Biome-Specific Objects</div>
+<div class="toolbar">
+  <button class="btn-regen" onclick="regenerate()">Regenerate 3 Random Towns</button>
+  <button onclick="generateAll9()">Generate All 9 Towns</button>
+</div>
+<div class="maps" id="maps"></div>
+<div class="legend">
+  <span><b style="background:#CC6633"></b>House</span>
+  <span><b style="background:#8855AA"></b>Shop</span>
+  <span><b style="background:#CC4466"></b>Heal</span>
+  <span><b style="background:#DD2200"></b>Gym</span>
+  <span><b style="background:#336622"></b>Tree</span>
+  <span><b style="background:#FFD700"></b>Exit</span>
+</div>
+
+<script src="map-generator.js"></script>
+<script>
+const TS = 16, SC = 2, R = TS * SC;
+
+let tilesetImages = {}, wangLookups = {}, generators = {};
+
+function buildLookup(meta) {
+  const lk = {};
+  for (const t of (meta.tileset_data?.tiles || meta.tiles || [])) {
+    const c = t.corners;
+    const k = (c.NW==='upper'?'U':'L')+(c.NE==='upper'?'U':'L')+(c.SW==='upper'?'U':'L')+(c.SE==='upper'?'U':'L');
+    lk[k] = { sx: t.bounding_box.x, sy: t.bounding_box.y };
+  }
+  return lk;
+}
+
+function wangKey(grid, x, y, h, w) {
+  const g = (cx,cy) => (cy>=0&&cy<h&&cx>=0&&cx<w) ? grid[cy][cx] : 0;
+  if (g(x,y)===1) return 'UUUU';
+  const nw = g(x-1,y-1)||g(x-1,y)||g(x,y-1)?1:0;
+  const ne = g(x+1,y-1)||g(x+1,y)||g(x,y-1)?1:0;
+  const sw = g(x-1,y+1)||g(x-1,y)||g(x,y+1)?1:0;
+  const se = g(x+1,y+1)||g(x+1,y)||g(x,y+1)?1:0;
+  return (nw?'U':'L')+(ne?'U':'L')+(sw?'U':'L')+(se?'U':'L');
+}
+
+// ============================================================
+// RENDER
+// ============================================================
+function renderTown(canvas, map) {
+  const { terrain, width: w, height: h, buildings, trees, decorations, biome, exits } = map;
+  canvas.width = w * R;
+  canvas.height = h * R;
+  const ctx = canvas.getContext('2d');
+  ctx.imageSmoothingEnabled = false;
+
+  const tsId = biome.tileset;
+  const img = tilesetImages[tsId];
+  const lk = wangLookups[tsId];
+
+  // -- Terrain --
+  for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+    const sx = x*R, sy = y*R;
+    if (img && lk) {
+      const k = wangKey(terrain, x, y, h, w);
+      const src = lk[k];
+      if (src) { ctx.drawImage(img, src.sx, src.sy, TS, TS, sx, sy, R, R); continue; }
+    }
+    ctx.fillStyle = terrain[y][x] ? (biome.palette.road||'#777') : '#2a3a2a';
+    ctx.fillRect(sx, sy, R, R);
+  }
+
+  // -- Buildings --
+  for (const b of buildings) {
+    const bx = b.x*R, by = b.y*R, bw = b.w*R, bh = b.h*R;
+    const pal = biome.palette;
+
+    // Wall
+    ctx.fillStyle = b.type === 'gym' ? pal.wallAlt : pal.wall;
+    ctx.fillRect(bx+2, by+2, bw-4, bh-4);
+
+    // Roof (top 40%)
+    ctx.fillStyle = b.roof || pal.roofMain;
+    const roofH = Math.floor(bh * 0.4);
+    ctx.fillRect(bx+1, by+1, bw-2, roofH);
+
+    // Windows
+    ctx.fillStyle = pal.window;
+    const winY = by + roofH + 4;
+    const winSize = Math.min(R*0.3, 8);
+    if (b.w >= 3) {
+      ctx.fillRect(bx + R*0.5, winY, winSize, winSize);
+      ctx.fillRect(bx + bw - R*0.5 - winSize, winY, winSize, winSize);
+    }
+    if (b.w >= 5) {
+      ctx.fillRect(bx + bw/2 - winSize/2, winY, winSize, winSize);
+    }
+
+    // Door
+    ctx.fillStyle = pal.door;
+    const doorW = R*0.4, doorH = R*0.55;
+    const doorX = bx + bw/2 - doorW/2;
+    ctx.fillRect(doorX, by + bh - doorH - 2, doorW, doorH);
+
+    // Type icon
+    ctx.fillStyle = '#fff';
+    ctx.font = 'bold 10px monospace';
+    ctx.textAlign = 'center';
+    let icon = '';
+    if (b.type === 'shop') icon = '$';
+    else if (b.type === 'heal') icon = '+';
+    else if (b.type === 'gym') icon = 'G';
+    if (icon) {
+      ctx.fillText(icon, bx + bw/2, by + roofH/2 + 4);
+    }
+
+    // Label
+    ctx.fillStyle = '#fff8';
+    ctx.font = '8px monospace';
+    ctx.fillText(b.label, bx + bw/2, by - 2);
+    ctx.textAlign = 'left';
+  }
+
+  // -- Trees --
+  for (const t of trees) {
+    const tx = t.x*R, ty = t.y*R;
+    drawTree(ctx, tx, ty, t.type, t.color, t.trunkColor);
+  }
+
+  // -- Decorations --
+  for (const d of decorations) {
+    const dx = d.x*R + R/2, dy = d.y*R + R/2;
+    drawDecoration(ctx, dx, dy, d);
+  }
+
+  // -- Exits --
+  if (exits) for (const exit of exits) {
+    const pos = exitPos(w, h, exit);
+    const ex = pos.x*R, ey = pos.y*R;
+    ctx.fillStyle = '#FFD700';
+    ctx.fillRect(ex+4, ey+4, R-8, R-8);
+    ctx.fillStyle = '#000';
+    ctx.font = '9px monospace';
+    ctx.textAlign = 'center';
+    ctx.fillText(exit.side[0].toUpperCase(), ex+R/2, ey+R/2+3);
+    ctx.textAlign = 'left';
+  }
+}
+
+function drawTree(ctx, x, y, type, color, trunkColor) {
+  const cx = x + R/2, cy = y + R/2;
+  switch (type) {
+    case 'oak': case 'trimmed': case 'ancient':
+      ctx.fillStyle = trunkColor;
+      ctx.fillRect(cx-2, cy, 4, R*0.45);
+      ctx.fillStyle = color;
+      ctx.beginPath(); ctx.arc(cx, cy-1, R*0.42, 0, Math.PI*2); ctx.fill();
+      break;
+    case 'palm':
+      ctx.fillStyle = trunkColor;
+      ctx.fillRect(cx-2, cy-2, 3, R*0.6);
+      ctx.fillStyle = color;
+      // Fronds
+      for (let a = 0; a < 5; a++) {
+        const angle = -Math.PI/2 + (a-2)*0.6;
+        ctx.beginPath(); ctx.moveTo(cx, cy-R*0.3);
+        ctx.lineTo(cx + Math.cos(angle)*R*0.5, cy-R*0.3 + Math.sin(angle)*R*0.35);
+        ctx.lineWidth = 3; ctx.strokeStyle = color; ctx.stroke();
+      }
+      break;
+    case 'snow_pine': case 'dead_tree':
+      ctx.fillStyle = trunkColor;
+      ctx.fillRect(cx-2, cy+2, 4, R*0.4);
+      ctx.fillStyle = color;
+      // Triangle pine
+      ctx.beginPath(); ctx.moveTo(cx, cy-R*0.35); ctx.lineTo(cx-R*0.35, cy+4); ctx.lineTo(cx+R*0.35, cy+4); ctx.closePath(); ctx.fill();
+      break;
+    case 'big_tree':
+      ctx.fillStyle = trunkColor;
+      ctx.fillRect(cx-3, cy, 6, R*0.45);
+      ctx.fillStyle = color;
+      ctx.beginPath(); ctx.arc(cx, cy-3, R*0.48, 0, Math.PI*2); ctx.fill();
+      // Extra foliage
+      ctx.beginPath(); ctx.arc(cx-4, cy+2, R*0.25, 0, Math.PI*2); ctx.fill();
+      ctx.beginPath(); ctx.arc(cx+4, cy+2, R*0.25, 0, Math.PI*2); ctx.fill();
+      break;
+    case 'bamboo':
+      ctx.strokeStyle = color; ctx.lineWidth = 2;
+      for (let i = -1; i <= 1; i++) {
+        ctx.beginPath(); ctx.moveTo(cx+i*4, y+R); ctx.lineTo(cx+i*4+i, y+2); ctx.stroke();
+      }
+      ctx.fillStyle = color;
+      for (let i = -1; i <= 1; i++) {
+        ctx.beginPath(); ctx.ellipse(cx+i*4, y+6, 4, 3, 0, 0, Math.PI*2); ctx.fill();
+      }
+      break;
+    case 'dead':
+      ctx.strokeStyle = trunkColor; ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.moveTo(cx, y+R-2); ctx.lineTo(cx, cy-4);
+      ctx.lineTo(cx-6, cy-8); ctx.moveTo(cx, cy-4); ctx.lineTo(cx+5, cy-10); ctx.stroke();
+      break;
+    default:
+      ctx.fillStyle = trunkColor;
+      ctx.fillRect(cx-2, cy, 4, R*0.45);
+      ctx.fillStyle = color;
+      ctx.beginPath(); ctx.arc(cx, cy-1, R*0.4, 0, Math.PI*2); ctx.fill();
+  }
+}
+
+function drawDecoration(ctx, cx, cy, d) {
+  ctx.fillStyle = d.color;
+  ctx.font = 'bold 11px monospace';
+  ctx.textAlign = 'center';
+
+  switch (d.type) {
+    case 'well':
+      ctx.strokeStyle = '#888'; ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.arc(cx, cy, 8, 0, Math.PI*2); ctx.stroke();
+      ctx.fillStyle = '#44a'; ctx.beginPath(); ctx.arc(cx, cy, 5, 0, Math.PI*2); ctx.fill();
+      break;
+    case 'flowers':
+      for (let i = 0; i < 4; i++) {
+        ctx.fillStyle = ['#F88','#F8F','#FF8','#8FF'][i];
+        ctx.beginPath(); ctx.arc(cx-5+i*4, cy-2+Math.sin(i)*3, 2.5, 0, Math.PI*2); ctx.fill();
+      }
+      break;
+    case 'lava_vent':
+      ctx.fillStyle = '#F60'; ctx.beginPath(); ctx.arc(cx, cy, 5, 0, Math.PI*2); ctx.fill();
+      ctx.fillStyle = '#FF0'; ctx.beginPath(); ctx.arc(cx, cy, 2, 0, Math.PI*2); ctx.fill();
+      break;
+    case 'torch': case 'dark_torch': case 'frozen_lamp': case 'pagoda_lamp':
+      ctx.fillStyle = '#888'; ctx.fillRect(cx-1, cy-2, 3, 10);
+      ctx.fillStyle = d.color; ctx.beginPath(); ctx.arc(cx, cy-4, 4, 0, Math.PI*2); ctx.fill();
+      break;
+    case 'rock':
+      ctx.fillStyle = d.color;
+      ctx.beginPath(); ctx.ellipse(cx, cy+2, 6, 4, 0, 0, Math.PI*2); ctx.fill();
+      break;
+    case 'boat':
+      ctx.fillStyle = d.color;
+      ctx.beginPath(); ctx.moveTo(cx-10,cy+2); ctx.lineTo(cx-6,cy+6); ctx.lineTo(cx+6,cy+6); ctx.lineTo(cx+10,cy+2); ctx.closePath(); ctx.fill();
+      ctx.strokeStyle = '#654'; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(cx,cy+2); ctx.lineTo(cx,cy-8); ctx.stroke();
+      break;
+    case 'lighthouse':
+      ctx.fillStyle = '#DDD'; ctx.fillRect(cx-4, cy-12, 8, 18);
+      ctx.fillStyle = '#C44'; ctx.fillRect(cx-4, cy-12, 8, 3);
+      ctx.fillStyle = '#FF0'; ctx.beginPath(); ctx.arc(cx, cy-14, 3, 0, Math.PI*2); ctx.fill();
+      break;
+    case 'snowman':
+      ctx.fillStyle = '#EEE';
+      ctx.beginPath(); ctx.arc(cx, cy+4, 6, 0, Math.PI*2); ctx.fill();
+      ctx.beginPath(); ctx.arc(cx, cy-4, 4, 0, Math.PI*2); ctx.fill();
+      ctx.fillStyle = '#333';
+      ctx.beginPath(); ctx.arc(cx-2, cy-5, 1, 0, Math.PI*2); ctx.fill();
+      ctx.beginPath(); ctx.arc(cx+2, cy-5, 1, 0, Math.PI*2); ctx.fill();
+      break;
+    case 'dragon_statue':
+      ctx.fillStyle = '#4A8';
+      ctx.beginPath(); ctx.moveTo(cx, cy-10); ctx.lineTo(cx-7, cy+6); ctx.lineTo(cx+7, cy+6); ctx.closePath(); ctx.fill();
+      ctx.fillStyle = '#2A6'; ctx.fillRect(cx-8, cy+6, 16, 4);
+      break;
+    case 'gargoyle':
+      ctx.fillStyle = '#555';
+      ctx.beginPath(); ctx.moveTo(cx, cy-8); ctx.lineTo(cx-6, cy+4); ctx.lineTo(cx+6, cy+4); ctx.closePath(); ctx.fill();
+      ctx.fillStyle = '#A4F'; ctx.beginPath(); ctx.arc(cx-2, cy-2, 1.5, 0, Math.PI*2); ctx.fill();
+      ctx.beginPath(); ctx.arc(cx+2, cy-2, 1.5, 0, Math.PI*2); ctx.fill();
+      break;
+    case 'magic_circle':
+      ctx.strokeStyle = '#F4A'; ctx.lineWidth = 1.5;
+      ctx.beginPath(); ctx.arc(cx, cy, 10, 0, Math.PI*2); ctx.stroke();
+      ctx.beginPath(); ctx.arc(cx, cy, 6, 0, Math.PI*2); ctx.stroke();
+      for (let a = 0; a < 6; a++) {
+        const ang = a * Math.PI/3;
+        ctx.fillStyle = '#F4A';
+        ctx.beginPath(); ctx.arc(cx+Math.cos(ang)*10, cy+Math.sin(ang)*10, 2, 0, Math.PI*2); ctx.fill();
+      }
+      break;
+    case 'training_post':
+      ctx.fillStyle = '#A86'; ctx.fillRect(cx-2, cy-8, 4, 16);
+      ctx.fillRect(cx-6, cy-6, 12, 3);
+      break;
+    case 'antenna':
+      ctx.strokeStyle = '#AAA'; ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(cx, cy+8); ctx.lineTo(cx, cy-10); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(cx-5, cy-6); ctx.lineTo(cx, cy-10); ctx.lineTo(cx+5, cy-6); ctx.stroke();
+      ctx.fillStyle = '#F00'; ctx.beginPath(); ctx.arc(cx, cy-10, 2, 0, Math.PI*2); ctx.fill();
+      break;
+    case 'mushroom':
+      ctx.fillStyle = '#DDB'; ctx.fillRect(cx-1, cy, 2, 6);
+      ctx.fillStyle = d.color; ctx.beginPath(); ctx.arc(cx, cy, 5, Math.PI, 0); ctx.fill();
+      ctx.fillStyle = '#FFF';
+      ctx.beginPath(); ctx.arc(cx-2, cy-2, 1.5, 0, Math.PI*2); ctx.fill();
+      ctx.beginPath(); ctx.arc(cx+2, cy-1, 1, 0, Math.PI*2); ctx.fill();
+      break;
+    case 'skull':
+      ctx.fillStyle = d.color;
+      ctx.beginPath(); ctx.arc(cx, cy-1, 5, 0, Math.PI*2); ctx.fill();
+      ctx.fillStyle = '#333';
+      ctx.beginPath(); ctx.arc(cx-2, cy-2, 1.5, 0, Math.PI*2); ctx.fill();
+      ctx.beginPath(); ctx.arc(cx+2, cy-2, 1.5, 0, Math.PI*2); ctx.fill();
+      break;
+    default:
+      ctx.fillText(d.icon || '?', cx, cy+4);
+  }
+  ctx.textAlign = 'left';
+}
+
+function exitPos(w, h, exit) {
+  const p = exit.pos||0.5;
+  switch(exit.side) {
+    case 'north': return {x:Math.floor(w*p),y:0};
+    case 'south': return {x:Math.floor(w*p),y:h-1};
+    case 'east': return {x:w-1,y:Math.floor(h*p)};
+    case 'west': return {x:0,y:Math.floor(h*p)};
+  }
+}
+
+// ============================================================
+// PAGE LOGIC
+// ============================================================
+function getGenerator(tsId) {
+  if (!generators[tsId]) {
+    generators[tsId] = new MapGenerator();
+  }
+  return generators[tsId];
+}
+
+function createCard(biomeKey) {
+  const biome = TOWN_BIOMES[biomeKey];
+  const gen = getGenerator(biome.tileset);
+  if (!gen) return null;
+
+  const w = 26 + Math.floor(Math.random() * 6);
+  const h = 20 + Math.floor(Math.random() * 4);
+  const t0 = performance.now();
+  const mapData = gen.generateTown(w, h, biome);
+  const dt = (performance.now() - t0).toFixed(0);
+
+  const card = document.createElement('div');
+  card.className = 'card';
+  const header = document.createElement('h2');
+  header.textContent = biome.name;
+  card.appendChild(header);
+  const desc = document.createElement('div');
+  desc.className = 'desc';
+  desc.textContent = biome.description;
+  card.appendChild(desc);
+  const canvas = document.createElement('canvas');
+  card.appendChild(canvas);
+  const stats = document.createElement('div');
+  stats.className = 'stats';
+  stats.textContent = `${w}x${h} tiles | ${dt}ms | ${mapData.buildings.length} buildings | ${mapData.trees.length} trees | ${mapData.decorations.length} decos`;
+  card.appendChild(stats);
+
+  renderTown(canvas, mapData);
+  return card;
+}
+
+function regenerate() {
+  const container = document.getElementById('maps');
+  container.innerHTML = '';
+  const keys = Object.keys(TOWN_BIOMES);
+  const shuffled = keys.sort(() => Math.random() - 0.5).slice(0, 3);
+  for (const k of shuffled) {
+    const card = createCard(k);
+    if (card) container.appendChild(card);
+  }
+}
+
+function generateAll9() {
+  const container = document.getElementById('maps');
+  container.innerHTML = '';
+  for (const k of Object.keys(TOWN_BIOMES)) {
+    const card = createCard(k);
+    if (card) container.appendChild(card);
+  }
+}
+
+// ============================================================
+// INIT
+// ============================================================
+async function init() {
+  const basePath = 'tiles/candidates/';
+  const tsList = [
+    'T01_grass_dirt','T03_ocean_beach','T05_forest_grass','T06_snow_ice',
+    'T07_volcanic_lava','T09_cobblestone_grass','T12_corrupted_obsidian',
+  ];
+
+  await Promise.all(tsList.map(async id => {
+    try {
+      const img = new Image();
+      img.src = basePath + id + '.png';
+      await new Promise((r,e) => { img.onload=r; img.onerror=e; });
+      tilesetImages[id] = img;
+      const resp = await fetch(basePath + id + '_meta.json');
+      if (resp.ok) wangLookups[id] = buildLookup(await resp.json());
+    } catch(e) { console.warn('Load fail:', id, e); }
+  }));
+
+  regenerate();
+}
+
+init();
+</script>
+</body>
+</html>

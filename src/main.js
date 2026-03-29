@@ -249,44 +249,106 @@ class Game {
       ...playerManifest,
       ...npcManifest,
       ...monsterManifest,
-      // Tilesets
-      { key: 'tileset_grass_dirt', path: './src/assets/tilesets/grass_dirt.png' },
-      { key: 'tileset_grass_water', path: './src/assets/tilesets/grass_water.png' },
-      { key: 'tileset_dirt_stone', path: './src/assets/tilesets/dirt_stone.png' },
-      // Map objects
+      // Tilesets (new WAVE 1 assets)
+      { key: 'tileset_grass_dirt', path: './assets/tiles/candidates/T01_grass_dirt.png' },
+      { key: 'tileset_dirt_stone', path: './assets/tiles/candidates/T02_dirt_stone.png' },
+      { key: 'tileset_ocean_beach', path: './assets/tiles/candidates/T03_ocean_beach.png' },
+      { key: 'tileset_beach_grass', path: './assets/tiles/candidates/T04_beach_grass.png' },
+      { key: 'tileset_forest_grass', path: './assets/tiles/candidates/T05_forest_grass.png' },
+      { key: 'tileset_snow_ice', path: './assets/tiles/candidates/T06_snow_ice.png' },
+      { key: 'tileset_volcanic_lava', path: './assets/tiles/candidates/T07_volcanic_lava.png' },
+      { key: 'tileset_cave_wall', path: './assets/tiles/candidates/T08_cave_wall.png' },
+      { key: 'tileset_cobblestone_grass', path: './assets/tiles/candidates/T09_cobblestone_grass.png' },
+      { key: 'tileset_swamp_marsh', path: './assets/tiles/candidates/T10_swamp_marsh.png' },
+      { key: 'tileset_crystal_cave', path: './assets/tiles/candidates/T11_crystal_cave.png' },
+      { key: 'tileset_corrupted_obsidian', path: './assets/tiles/candidates/T12_corrupted_obsidian.png' },
+      { key: 'tileset_gym_fire', path: './assets/tiles/candidates/T13_gym_fire.png' },
+      { key: 'tileset_gym_water', path: './assets/tiles/candidates/T14_gym_water.png' },
+      { key: 'tileset_gym_electric', path: './assets/tiles/candidates/T15_gym_electric.png' },
+      { key: 'tileset_gym_nature', path: './assets/tiles/candidates/T16_gym_nature.png' },
+      { key: 'tileset_gym_fighting', path: './assets/tiles/candidates/T17_gym_fighting.png' },
+      { key: 'tileset_gym_ice', path: './assets/tiles/candidates/T18_gym_ice.png' },
+      { key: 'tileset_gym_dragon', path: './assets/tiles/candidates/T19_gym_dragon.png' },
+      { key: 'tileset_gym_dark', path: './assets/tiles/candidates/T20_gym_dark.png' },
+      // Map objects (legacy - will be replaced in WAVE 2)
       { key: 'obj_tree', path: './src/assets/objects/tree.png' },
       { key: 'obj_fence', path: './src/assets/objects/fence.png' },
       { key: 'obj_house', path: './src/assets/objects/house.png' },
       { key: 'obj_signpost', path: './src/assets/objects/signpost.png' },
-      // Battle UI
-      { key: 'battle_frame', path: './src/assets/ui/battle_frame.png' },
+      // UI assets (new WAVE 1)
+      { key: 'battle_frame', path: './assets/ui/candidates/UI03_skill_menu.png' },
+      { key: 'ui_hp_bar', path: './assets/ui/candidates/UI01_hp_bar_frame.png' },
+      { key: 'ui_message_box', path: './assets/ui/candidates/UI02_message_box.png' },
+      { key: 'ui_action_menu', path: './assets/ui/candidates/UI04_action_menu.png' },
+      { key: 'ui_dialog_box', path: './assets/ui/candidates/UI06_dialog_box.png' },
+      { key: 'ui_title_logo', path: './assets/ui/candidates/UI17_title_logo.png' },
+      { key: 'ui_battle_platform', path: './assets/ui/candidates/UC10_battle_platform.png' },
+      { key: 'ui_gold_icon', path: './assets/ui/candidates/UC03_gold_icon.png' },
+      { key: 'ui_dpad', path: './assets/ui/candidates/UC06_touch_dpad.png' },
+      { key: 'ui_a_button', path: './assets/ui/candidates/UC07_touch_a_button.png' },
     ]);
 
-    // Load Wang tileset metadata
-    const loadJson = async (path) => { const r = await fetch(path); return r.json(); };
-    const [metaGrassDirt, metaGrassWater, metaDirtStone] = await Promise.all([
-      loadJson('./src/assets/tilesets/meta/8de067a5-fa64-4f06-897f-c132b0ef7b7f.json').catch(() => null),
-      loadJson('./src/assets/tilesets/meta/d3359993-457c-46da-a2cc-32985fba1916.json').catch(() => null),
-      loadJson('./src/assets/tilesets/meta/a784ec88-01fa-4baa-98cd-cdeccec98a1e.json').catch(() => null),
-    ]);
+    // Load Wang tileset metadata (new WAVE 1 tilesets)
+    const loadJson = async (path) => { const r = await fetch(path); if (!r.ok) return null; return r.json(); };
+    const tilesetMetaFiles = {
+      grass_dirt: './assets/tiles/candidates/T01_grass_dirt_meta.json',
+      dirt_stone: './assets/tiles/candidates/T02_dirt_stone_meta.json',
+      ocean_beach: './assets/tiles/candidates/T03_ocean_beach_meta.json',
+      beach_grass: './assets/tiles/candidates/T04_beach_grass_meta.json',
+      forest_grass: './assets/tiles/candidates/T05_forest_grass_meta.json',
+      snow_ice: './assets/tiles/candidates/T06_snow_ice_meta.json',
+      volcanic_lava: './assets/tiles/candidates/T07_volcanic_lava_meta.json',
+      cave_wall: './assets/tiles/candidates/T08_cave_wall_meta.json',
+      cobblestone_grass: './assets/tiles/candidates/T09_cobblestone_grass_meta.json',
+      swamp_marsh: './assets/tiles/candidates/T10_swamp_marsh_meta.json',
+      crystal_cave: './assets/tiles/candidates/T11_crystal_cave_meta.json',
+      corrupted_obsidian: './assets/tiles/candidates/T12_corrupted_obsidian_meta.json',
+    };
+    const metaEntries = await Promise.all(
+      Object.entries(tilesetMetaFiles).map(async ([name, path]) => [name, await loadJson(path).catch(() => null)])
+    );
+    const metaGrassDirt = metaEntries.find(([n]) => n === 'grass_dirt')?.[1];
+    const metaDirtStone = metaEntries.find(([n]) => n === 'dirt_stone')?.[1];
+    // grass_water alias for backwards compat — use ocean_beach
+    const metaGrassWater = metaEntries.find(([n]) => n === 'ocean_beach')?.[1];
 
     // Initialize map system
     this.mapManager = new MapManager(this.mapsData);
     this.tilemapEngine = new TilemapEngine(this.canvas.width, this.canvas.height);
 
-    // Load Wang metadata
+    // Load Wang metadata for all tilesets
     const wangMeta = {};
-    if (metaGrassDirt) wangMeta.grass_dirt = metaGrassDirt;
-    if (metaGrassWater) wangMeta.grass_water = metaGrassWater;
-    if (metaDirtStone) wangMeta.dirt_stone = metaDirtStone;
+    for (const [name, meta] of metaEntries) {
+      if (meta) wangMeta[name] = meta;
+    }
+    // Backwards compat aliases
+    if (wangMeta.ocean_beach) wangMeta.grass_water = wangMeta.ocean_beach;
     this.tilemapEngine.loadWangMetadata(wangMeta);
     this.mapUI = new MapUI(this.tilemapEngine, this.mapManager);
 
     // Set tileset images
     this.tilemapEngine.setTilesetImages({
       grass_dirt: this.assetLoader.get('tileset_grass_dirt'),
-      grass_water: this.assetLoader.get('tileset_grass_water'),
+      grass_water: this.assetLoader.get('tileset_ocean_beach'),
       dirt_stone: this.assetLoader.get('tileset_dirt_stone'),
+      ocean_beach: this.assetLoader.get('tileset_ocean_beach'),
+      beach_grass: this.assetLoader.get('tileset_beach_grass'),
+      forest_grass: this.assetLoader.get('tileset_forest_grass'),
+      snow_ice: this.assetLoader.get('tileset_snow_ice'),
+      volcanic_lava: this.assetLoader.get('tileset_volcanic_lava'),
+      cave_wall: this.assetLoader.get('tileset_cave_wall'),
+      cobblestone_grass: this.assetLoader.get('tileset_cobblestone_grass'),
+      swamp_marsh: this.assetLoader.get('tileset_swamp_marsh'),
+      crystal_cave: this.assetLoader.get('tileset_crystal_cave'),
+      corrupted_obsidian: this.assetLoader.get('tileset_corrupted_obsidian'),
+      gym_fire: this.assetLoader.get('tileset_gym_fire'),
+      gym_water: this.assetLoader.get('tileset_gym_water'),
+      gym_electric: this.assetLoader.get('tileset_gym_electric'),
+      gym_nature: this.assetLoader.get('tileset_gym_nature'),
+      gym_fighting: this.assetLoader.get('tileset_gym_fighting'),
+      gym_ice: this.assetLoader.get('tileset_gym_ice'),
+      gym_dragon: this.assetLoader.get('tileset_gym_dragon'),
+      gym_dark: this.assetLoader.get('tileset_gym_dark'),
     });
 
     // Set object images
@@ -396,7 +458,7 @@ class Game {
         // Reload NPCs on map transition + check story events
         if (this.mapUI.lastTransitionMapId) {
           const newMapId = this.mapUI.lastTransitionMapId;
-          this.currentNPCs = getNPCsForMap(newMapId);
+          this.currentNPCs = getNPCsForMap(newMapId, this.storyEngine);
           this.mapUI.npcs = this.currentNPCs;
           this.mapUI.lastTransitionMapId = null;
           // Story trigger: arrive
@@ -636,7 +698,7 @@ class Game {
         console.log(`[PK] Starter: ${this.playerMonster.name} Lv.${this.playerMonster.level}`);
       }
       this.mapManager.loadMap('town_01');
-      this.currentNPCs = getNPCsForMap('town_01');
+      this.currentNPCs = getNPCsForMap('town_01', this.storyEngine);
       this.mapUI.npcs = this.currentNPCs;
       this.mapUI.spawn(7, 7);
       this.state = STATE.MAP;

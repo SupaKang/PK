@@ -2,7 +2,7 @@
   "maps": [
     {
       "id": "town_01",
-      "name": "시작의 마을",
+      "name": "아스텔 마을",
       "type": "town",
       "description": "평화로운 작은 마을. 이곳에서 새로운 모험이 시작된다.",
       "connections": [
@@ -51,9 +51,9 @@
     },
     {
       "id": "route_01",
-      "name": "1번 도로",
+      "name": "여명의 오솔길",
       "type": "route",
-      "description": "시작의 마을과 화염도시를 잇는 초원길.",
+      "description": "아스텔 마을과 칼데라 시티를 잇는 초원길.",
       "connections": [
         "town_01",
         "town_02"
@@ -123,9 +123,9 @@
     },
     {
       "id": "town_02",
-      "name": "화염도시",
+      "name": "칼데라 시티",
       "type": "town",
-      "description": "화산 근처에 세워진 뜨거운 도시. 화염 체육관이 있다.",
+      "description": "화산 근처에 세워진 뜨거운 도시. 화련의 전당이 있다.",
       "connections": [
         "route_01",
         "gym_01",
@@ -170,9 +170,9 @@
     },
     {
       "id": "gym_01",
-      "name": "화염 체육관",
+      "name": "화련의 전당",
       "type": "gym",
-      "description": "화염 타입 전문 체육관.",
+      "description": "화염 타입 전문. 화련의 수호자 이그나가 이끈다.",
       "connections": [
         "town_02"
       ],
@@ -206,7 +206,7 @@
         }
       ],
       "gym": {
-        "leader": "수호자 불꽃",
+        "leader": "화련의 수호자 이그나",
         "type": "fire",
         "badge": "badge_fire",
         "team": [
@@ -232,9 +232,9 @@
     },
     {
       "id": "route_02",
-      "name": "2번 도로",
+      "name": "화강암 해안도",
       "type": "route",
-      "description": "화염도시에서 해류항으로 이어지는 해안도로.",
+      "description": "칼데라 시티에서 마레포트로 이어지는 해안도로.",
       "connections": [
         "town_02",
         "cave_01",
@@ -312,7 +312,7 @@
     },
     {
       "id": "cave_01",
-      "name": "바위동굴",
+      "name": "그림록 동굴",
       "type": "cave",
       "description": "해안 절벽에 뚫린 어두운 동굴.",
       "connections": [
@@ -394,9 +394,9 @@
     },
     {
       "id": "town_03",
-      "name": "해류항",
+      "name": "마레포트",
       "type": "town",
-      "description": "큰 항구가 있는 바닷가 마을. 해류 체육관이 있다.",
+      "description": "큰 항구가 있는 바닷가 마을. 조류의 전당이 있다.",
       "connections": [
         "route_02",
         "gym_02",
@@ -454,9 +454,9 @@
     },
     {
       "id": "gym_02",
-      "name": "해류 체육관",
+      "name": "조류의 전당",
       "type": "gym",
-      "description": "물 타입 전문 체육관.",
+      "description": "물 타입 전문. 조류의 수호자 미네아가 이끈다.",
       "connections": [
         "town_03"
       ],
@@ -490,7 +490,7 @@
         }
       ],
       "gym": {
-        "leader": "수호자 석진",
+        "leader": "조류의 수호자 미네아",
         "type": "water",
         "badge": "badge_water",
         "team": [
@@ -516,9 +516,9 @@
     },
     {
       "id": "route_03",
-      "name": "3번 도로",
+      "name": "뇌우 고원길",
       "type": "route",
-      "description": "해류항에서 전격시티로 이어지는 산길.",
+      "description": "마레포트에서 볼타 시티로 이어지는 산길.",
       "connections": [
         "town_03",
         "town_04"
@@ -594,7 +594,7 @@
         },
         {
           "id": "route3_t3",
-          "name": "그림자단원 알파",
+          "name": "황혼의 사도 알파",
           "team": [
             {
               "monsterId": 31,
@@ -622,9 +622,9 @@
     },
     {
       "id": "town_04",
-      "name": "전격시티",
+      "name": "볼타 시티",
       "type": "town",
-      "description": "첨단 기술의 도시. 전격 체육관과 연구소가 있다.",
+      "description": "첨단 기술의 도시. 뇌광의 전당과 연구소가 있다.",
       "connections": [
         "route_03",
         "gym_03",
@@ -681,9 +681,9 @@
     },
     {
       "id": "gym_03",
-      "name": "전격 체육관",
+      "name": "뇌광의 전당",
       "type": "gym",
-      "description": "전기 타입 전문 체육관.",
+      "description": "전기 타입 전문. 뇌광의 수호자 라이젤이 이끈���.",
       "connections": [
         "town_04"
       ],
@@ -717,7 +717,7 @@
         }
       ],
       "gym": {
-        "leader": "수호자 미나",
+        "leader": "뇌광의 수호자 라이젤",
         "type": "electric",
         "badge": "badge_electric",
         "team": [
@@ -743,9 +743,9 @@
     },
     {
       "id": "route_04",
-      "name": "4번 도로",
+      "name": "안개숲 산도",
       "type": "route",
-      "description": "전격시티에서 자연마을로 이어지는 숲길.",
+      "description": "볼타 시티에서 실바리아로 이어지는 숲길.",
       "connections": [
         "town_04",
         "forest_01",
@@ -836,7 +836,7 @@
     },
     {
       "id": "forest_01",
-      "name": "수수께끼의 숲",
+      "name": "미스트우드",
       "type": "forest",
       "description": "안개가 자욱한 신비한 숲.",
       "connections": [
@@ -906,7 +906,7 @@
         },
         {
           "id": "forest1_t2",
-          "name": "그림자단원 베타",
+          "name": "황혼의 사도 베타",
           "team": [
             {
               "monsterId": 32,
@@ -934,9 +934,9 @@
     },
     {
       "id": "town_05",
-      "name": "자연마을",
+      "name": "실바리아",
       "type": "town",
-      "description": "숲에 둘러싸인 평화로운 마을. 자연 체육관이 있다.",
+      "description": "숲에 둘러싸인 평화로운 마을. 상림의 전당이 있다.",
       "connections": [
         "route_04",
         "gym_04",
@@ -982,9 +982,9 @@
     },
     {
       "id": "gym_04",
-      "name": "자연 체육관",
+      "name": "상림의 전당",
       "type": "gym",
-      "description": "풀 타입 전문 체육관.",
+      "description": "풀 타입 전문. 상��의 수호자 페르나가 이끈다.",
       "connections": [
         "town_05"
       ],
@@ -1022,7 +1022,7 @@
         }
       ],
       "gym": {
-        "leader": "수호자 라이",
+        "leader": "상림의 수호자 페르나",
         "type": "grass",
         "badge": "badge_grass",
         "team": [
@@ -1052,9 +1052,9 @@
     },
     {
       "id": "route_05",
-      "name": "5번 도로",
+      "name": "격류 협곡로",
       "type": "route",
-      "description": "자연마을에서 투지시티로 이어지는 험준한 산길.",
+      "description": "실바리아에서 발록으로 이어지는 험준한 산길.",
       "connections": [
         "town_05",
         "town_06"
@@ -1130,7 +1130,7 @@
         },
         {
           "id": "route5_t3",
-          "name": "그림자단 간부 검은달",
+          "name": "현월 루나르",
           "team": [
             {
               "monsterId": 32,
@@ -1162,9 +1162,9 @@
     },
     {
       "id": "town_06",
-      "name": "투지시티",
+      "name": "발록",
       "type": "town",
-      "description": "무술의 도시. 투지 체육관과 대련장이 있다.",
+      "description": "무술의 도시. 쟁투의 전당과 대련장이 있다.",
       "connections": [
         "route_05",
         "gym_05",
@@ -1221,9 +1221,9 @@
     },
     {
       "id": "gym_05",
-      "name": "투지 체육관",
+      "name": "쟁투의 전당",
       "type": "gym",
-      "description": "격투 타입 전문 체육관.",
+      "description": "격투 타입 전문. 쟁투의 수호자 무현이 이끈다.",
       "connections": [
         "town_06"
       ],
@@ -1261,7 +1261,7 @@
         }
       ],
       "gym": {
-        "leader": "수호자 무현",
+        "leader": "쟁투의 수호자 무현",
         "type": "fighting",
         "badge": "badge_fighting",
         "team": [
@@ -1291,9 +1291,9 @@
     },
     {
       "id": "route_06",
-      "name": "6번 도로",
+      "name": "설맥 등산로",
       "type": "route",
-      "description": "투지시티에서 빙결마을로 이어지는 설원길.",
+      "description": "발록에서 프로스트홀름으로 이어지는 설원길.",
       "connections": [
         "town_06",
         "cave_02",
@@ -1392,7 +1392,7 @@
     },
     {
       "id": "cave_02",
-      "name": "빙하동굴",
+      "name": "크리스탈 심연",
       "type": "cave",
       "description": "얼음으로 뒤덮인 거대한 동굴.",
       "connections": [
@@ -1462,7 +1462,7 @@
         },
         {
           "id": "cave2_t2",
-          "name": "그림자단원 감마",
+          "name": "황혼의 사도 감마",
           "team": [
             {
               "monsterId": 20,
@@ -1490,9 +1490,9 @@
     },
     {
       "id": "town_07",
-      "name": "빙결마을",
+      "name": "프로스트홀름",
       "type": "town",
-      "description": "만년설이 덮인 산 위의 마을. 빙결 체육관이 있다.",
+      "description": "만년설이 덮인 산 위의 마을. 상화의 전당이 있다.",
       "connections": [
         "route_06",
         "gym_06",
@@ -1542,9 +1542,9 @@
     },
     {
       "id": "gym_06",
-      "name": "빙결 체육관",
+      "name": "상화의 전당",
       "type": "gym",
-      "description": "얼음 타입 전문 체육관.",
+      "description": "얼음 타입 전문. 상화의 수호자 설리아가 이끈다.",
       "connections": [
         "town_07"
       ],
@@ -1582,7 +1582,7 @@
         }
       ],
       "gym": {
-        "leader": "수호자 설화",
+        "leader": "상화의 수호자 설리아",
         "type": "ice",
         "badge": "badge_ice",
         "team": [
@@ -1612,9 +1612,9 @@
     },
     {
       "id": "route_07",
-      "name": "7번 도로",
+      "name": "비룡 고갯길",
       "type": "route",
-      "description": "빙결마을에서 용린시티로 이어지는 고산길.",
+      "description": "프로스트홀름에서 드라코니아로 이어지는 고산길.",
       "connections": [
         "town_07",
         "town_08"
@@ -1703,7 +1703,7 @@
         },
         {
           "id": "route7_t3",
-          "name": "그림자단 간부 흑사",
+          "name": "흑아 쿠로가",
           "team": [
             {
               "monsterId": 20,
@@ -1735,7 +1735,7 @@
     },
     {
       "id": "town_08",
-      "name": "용린시티",
+      "name": "드라코니아",
       "type": "town",
       "description": "용의 전설이 내려오는 고대 도시.",
       "connections": [
@@ -1794,9 +1794,9 @@
     },
     {
       "id": "gym_07",
-      "name": "용린 체육관",
+      "name": "고룡의 전당",
       "type": "gym",
-      "description": "용 타입 전문 체육관.",
+      "description": "용 타입 전문. 고룡의 수호자 드래곤 카이가 이끈다.",
       "connections": [
         "town_08"
       ],
@@ -1834,7 +1834,7 @@
         }
       ],
       "gym": {
-        "leader": "수호자 용왕",
+        "leader": "고룡의 수호자 드래곤 카이",
         "type": "dragon",
         "badge": "badge_dragon",
         "team": [
@@ -1864,9 +1864,9 @@
     },
     {
       "id": "route_08",
-      "name": "8번 도로",
+      "name": "황혼의 늪길",
       "type": "route",
-      "description": "용린시티에서 암흑성채로 이어지는 어두운 길.",
+      "description": "드라코니아에서 옵시디안 포트리스로 이어지는 어두운 길.",
       "connections": [
         "town_08",
         "shadow_base",
@@ -1950,9 +1950,9 @@
     },
     {
       "id": "shadow_base",
-      "name": "그림자단 비밀기지",
+      "name": "어비스 요새",
       "type": "cave",
-      "description": "그림자단의 본거지.",
+      "description": "황혼결사의 본거지.",
       "connections": [
         "route_08",
         "town_09"
@@ -1999,7 +1999,7 @@
       "trainers": [
         {
           "id": "shadow_t1",
-          "name": "그림자단원 오메가",
+          "name": "황혼의 사도 오메가",
           "team": [
             {
               "monsterId": 32,
@@ -2014,7 +2014,7 @@
         },
         {
           "id": "shadow_t2",
-          "name": "그림자단원 시그마",
+          "name": "황혼의 사도 시그마",
           "team": [
             {
               "monsterId": 20,
@@ -2029,7 +2029,7 @@
         },
         {
           "id": "shadow_t3",
-          "name": "그림자단 간부 적월",
+          "name": "겁화 이그니온",
           "team": [
             {
               "monsterId": 32,
@@ -2048,7 +2048,7 @@
         },
         {
           "id": "shadow_t4",
-          "name": "그림자 간부 암살",
+          "name": "황혼결사 암살자",
           "team": [
             {
               "monsterId": 89,
@@ -2067,7 +2067,7 @@
         },
         {
           "id": "shadow_boss",
-          "name": "그림자단 수장 다크니스",
+          "name": "황혼의 왕 다크니스",
           "team": [
             {
               "monsterId": 89,
@@ -2112,9 +2112,9 @@
     },
     {
       "id": "town_09",
-      "name": "암흑성채",
+      "name": "옵시디안 포트리스",
       "type": "town",
-      "description": "어둠에 싸인 고대 성채. 암흑 체육관이 있다.",
+      "description": "어둠에 싸인 고대 성채. 성운의 전당이 있다.",
       "connections": [
         "route_08",
         "gym_08",
@@ -2164,9 +2164,9 @@
     },
     {
       "id": "gym_08",
-      "name": "암흑 체육관",
+      "name": "성운의 전당",
       "type": "gym",
-      "description": "어둠 타입 전문 체육관.",
+      "description": "어둠 타입 전문. ��운의 수호자 네뷸라가 이끈다.",
       "connections": [
         "town_09"
       ],
@@ -2204,7 +2204,7 @@
         }
       ],
       "gym": {
-        "leader": "수호자 성운",
+        "leader": "성운의 수호자 네뷸라",
         "type": "dark",
         "badge": "badge_dark",
         "team": [
@@ -2238,7 +2238,7 @@
     },
     {
       "id": "route_09",
-      "name": "챔피언 로드",
+      "name": "심연의 나선로",
       "type": "route",
       "description": "사천왕에게 도전하기 위한 최후의 관문.",
       "connections": [
@@ -2381,9 +2381,9 @@
     },
     {
       "id": "elite_four",
-      "name": "포켓 왕국 리그",
+      "name": "카오스 시타델",
       "type": "elite_four",
-      "description": "최강의 사천왕과 챔피언이 기다리는 최종 결전의 장소.",
+      "description": "카오스의 사천왕이 기다리는 최종 결전의 장소.",
       "connections": [
         "route_09"
       ],
@@ -2391,7 +2391,7 @@
       "trainers": [
         {
           "id": "elite_1",
-          "name": "사천왕 강철 - 강철의 수호자",
+          "name": "철벽의 사천왕 아이언",
           "team": [
             {
               "monsterId": 34,
@@ -2418,7 +2418,7 @@
         },
         {
           "id": "elite_2",
-          "name": "사천왕 유령 - 영혼의 인도자",
+          "name": "영혼의 사천왕 팬텀",
           "team": [
             {
               "monsterId": 20,
@@ -2445,7 +2445,7 @@
         },
         {
           "id": "elite_3",
-          "name": "사천왕 용린 - 용의 후예",
+          "name": "용의 사천왕 와이번",
           "team": [
             {
               "monsterId": 28,
@@ -2472,7 +2472,7 @@
         },
         {
           "id": "elite_4",
-          "name": "사천왕 우주 - 별의 관측자",
+          "name": "별의 사천왕 스텔라",
           "team": [
             {
               "monsterId": 51,

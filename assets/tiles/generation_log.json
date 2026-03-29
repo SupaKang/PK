@@ -1,0 +1,26 @@
+{
+  "generated": [
+    {"id": "T01", "name": "초원↔흙길", "tileset_id": "3a28efc4-b28c-439e-bf6a-12aa2dbfec5b", "lower_base": "5ddfbca6-12c6-4950-a117-2ab5f5ce2a8c", "upper_base": "5b562249-83bc-4cc3-9341-a7d260a16a33", "status": "processing"},
+    {"id": "T03", "name": "바다↔모래", "tileset_id": "b6378534-343f-4cc0-b68a-0b12e2589401", "lower_base": "fa071efa-d4c6-409c-8b92-68366c77ef0d", "upper_base": "70d50ad9-103f-4f52-bc6f-e1d8b27e6a05", "status": "processing"},
+    {"id": "T06", "name": "눈↔얼음", "tileset_id": "70ea80a4-fedd-4766-89fa-ab6a3204aa10", "lower_base": "f1946112-2f02-46b3-9ae9-4a6c387e77d3", "upper_base": "c717446e-d95b-46a1-8c6f-cc90b2ff0705", "status": "processing"},
+    {"id": "T07", "name": "화산↔용암", "tileset_id": "82bd7aaa-8127-4737-ab0c-5504a8675450", "lower_base": "2ed05bd9-ef9f-49ed-893e-1feaac781057", "upper_base": "bf8a7019-90a6-4a05-9fc8-8a504fbc3c42", "status": "processing"},
+    {"id": "T10", "name": "늪↔진흙", "tileset_id": "7faed228-0455-4b59-9f6f-6b84e54d94d2", "lower_base": "7f05be15-3001-43f0-a313-17442ea6d612", "upper_base": "a4da5c0d-3626-44f0-bded-4f8d5cc23fd5", "status": "processing"},
+    {"id": "T12", "name": "마왕성", "tileset_id": "8960be71-8f5b-4b75-a5a9-9b6ac0ea35e2", "lower_base": "bf953530-3697-4a46-b6d6-15e91b338b68", "upper_base": "40f5d1b3-cf7a-4714-be8a-9df2bec38cb4", "status": "processing"},
+    {"id": "T02", "name": "흙길↔석재", "tileset_id": "df7e8297-f4ea-4438-921d-ca9606aad706", "lower_base": "5b562249-83bc-4cc3-9341-a7d260a16a33", "upper_base": "98647736-8326-47cb-a0f5-be4449658736", "status": "processing", "chain": "T01_upper"},
+    {"id": "T04", "name": "모래↔잔디", "tileset_id": "38fdebe5-5a01-496c-b54a-84c29fa6792d", "lower_base": "70d50ad9-103f-4f52-bc6f-e1d8b27e6a05", "upper_base": "34736f17-a29c-4d96-b100-0e45bcde7169", "status": "processing", "chain": "T03_upper"},
+    {"id": "T20", "name": "체육관 암흑", "tileset_id": "7328653a-1ef6-4bba-a1cb-259a8bada230", "lower_base": "22bb5460-83fa-463d-af97-69984a4fedec", "upper_base": "d5ca702e-6ec2-4b92-b2ac-987f019ea36e", "status": "processing"}
+  ],
+  "pending": [
+    {"id": "T05", "name": "숲↔풀", "chain": "T01_upper", "lower_base_tile_id": "5b562249-83bc-4cc3-9341-a7d260a16a33"},
+    {"id": "T08", "name": "동굴↔벽", "chain": "T02_upper", "lower_base_tile_id": "98647736-8326-47cb-a0f5-be4449658736"},
+    {"id": "T09", "name": "마을↔잔디", "chain": "T01_lower", "lower_base_tile_id": "5ddfbca6-12c6-4950-a117-2ab5f5ce2a8c"},
+    {"id": "T11", "name": "수정동굴", "chain": "T08_upper", "lower_base_tile_id": "pending_T08"},
+    {"id": "T13", "name": "체육관 화염", "chain": null},
+    {"id": "T14", "name": "체육관 해류", "chain": null},
+    {"id": "T15", "name": "체육관 전격", "chain": null},
+    {"id": "T16", "name": "체육관 자연", "chain": null},
+    {"id": "T17", "name": "체육관 투지", "chain": null},
+    {"id": "T18", "name": "체육관 빙결", "chain": null},
+    {"id": "T19", "name": "체육관 용린", "chain": null}
+  ]
+}

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>PK — World Map</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:#0a0a16;color:#fff;font-family:monospace;overflow:auto}
+  canvas{display:block;margin:20px auto;image-rendering:pixelated}
+  h1{text-align:center;color:#FFD700;font-size:16px;padding-top:16px}
+  .sub{text-align:center;color:#888;font-size:11px;margin-bottom:8px}
+  .legend{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;padding:8px;font-size:10px;color:#aaa}
+  .legend span{display:flex;align-items:center;gap:4px}
+  .legend b{width:12px;height:12px;border-radius:2px;display:inline-block}
+</style>
+</head>
+<body>
+<h1>Pocket Kingdom — World Map</h1>
+<div class="sub">스토리 진행 순서 + 유기적 연결 구조 (10챕터, 31맵)</div>
+<canvas id="c"></canvas>
+<div class="legend">
+  <span><b style="background:#4a4"></b>마을</span>
+  <span><b style="background:#a86"></b>도로</span>
+  <span><b style="background:#c44"></b>체육관</span>
+  <span><b style="background:#668"></b>동굴/숲</span>
+  <span><b style="background:#a4f"></b>마왕성</span>
+  <span><b style="background:#888"></b>기본 연결</span>
+  <span><b style="background:#fa0"></b>추가 연결</span>
+</div>
+
+<script>
+const W = 1200, H = 1600;
+const canvas = document.getElementById('c');
+canvas.width = W; canvas.height = H;
+canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
+const ctx = canvas.getContext('2d');
+
+// Map nodes with positions (hand-placed for visual clarity)
+const nodes = [
+  // Main path bottom to top
+  { id:'town_01',  name:'시작의 마을',     type:'town', x:600, y:1520, ch:0, badge:0, env:'T09' },
+  { id:'route_01', name:'1번 도로',        type:'route',x:600, y:1430, ch:1, badge:0, env:'T01' },
+  { id:'town_02',  name:'화염도시',        type:'town', x:600, y:1340, ch:1, badge:0, env:'T07' },
+  { id:'gym_01',   name:'화염 수호자',     type:'gym',  x:740, y:1340, ch:1, badge:0, env:'T13' },
+  { id:'route_02', name:'2번 도로',        type:'route',x:500, y:1250, ch:2, badge:1, env:'T01' },
+  { id:'cave_01',  name:'바위동굴',        type:'cave', x:360, y:1210, ch:2, badge:1, env:'T08' },
+  { id:'town_03',  name:'해류항',          type:'town', x:400, y:1140, ch:3, badge:1, env:'T03' },
+  { id:'gym_02',   name:'해류 수호자',     type:'gym',  x:260, y:1140, ch:2, badge:1, env:'T14' },
+  { id:'route_03', name:'3번 도로',        type:'route',x:500, y:1060, ch:3, badge:2, env:'T01' },
+  { id:'town_04',  name:'전격시티',        type:'town', x:600, y: 970, ch:4, badge:2, env:'T09' },
+  { id:'gym_03',   name:'전격 수호자',     type:'gym',  x:740, y: 970, ch:3, badge:2, env:'T15' },
+  { id:'route_04', name:'4번 도로',        type:'route',x:500, y: 890, ch:4, badge:3, env:'T05' },
+  { id:'forest_01',name:'수수께끼의 숲',   type:'cave', x:360, y: 850, ch:4, badge:3, env:'T05' },
+  { id:'town_05',  name:'자연마을',        type:'town', x:400, y: 770, ch:4, badge:3, env:'T05' },
+  { id:'gym_04',   name:'자연 수호자',     type:'gym',  x:260, y: 770, ch:4, badge:3, env:'T16' },
+  { id:'route_05', name:'5번 도로',        type:'route',x:500, y: 690, ch:5, badge:4, env:'T01' },
+  { id:'town_06',  name:'투지시티',        type:'town', x:600, y: 610, ch:5, badge:4, env:'T01' },
+  { id:'gym_05',   name:'투지 수호자',     type:'gym',  x:740, y: 610, ch:5, badge:4, env:'T17' },
+  { id:'route_06', name:'6번 도로',        type:'route',x:500, y: 530, ch:6, badge:5, env:'T06' },
+  { id:'cave_02',  name:'빙하동굴',        type:'cave', x:360, y: 490, ch:6, badge:5, env:'T11' },
+  { id:'town_07',  name:'빙결마을',        type:'town', x:400, y: 420, ch:6, badge:5, env:'T06' },
+  { id:'gym_06',   name:'빙결 수호자',     type:'gym',  x:260, y: 420, ch:6, badge:5, env:'T18' },
+  { id:'route_07', name:'7번 도로',        type:'route',x:500, y: 350, ch:6, badge:6, env:'T01' },
+  { id:'town_08',  name:'용린시티',        type:'town', x:600, y: 270, ch:6, badge:6, env:'T01' },
+  { id:'gym_07',   name:'용린 수호자',     type:'gym',  x:740, y: 270, ch:6, badge:6, env:'T19' },
+  { id:'route_08', name:'8번 도로',        type:'route',x:500, y: 200, ch:7, badge:7, env:'T10' },
+  { id:'shadow',   name:'그림자 비밀기지', type:'dark', x:360, y: 170, ch:7, badge:7, env:'T12' },
+  { id:'town_09',  name:'암흑성채',        type:'town', x:600, y: 120, ch:8, badge:7, env:'T12' },
+  { id:'gym_08',   name:'암흑 수호자',     type:'gym',  x:740, y: 120, ch:8, badge:7, env:'T20' },
+  { id:'route_09', name:'챔피언 로드',     type:'route',x:600, y:  60, ch:9, badge:8, env:'T02' },
+  { id:'elite',    name:'마왕성',          type:'dark', x:600, y:  20, ch:9, badge:8, env:'T12' },
+];
+
+// Main connections
+const edges = [
+  ['town_01','route_01'],['route_01','town_02'],['town_02','gym_01'],
+  ['town_02','route_02'],['route_02','cave_01'],['route_02','town_03'],['cave_01','town_03'],
+  ['town_03','gym_02'],['town_03','route_03'],
+  ['route_03','town_04'],['town_04','gym_03'],['town_04','route_04'],
+  ['route_04','forest_01'],['route_04','town_05'],['forest_01','town_05'],
+  ['town_05','gym_04'],['town_05','route_05'],
+  ['route_05','town_06'],['town_06','gym_05'],['town_06','route_06'],
+  ['route_06','cave_02'],['route_06','town_07'],['cave_02','town_07'],
+  ['town_07','gym_06'],['town_07','route_07'],
+  ['route_07','town_08'],['town_08','gym_07'],['town_08','route_08'],
+  ['route_08','shadow'],['route_08','town_09'],['shadow','town_09'],
+  ['town_09','gym_08'],['town_09','route_09'],
+  ['route_09','elite'],
+];
+
+// Extra connections (shortcuts)
+const extraEdges = [
+  { from:'cave_01', to:'town_04', label:'뒷문 (3뱃지)', badge:3 },
+  { from:'forest_01', to:'town_07', label:'비밀통로 (6뱃지)', badge:6 },
+  { from:'town_03', to:'town_07', label:'배편 (5뱃지)', badge:5 },
+  { from:'town_08', to:'town_02', label:'용의 통로 (7뱃지)', badge:7 },
+  { from:'shadow', to:'town_04', label:'탈출로 (7뱃지)', badge:7 },
+];
+
+const nodeMap = {};
+nodes.forEach(n => nodeMap[n.id] = n);
+
+const typeColors = {
+  town: '#4a4', route: '#a86', gym: '#c44', cave: '#668', dark: '#a4f',
+};
+const typeRadius = {
+  town: 22, route: 14, gym: 16, cave: 18, dark: 24,
+};
+
+function draw() {
+  ctx.fillStyle = '#0a0a16';
+  ctx.fillRect(0, 0, W, H);
+
+  // Chapter backgrounds
+  const chColors = ['#181820','#1a1418','#181a14','#14181a','#18141a','#1a1814','#141a18','#1a1418','#181420','#141420'];
+  const chY = [1490,1390,1200,1010,840,640,320,150,80,10];
+  const chH = [110,200,200,200,210,320,330,80,80,40];
+  const chLabels = ['Ch0 프롤로그','Ch1 화염','Ch2 대지','Ch3 해류','Ch4 전격/자연','Ch5 투지','Ch6 빙결/용린','Ch7 그림자','Ch8 암흑','Ch9 마왕성'];
+
+  for (let i = 0; i < chY.length; i++) {
+    ctx.fillStyle = chColors[i];
+    ctx.fillRect(100, chY[i], W-200, chH[i]);
+    ctx.fillStyle = '#ffffff15';
+    ctx.font = '10px monospace';
+    ctx.fillText(chLabels[i], 110, chY[i] + 14);
+  }
+
+  // Draw main edges
+  ctx.lineWidth = 3;
+  ctx.strokeStyle = '#555';
+  for (const [a, b] of edges) {
+    const na = nodeMap[a], nb = nodeMap[b];
+    if (!na || !nb) continue;
+    ctx.beginPath();
+    ctx.moveTo(na.x, na.y);
+    ctx.lineTo(nb.x, nb.y);
+    ctx.stroke();
+  }
+
+  // Draw extra edges (dashed, colored)
+  ctx.lineWidth = 2;
+  ctx.setLineDash([6, 4]);
+  for (const e of extraEdges) {
+    const na = nodeMap[e.from], nb = nodeMap[e.to];
+    if (!na || !nb) continue;
+    ctx.strokeStyle = '#fa0';
+    ctx.beginPath();
+    ctx.moveTo(na.x, na.y);
+    // Bezier curve for long connections
+    const mx = (na.x + nb.x) / 2 + (na.x < nb.x ? -80 : 80);
+    const my = (na.y + nb.y) / 2;
+    ctx.quadraticCurveTo(mx, my, nb.x, nb.y);
+    ctx.stroke();
+    // Label
+    ctx.fillStyle = '#fa0';
+    ctx.font = '9px monospace';
+    ctx.textAlign = 'center';
+    ctx.fillText(e.label, mx + 20, my);
+    ctx.textAlign = 'left';
+  }
+  ctx.setLineDash([]);
+
+  // Draw nodes
+  for (const n of nodes) {
+    const r = typeRadius[n.type] || 16;
+    const color = typeColors[n.type] || '#888';
+
+    // Glow
+    ctx.shadowColor = color;
+    ctx.shadowBlur = 8;
+    ctx.fillStyle = color;
+    ctx.beginPath();
+    ctx.arc(n.x, n.y, r, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.shadowBlur = 0;
+
+    // Border
+    ctx.strokeStyle = '#fff3';
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+
+    // Name
+    ctx.fillStyle = '#fff';
+    ctx.font = 'bold 10px monospace';
+    ctx.textAlign = 'center';
+    ctx.fillText(n.name, n.x, n.y + r + 14);
+
+    // Badge requirement
+    if (n.badge > 0) {
+      ctx.fillStyle = '#FFD700';
+      ctx.font = '8px monospace';
+      ctx.fillText(`${n.badge}뱃지`, n.x, n.y + r + 24);
+    }
+
+    // Type icon inside node
+    ctx.fillStyle = '#fff';
+    ctx.font = 'bold 11px monospace';
+    let icon = '';
+    switch (n.type) {
+      case 'town': icon = '🏠'; break;
+      case 'route': icon = '→'; break;
+      case 'gym': icon = '⚔'; break;
+      case 'cave': icon = '▓'; break;
+      case 'dark': icon = '☠'; break;
+    }
+    ctx.fillText(icon, n.x, n.y + 4);
+    ctx.textAlign = 'left';
+  }
+
+  // START marker
+  ctx.fillStyle = '#FFD700';
+  ctx.font = 'bold 14px monospace';
+  ctx.textAlign = 'center';
+  ctx.fillText('★ START', 600, 1560);
+  ctx.textAlign = 'left';
+
+  // Title at top
+  ctx.fillStyle = '#a4f';
+  ctx.font = 'bold 12px monospace';
+  ctx.textAlign = 'center';
+  ctx.fillText('FINAL BOSS: 챔피언 하늘', 600, 15);
+  ctx.textAlign = 'left';
+}
+
+draw();
+</script>
+</body>
+</html>
