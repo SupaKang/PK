@@ -1,0 +1,85 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const faqs = [
+  {
+    q: '포켓 왕국은 어떤 게임인가요?',
+    a: '102종의 크리처를 계약(포획)하고 키우며, 18가지 타입 상성 기반 턴제 전투를 즐기는 RPG입니다. 10장의 스토리와 카르마 시스템에 따라 3가지 엔딩이 준비되어 있습니다.',
+  },
+  {
+    q: '크리처는 몇 마리까지 파티에 넣을 수 있나요?',
+    a: '최대 6마리까지 파티에 편성할 수 있습니다. 타입 상성을 고려하여 밸런스 잡힌 팀을 구성하는 것이 중요합니다.',
+  },
+  {
+    q: '클래스(직업)는 어떤 역할인가요?',
+    a: '5가지 클래스(투사, 마법사, 궁수, 성직자, 암흑기사) 중 하나를 선택합니다. 클래스에 따라 파티 크리처에 스탯 보너스가 적용되고, 고유 스킬을 사용할 수 있습니다.',
+  },
+  {
+    q: '타입은 몇 가지인가요?',
+    a: '총 18가지 타입이 있습니다: 불꽃, 물, 풀, 전기, 땅, 얼음, 바람, 독, 금속, 빛, 어둠, 영혼, 드래곤, 격투, 바위, 노멀, 소리, 우주. 각 타입은 공격/방어 상성이 있으며, 시스템 가이드의 타입 상성표에서 확인할 수 있습니다.',
+  },
+  {
+    q: '카르마 시스템은 무엇인가요?',
+    a: '스토리 진행 중 선택에 따라 카르마(-100~+100)가 변합니다. 카르마 +30 이상이면 빛의 엔딩, -30~+30은 중립 엔딩, -30 이하면 어둠의 엔딩으로 분기합니다.',
+  },
+  {
+    q: '크리처를 진화시키려면 어떻게 하나요?',
+    a: '크리처마다 정해진 진화 레벨이 있습니다. 해당 레벨에 도달하면 자동으로 진화합니다. 크리처 도감에서 각 크리처의 진화 트리와 필요 레벨을 확인할 수 있습니다.',
+  },
+  {
+    q: '포획(계약)은 어떻게 하나요?',
+    a: '야생 크리처의 HP를 낮추고 상태 이상을 건 후 마석을 사용합니다. HP가 낮을수록, 상태 이상이 걸려 있을수록 포획률이 올라갑니다. 마석 등급(일반/상급/최상급/지배)에 따라 배율이 달라집니다.',
+  },
+  {
+    q: '세이브 슬롯은 몇 개인가요?',
+    a: '여러 개의 세이브 슬롯을 지원합니다. 브라우저의 localStorage에 저장됩니다.',
+  },
+  {
+    q: '모바일에서도 플레이할 수 있나요?',
+    a: '네, 터치 컨트롤을 지원하며 모바일 브라우저에서 플레이 가능합니다. 480×270 해상도가 화면 크기에 맞게 자동 스케일링됩니다.',
+  },
+  {
+    q: '팀 빌더나 데미지 계산기는 어디서 사용하나요?',
+    a: '상단 네비게이션의 "도구" 메뉴에서 팀 빌더, 데미지 계산기, 크리처 비교 도구를 이용할 수 있습니다.',
+  },
+];
+---
+
+<BaseLayout title="FAQ — 포켓 왕국">
+  <section class="relative py-16 px-4 text-center overflow-hidden" aria-label="FAQ 헤더">
+    <div class="absolute inset-0 bg-gradient-to-b from-[#1a1a28] via-pk-bg to-pk-bg" aria-hidden="true"></div>
+    <div class="relative z-10 max-w-3xl mx-auto">
+      <p class="text-[#9999CC] text-xs tracking-[0.3em] uppercase mb-4 animate-fade-up">FAQ</p>
+      <h1 class="text-pk-accent animate-fade-up-delay-1 mb-4">자주 묻는 질문</h1>
+      <p class="text-pk-text-secondary text-sm animate-fade-up-delay-2 text-balance">
+        포켓 왕국에 대해 궁금한 점을 확인하세요.
+      </p>
+    </div>
+  </section>
+
+  <div class="max-w-3xl mx-auto px-4 py-12">
+    <div class="space-y-3 reveal-children">
+      {faqs.map((faq, i) => (
+        <details class="pixel-card group" id={`faq-${i}`}>
+          <summary class="cursor-pointer select-none flex items-start gap-3 text-sm text-pk-text leading-relaxed">
+            <span class="text-pk-accent shrink-0 text-xs mt-0.5 group-open:rotate-90 transition-transform">▶</span>
+            {faq.q}
+          </summary>
+          <p class="text-xs text-pk-text-secondary leading-relaxed mt-3 pl-6">
+            {faq.a}
+          </p>
+        </details>
+      ))}
+    </div>
+
+    <div class="pixel-divider max-w-xs mx-auto my-10"></div>
+
+    <div class="text-center">
+      <p class="text-sm text-pk-muted mb-4">더 궁금한 점이 있으신가요?</p>
+      <div class="flex flex-col sm:flex-row gap-3 justify-center">
+        <a href="/guide" class="pixel-btn-ghost text-xs">시스템 가이드 보기</a>
+        <a href="/creatures" class="pixel-btn-ghost text-xs">크리처 도감 보기</a>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

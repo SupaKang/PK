@@ -188,7 +188,7 @@ class Game {
     };
 
     const [monsters, skills, types, classes, items, maps, story] = await Promise.all([
-      load('./data/monsters.json'),
+      load('./data/creature.json'),
       load('./data/skills.json'),
       load('./data/types.json'),
       load('./data/classes.json'),
@@ -197,7 +197,7 @@ class Game {
       load('./data/story.json'),
     ]);
 
-    this.monstersData = monsters.monsters || monsters;
+    this.monstersData = monsters.creatures || monsters.monsters || monsters;
     this.skillsData = skills.skills || skills;
     this.typesData = types; // Keep full object with .types and .matchups
     this.classesData = classes.classes || classes;
@@ -641,8 +641,8 @@ class Game {
       this.mapUI.spawn(7, 7);
       this.state = STATE.MAP;
     }, (lineIdx, choiceIdx) => {
-      // Class selection callback (line index 3 has choices)
-      if (lineIdx === 3 && classesData[choiceIdx]) {
+      // Class selection callback (line index 2 has choices)
+      if (lineIdx === 2 && classesData[choiceIdx]) {
         this.playerClass = new PlayerClass(classesData[choiceIdx]);
         console.log(`[PK] Class selected: ${this.playerClass.name}`);
       }

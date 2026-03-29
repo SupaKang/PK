@@ -1,11 +1,11 @@
 ---
 const features = [
-  { number: '102', label: '몬스터', color: '#44BB44', delay: '0' },
-  { number: '346', label: '스킬', color: '#FF4422', delay: '0.08' },
-  { number: '18', label: '타입', color: '#FFCC00', delay: '0.16' },
-  { number: '5', label: '클래스', color: '#AA44CC', delay: '0.24' },
-  { number: '10', label: '챕터', color: '#3399FF', delay: '0.32' },
-  { number: '31', label: '지역', color: '#BB8844', delay: '0.4' },
+  { number: 102, label: '크리처', color: '#5dba5d', delay: '0' },
+  { number: 346, label: '스킬', color: '#ef5235', delay: '0.08' },
+  { number: 18, label: '타입', color: '#f0c040', delay: '0.16' },
+  { number: 5, label: '클래스', color: '#a855c8', delay: '0.24' },
+  { number: 10, label: '챕터', color: '#4a90d9', delay: '0.32' },
+  { number: 31, label: '지역', color: '#c49555', delay: '0.4' },
 ];
 ---
 
@@ -14,18 +14,41 @@ const features = [
 
   <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 mt-10 reveal-children">
     {features.map(f => (
-      <div class="pixel-card text-center py-6 group">
+      <div class="glass-card text-center py-6 group">
         <div
-          class="text-3xl md:text-4xl mb-2 transition-all group-hover:scale-110"
-          style={`color: ${f.color}; text-shadow: 0 0 12px ${f.color}40`}
+          class="text-3xl md:text-4xl font-bold mb-2 transition-all group-hover:scale-105 counter-number"
+          style={`color: ${f.color}`}
           aria-label={`${f.number}${f.label}`}
+          data-target={f.number}
         >
-          {f.number}
+          0
         </div>
-        <div class="text-pk-muted text-xs tracking-wider">{f.label}</div>
+        <div class="text-pk-muted text-xs">{f.label}</div>
       </div>
     ))}
   </div>
 </section>
 
 <div class="pixel-divider max-w-md mx-auto" aria-hidden="true"></div>
+
+<script>
+  const counterObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const el = entry.target as HTMLElement;
+        const target = parseInt(el.dataset.target || '0');
+        let current = 0;
+        const duration = 1200;
+        const step = Math.max(1, Math.floor(target / (duration / 16)));
+        const animate = () => {
+          current = Math.min(current + step, target);
+          el.textContent = String(current);
+          if (current < target) requestAnimationFrame(animate);
+        };
+        requestAnimationFrame(animate);
+        counterObserver.unobserve(el);
+      }
+    });
+  }, { threshold: 0.5 });
+  document.querySelectorAll('.counter-number').forEach(el => counterObserver.observe(el));
+</script>

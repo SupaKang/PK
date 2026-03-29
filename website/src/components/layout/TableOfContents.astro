@@ -1,0 +1,93 @@
+---
+interface TocItem {
+  id: string;
+  label: string;
+}
+
+interface Props {
+  items: TocItem[];
+}
+
+const { items } = Astro.props;
+---
+
+<nav class="toc-nav mb-8 reveal" aria-label="페이지 목차">
+  <!-- Mobile: collapsible -->
+  <details class="lg:hidden pixel-card">
+    <summary class="text-sm text-pk-accent cursor-pointer select-none py-1">
+      목차
+    </summary>
+    <ol class="mt-3 space-y-1.5 text-xs">
+      {items.map((item, i) => (
+        <li>
+          <a
+            href={`#${item.id}`}
+            class="text-pk-text-secondary hover:text-pk-accent transition-colors flex items-center gap-2 py-1"
+          >
+            <span class="text-pk-muted/60 w-4 text-right shrink-0">{i + 1}.</span>
+            {item.label}
+          </a>
+        </li>
+      ))}
+    </ol>
+  </details>
+
+  <!-- Desktop: sticky sidebar -->
+  <div class="hidden lg:block fixed right-4 top-24 z-30 w-44" id="toc-desktop">
+    <div class="pixel-card bg-pk-bg/90 backdrop-blur-sm border-pk-border/40">
+      <p class="text-[10px] text-pk-accent tracking-wider uppercase mb-3">목차</p>
+      <ol class="space-y-1">
+        {items.map((item, i) => (
+          <li>
+            <a
+              href={`#${item.id}`}
+              class="toc-link text-[10px] text-pk-muted hover:text-pk-accent transition-colors flex items-center gap-1.5 py-0.5"
+              data-section={item.id}
+            >
+              <span class="w-1 h-1 bg-pk-border shrink-0 toc-dot transition-all"></span>
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </div>
+</nav>
+
+<style>
+  .toc-link.active {
+    color: #FFCC00;
+  }
+  .toc-link.active .toc-dot {
+    background: #FFCC00;
+    box-shadow: 0 0 4px rgba(255, 204, 0, 0.5);
+    transform: scale(1.5);
+  }
+</style>
+
+<script>
+  const tocLinks = document.querySelectorAll('.toc-link[data-section]');
+  if (tocLinks.length > 0) {
+    const tocObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const link = document.querySelector(`.toc-link[data-section="${entry.target.id}"]`);
+          if (link) {
+            if (entry.isIntersecting) {
+              tocLinks.forEach(l => l.classList.remove('active'));
+              link.classList.add('active');
+            }
+          }
+        });
+      },
+      { threshold: 0.2, rootMargin: '-80px 0px -60% 0px' }
+    );
+    tocLinks.forEach(link => {
+      const id = (link as HTMLElement).dataset.section;
+      if (id) {
+        const section = document.getElementById(id);
+        if (section) tocObserver.observe(section);
+      }
+    });
+  }
+</script>

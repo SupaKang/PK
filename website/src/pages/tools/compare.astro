@@ -1,0 +1,24 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CreatureCompare from '../../components/tools/CreatureCompare.tsx';
+import { creatures } from '../../data/creatures';
+import { types } from '../../data/types';
+import { spriteMap } from '../../data/sprite-map';
+---
+
+<BaseLayout title="크리처 비교 — 포켓 왕국">
+  <section class="relative py-16 px-4 text-center overflow-hidden" aria-label="크리처 비교 헤더">
+    <div class="absolute inset-0 bg-gradient-to-b from-[#1a1a25] via-pk-bg to-pk-bg" aria-hidden="true"></div>
+    <div class="relative z-10 max-w-3xl mx-auto">
+      <p class="text-[#9999CC] text-xs tracking-[0.3em] uppercase mb-4 animate-fade-up">CREATURE COMPARE</p>
+      <h1 class="text-pk-accent animate-fade-up-delay-1 mb-4">크리처 비교</h1>
+      <p class="text-pk-text-secondary text-sm animate-fade-up-delay-2 text-balance">
+        최대 3마리 크리처의 스탯을 나란히 비교하세요.
+      </p>
+    </div>
+  </section>
+
+  <div class="max-w-4xl mx-auto px-4 py-12">
+    <CreatureCompare creatures={creatures} types={types} spriteMap={spriteMap} client:load />
+  </div>
+</BaseLayout>

@@ -1,0 +1,24 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import DamageCalculator from '../../components/tools/DamageCalculator.tsx';
+import { creatures } from '../../data/creatures';
+import { types, matchups } from '../../data/types';
+import { skills } from '../../data/skills';
+---
+
+<BaseLayout title="데미지 계산기 — 포켓 왕국">
+  <section class="relative py-16 px-4 text-center overflow-hidden" aria-label="데미지 계산기 헤더">
+    <div class="absolute inset-0 bg-gradient-to-b from-[#201a1a] via-pk-bg to-pk-bg" aria-hidden="true"></div>
+    <div class="relative z-10 max-w-3xl mx-auto">
+      <p class="text-[#CC6644] text-xs tracking-[0.3em] uppercase mb-4 animate-fade-up">DAMAGE CALCULATOR</p>
+      <h1 class="text-pk-accent animate-fade-up-delay-1 mb-4">데미지 계산기</h1>
+      <p class="text-pk-text-secondary text-sm animate-fade-up-delay-2 text-balance">
+        크리처, 스킬, 레벨을 선택하여 예상 데미지를 계산하세요.
+      </p>
+    </div>
+  </section>
+
+  <div class="max-w-4xl mx-auto px-4 py-12">
+    <DamageCalculator creatures={creatures} types={types} skills={skills} matchups={matchups} client:load />
+  </div>
+</BaseLayout>

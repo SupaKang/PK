@@ -1,0 +1,1997 @@
+{
+  "creatures": [
+    {
+      "id": 1,
+      "name": "신더",
+      "type": ["fire"],
+      "baseStats": {"hp": 45, "atk": 52, "def": 43, "spAtk": 60, "spDef": 50, "speed": 50},
+      "growthRate": "medium",
+      "evolution": {"to": 2, "level": 16},
+      "catchRate": 45,
+      "expYield": 62,
+      "learnset": [
+        {"level": 1, "skillId": "scratch"}, {"level": 1, "skillId": "growl"},
+        {"level": 5, "skillId": "ember"}, {"level": 9, "skillId": "flame_claw"},
+        {"level": 13, "skillId": "bite"}, {"level": 17, "skillId": "fire_breath"},
+        {"level": 21, "skillId": "flame_charge"}, {"level": 25, "skillId": "fire_spin"}
+      ],
+      "uniqueSkill": {"level": 30, "skillId": "unique_fire_puppy"},
+      "description": "꼬리 끝의 불씨가 감정에 따라 일렁이는 새끼 고양이 마물. 화가 나면 불꽃이 두 배로 커지고, 잠들면 재가 소복이 쌓인다.",
+      "spriteConfig": {"baseColor": "#FF6633", "accentColor": "#FFAA00", "shape": "quadruped", "features": ["tail", "fangs", "claws"]}
+    },
+    {
+      "id": 2,
+      "name": "이그니온",
+      "type": ["fire"],
+      "baseStats": {"hp": 65, "atk": 72, "def": 58, "spAtk": 80, "spDef": 65, "speed": 60},
+      "growthRate": "medium",
+      "evolution": {"to": 3, "level": 36},
+      "catchRate": 45,
+      "expYield": 142,
+      "learnset": [
+        {"level": 1, "skillId": "scratch"}, {"level": 1, "skillId": "ember"},
+        {"level": 5, "skillId": "flame_claw"}, {"level": 9, "skillId": "bite"},
+        {"level": 13, "skillId": "fire_breath"}, {"level": 17, "skillId": "flame_charge"},
+        {"level": 21, "skillId": "fire_spin"}, {"level": 25, "skillId": "heat_fang"},
+        {"level": 29, "skillId": "inferno"}
+      ],
+      "uniqueSkill": {"level": 38, "skillId": "unique_flame_lion"},
+      "description": "불타는 갈기로 황야를 지배하는 맹수 마물. 한 번 포효하면 반경 수십 보의 풀이 타오르며, 영역 침범자는 뼛속까지 열기를 느낀다.",
+      "spriteConfig": {"baseColor": "#FF4400", "accentColor": "#FFCC00", "shape": "quadruped", "features": ["tail", "fangs", "claws", "aura"]}
+    },
+    {
+      "id": 3,
+      "name": "이프리트",
+      "type": ["fire", "fighting"],
+      "baseStats": {"hp": 80, "atk": 95, "def": 72, "spAtk": 100, "spDef": 78, "speed": 95},
+      "growthRate": "medium",
+      "evolution": null,
+      "catchRate": 45,
+      "expYield": 240,
+      "learnset": [
+        {"level": 1, "skillId": "scratch"}, {"level": 1, "skillId": "ember"},
+        {"level": 5, "skillId": "flame_claw"}, {"level": 9, "skillId": "fire_breath"},
+        {"level": 13, "skillId": "flame_charge"}, {"level": 17, "skillId": "heat_fang"},
+        {"level": 21, "skillId": "brick_break"}, {"level": 25, "skillId": "inferno"},
+        {"level": 29, "skillId": "close_combat"}, {"level": 33, "skillId": "eruption"},
+        {"level": 37, "skillId": "fire_wall"}
+      ],
+      "uniqueSkill": {"level": 42, "skillId": "unique_inferno_emperor"},
+      "description": "화염의 갑주를 두른 전설의 전사 마물. 불타는 주먹 한 방에 바위가 녹아 흐르고, 그 눈빛을 마주친 자는 영혼까지 그을린다.",
+      "spriteConfig": {"baseColor": "#CC2200", "accentColor": "#FFD700", "shape": "bipedal", "features": ["tail", "fangs", "claws", "aura", "horns"]}
+    },
+    {
+      "id": 4,
+      "name": "아쿠아젤",
+      "type": ["water"],
+      "baseStats": {"hp": 50, "atk": 45, "def": 50, "spAtk": 58, "spDef": 55, "speed": 42},
+      "growthRate": "medium",
+      "evolution": {"to": 5, "level": 16},
+      "catchRate": 45,
+      "expYield": 63,
+      "learnset": [
+        {"level": 1, "skillId": "tackle"}, {"level": 1, "skillId": "growl"},
+        {"level": 5, "skillId": "water_gun"}, {"level": 9, "skillId": "bubble_beam"},
+        {"level": 13, "skillId": "aqua_jet"}, {"level": 17, "skillId": "water_pulse"},
+        {"level": 21, "skillId": "aqua_shield"}, {"level": 25, "skillId": "torrent_bite"}
+      ],
+      "uniqueSkill": {"level": 30, "skillId": "unique_water_sprite"},
+      "description": "감정에 따라 몸빛이 바뀌는 물방울 마물. 기쁘면 맑은 청록, 겁먹으면 탁한 보랏빛으로 변하며, 비 오는 날엔 웅덩이마다 숨어들어 지나는 이의 발목을 잡아당긴다.",
+      "spriteConfig": {"baseColor": "#4488FF", "accentColor": "#88CCFF", "shape": "amorphous", "features": ["tail", "aura"]}
+    },
+    {
+      "id": 5,
+      "name": "토렌트",
+      "type": ["water"],
+      "baseStats": {"hp": 70, "atk": 60, "def": 65, "spAtk": 80, "spDef": 70, "speed": 55},
+      "growthRate": "medium",
+      "evolution": {"to": 6, "level": 36},
+      "catchRate": 45,
+      "expYield": 144,
+      "learnset": [
+        {"level": 1, "skillId": "tackle"}, {"level": 1, "skillId": "water_gun"},
+        {"level": 5, "skillId": "bubble_beam"}, {"level": 9, "skillId": "aqua_jet"},
+        {"level": 13, "skillId": "water_pulse"}, {"level": 17, "skillId": "aqua_shield"},
+        {"level": 21, "skillId": "torrent_bite"}, {"level": 25, "skillId": "waterfall"},
+        {"level": 29, "skillId": "tidal_wave"}
+      ],
+      "uniqueSkill": {"level": 38, "skillId": "unique_tidal_beast"},
+      "description": "급류를 거슬러 오르는 수달 마물. 조약돌로 먹이를 기절시킨 뒤 물속으로 끌어당기며, 물에 잠긴 발목을 절대 놓아주지 않는 집요함이 있다.",
+      "spriteConfig": {"baseColor": "#3366CC", "accentColor": "#66AAFF", "shape": "quadruped", "features": ["tail", "fins", "claws"]}
+    },
+    {
+      "id": 6,
+      "name": "리바이어선",
+      "type": ["water", "dragon"],
+      "baseStats": {"hp": 90, "atk": 78, "def": 82, "spAtk": 105, "spDef": 85, "speed": 80},
+      "growthRate": "medium",
+      "evolution": null,
+      "catchRate": 45,
+      "expYield": 239,
+      "learnset": [
+        {"level": 1, "skillId": "water_gun"}, {"level": 1, "skillId": "bubble_beam"},
+        {"level": 5, "skillId": "water_pulse"}, {"level": 9, "skillId": "aqua_jet"},
+        {"level": 13, "skillId": "waterfall"}, {"level": 17, "skillId": "tidal_wave"},
+        {"level": 21, "skillId": "dragon_breath"}, {"level": 25, "skillId": "hydro_pump"},
+        {"level": 29, "skillId": "dragon_pulse"}, {"level": 33, "skillId": "rain_dance"},
+        {"level": 37, "skillId": "dragon_dance"}
+      ],
+      "uniqueSkill": {"level": 42, "skillId": "unique_ocean_emperor"},
+      "description": "심해의 어둠에 깃든 거대 해룡 마물. 한 번 몸을 뒤틀면 해일이 해안을 집어삼키고, 비늘 하나가 떨어지면 그 자리에 새로운 섬이 생겨난다는 전설이 있다.",
+      "spriteConfig": {"baseColor": "#1144AA", "accentColor": "#44CCFF", "shape": "serpent", "features": ["horns", "fins", "tail", "spikes", "aura"]}
+    },
+    {
+      "id": 7,
+      "name": "시드링",
+      "type": ["grass"],
+      "baseStats": {"hp": 48, "atk": 47, "def": 52, "spAtk": 55, "spDef": 55, "speed": 43},
+      "growthRate": "medium",
+      "evolution": {"to": 8, "level": 16},
+      "catchRate": 45,
+      "expYield": 64,
+      "learnset": [
+        {"level": 1, "skillId": "tackle"}, {"level": 1, "skillId": "growl"},
+        {"level": 5, "skillId": "vine_whip"}, {"level": 9, "skillId": "absorb"},
+        {"level": 13, "skillId": "razor_leaf"}, {"level": 17, "skillId": "growth"},
+        {"level": 21, "skillId": "thorn_whip"}, {"level": 25, "skillId": "sleep_powder"}
+      ],
+      "uniqueSkill": {"level": 30, "skillId": "unique_leaf_spirit"},
+      "description": "머리 위 새싹이 감정에 따라 흔들리는 꼬마 마물. 햇볕을 쬐면 기분이 좋아져 콧노래를 흥얼거리지만, 화가 나면 새싹에서 수면 포자를 뿌려 주변을 잠재운다.",
+      "spriteConfig": {"baseColor": "#55CC55", "accentColor": "#88FF88", "shape": "bipedal", "features": ["tail", "spikes"]}
+    },
+    {
+      "id": 8,
+      "name": "트렌트",
+      "type": ["grass"],
+      "baseStats": {"hp": 68, "atk": 63, "def": 68, "spAtk": 75, "spDef": 72, "speed": 54},
+      "growthRate": "medium",
+      "evolution": {"to": 9, "level": 36},
+      "catchRate": 45,
+      "expYield": 143,
+      "learnset": [
+        {"level": 1, "skillId": "vine_whip"}, {"level": 1, "skillId": "absorb"},
+        {"level": 5, "skillId": "razor_leaf"}, {"level": 9, "skillId": "growth"},
+        {"level": 13, "skillId": "thorn_whip"}, {"level": 17, "skillId": "sleep_powder"},
+        {"level": 21, "skillId": "mega_drain"}, {"level": 25, "skillId": "seed_bomb"},
+        {"level": 29, "skillId": "solar_beam"}
+      ],
+      "uniqueSkill": {"level": 38, "skillId": "unique_jungle_beast"},
+      "description": "고대 숲을 묵묵히 지키는 수호 마물. 등에 자란 이끼와 덩굴에서 잠든 자의 꿈을 먹는 향기가 흘러나오며, 밤이면 나무 형태로 위장해 길손을 미혹한다.",
+      "spriteConfig": {"baseColor": "#338833", "accentColor": "#66CC44", "shape": "quadruped", "features": ["tail", "spikes", "aura"]}
+    },
+    {
+      "id": 9,
+      "name": "엘더 트렌트",
+      "type": ["grass", "earth"],
+      "baseStats": {"hp": 90, "atk": 82, "def": 88, "spAtk": 100, "spDef": 90, "speed": 70},
+      "growthRate": "medium",
+      "evolution": null,
+      "catchRate": 45,
+      "expYield": 236,
+      "learnset": [
+        {"level": 1, "skillId": "vine_whip"}, {"level": 1, "skillId": "absorb"},
+        {"level": 5, "skillId": "razor_leaf"}, {"level": 9, "skillId": "mega_drain"},
+        {"level": 13, "skillId": "seed_bomb"}, {"level": 17, "skillId": "solar_beam"},
+        {"level": 21, "skillId": "earthquake"}, {"level": 25, "skillId": "leaf_storm"},
+        {"level": 29, "skillId": "earth_power"}, {"level": 33, "skillId": "growth"},
+        {"level": 37, "skillId": "sand_armor"}
+      ],
+      "uniqueSkill": {"level": 42, "skillId": "unique_forest_emperor"},
+      "description": "만 그루의 나무를 거느린 숲의 마왕. 발을 구르면 대지가 갈라지며 독가시 거목이 솟구치고, 그 눈동자 속에는 수백 년의 원한이 뿌리내리고 있다.",
+      "spriteConfig": {"baseColor": "#226622", "accentColor": "#88AA44", "shape": "quadruped", "features": ["horns", "tail", "spikes", "aura", "claws"]}
+    },
+    {
+      "id": 10,
+      "name": "스파크 래트",
+      "type": ["electric"],
+      "baseStats": {"hp": 40, "atk": 42, "def": 35, "spAtk": 55, "spDef": 40, "speed": 88},
+      "growthRate": "fast",
+      "evolution": {"to": 11, "level": 18},
+      "catchRate": 190,
+      "expYield": 55,
+      "learnset": [
+        {"level": 1, "skillId": "tackle"}, {"level": 1, "skillId": "thunder_shock"},
+        {"level": 5, "skillId": "charge"}, {"level": 9, "skillId": "spark"},
+        {"level": 13, "skillId": "thunder_wave"}, {"level": 17, "skillId": "discharge"},
+        {"level": 21, "skillId": "thunderbolt"}
+      ],
+      "uniqueSkill": {"level": 25, "skillId": "unique_spark_mouse"},
+      "description": "뺨의 전기주머니에 정전기를 잔뜩 모으는 쥐 마물. 깜짝 놀라면 주변에 불꽃이 튀어 마을 헛간에 불이 나는 사고가 끊이질 않는다.",
+      "spriteConfig": {"baseColor": "#FFCC00", "accentColor": "#FF8800", "shape": "quadruped", "features": ["tail", "fangs"]}
+    },
+    {
+      "id": 11,
+      "name": "썬더 폭스",
+      "type": ["electric"],
+      "baseStats": {"hp": 60, "atk": 62, "def": 50, "spAtk": 85, "spDef": 60, "speed": 105},
+      "growthRate": "fast",
+      "evolution": null,
+      "catchRate": 75,
+      "expYield": 168,
+      "learnset": [
+        {"level": 1, "skillId": "thunder_shock"}, {"level": 1, "skillId": "charge"},
+        {"level": 5, "skillId": "spark"}, {"level": 9, "skillId": "thunder_wave"},
+        {"level": 13, "skillId": "discharge"}, {"level": 17, "skillId": "thunderbolt"},
+        {"level": 21, "skillId": "lightning_fang"}, {"level": 25, "skillId": "volt_tackle"},
+        {"level": 29, "skillId": "thunder"}
+      ],
+      "uniqueSkill": {"level": 33, "skillId": "unique_bolt_fox"},
+      "description": "번개를 타고 이동하는 여우 마물. 꼬리에 정전기를 모아 먹이를 기절시킨 뒤 유유히 사라지며, 그 발자국이 닿은 땅은 한동안 전기를 띤다.",
+      "spriteConfig": {"baseColor": "#FFDD00", "accentColor": "#FFFFFF", "shape": "quadruped", "features": ["tail", "fangs", "aura"]}
+    },
+    {
+      "id": 12,
+      "name": "어스 몰",
+      "type": ["earth"],
+      "baseStats": {"hp": 50, "atk": 58, "def": 55, "spAtk": 35, "spDef": 40, "speed": 62},
+      "growthRate": "fast",
+      "evolution": {"to": 13, "level": 22},
+      "catchRate": 200,
+      "expYield": 56,
+      "learnset": [
+        {"level": 1, "skillId": "scratch"}, {"level": 1, "skillId": "mud_slap"},
+        {"level": 5, "skillId": "dig"}, {"level": 9, "skillId": "sand_tomb"},
+        {"level": 13, "skillId": "ground_slam"}, {"level": 17, "skillId": "earthquake"},
+        {"level": 21, "skillId": "sand_armor"}
+      ],
+      "uniqueSkill": {"level": 26, "skillId": "unique_sand_worm"},
+      "description": "하루에 수십 미터의 땅굴을 파는 두더지 마물. 코끝으로 땅속 보석을 찾아내며, 발굴한 보물을 둥지에 쌓아두는 탐욕스러운 습성이 있다.",
+      "spriteConfig": {"baseColor": "#AA7744", "accentColor": "#DDBB88", "shape": "quadruped", "features": ["claws", "spikes"]}
+    },
+    {
+      "id": 13,
+      "name": "아이언 골렘",
+      "type": ["earth", "metal"],
+      "baseStats": {"hp": 75, "atk": 90, "def": 85, "spAtk": 50, "spDef": 60, "speed": 60},
+      "growthRate": "fast",
+      "evolution": null,
+      "catchRate": 75,
+      "expYield": 170,
+      "learnset": [
+        {"level": 1, "skillId": "scratch"}, {"level": 1, "skillId": "mud_slap"},
+        {"level": 5, "skillId": "dig"}, {"level": 9, "skillId": "ground_slam"},
+        {"level": 13, "skillId": "earthquake"}, {"level": 17, "skillId": "iron_head"},
+        {"level": 21, "skillId": "fissure"}, {"level": 25, "skillId": "iron_defense"},
+        {"level": 29, "skillId": "earth_power"}
+      ],
+      "uniqueSkill": {"level": 33, "skillId": "unique_mole_king"},
+      "description": "지하 깊은 곳에 사는 철갑 두더지 마물. 강철보다 단단한 발톱으로 광맥을 따라 암반을 뚫으며, 광산에서 실종된 광부들은 대부분 이 녀석의 굴에서 발견된다.",
+      "spriteConfig": {"baseColor": "#886633", "accentColor": "#CCCCDD", "shape": "quadruped", "features": ["claws", "spikes", "horns"]}
+    },
+    {
+      "id": 14,
+      "name": "게일 스패로",
+      "type": ["wind"],
+      "baseStats": {"hp": 40, "atk": 48, "def": 38, "spAtk": 42, "spDef": 38, "speed": 56},
+      "growthRate": "fast",
+      "evolution": {"to": 15, "level": 18},
+      "catchRate": 220,
+      "expYield": 50,
+      "learnset": [
+        {"level": 1, "skillId": "tackle"}, {"level": 1, "skillId": "gust"},
+        {"level": 5, "skillId": "wing_attack"}, {"level": 9, "skillId": "aerial_ace"},
+        {"level": 13, "skillId": "air_slash"}, {"level": 17, "skillId": "tailwind"}
+      ],
+      "uniqueSkill": {"level": 22, "skillId": "unique_normal_bird"},
+      "description": "어디서든 만날 수 있는 흔한 새 마물이나 결코 만만하지 않다. 작지만 용감해서 자기보다 큰 마물에게도 거침없이 덤비며, 군집을 이루면 성인 남성도 쓰러뜨린다.",
+      "spriteConfig": {"baseColor": "#AA8866", "accentColor": "#FFFFFF", "shape": "avian", "features": ["wings", "claws"]}
+    },
+    {
+      "id": 15,
+      "name": "스톰 호크",
+      "type": ["wind"],
+      "baseStats": {"hp": 60, "atk": 78, "def": 55, "spAtk": 62, "spDef": 55, "speed": 100},
+      "growthRate": "fast",
+      "evolution": {"to": 16, "level": 36},
+      "catchRate": 75,
+      "expYield": 155,
+      "learnset": [
+        {"level": 1, "skillId": "gust"}, {"level": 1, "skillId": "wing_attack"},
+        {"level": 5, "skillId": "aerial_ace"}, {"level": 9, "skillId": "air_slash"},
+        {"level": 13, "skillId": "tailwind"}, {"level": 17, "skillId": "sky_dive"},
+        {"level": 21, "skillId": "feather_dance"}, {"level": 25, "skillId": "tornado"}
+      ],
+      "uniqueSkill": {"level": 35, "skillId": "unique_gale_bird"},
+      "description": "바람보다 빠르게 하늘을 가르는 매 마물. 급강하 사냥 속도는 마물 중에서도 최상급이며, 날개가 일으키는 기압차로 지나가는 마차를 뒤집기도 한다.",
+      "spriteConfig": {"baseColor": "#667788", "accentColor": "#AADDCC", "shape": "avian", "features": ["wings", "claws", "spikes"]}
+    },
+    {
+      "id": 16,
+      "name": "가루다",
+      "type": ["wind", "fighting"],
+      "baseStats": {"hp": 80, "atk": 100, "def": 68, "spAtk": 78, "spDef": 68, "speed": 118},
+      "growthRate": "fast",
+      "evolution": null,
+      "catchRate": 45,
+      "expYield": 240,
+      "learnset": [
+        {"level": 1, "skillId": "aerial_ace"}, {"level": 1, "skillId": "air_slash"},
+        {"level": 5, "skillId": "tailwind"}, {"level": 9, "skillId": "sky_dive"},
+        {"level": 13, "skillId": "tornado"}, {"level": 17, "skillId": "hurricane"},
+        {"level": 21, "skillId": "brick_break"}, {"level": 25, "skillId": "close_combat"},
+        {"level": 29, "skillId": "feather_dance"}
+      ],
+      "uniqueSkill": {"level": 40, "skillId": "unique_storm_hawk"},
+      "description": "폭풍을 부르는 하늘의 마왕. 날갯짓 한 번에 태풍이 일고 발톱 한 번에 성벽이 무너지며, 그 그림자가 드리우면 닭도 울음을 멈추고 숨을 죽인다.",
+      "spriteConfig": {"baseColor": "#445566", "accentColor": "#88FFCC", "shape": "avian", "features": ["wings", "claws", "aura", "horns"]}
+    },
+    {
+      "id": 17,
+      "name": "톡시캡",
+      "type": ["poison"],
+      "baseStats": {"hp": 48, "atk": 42, "def": 45, "spAtk": 55, "spDef": 52, "speed": 48},
+      "growthRate": "medium",
+      "evolution": {"to": 18, "level": 20},
+      "catchRate": 190,
+      "expYield": 55,
+      "learnset": [
+        {"level": 1, "skillId": "tackle"}, {"level": 1, "skillId": "poison_sting"},
+        {"level": 5, "skillId": "poison_gas"}, {"level": 9, "skillId": "acid_spray"},
+        {"level": 13, "skillId": "venoshock"}, {"level": 17, "skillId": "toxic"}
+      ],
+      "uniqueSkill": {"level": 24, "skillId": "unique_poison_moth"},
+      "description": "머리의 독버섯에서 독가스가 새어나오는 꼬마 마물. 본인은 냄새를 못 맡아 늘 멀쩡한 표정이지만, 가까이 다가선 마을 사람들이 집단으로 메스꺼움을 호소한 사례가 있다.",
+      "spriteConfig": {"baseColor": "#AA44CC", "accentColor": "#DD88EE", "shape": "bipedal", "features": ["spikes", "aura"]}
+    },
+    {
+      "id": 18,
+      "name": "하이드라",
+      "type": ["poison", "dark"],
+      "baseStats": {"hp": 75, "atk": 68, "def": 62, "spAtk": 90, "spDef": 72, "speed": 65},
+      "growthRate": "medium",
+      "evolution": null,
+      "catchRate": 75,
+      "expYield": 170,
+      "learnset": [
+        {"level": 1, "skillId": "poison_sting"}, {"level": 1, "skillId": "acid_spray"},
+        {"level": 5, "skillId": "venoshock"}, {"level": 9, "skillId": "toxic"},
+        {"level": 13, "skillId": "sludge_bomb"}, {"level": 17, "skillId": "dark_pulse"},
+        {"level": 21, "skillId": "venom_fang"}, {"level": 25, "skillId": "corrosion"},
+        {"level": 29, "skillId": "shadow_ball"}
+      ],
+      "uniqueSkill": {"level": 35, "skillId": "unique_venom_hydra"},
+      "description": "세 개의 머리가 각기 다른 독을 뿜는 히드라 마물. 머리를 자르면 두 개가 돋아나며, 각 머리는 서로 다른 의지를 가져 드물게 내부 다툼을 벌이기도 한다.",
+      "spriteConfig": {"baseColor": "#7722AA", "accentColor": "#CC44FF", "shape": "serpent", "features": ["horns", "fangs", "tail", "aura"]}
+    },
+    {
+      "id": 19,
+      "name": "위습",
+      "type": ["spirit"],
+      "baseStats": {"hp": 42, "atk": 38, "def": 40, "spAtk": 58, "spDef": 55, "speed": 57},
+      "growthRate": "medium",
+      "evolution": {"to": 20, "level": 25},
+      "catchRate": 150,
+      "expYield": 60,
+      "learnset": [
+        {"level": 1, "skillId": "spirit_flame"}, {"level": 1, "skillId": "ghost_wind"},
+        {"level": 5, "skillId": "curse"}, {"level": 9, "skillId": "life_steal"},
+        {"level": 13, "skillId": "haunt"}, {"level": 17, "skillId": "soul_drain"},
+        {"level": 21, "skillId": "spectral_chain"}
+      ],
+      "uniqueSkill": {"level": 28, "skillId": "unique_ghost_lantern"},
+      "description": "버려진 등불에 깃든 원혼 마물. 꺼진 줄 알았던 등불이 스스로 켜지면 이 녀석이 근처에 있다는 뜻이며, 그 불빛을 따라가면 늪지 한가운데에서 길을 잃는다.",
+      "spriteConfig": {"baseColor": "#6644AA", "accentColor": "#AA88FF", "shape": "amorphous", "features": ["aura", "tail"]}
+    },
+    {
+      "id": 20,
+      "name": "데스 나이트",
+      "type": ["spirit", "dark"],
+      "baseStats": {"hp": 68, "atk": 72, "def": 62, "spAtk": 88, "spDef": 78, "speed": 72},
+      "growthRate": "medium",
+      "evolution": null,
+      "catchRate": 60,
+      "expYield": 180,
+      "learnset": [
+        {"level": 1, "skillId": "spirit_flame"}, {"level": 1, "skillId": "ghost_wind"},
+        {"level": 5, "skillId": "curse"}, {"level": 9, "skillId": "soul_drain"},
+        {"level": 13, "skillId": "spectral_chain"}, {"level": 17, "skillId": "phantom_force"},
+        {"level": 21, "skillId": "shadow_ball"}, {"level": 25, "skillId": "ectoplasm"},
+        {"level": 29, "skillId": "dark_pulse"}
+      ],
+      "uniqueSkill": {"level": 35, "skillId": "unique_phantom_knight"},
+      "description": "저승의 갑옷을 걸친 유령 기사 마물. 한 번 표적을 정하면 세상 끝까지 쫓아가며, 갑옷에서 흘러내리는 한기에 닿은 자는 사흘간 몸을 떨게 된다.",
+      "spriteConfig": {"baseColor": "#443366", "accentColor": "#8866CC", "shape": "humanoid", "features": ["aura", "claws", "spikes"]}
+    },
+    {
+      "id": 21,
+      "name": "리프 크롤러",
+      "type": ["grass", "poison"],
+      "baseStats": {"hp": 44, "atk": 50, "def": 42, "spAtk": 48, "spDef": 45, "speed": 58},
+      "growthRate": "fast",
+      "evolution": {"to": 22, "level": 16},
+      "catchRate": 200,
+      "expYield": 52,
+      "learnset": [
+        {"level": 1, "skillId": "tackle"}, {"level": 1, "skillId": "vine_whip"},
+        {"level": 5, "skillId": "poison_sting"}, {"level": 9, "skillId": "razor_leaf"},
+        {"level": 13, "skillId": "acid_spray"}, {"level": 17, "skillId": "thorn_whip"}
+      ],
+      "uniqueSkill": {"level": 22, "skillId": "unique_grass_mantis"},
+      "description": "나뭇잎 위에 완벽하게 위장하는 벌레 마물. 숲을 걸을 때 나뭇잎이 바스락거리면 이 녀석이 독침을 겨누고 있다는 뜻이다.",
+      "spriteConfig": {"baseColor": "#66AA33", "accentColor": "#AA55CC", "shape": "insectoid", "features": ["claws", "spikes"]}
+    },
+    {
+      "id": 22,
+      "name": "베놈 맨티스",
+      "type": ["grass", "poison"],
+      "baseStats": {"hp": 58, "atk": 72, "def": 55, "spAtk": 62, "spDef": 58, "speed": 78},
+      "growthRate": "fast",
+      "evolution": {"to": 23, "level": 36},
+      "catchRate": 80,
+      "expYield": 148,
+      "learnset": [
+        {"level": 1, "skillId": "vine_whip"}, {"level": 1, "skillId": "poison_sting"},
+        {"level": 5, "skillId": "razor_leaf"}, {"level": 9, "skillId": "acid_spray"},
+        {"level": 13, "skillId": "thorn_whip"}, {"level": 17, "skillId": "seed_bomb"},
+        {"level": 21, "skillId": "venom_fang"}, {"level": 25, "skillId": "sludge_bomb"}
+      ],
+      "uniqueSkill": {"level": 32, "skillId": "unique_fight_mantis"},
+      "description": "독 묻은 낫 팔로 먹이를 마비시키는 사마귀 마물. 단 한 번의 베기로 나무를 쪼개며, 삼림지대를 지나는 대상이 이 녀석의 덫에 걸려 통째로 사라졌다는 기록이 있다.",
+      "spriteConfig": {"baseColor": "#448822", "accentColor": "#BB44DD", "shape": "insectoid", "features": ["claws", "fangs", "spikes"]}
+    },
+    {
+      "id": 23,
+      "name": "베놈 퀸",
+      "type": ["grass", "poison"],
+      "baseStats": {"hp": 78, "atk": 95, "def": 72, "spAtk": 82, "spDef": 75, "speed": 98},
+      "growthRate": "fast",
+      "evolution": null,
+      "catchRate": 45,
+      "expYield": 235,
+      "learnset": [
+        {"level": 1, "skillId": "vine_whip"}, {"level": 1, "skillId": "poison_sting"},
+        {"level": 5, "skillId": "razor_leaf"}, {"level": 9, "skillId": "thorn_whip"},
+        {"level": 13, "skillId": "seed_bomb"}, {"level": 17, "skillId": "venom_fang"},
+        {"level": 21, "skillId": "sludge_bomb"}, {"level": 25, "skillId": "leaf_storm"},
+        {"level": 29, "skillId": "corrosion"}, {"level": 33, "skillId": "toxic"}
+      ],
+      "uniqueSkill": {"level": 40, "skillId": "unique_toxic_swamp"},
+      "description": "맹독의 숲을 다스리는 여왕 마물. 그녀가 걸어간 자리엔 아름다운 독꽃이 피어나 여행자를 유혹하고, 그 향에 취한 자는 영원히 숲 밖으로 나오지 못한다.",
+      "spriteConfig": {"baseColor": "#336611", "accentColor": "#CC33FF", "shape": "humanoid", "features": ["claws", "aura", "spikes", "wings"]}
+    },
+    {
+      "id": 24,
+      "name": "록 터틀",
+      "type": ["rock", "water"],
+      "baseStats": {"hp": 55, "atk": 48, "def": 72, "spAtk": 42, "spDef": 55, "speed": 28},
+      "growthRate": "slow",
+      "evolution": {"to": 25, "level": 20},
+      "catchRate": 150,
+      "expYield": 65,
+      "learnset": [
+        {"level": 1, "skillId": "tackle"}, {"level": 1, "skillId": "rock_throw"},
+        {"level": 5, "skillId": "water_gun"}, {"level": 9, "skillId": "rock_slide"},
+        {"level": 13, "skillId": "aqua_shield"}, {"level": 17, "skillId": "fossil_impact"},
+        {"level": 21, "skillId": "waterfall"}
+      ],
+      "uniqueSkill": {"level": 28, "skillId": "unique_rock_turtle"},
+      "description": "등껍질이 단단한 바위로 이루어진 거북 마물. 위험을 느끼면 껍질 안에 숨어 바위처럼 위장하며, 그 위에 앉았다가 봉변을 당한 여행자가 한둘이 아니다.",
+      "spriteConfig": {"baseColor": "#887744", "accentColor": "#4488BB", "shape": "quadruped", "features": ["shell", "spikes"]}
+    },
+    {
+      "id": 25,
+      "name": "바스티온",
+      "type": ["rock", "water"],
+      "baseStats": {"hp": 85, "atk": 72, "def": 110, "spAtk": 65, "spDef": 82, "speed": 38},
+      "growthRate": "slow",
+      "evolution": null,
+      "catchRate": 60,
+      "expYield": 185,
+      "learnset": [
+        {"level": 1, "skillId": "rock_throw"}, {"level": 1, "skillId": "water_gun"},
+        {"level": 5, "skillId": "rock_slide"}, {"level": 9, "skillId": "waterfall"},
+        {"level": 13, "skillId": "fossil_impact"}, {"level": 17, "skillId": "stone_edge"},
+        {"level": 21, "skillId": "hydro_pump"}, {"level": 25, "skillId": "sandstorm"},
+        {"level": 29, "skillId": "boulder_crush"}
+      ],
+      "uniqueSkill": {"level": 35, "skillId": "unique_dragon_turtle"},
+      "description": "전설의 현무를 닮은 거대 거북 마물. 등에 이끼 낀 바위산과 작은 호수가 있어 하나의 섬처럼 보이며, 잠들면 섬으로 착각한 배가 좌초된 사례가 기록에 남아있다.",
+      "spriteConfig": {"baseColor": "#556644", "accentColor": "#3366AA", "shape": "quadruped", "features": ["shell", "horns", "spikes", "aura"]}
+    },
+    {
+      "id": 26,
+      "name": "해츨링",
+      "type": ["dragon"],
+      "baseStats": {"hp": 50, "atk": 55, "def": 45, "spAtk": 55, "spDef": 45, "speed": 50},
+      "growthRate": "slow",
+      "evolution": {"to": 27, "level": 16},
+      "catchRate": 80,
+      "expYield": 70,
+      "learnset": [
+        {"level": 1, "skillId": "scratch"}, {"level": 1, "skillId": "dragon_breath"},
+        {"level": 5, "skillId": "bite"}, {"level": 9, "skillId": "twin_fang"},
+        {"level": 13, "skillId": "dragon_claw"}, {"level": 17, "skillId": "scale_armor"},
+        {"level": 21, "skillId": "dragon_pulse"}
+      ],
+      "uniqueSkill": {"level": 26, "skillId": "unique_drake_pup"},
+      "description": "아직 날지 못하는 아기 용 마물. 작은 날개를 퍼덕이며 열심히 날기를 연습하는 모습이 귀엽지만, 그 작은 이빨에 물리면 뼈까지 시린 냉기가 흐른다.",
+      "spriteConfig": {"baseColor": "#6644BB", "accentColor": "#AA88FF", "shape": "bipedal", "features": ["horns", "tail", "wings"]}
+    },
+    {
+      "id": 27,
+      "name": "와이번",
+      "type": ["dragon", "wind"],
+      "baseStats": {"hp": 72, "atk": 78, "def": 62, "spAtk": 78, "spDef": 62, "speed": 72},
+      "growthRate": "slow",
+      "evolution": {"to": 28, "level": 36},
+      "catchRate": 40,
+      "expYield": 165,
+      "learnset": [
+        {"level": 1, "skillId": "dragon_breath"}, {"level": 1, "skillId": "twin_fang"},
+        {"level": 5, "skillId": "dragon_claw"}, {"level": 9, "skillId": "air_slash"},
+        {"level": 13, "skillId": "dragon_pulse"}, {"level": 17, "skillId": "sky_dive"},
+        {"level": 21, "skillId": "dragon_dance"}, {"level": 25, "skillId": "dragon_rush"}
+      ],
+      "uniqueSkill": {"level": 34, "skillId": "unique_wyrm_lord"},
+      "description": "드디어 하늘을 나는 법을 터득한 용 마물. 구름 사이를 누비며 폭풍을 몰고 다니며, 영역으로 삼은 산맥에는 강풍이 끊이질 않아 인간이 접근을 꺼린다.",
+      "spriteConfig": {"baseColor": "#5533AA", "accentColor": "#88DDBB", "shape": "serpent", "features": ["horns", "wings", "tail", "claws"]}
+    },
+    {
+      "id": 28,
+      "name": "엘더 드래곤",
+      "type": ["dragon", "wind"],
+      "baseStats": {"hp": 92, "atk": 100, "def": 80, "spAtk": 100, "spDef": 80, "speed": 88},
+      "growthRate": "slow",
+      "evolution": null,
+      "catchRate": 25,
+      "expYield": 270,
+      "learnset": [
+        {"level": 1, "skillId": "dragon_claw"}, {"level": 1, "skillId": "dragon_breath"},
+        {"level": 5, "skillId": "dragon_pulse"}, {"level": 9, "skillId": "air_slash"},
+        {"level": 13, "skillId": "dragon_dance"}, {"level": 17, "skillId": "dragon_rush"},
+        {"level": 21, "skillId": "hurricane"}, {"level": 25, "skillId": "outrage"},
+        {"level": 29, "skillId": "draco_meteor"}, {"level": 33, "skillId": "hyper_beam"}
+      ],
+      "uniqueSkill": {"level": 42, "skillId": "unique_dragon_emperor"},
+      "description": "하늘 위에 군림하는 용의 황제 마물. 한 번 포효하면 하늘이 갈라지고 비구름이 몰려들며, 그 눈길이 닿은 마을은 사흘간 폭풍이 그치지 않는다.",
+      "spriteConfig": {"baseColor": "#4422AA", "accentColor": "#FFDD88", "shape": "serpent", "features": ["horns", "wings", "tail", "aura", "claws", "spikes"]}
+    },
+    {
+      "id": 29,
+      "name": "루미나",
+      "type": ["light"],
+      "baseStats": {"hp": 42, "atk": 35, "def": 38, "spAtk": 58, "spDef": 52, "speed": 62},
+      "growthRate": "fast",
+      "evolution": {"to": 30, "level": 20},
+      "catchRate": 180,
+      "expYield": 55,
+      "learnset": [
+        {"level": 1, "skillId": "tackle"}, {"level": 1, "skillId": "flash"},
+        {"level": 5, "skillId": "aurora_ray"}, {"level": 9, "skillId": "blessing"},
+        {"level": 13, "skillId": "holy_beam"}, {"level": 17, "skillId": "purify"}
+      ],
+      "uniqueSkill": {"level": 24, "skillId": "unique_light_butterfly"},
+      "description": "밤에 은은한 빛을 내며 날아다니는 나비 마물. 숲에서 길을 잃은 여행자를 밝은 곳으로 이끌기도 하지만, 악의를 품은 자에게는 빛으로 눈을 멀게 한다.",
+      "spriteConfig": {"baseColor": "#FFEE88", "accentColor": "#FFFFFF", "shape": "insectoid", "features": ["wings", "aura", "crystals"]}
+    },
+    {
+      "id": 30,
+      "name": "셀레스티아",
+      "type": ["light", "grass"],
+      "baseStats": {"hp": 68, "atk": 55, "def": 58, "spAtk": 82, "spDef": 78, "speed": 80},
+      "growthRate": "fast",
+      "evolution": null,
+      "catchRate": 60,
+      "expYield": 172,
+      "learnset": [
+        {"level": 1, "skillId": "flash"}, {"level": 1, "skillId": "aurora_ray"},
+        {"level": 5, "skillId": "holy_beam"}, {"level": 9, "skillId": "purify"},
+        {"level": 13, "skillId": "solar_flare"}, {"level": 17, "skillId": "mega_drain"},
+        {"level": 21, "skillId": "radiance"}, {"level": 25, "skillId": "light_screen"},
+        {"level": 29, "skillId": "divine_light"}
+      ],
+      "uniqueSkill": {"level": 35, "skillId": "unique_holy_deer"},
+      "description": "성스러운 빛의 뿔을 가진 사슴 마물. 이 사슴이 나타난 숲에는 병든 나무가 되살아나지만, 그 뿔을 꺾으려 손을 뻗은 자는 눈 먼 채로 숲을 헤맨다.",
+      "spriteConfig": {"baseColor": "#FFDD66", "accentColor": "#88FF88", "shape": "quadruped", "features": ["horns", "aura", "crystals"]}
+    },
+    {
+      "id": 31,
+      "name": "섀도 캣",
+      "type": ["dark"],
+      "baseStats": {"hp": 45, "atk": 50, "def": 40, "spAtk": 55, "spDef": 45, "speed": 60},
+      "growthRate": "fast",
+      "evolution": {"to": 32, "level": 22, "condition": "night"},
+      "catchRate": 170,
+      "expYield": 58,
+      "learnset": [
+        {"level": 1, "skillId": "scratch"}, {"level": 1, "skillId": "shadow_sneak"},
+        {"level": 5, "skillId": "shadow_claw"}, {"level": 9, "skillId": "night_slash"},
+        {"level": 13, "skillId": "dark_shroud"}, {"level": 17, "skillId": "crunch"},
+        {"level": 21, "skillId": "dark_pulse"}
+      ],
+      "uniqueSkill": {"level": 26, "skillId": "unique_dark_cat"},
+      "description": "어둠 속에서 금빛 눈만 빛나는 검은 고양이 마물. 그림자 사이를 소리 없이 누비며 값진 물건을 훔쳐가고, 이를 되찾으러 그림자를 따라가면 돌아오지 못한다.",
+      "spriteConfig": {"baseColor": "#332244", "accentColor": "#FFCC00", "shape": "quadruped", "features": ["tail", "fangs", "claws"]}
+    },
+    {
+      "id": 32,
+      "name": "다크 울프",
+      "type": ["dark"],
+      "baseStats": {"hp": 70, "atk": 82, "def": 58, "spAtk": 72, "spDef": 62, "speed": 85},
+      "growthRate": "fast",
+      "evolution": null,
+      "catchRate": 60,
+      "expYield": 172,
+      "learnset": [
+        {"level": 1, "skillId": "shadow_sneak"}, {"level": 1, "skillId": "shadow_claw"},
+        {"level": 5, "skillId": "night_slash"}, {"level": 9, "skillId": "crunch"},
+        {"level": 13, "skillId": "dark_pulse"}, {"level": 17, "skillId": "dark_shroud"},
+        {"level": 21, "skillId": "shadow_ball"}, {"level": 25, "skillId": "abyss_gaze"},
+        {"level": 29, "skillId": "body_slam"}
+      ],
+      "uniqueSkill": {"level": 35, "skillId": "unique_dark_wolf"},
+      "description": "보름달 아래 울부짖으면 주변이 칠흑 같은 어둠에 휩싸이는 늑대 마물. 어둠 자체가 그의 사냥터이며, 짖는 소리를 들은 가축은 사흘 안에 한 마리도 남지 않는다.",
+      "spriteConfig": {"baseColor": "#221133", "accentColor": "#8844AA", "shape": "quadruped", "features": ["tail", "fangs", "claws", "aura"]}
+    },
+    {
+      "id": 33,
+      "name": "아이언 오브",
+      "type": ["metal"],
+      "baseStats": {"hp": 48, "atk": 55, "def": 70, "spAtk": 38, "spDef": 48, "speed": 32},
+      "growthRate": "medium",
+      "evolution": {"to": 34, "level": 22},
+      "catchRate": 170,
+      "expYield": 58,
+      "learnset": [
+        {"level": 1, "skillId": "tackle"}, {"level": 1, "skillId": "metal_claw"},
+        {"level": 5, "skillId": "iron_defense"}, {"level": 9, "skillId": "bullet_punch"},
+        {"level": 13, "skillId": "iron_head"}, {"level": 17, "skillId": "chrome_shield"},
+        {"level": 21, "skillId": "gear_grind"}
+      ],
+      "uniqueSkill": {"level": 28, "skillId": "unique_gear_bot"},
+      "description": "단단한 금속 몸을 굴려 이동하는 구형 마물. 부딪히면 맑은 쇠 소리가 나지만, 속도를 올리면 성인 기사도 튕겨나가는 충격을 가한다.",
+      "spriteConfig": {"baseColor": "#AAAACC", "accentColor": "#DDDDEE", "shape": "amorphous", "features": ["spikes", "crystals"]}
+    },
+    {
+      "id": 34,
+      "name": "아이언 나이트",
+      "type": ["metal", "fighting"],
+      "baseStats": {"hp": 72, "atk": 90, "def": 105, "spAtk": 52, "spDef": 68, "speed": 48},
+      "growthRate": "medium",
+      "evolution": null,
+      "catchRate": 60,
+      "expYield": 180,
+      "learnset": [
+        {"level": 1, "skillId": "metal_claw"}, {"level": 1, "skillId": "bullet_punch"},
+        {"level": 5, "skillId": "iron_head"}, {"level": 9, "skillId": "iron_defense"},
+        {"level": 13, "skillId": "gear_grind"}, {"level": 17, "skillId": "steel_lance"},
+        {"level": 21, "skillId": "brick_break"}, {"level": 25, "skillId": "steel_beam"},
+        {"level": 29, "skillId": "close_combat"}
+      ],
+      "uniqueSkill": {"level": 35, "skillId": "unique_steel_knight"},
+      "description": "스스로 갑옷을 단조해 입는 금속 전사 마물. 녹슬지 않는 강철 의지로 약한 자를 지킨다고 전해지지만, 그 기준이 무엇인지는 아무도 모른다.",
+      "spriteConfig": {"baseColor": "#8888AA", "accentColor": "#CCCCFF", "shape": "humanoid", "features": ["claws", "spikes", "aura"]}
+    },
+    {
+      "id": 35,
+      "name": "에코 래트",
+      "type": ["normal"],
+      "baseStats": {"hp": 45, "atk": 40, "def": 38, "spAtk": 55, "spDef": 48, "speed": 62},
+      "growthRate": "fast",
+      "evolution": {"to": 36, "level": 20},
+      "catchRate": 180,
+      "expYield": 54,
+      "learnset": [
+        {"level": 1, "skillId": "tackle"}, {"level": 1, "skillId": "echo"},
+        {"level": 5, "skillId": "screech"}, {"level": 9, "skillId": "sonic_boom"},
+        {"level": 13, "skillId": "discord"}, {"level": 17, "skillId": "resonance"}
+      ],
+      "uniqueSkill": {"level": 24, "skillId": "unique_echo_bat"},
+      "description": "큰 귀로 아주 먼 곳의 소리까지 감지하는 쥐 마물. 위험을 느끼면 초음파를 내질러 주변을 혼란시키며, 그 소리를 들은 자는 며칠간 귀울림에 시달린다.",
+      "spriteConfig": {"baseColor": "#DD77AA", "accentColor": "#FFAACC", "shape": "quadruped", "features": ["tail", "fangs"]}
+    },
+    {
+      "id": 36,
+      "name": "세이렌",
+      "type": ["water"],
+      "baseStats": {"hp": 70, "atk": 55, "def": 58, "spAtk": 90, "spDef": 72, "speed": 78},
+      "growthRate": "fast",
+      "evolution": null,
+      "catchRate": 60,
+      "expYield": 175,
+      "learnset": [
+        {"level": 1, "skillId": "echo"}, {"level": 1, "skillId": "sonic_boom"},
+        {"level": 5, "skillId": "discord"}, {"level": 9, "skillId": "resonance"},
+        {"level": 13, "skillId": "hyper_voice"}, {"level": 17, "skillId": "water_pulse"},
+        {"level": 21, "skillId": "lullaby"}, {"level": 25, "skillId": "shatter_note"},
+        {"level": 29, "skillId": "hydro_pump"}
+      ],
+      "uniqueSkill": {"level": 35, "skillId": "unique_siren_song"},
+      "description": "아름다운 노랫소리로 바다를 지배하는 마물. 그 노래를 들은 선원은 넋을 잃고 바다를 향해 걸어가며, 항구 도시들은 이 녀석의 출현 시기마다 항해 금지령을 내린다.",
+      "spriteConfig": {"baseColor": "#CC5588", "accentColor": "#66AAFF", "shape": "humanoid", "features": ["tail", "fins", "aura", "crystals"]}
+    },
+    {
+      "id": 37,
+      "name": "프로스트 폭스",
+      "type": ["ice"],
+      "baseStats": {"hp": 45, "atk": 42, "def": 42, "spAtk": 58, "spDef": 50, "speed": 58},
+      "growthRate": "medium",
+      "evolution": {"to": 38, "level": 22},
+      "catchRate": 150,
+      "expYield": 58,
+      "learnset": [
+        {"level": 1, "skillId": "tackle"}, {"level": 1, "skillId": "ice_shard"},
+        {"level": 5, "skillId": "frost_breath"}, {"level": 9, "skillId": "ice_fang"},
+        {"level": 13, "skillId": "hail"}, {"level": 17, "skillId": "freeze_ray"},
+        {"level": 21, "skillId": "ice_beam"}
+      ],
+      "uniqueSkill": {"level": 26, "skillId": "unique_snow_fox"},
+      "description": "새하얀 털로 설원에 완벽하게 숨는 여우 마물. 꼬리로 자기 발자국을 지우며, 추적자를 눈보라 속으로 유인해 얼려버리는 영리한 습성이 있다.",
+      "spriteConfig": {"baseColor": "#AADDEE", "accentColor": "#FFFFFF", "shape": "quadruped", "features": ["tail", "fangs"]}
+    },
+    {
+      "id": 38,
+      "name": "아이스 퀸",
+      "type": ["ice", "light"],
+      "baseStats": {"hp": 70, "atk": 58, "def": 62, "spAtk": 95, "spDef": 78, "speed": 72},
+      "growthRate": "medium",
+      "evolution": null,
+      "catchRate": 60,
+      "expYield": 178,
+      "learnset": [
+        {"level": 1, "skillId": "ice_shard"}, {"level": 1, "skillId": "frost_breath"},
+        {"level": 5, "skillId": "freeze_ray"}, {"level": 9, "skillId": "ice_beam"},
+        {"level": 13, "skillId": "aurora_ray"}, {"level": 17, "skillId": "blizzard"},
+        {"level": 21, "skillId": "glacial_lance"}, {"level": 25, "skillId": "light_screen"},
+        {"level": 29, "skillId": "divine_light"}
+      ],
+      "uniqueSkill": {"level": 35, "skillId": "unique_ice_queen_domain"},
+      "description": "손끝 하나로 만물을 얼리는 얼음 여왕 마물. 그녀가 걷는 곳마다 서리꽃이 피어나지만, 그 아름다움에 홀려 다가선 자는 얼음 조각이 되어 영원히 그녀의 궁전을 장식한다.",
+      "spriteConfig": {"baseColor": "#88CCEE", "accentColor": "#FFFFFF", "shape": "humanoid", "features": ["aura", "crystals", "horns"]}
+    },
+    {
+      "id": 39,
+      "name": "나이트메어",
+      "type": ["fire"],
+      "baseStats": {"hp": 48, "atk": 60, "def": 42, "spAtk": 52, "spDef": 45, "speed": 55},
+      "growthRate": "medium",
+      "evolution": {"to": 40, "level": 24},
+      "catchRate": 150,
+      "expYield": 60,
+      "learnset": [
+        {"level": 1, "skillId": "tackle"}, {"level": 1, "skillId": "ember"},
+        {"level": 5, "skillId": "flame_charge"}, {"level": 9, "skillId": "flame_claw"},
+        {"level": 13, "skillId": "fire_breath"}, {"level": 17, "skillId": "heat_fang"},
+        {"level": 21, "skillId": "fire_spin"}
+      ],
+      "uniqueSkill": {"level": 28, "skillId": "unique_fire_horse"},
+      "description": "갈기에서 불꽃이 일렁이는 어린 말 마물. 초원을 달리면 뒤에 불꽃 자국이 남으며, 이 녀석이 뛰어다닌 들판은 다음 날 아침 온통 검게 그을려 있다.",
+      "spriteConfig": {"baseColor": "#FF5500", "accentColor": "#FFCC00", "shape": "quadruped", "features": ["tail", "aura", "fangs"]}
+    },
+    {
+      "id": 40,
+      "name": "헬 페가수스",
+      "type": ["fire", "wind"],
+      "baseStats": {"hp": 72, "atk": 88, "def": 62, "spAtk": 75, "spDef": 65, "speed": 95},
+      "growthRate": "medium",
+      "evolution": null,
+      "catchRate": 60,
+      "expYield": 182,
+      "learnset": [
+        {"level": 1, "skillId": "ember"}, {"level": 1, "skillId": "flame_charge"},
+        {"level": 5, "skillId": "fire_breath"}, {"level": 9, "skillId": "heat_fang"},
+        {"level": 13, "skillId": "fire_spin"}, {"level": 17, "skillId": "inferno"},
+        {"level": 21, "skillId": "aerial_ace"}, {"level": 25, "skillId": "eruption"},
+        {"level": 29, "skillId": "sky_dive"}
+      ],
+      "uniqueSkill": {"level": 36, "skillId": "unique_fire_wind_horse"},
+      "description": "지옥불을 날개에 두른 전마 마물. 불타는 날개를 펼치면 새벽빛처럼 눈부시며, 이 녀석이 달린 하늘 아래는 며칠간 재가 내린다.",
+      "spriteConfig": {"baseColor": "#DD3300", "accentColor": "#FFDD00", "shape": "quadruped", "features": ["wings", "tail", "aura", "horns"]}
+    },
+    {
+      "id": 41,
+      "name": "픽시",
+      "type": ["normal"],
+      "baseStats": {"hp": 55, "atk": 40, "def": 40, "spAtk": 50, "spDef": 50, "speed": 55},
+      "growthRate": "fast",
+      "evolution": {"to": 42, "level": 20},
+      "catchRate": 200,
+      "expYield": 50,
+      "learnset": [
+        {"level": 1, "skillId": "pound"}, {"level": 1, "skillId": "growl"},
+        {"level": 5, "skillId": "quick_strike"}, {"level": 9, "skillId": "bite"},
+        {"level": 13, "skillId": "body_slam"}, {"level": 17, "skillId": "protect"}
+      ],
+      "uniqueSkill": {"level": 24, "skillId": "unique_normal_cat"},
+      "description": "호기심 많고 장난을 좋아하는 요정 마물. 사람의 물건을 몰래 가져갔다 슬쩍 돌려놓곤 하지만, 돌아온 물건에는 반드시 작은 저주가 걸려 있다.",
+      "spriteConfig": {"baseColor": "#FFCCAA", "accentColor": "#FFEECC", "shape": "bipedal", "features": ["tail", "aura"]}
+    },
+    {
+      "id": 42,
+      "name": "세라프",
+      "type": ["normal", "light"],
+      "baseStats": {"hp": 82, "atk": 58, "def": 62, "spAtk": 72, "spDef": 78, "speed": 70},
+      "growthRate": "fast",
+      "evolution": null,
+      "catchRate": 75,
+      "expYield": 165,
+      "learnset": [
+        {"level": 1, "skillId": "pound"}, {"level": 1, "skillId": "quick_strike"},
+        {"level": 5, "skillId": "body_slam"}, {"level": 9, "skillId": "protect"},
+        {"level": 13, "skillId": "flash"}, {"level": 17, "skillId": "holy_beam"},
+        {"level": 21, "skillId": "purify"}, {"level": 25, "skillId": "hyper_beam"},
+        {"level": 29, "skillId": "divine_light"}
+      ],
+      "uniqueSkill": {"level": 35, "skillId": "unique_guardian_spirit"},
+      "description": "마을을 지키는 수호 정령 마물. 위험이 다가오면 온몸에서 따뜻한 빛이 퍼져나오며, 그 빛을 받은 자는 모든 마물의 공격이 빗나간다.",
+      "spriteConfig": {"baseColor": "#FFDDBB", "accentColor": "#FFEE88", "shape": "bipedal", "features": ["aura", "wings", "crystals"]}
+    },
+    {
+      "id": 43,
+      "name": "배틀 하운드",
+      "type": ["fighting"],
+      "baseStats": {"hp": 50, "atk": 60, "def": 45, "spAtk": 35, "spDef": 40, "speed": 55},
+      "growthRate": "medium",
+      "evolution": {"to": 44, "level": 16},
+      "catchRate": 180,
+      "expYield": 57,
+      "learnset": [
+        {"level": 1, "skillId": "tackle"}, {"level": 1, "skillId": "karate_chop"},
+        {"level": 5, "skillId": "low_kick"}, {"level": 9, "skillId": "counter"},
+        {"level": 13, "skillId": "brick_break"}, {"level": 17, "skillId": "bulk_up"}
+      ],
+      "uniqueSkill": {"level": 22, "skillId": "unique_boxer"},
+      "description": "태어나자마자 주먹을 쥐는 격투 강아지 마물. 지는 걸 참지 못해 쓰러져도 다시 일어나며, 한 번 각인된 적은 죽을 때까지 쫓아다닌다.",
+      "spriteConfig": {"baseColor": "#CC5544", "accentColor": "#FFFFFF", "shape": "bipedal", "features": ["claws", "fangs"]}
+    },
+    {
+      "id": 44,
+      "name": "글래디에이터",
+      "type": ["fighting"],
+      "baseStats": {"hp": 68, "atk": 82, "def": 60, "spAtk": 48, "spDef": 55, "speed": 72},
+      "growthRate": "medium",
+      "evolution": {"to": 45, "level": 36},
+      "catchRate": 75,
+      "expYield": 152,
+      "learnset": [
+        {"level": 1, "skillId": "karate_chop"}, {"level": 1, "skillId": "low_kick"},
+        {"level": 5, "skillId": "brick_break"}, {"level": 9, "skillId": "bulk_up"},
+        {"level": 13, "skillId": "counter"}, {"level": 17, "skillId": "drain_punch"},
+        {"level": 21, "skillId": "dynamic_kick"}, {"level": 25, "skillId": "close_combat"}
+      ],
+      "uniqueSkill": {"level": 34, "skillId": "unique_wrestler"},
+      "description": "수백 번의 실전에서 단련된 격투 마물. 강철처럼 단단한 근육에 주먹이 닿으면 오히려 뼈가 부러지며, 투기장에서 무패 기록을 세웠다는 전설이 있다.",
+      "spriteConfig": {"baseColor": "#BB3333", "accentColor": "#FFCC00", "shape": "bipedal", "features": ["claws", "aura"]}
+    },
+    {
+      "id": 45,
+      "name": "아수라",
+      "type": ["fighting", "spirit"],
+      "baseStats": {"hp": 85, "atk": 110, "def": 75, "spAtk": 65, "spDef": 72, "speed": 98},
+      "growthRate": "medium",
+      "evolution": null,
+      "catchRate": 45,
+      "expYield": 242,
+      "learnset": [
+        {"level": 1, "skillId": "karate_chop"}, {"level": 1, "skillId": "brick_break"},
+        {"level": 5, "skillId": "drain_punch"}, {"level": 9, "skillId": "close_combat"},
+        {"level": 13, "skillId": "dynamic_kick"}, {"level": 17, "skillId": "focus_punch"},
+        {"level": 21, "skillId": "phantom_force"}, {"level": 25, "skillId": "soul_drain"},
+        {"level": 29, "skillId": "bulk_up"}, {"level": 33, "skillId": "hyper_beam"}
+      ],
+      "uniqueSkill": {"level": 42, "skillId": "unique_martial_god"},
+      "description": "무술의 끝에 도달한 전설의 무성 마물. 주먹에 영혼의 기운을 실어 보이지 않는 일격을 날리며, 그 주먹에 맞은 자는 육신이 아닌 혼이 부서진다.",
+      "spriteConfig": {"baseColor": "#AA2222", "accentColor": "#7766CC", "shape": "humanoid", "features": ["aura", "claws", "spikes"]}
+    },
+    {
+      "id": 46,
+      "name": "코럴",
+      "type": ["water", "rock"],
+      "baseStats": {"hp": 48, "atk": 42, "def": 55, "spAtk": 50, "spDef": 55, "speed": 35},
+      "growthRate": "medium",
+      "evolution": {"to": 47, "level": 24},
+      "catchRate": 160,
+      "expYield": 55,
+      "learnset": [
+        {"level": 1, "skillId": "tackle"}, {"level": 1, "skillId": "water_gun"},
+        {"level": 5, "skillId": "rock_throw"}, {"level": 9, "skillId": "bubble_beam"},
+        {"level": 13, "skillId": "rock_slide"}, {"level": 17, "skillId": "aqua_shield"}
+      ],
+      "uniqueSkill": {"level": 28, "skillId": "unique_coral_barrier"},
+      "description": "얕은 바다에서 천천히 자라나는 산호 마물. 맑은 물에서만 살 수 있어 깨끗한 바다의 상징이지만, 촉수에 닿으면 피부가 녹아내리는 독성을 품고 있다.",
+      "spriteConfig": {"baseColor": "#FF8899", "accentColor": "#44AACC", "shape": "amorphous", "features": ["crystals", "spikes"]}
+    },
+    {
+      "id": 47,
+      "name": "크리스탈 코럴",
+      "type": ["water", "rock"],
+      "baseStats": {"hp": 72, "atk": 62, "def": 85, "spAtk": 75, "spDef": 82, "speed": 45},
+      "growthRate": "medium",
+      "evolution": null,
+      "catchRate": 60,
+      "expYield": 168,
+      "learnset": [
+        {"level": 1, "skillId": "water_gun"}, {"level": 1, "skillId": "rock_throw"},
+        {"level": 5, "skillId": "bubble_beam"}, {"level": 9, "skillId": "rock_slide"},
+        {"level": 13, "skillId": "water_pulse"}, {"level": 17, "skillId": "crystal_shot"},
+        {"level": 21, "skillId": "stone_edge"}, {"level": 25, "skillId": "hydro_pump"},
+        {"level": 29, "skillId": "sandstorm"}
+      ],
+      "uniqueSkill": {"level": 35, "skillId": "unique_crystal_coral"},
+      "description": "수정처럼 영롱하게 빛나는 거대 산호 마물. 그 주변에 모여드는 바다 생물들은 결국 수정화되어 코럴의 일부가 되며, 해저 탐험가들은 이를 아름다운 무덤이라 부른다.",
+      "spriteConfig": {"baseColor": "#CC66AA", "accentColor": "#4488DD", "shape": "amorphous", "features": ["crystals", "spikes", "aura"]}
+    },
+    {
+      "id": 48,
+      "name": "볼트 스파이더",
+      "type": ["electric", "poison"],
+      "baseStats": {"hp": 44, "atk": 52, "def": 40, "spAtk": 55, "spDef": 42, "speed": 58},
+      "growthRate": "fast",
+      "evolution": {"to": 49, "level": 22},
+      "catchRate": 170,
+      "expYield": 55,
+      "learnset": [
+        {"level": 1, "skillId": "poison_sting"}, {"level": 1, "skillId": "thunder_shock"},
+        {"level": 5, "skillId": "spark"}, {"level": 9, "skillId": "acid_spray"},
+        {"level": 13, "skillId": "discharge"}, {"level": 17, "skillId": "thunder_wave"}
+      ],
+      "uniqueSkill": {"level": 26, "skillId": "unique_thunder_spider"},
+      "description": "전기를 띤 거미줄을 치는 사냥꾼 마물. 줄에 걸린 먹이는 감전과 독으로 동시에 마비되며, 그 거미줄은 금속도 부식시키는 강산성을 띤다.",
+      "spriteConfig": {"baseColor": "#CCAA00", "accentColor": "#AA44CC", "shape": "insectoid", "features": ["fangs", "spikes", "claws"]}
+    },
+    {
+      "id": 49,
+      "name": "볼트 타란튤라",
+      "type": ["electric", "poison"],
+      "baseStats": {"hp": 68, "atk": 78, "def": 60, "spAtk": 82, "spDef": 62, "speed": 80},
+      "growthRate": "fast",
+      "evolution": null,
+      "catchRate": 60,
+      "expYield": 172,
+      "learnset": [
+        {"level": 1, "skillId": "poison_sting"}, {"level": 1, "skillId": "thunder_shock"},
+        {"level": 5, "skillId": "spark"}, {"level": 9, "skillId": "discharge"},
+        {"level": 13, "skillId": "sludge_bomb"}, {"level": 17, "skillId": "thunderbolt"},
+        {"level": 21, "skillId": "venom_fang"}, {"level": 25, "skillId": "thunder"},
+        {"level": 29, "skillId": "corrosion"}
+      ],
+      "uniqueSkill": {"level": 35, "skillId": "unique_acid_spider"},
+      "description": "산 하나를 거미줄로 뒤덮는 거대 타란튤라 마물. 번개를 머금은 독니에 물리면 심장이 멈추며, 거미줄에 걸린 채 발견되는 모험가들의 유품이 끊이지 않는다.",
+      "spriteConfig": {"baseColor": "#BBAA00", "accentColor": "#8833BB", "shape": "insectoid", "features": ["fangs", "spikes", "claws", "aura"]}
+    },
+    {
+      "id": 50,
+      "name": "루나 래빗",
+      "type": ["normal"],
+      "baseStats": {"hp": 48, "atk": 38, "def": 42, "spAtk": 58, "spDef": 52, "speed": 55},
+      "growthRate": "medium",
+      "evolution": {"to": 51, "level": 24, "condition": "day"},
+      "catchRate": 140,
+      "expYield": 58,
+      "learnset": [
+        {"level": 1, "skillId": "tackle"}, {"level": 1, "skillId": "cosmic_ray"},
+        {"level": 5, "skillId": "void_ray"}, {"level": 9, "skillId": "gravity_well"},
+        {"level": 13, "skillId": "star_fall"}, {"level": 17, "skillId": "warp"}
+      ],
+      "uniqueSkill": {"level": 28, "skillId": "unique_moon_rabbit"},
+      "description": "보름달이 뜨면 나타나는 전설의 토끼 마물. 절구로 빚은 불사의 떡을 먹으면 우주의 기운을 얻는다 하나, 그 떡을 받아 먹은 자의 몸에서 별빛이 새어나오다 사라졌다는 기록이 있다.",
+      "spriteConfig": {"baseColor": "#EEDDFF", "accentColor": "#6644AA", "shape": "bipedal", "features": ["aura", "crystals"]}
+    },
+    {
+      "id": 51,
+      "name": "네뷸라 폭스",
+      "type": ["dark"],
+      "baseStats": {"hp": 72, "atk": 55, "def": 60, "spAtk": 90, "spDef": 72, "speed": 78},
+      "growthRate": "medium",
+      "evolution": null,
+      "catchRate": 55,
+      "expYield": 178,
+      "learnset": [
+        {"level": 1, "skillId": "cosmic_ray"}, {"level": 1, "skillId": "void_ray"},
+        {"level": 5, "skillId": "gravity_well"}, {"level": 9, "skillId": "star_fall"},
+        {"level": 13, "skillId": "warp"}, {"level": 17, "skillId": "dark_pulse"},
+        {"level": 21, "skillId": "nebula_burst"}, {"level": 25, "skillId": "dark_matter"},
+        {"level": 29, "skillId": "cosmic_armor"}
+      ],
+      "uniqueSkill": {"level": 35, "skillId": "unique_star_fox"},
+      "description": "성운의 빛깔을 털에 품은 우주 여우 마물. 꼬리를 흔들면 별가루가 흩날리지만, 그 별가루가 닿은 자의 기억이 서서히 지워지는 부작용이 있다.",
+      "spriteConfig": {"baseColor": "#332255", "accentColor": "#FF88CC", "shape": "quadruped", "features": ["tail", "aura", "crystals"]}
+    },
+    {
+      "id": 52,
+      "name": "볼트 하운드",
+      "type": ["electric", "fighting"],
+      "baseStats": {"hp": 50, "atk": 55, "def": 45, "spAtk": 50, "spDef": 42, "speed": 58},
+      "growthRate": "medium",
+      "evolution": {"to": 53, "level": 16},
+      "catchRate": 120,
+      "expYield": 62,
+      "learnset": [
+        {"level": 1, "skillId": "tackle"}, {"level": 1, "skillId": "thunder_shock"},
+        {"level": 5, "skillId": "karate_chop"}, {"level": 9, "skillId": "spark"},
+        {"level": 13, "skillId": "low_kick"}, {"level": 17, "skillId": "discharge"}
+      ],
+      "uniqueSkill": {"level": 22, "skillId": "unique_normal_dog"},
+      "description": "번개를 온몸에 두른 격투 강아지 마물. 전광석화의 발차기가 주특기이며, 기분이 좋을 때도 주변에 방전을 일으켜 집기를 망가뜨린다.",
+      "spriteConfig": {"baseColor": "#FFCC33", "accentColor": "#CC4444", "shape": "bipedal", "features": ["claws", "aura", "fangs"]}
+    },
+    {
+      "id": 53,
+      "name": "썬더 워리어",
+      "type": ["electric", "fighting"],
+      "baseStats": {"hp": 70, "atk": 78, "def": 60, "spAtk": 72, "spDef": 58, "speed": 78},
+      "growthRate": "medium",
+      "evolution": {"to": 54, "level": 36},
+      "catchRate": 60,
+      "expYield": 152,
+      "learnset": [
+        {"level": 1, "skillId": "thunder_shock"}, {"level": 1, "skillId": "karate_chop"},
+        {"level": 5, "skillId": "spark"}, {"level": 9, "skillId": "brick_break"},
+        {"level": 13, "skillId": "discharge"}, {"level": 17, "skillId": "thunderbolt"},
+        {"level": 21, "skillId": "drain_punch"}, {"level": 25, "skillId": "close_combat"}
+      ],
+      "uniqueSkill": {"level": 34, "skillId": "unique_electric_eel"},
+      "description": "번개와 격투술을 융합한 전사 마물. 주먹을 내지를 때마다 번개가 작렬하며, 이 녀석과 교전한 기사 부대가 전원 기절한 채 발견된 사례가 있다.",
+      "spriteConfig": {"baseColor": "#DDBB00", "accentColor": "#CC3333", "shape": "bipedal", "features": ["claws", "aura", "spikes"]}
+    },
+    {
+      "id": 54,
+      "name": "라이트닝 로드",
+      "type": ["electric", "fighting"],
+      "baseStats": {"hp": 88, "atk": 100, "def": 75, "spAtk": 92, "spDef": 72, "speed": 102},
+      "growthRate": "medium",
+      "evolution": null,
+      "catchRate": 45,
+      "expYield": 245,
+      "learnset": [
+        {"level": 1, "skillId": "spark"}, {"level": 1, "skillId": "brick_break"},
+        {"level": 5, "skillId": "thunderbolt"}, {"level": 9, "skillId": "close_combat"},
+        {"level": 13, "skillId": "volt_tackle"}, {"level": 17, "skillId": "focus_punch"},
+        {"level": 21, "skillId": "thunder"}, {"level": 25, "skillId": "drain_punch"},
+        {"level": 29, "skillId": "discharge"}, {"level": 33, "skillId": "hyper_beam"}
+      ],
+      "uniqueSkill": {"level": 42, "skillId": "unique_thunder_god"},
+      "description": "번개의 정점에 선 마물. 주먹 한 방에 낙뢰가 떨어지고 발차기 한 번에 뇌운이 몰려들며, 이 녀석이 지나간 도시는 모든 금속이 녹아내린 채 발견된다.",
+      "spriteConfig": {"baseColor": "#FFDD00", "accentColor": "#CC2222", "shape": "humanoid", "features": ["aura", "claws", "spikes", "horns"]}
+    },
+    {
+      "id": 55,
+      "name": "샌드 바이퍼",
+      "type": ["earth", "poison"],
+      "baseStats": {"hp": 52, "atk": 55, "def": 50, "spAtk": 45, "spDef": 42, "speed": 48},
+      "growthRate": "medium",
+      "evolution": {"to": 56, "level": 22},
+      "catchRate": 160,
+      "expYield": 56,
+      "learnset": [
+        {"level": 1, "skillId": "tackle"}, {"level": 1, "skillId": "mud_slap"},
+        {"level": 5, "skillId": "poison_sting"}, {"level": 9, "skillId": "sand_tomb"},
+        {"level": 13, "skillId": "dig"}, {"level": 17, "skillId": "venom_fang"},
+        {"level": 21, "skillId": "ground_slam"}
+      ],
+      "uniqueSkill": {"level": 28, "skillId": "unique_sand_cobra"},
+      "description": "사막 모래 속에 몸을 숨기고 먹이를 기다리는 독뱀 마물. 꼬리만 살짝 내놓아 벌레처럼 보이게 유인하며, 사막 횡단 대상(隊商)의 낙타 손실 원인 1위를 차지한다.",
+      "spriteConfig": {"baseColor": "#CC9944", "accentColor": "#AA44BB", "shape": "serpent", "features": ["fangs", "tail", "spikes"]}
+    },
+    {
+      "id": 56,
+      "name": "데저트 코브라",
+      "type": ["earth", "poison"],
+      "baseStats": {"hp": 78, "atk": 82, "def": 72, "spAtk": 68, "spDef": 62, "speed": 68},
+      "growthRate": "medium",
+      "evolution": null,
+      "catchRate": 60,
+      "expYield": 175,
+      "learnset": [
+        {"level": 1, "skillId": "mud_slap"}, {"level": 1, "skillId": "poison_sting"},
+        {"level": 5, "skillId": "dig"}, {"level": 9, "skillId": "venom_fang"},
+        {"level": 13, "skillId": "earthquake"}, {"level": 17, "skillId": "sludge_bomb"},
+        {"level": 21, "skillId": "earth_power"}, {"level": 25, "skillId": "corrosion"},
+        {"level": 29, "skillId": "fissure"}
+      ],
+      "uniqueSkill": {"level": 35, "skillId": "unique_earth_croc"},
+      "description": "사막 전체를 영역으로 삼는 거대 코브라 마물. 독 안개를 뿜어 모래폭풍 속에 함정을 깔며, 이 녀석의 영역에 들어간 대상은 뼈도 남지 않는다고 전해진다.",
+      "spriteConfig": {"baseColor": "#BB8833", "accentColor": "#993399", "shape": "serpent", "features": ["fangs", "horns", "spikes", "aura"]}
+    },
+    {
+      "id": 57,
+      "name": "프로스트 커브",
+      "type": ["ice"],
+      "baseStats": {"hp": 55, "atk": 52, "def": 48, "spAtk": 42, "spDef": 48, "speed": 40},
+      "growthRate": "slow",
+      "evolution": {"to": 58, "level": 24},
+      "catchRate": 140,
+      "expYield": 60,
+      "learnset": [
+        {"level": 1, "skillId": "tackle"}, {"level": 1, "skillId": "ice_shard"},
+        {"level": 5, "skillId": "frost_breath"}, {"level": 9, "skillId": "ice_fang"},
+        {"level": 13, "skillId": "hail"}, {"level": 17, "skillId": "ice_beam"},
+        {"level": 21, "skillId": "ice_wall"}
+      ],
+      "uniqueSkill": {"level": 28, "skillId": "unique_frost_bear"},
+      "description": "설산에서 태어난 새끼 곰 마물. 포근한 털에서 냉기가 감돌아 안아 올리면 손가락이 동상에 걸리며, 눈뭉치를 굴리며 노는 척 사람을 골짜기로 유인한다.",
+      "spriteConfig": {"baseColor": "#CCEEEE", "accentColor": "#88BBDD", "shape": "quadruped", "features": ["claws", "fangs"]}
+    },
+    {
+      "id": 58,
+      "name": "글레이셜 베어",
+      "type": ["ice", "fighting"],
+      "baseStats": {"hp": 90, "atk": 95, "def": 78, "spAtk": 62, "spDef": 65, "speed": 45},
+      "growthRate": "slow",
+      "evolution": null,
+      "catchRate": 55,
+      "expYield": 182,
+      "learnset": [
+        {"level": 1, "skillId": "ice_shard"}, {"level": 1, "skillId": "ice_fang"},
+        {"level": 5, "skillId": "ice_beam"}, {"level": 9, "skillId": "ice_wall"},
+        {"level": 13, "skillId": "glacial_lance"}, {"level": 17, "skillId": "brick_break"},
+        {"level": 21, "skillId": "blizzard"}, {"level": 25, "skillId": "close_combat"},
+        {"level": 29, "skillId": "bulk_up"}
+      ],
+      "uniqueSkill": {"level": 35, "skillId": "unique_glacier_giant"},
+      "description": "빙하를 지키는 거대 곰 마물. 두 발로 서서 포효하면 눈보라가 일고 대지가 얼어붙으며, 이 녀석의 굴 앞에 세워진 왕국 탐험대 비석만 열두 개가 넘는다.",
+      "spriteConfig": {"baseColor": "#99CCDD", "accentColor": "#CC4444", "shape": "bipedal", "features": ["claws", "spikes", "fangs"]}
+    },
+    {
+      "id": 59,
+      "name": "프리즘 캣",
+      "type": ["light", "normal"],
+      "baseStats": {"hp": 48, "atk": 45, "def": 42, "spAtk": 58, "spDef": 48, "speed": 55},
+      "growthRate": "fast",
+      "evolution": {"to": 60, "level": 22},
+      "catchRate": 150,
+      "expYield": 55,
+      "learnset": [
+        {"level": 1, "skillId": "scratch"}, {"level": 1, "skillId": "flash"},
+        {"level": 5, "skillId": "aurora_ray"}, {"level": 9, "skillId": "quick_strike"},
+        {"level": 13, "skillId": "holy_beam"}, {"level": 17, "skillId": "blessing"}
+      ],
+      "uniqueSkill": {"level": 26, "skillId": "unique_prism_cat"},
+      "description": "몸에서 무지개빛 프리즘을 발하는 고양이 마물. 기분에 따라 빛의 색이 달라지며, 그 빛에 오래 노출되면 현실과 환상을 구분하지 못하게 된다.",
+      "spriteConfig": {"baseColor": "#FFDDFF", "accentColor": "#FF88CC", "shape": "quadruped", "features": ["tail", "crystals", "aura"]}
+    },
+    {
+      "id": 60,
+      "name": "솔라 그리폰",
+      "type": ["light", "fire"],
+      "baseStats": {"hp": 75, "atk": 65, "def": 60, "spAtk": 92, "spDef": 72, "speed": 78},
+      "growthRate": "fast",
+      "evolution": null,
+      "catchRate": 55,
+      "expYield": 178,
+      "learnset": [
+        {"level": 1, "skillId": "flash"}, {"level": 1, "skillId": "aurora_ray"},
+        {"level": 5, "skillId": "holy_beam"}, {"level": 9, "skillId": "ember"},
+        {"level": 13, "skillId": "solar_flare"}, {"level": 17, "skillId": "fire_breath"},
+        {"level": 21, "skillId": "radiance"}, {"level": 25, "skillId": "inferno"},
+        {"level": 29, "skillId": "light_screen"}
+      ],
+      "uniqueSkill": {"level": 35, "skillId": "unique_sun_guardian"},
+      "description": "태양의 축복을 받은 수호 마물. 날개를 펼치면 눈부신 빛이 퍼져 어둠을 몰아내지만, 그 빛에 직접 노출된 자는 시력을 잃는다.",
+      "spriteConfig": {"baseColor": "#FFCC44", "accentColor": "#FF6600", "shape": "quadruped", "features": ["wings", "aura", "tail", "claws"]}
+    },
+    {
+      "id": 61,
+      "name": "록 라이노",
+      "type": ["rock"],
+      "baseStats": {"hp": 55, "atk": 62, "def": 65, "spAtk": 32, "spDef": 38, "speed": 35},
+      "growthRate": "slow",
+      "evolution": {"to": 62, "level": 24},
+      "catchRate": 140,
+      "expYield": 60,
+      "learnset": [
+        {"level": 1, "skillId": "tackle"}, {"level": 1, "skillId": "rock_throw"},
+        {"level": 5, "skillId": "rock_slide"}, {"level": 9, "skillId": "boulder_crush"},
+        {"level": 13, "skillId": "fossil_impact"}, {"level": 17, "skillId": "rock_polish"},
+        {"level": 21, "skillId": "stone_edge"}
+      ],
+      "uniqueSkill": {"level": 28, "skillId": "unique_rock_rhino"},
+      "description": "바위처럼 단단한 피부를 가진 코뿔소 마물. 돌진하면 성벽도 무너뜨리며, 한 번 돌진을 시작하면 목표물이 사라질 때까지 멈추지 않는다.",
+      "spriteConfig": {"baseColor": "#776644", "accentColor": "#AA9966", "shape": "quadruped", "features": ["horns", "spikes", "claws"]}
+    },
+    {
+      "id": 62,
+      "name": "스톤 타이탄",
+      "type": ["rock", "earth"],
+      "baseStats": {"hp": 85, "atk": 98, "def": 105, "spAtk": 45, "spDef": 55, "speed": 42},
+      "growthRate": "slow",
+      "evolution": null,
+      "catchRate": 55,
+      "expYield": 185,
+      "learnset": [
+        {"level": 1, "skillId": "rock_throw"}, {"level": 1, "skillId": "rock_slide"},
+        {"level": 5, "skillId": "boulder_crush"}, {"level": 9, "skillId": "stone_edge"},
+        {"level": 13, "skillId": "earthquake"}, {"level": 17, "skillId": "iron_defense"},
+        {"level": 21, "skillId": "fissure"}, {"level": 25, "skillId": "earth_power"},
+        {"level": 29, "skillId": "sandstorm"}
+      ],
+      "uniqueSkill": {"level": 35, "skillId": "unique_earth_golem"},
+      "description": "수만 년 전부터 존재한 고대의 거신 마물. 움직일 때마다 대지가 진동하고 산맥이 흔들리며, 고대 지도에는 이 녀석의 잠든 자리가 산맥으로 표기되어 있다.",
+      "spriteConfig": {"baseColor": "#665533", "accentColor": "#998866", "shape": "bipedal", "features": ["horns", "spikes", "claws"]}
+    },
+    {
+      "id": 63,
+      "name": "팬텀 폭스",
+      "type": ["spirit"],
+      "baseStats": {"hp": 45, "atk": 40, "def": 38, "spAtk": 62, "spDef": 52, "speed": 58},
+      "growthRate": "medium",
+      "evolution": {"to": 64, "level": 24, "condition": "night"},
+      "catchRate": 140,
+      "expYield": 58,
+      "learnset": [
+        {"level": 1, "skillId": "tackle"}, {"level": 1, "skillId": "spirit_flame"},
+        {"level": 5, "skillId": "ghost_wind"}, {"level": 9, "skillId": "life_steal"},
+        {"level": 13, "skillId": "haunt"}, {"level": 17, "skillId": "soul_drain"},
+        {"level": 21, "skillId": "curse"}
+      ],
+      "uniqueSkill": {"level": 28, "skillId": "unique_spirit_fox"},
+      "description": "꼬리에서 여우불을 피우는 신비한 여우 마물. 밤길에 떠다니는 불빛을 따라가면 늪지 한가운데에 서 있게 되며, 이 녀석의 불빛에 홀린 자는 몸에서 생기가 빠져나간다.",
+      "spriteConfig": {"baseColor": "#8866BB", "accentColor": "#FFAA44", "shape": "quadruped", "features": ["tail", "aura", "fangs"]}
+    },
+    {
+      "id": 64,
+      "name": "나인테일",
+      "type": ["spirit", "fire"],
+      "baseStats": {"hp": 72, "atk": 60, "def": 55, "spAtk": 95, "spDef": 78, "speed": 82},
+      "growthRate": "medium",
+      "evolution": null,
+      "catchRate": 55,
+      "expYield": 180,
+      "learnset": [
+        {"level": 1, "skillId": "spirit_flame"}, {"level": 1, "skillId": "ghost_wind"},
+        {"level": 5, "skillId": "soul_drain"}, {"level": 9, "skillId": "haunt"},
+        {"level": 13, "skillId": "fire_breath"}, {"level": 17, "skillId": "spectral_chain"},
+        {"level": 21, "skillId": "phantom_force"}, {"level": 25, "skillId": "inferno"},
+        {"level": 29, "skillId": "ectoplasm"}
+      ],
+      "uniqueSkill": {"level": 35, "skillId": "unique_nine_tail_fox"},
+      "description": "아홉 꼬리에 각기 다른 빛깔의 여우불을 밝히는 영물 마물. 그 불에 비추인 자의 영혼은 저승으로 이끌리며, 불의 색이 붉으면 적, 파랗다면 이미 늦었다는 뜻이다.",
+      "spriteConfig": {"baseColor": "#6644AA", "accentColor": "#FF6600", "shape": "quadruped", "features": ["tail", "aura", "fangs", "crystals"]}
+    },
+    {
+      "id": 65,
+      "name": "스틸 스콜피온",
+      "type": ["metal", "poison"],
+      "baseStats": {"hp": 50, "atk": 60, "def": 62, "spAtk": 40, "spDef": 42, "speed": 42},
+      "growthRate": "medium",
+      "evolution": {"to": 66, "level": 24},
+      "catchRate": 130,
+      "expYield": 60,
+      "learnset": [
+        {"level": 1, "skillId": "poison_sting"}, {"level": 1, "skillId": "metal_claw"},
+        {"level": 5, "skillId": "iron_defense"}, {"level": 9, "skillId": "venom_fang"},
+        {"level": 13, "skillId": "iron_head"}, {"level": 17, "skillId": "toxic"},
+        {"level": 21, "skillId": "steel_lance"}
+      ],
+      "uniqueSkill": {"level": 28, "skillId": "unique_metal_scorpion"},
+      "description": "강철 외골격에 치명적인 독침을 숨긴 전갈 마물. 야밤에 금속 부딪치는 소리가 들리면 이 녀석이 집 안에 숨어든 것이며, 아침에 집주인이 살아있으면 운이 좋은 것이다.",
+      "spriteConfig": {"baseColor": "#999999", "accentColor": "#AA44CC", "shape": "insectoid", "features": ["claws", "tail", "spikes"]}
+    },
+    {
+      "id": 66,
+      "name": "스콜피온 킹",
+      "type": ["metal", "poison"],
+      "baseStats": {"hp": 78, "atk": 92, "def": 95, "spAtk": 58, "spDef": 62, "speed": 55},
+      "growthRate": "medium",
+      "evolution": null,
+      "catchRate": 55,
+      "expYield": 180,
+      "learnset": [
+        {"level": 1, "skillId": "metal_claw"}, {"level": 1, "skillId": "poison_sting"},
+        {"level": 5, "skillId": "iron_head"}, {"level": 9, "skillId": "venom_fang"},
+        {"level": 13, "skillId": "steel_lance"}, {"level": 17, "skillId": "sludge_bomb"},
+        {"level": 21, "skillId": "gear_grind"}, {"level": 25, "skillId": "steel_beam"},
+        {"level": 29, "skillId": "corrosion"}
+      ],
+      "uniqueSkill": {"level": 35, "skillId": "unique_steel_scorpion_emperor"},
+      "description": "강철 갑옷과 맹독을 겸비한 전갈 황제 마물. 꼬리의 독침 한 방이면 철판도 녹으며, 이 녀석이 한 번 영역으로 삼은 광산은 채굴 자체가 불가능해진다.",
+      "spriteConfig": {"baseColor": "#777788", "accentColor": "#9933CC", "shape": "insectoid", "features": ["claws", "tail", "spikes", "shell", "aura"]}
+    },
+    {
+      "id": 67,
+      "name": "옥토퍼프",
+      "type": ["water"],
+      "baseStats": {"hp": 50, "atk": 48, "def": 45, "spAtk": 52, "spDef": 48, "speed": 50},
+      "growthRate": "medium",
+      "evolution": {"to": 68, "level": 24},
+      "catchRate": 150,
+      "expYield": 58,
+      "learnset": [
+        {"level": 1, "skillId": "tackle"}, {"level": 1, "skillId": "water_gun"},
+        {"level": 5, "skillId": "bubble_beam"}, {"level": 9, "skillId": "aqua_jet"},
+        {"level": 13, "skillId": "water_pulse"}, {"level": 17, "skillId": "aqua_shield"},
+        {"level": 21, "skillId": "torrent_bite"}
+      ],
+      "uniqueSkill": {"level": 28, "skillId": "unique_water_octopus"},
+      "description": "여덟 팔로 무엇이든 붙잡는 호기심 대장 마물. 잉크를 뿜고 도망치는 재주가 일품이며, 항구 창고의 물건이 사라지면 십중팔구 이 녀석이 해저 굴 속에 숨겨두고 있다.",
+      "spriteConfig": {"baseColor": "#FF6688", "accentColor": "#4488FF", "shape": "aquatic", "features": ["tail", "fangs"]}
+    },
+    {
+      "id": 68,
+      "name": "크라켄",
+      "type": ["water", "dark"],
+      "baseStats": {"hp": 80, "atk": 78, "def": 68, "spAtk": 82, "spDef": 68, "speed": 58},
+      "growthRate": "medium",
+      "evolution": null,
+      "catchRate": 55,
+      "expYield": 178,
+      "learnset": [
+        {"level": 1, "skillId": "water_gun"}, {"level": 1, "skillId": "bubble_beam"},
+        {"level": 5, "skillId": "water_pulse"}, {"level": 9, "skillId": "torrent_bite"},
+        {"level": 13, "skillId": "dark_pulse"}, {"level": 17, "skillId": "hydro_pump"},
+        {"level": 21, "skillId": "shadow_ball"}, {"level": 25, "skillId": "tidal_wave"},
+        {"level": 29, "skillId": "crunch"}
+      ],
+      "uniqueSkill": {"level": 35, "skillId": "unique_deep_octopus"},
+      "description": "심해에 잠든 거대 문어 마물. 빨판 하나하나에 어둠의 기운이 서려 있어 잡힌 선박은 빛을 잃은 채 심연으로 끌려가며, 항해 지도에는 이 녀석의 영역이 공백으로 남아있다.",
+      "spriteConfig": {"baseColor": "#CC3355", "accentColor": "#332244", "shape": "aquatic", "features": ["tail", "fangs", "aura"]}
+    },
+    {
+      "id": 69,
+      "name": "윈드 서펜트",
+      "type": ["wind", "poison"],
+      "baseStats": {"hp": 45, "atk": 48, "def": 42, "spAtk": 52, "spDef": 42, "speed": 62},
+      "growthRate": "fast",
+      "evolution": {"to": 70, "level": 20},
+      "catchRate": 170,
+      "expYield": 55,
+      "learnset": [
+        {"level": 1, "skillId": "tackle"}, {"level": 1, "skillId": "gust"},
+        {"level": 5, "skillId": "poison_sting"}, {"level": 9, "skillId": "air_slash"},
+        {"level": 13, "skillId": "acid_spray"}, {"level": 17, "skillId": "aerial_ace"}
+      ],
+      "uniqueSkill": {"level": 24, "skillId": "unique_wind_serpent"},
+      "description": "바람을 타고 하늘을 활공하는 독뱀 마물. 독니에 바람의 독이 서려 있어 물린 자리가 크게 부풀어 오르며, 그 고통이 가라앉으면 이미 저승에 와 있다고 전해진다.",
+      "spriteConfig": {"baseColor": "#88CCAA", "accentColor": "#AA55CC", "shape": "serpent", "features": ["wings", "fangs", "tail"]}
+    },
+    {
+      "id": 70,
+      "name": "게일 바이퍼",
+      "type": ["wind", "poison"],
+      "baseStats": {"hp": 68, "atk": 72, "def": 58, "spAtk": 78, "spDef": 58, "speed": 88},
+      "growthRate": "fast",
+      "evolution": null,
+      "catchRate": 60,
+      "expYield": 170,
+      "learnset": [
+        {"level": 1, "skillId": "gust"}, {"level": 1, "skillId": "poison_sting"},
+        {"level": 5, "skillId": "air_slash"}, {"level": 9, "skillId": "aerial_ace"},
+        {"level": 13, "skillId": "sludge_bomb"}, {"level": 17, "skillId": "tornado"},
+        {"level": 21, "skillId": "hurricane"}, {"level": 25, "skillId": "venom_fang"},
+        {"level": 29, "skillId": "corrosion"}
+      ],
+      "uniqueSkill": {"level": 35, "skillId": "unique_wind_viper"},
+      "description": "독풍을 뿜으며 하늘을 나는 비행 독사 마물. 지나간 자리엔 독안개가 자욱하게 깔리며, 산맥 하나를 독으로 뒤덮어 인간 도시를 고립시킨 기록이 역사서에 남아있다.",
+      "spriteConfig": {"baseColor": "#66AA88", "accentColor": "#9933CC", "shape": "serpent", "features": ["wings", "fangs", "tail", "spikes"]}
+    },
+    {
+      "id": 71,
+      "name": "포실 드레이크",
+      "type": ["rock", "dragon"],
+      "baseStats": {"hp": 52, "atk": 55, "def": 58, "spAtk": 50, "spDef": 45, "speed": 38},
+      "growthRate": "slow",
+      "evolution": {"to": 72, "level": 16},
+      "catchRate": 80,
+      "expYield": 65,
+      "learnset": [
+        {"level": 1, "skillId": "tackle"}, {"level": 1, "skillId": "rock_throw"},
+        {"level": 5, "skillId": "dragon_breath"}, {"level": 9, "skillId": "rock_slide"},
+        {"level": 13, "skillId": "fossil_impact"}, {"level": 17, "skillId": "dragon_claw"}
+      ],
+      "uniqueSkill": {"level": 22, "skillId": "unique_fossil_rex"},
+      "description": "화석에서 되살아난 태고의 아기 용 마물. 바위처럼 단단한 비늘이 수천만 년의 세월을 증명하며, 아직 작지만 현대 마물들과 전혀 다른 질감의 원시적 위압감을 풍긴다.",
+      "spriteConfig": {"baseColor": "#887755", "accentColor": "#5533AA", "shape": "bipedal", "features": ["horns", "tail", "spikes"]}
+    },
+    {
+      "id": 72,
+      "name": "프로토 와이번",
+      "type": ["rock", "dragon"],
+      "baseStats": {"hp": 70, "atk": 78, "def": 75, "spAtk": 68, "spDef": 60, "speed": 55},
+      "growthRate": "slow",
+      "evolution": {"to": 73, "level": 36},
+      "catchRate": 40,
+      "expYield": 158,
+      "learnset": [
+        {"level": 1, "skillId": "rock_throw"}, {"level": 1, "skillId": "dragon_breath"},
+        {"level": 5, "skillId": "rock_slide"}, {"level": 9, "skillId": "dragon_claw"},
+        {"level": 13, "skillId": "fossil_impact"}, {"level": 17, "skillId": "stone_edge"},
+        {"level": 21, "skillId": "dragon_pulse"}, {"level": 25, "skillId": "boulder_crush"}
+      ],
+      "uniqueSkill": {"level": 34, "skillId": "unique_ancient_dragon"},
+      "description": "완전히 부활한 고대의 용 마물. 화석화되었던 날개로 다시 하늘을 날며 원시의 포효가 대지를 뒤흔들고, 고대어로 새겨진 비문에만 이 녀석을 쓰러뜨린 기록이 전해진다.",
+      "spriteConfig": {"baseColor": "#776644", "accentColor": "#6644BB", "shape": "bipedal", "features": ["horns", "tail", "claws", "wings"]}
+    },
+    {
+      "id": 73,
+      "name": "에이언 드래곤",
+      "type": ["rock", "dragon"],
+      "baseStats": {"hp": 92, "atk": 102, "def": 95, "spAtk": 85, "spDef": 75, "speed": 72},
+      "growthRate": "slow",
+      "evolution": null,
+      "catchRate": 25,
+      "expYield": 260,
+      "learnset": [
+        {"level": 1, "skillId": "rock_slide"}, {"level": 1, "skillId": "dragon_claw"},
+        {"level": 5, "skillId": "stone_edge"}, {"level": 9, "skillId": "dragon_pulse"},
+        {"level": 13, "skillId": "earthquake"}, {"level": 17, "skillId": "dragon_rush"},
+        {"level": 21, "skillId": "outrage"}, {"level": 25, "skillId": "draco_meteor"},
+        {"level": 29, "skillId": "hyper_beam"}, {"level": 33, "skillId": "boulder_crush"}
+      ],
+      "uniqueSkill": {"level": 42, "skillId": "unique_ancient_golem"},
+      "description": "시대를 초월한 고대 용왕 마물. 수천만 년의 기억을 품은 눈동자에는 세상의 시작과 끝이 비치며, 눈을 마주친 자는 자신이 얼마나 미미한 존재인지를 뼈저리게 깨닫는다.",
+      "spriteConfig": {"baseColor": "#665522", "accentColor": "#7744CC", "shape": "bipedal", "features": ["horns", "tail", "claws", "wings", "spikes", "aura"]}
+    },
+    {
+      "id": 74,
+      "name": "소닉 버드",
+      "type": ["wind"],
+      "baseStats": {"hp": 46, "atk": 52, "def": 40, "spAtk": 48, "spDef": 40, "speed": 60},
+      "growthRate": "fast",
+      "evolution": {"to": 75, "level": 20},
+      "catchRate": 170,
+      "expYield": 55,
+      "learnset": [
+        {"level": 1, "skillId": "tackle"}, {"level": 1, "skillId": "echo"},
+        {"level": 5, "skillId": "wing_attack"}, {"level": 9, "skillId": "sonic_boom"},
+        {"level": 13, "skillId": "aerial_ace"}, {"level": 17, "skillId": "discord"}
+      ],
+      "uniqueSkill": {"level": 24, "skillId": "unique_sound_woodpecker"},
+      "description": "나무를 쪼아 경쾌한 리듬을 만드는 딱따구리 마물. 그 소리에 맞춰 숲의 작은 마물들이 환각 상태로 춤을 추며, 리듬이 끝나도 며칠간 정신이 돌아오지 않는다.",
+      "spriteConfig": {"baseColor": "#DD7788", "accentColor": "#99DDBB", "shape": "avian", "features": ["wings", "claws"]}
+    },
+    {
+      "id": 75,
+      "name": "썬더버드",
+      "type": ["wind"],
+      "baseStats": {"hp": 68, "atk": 75, "def": 58, "spAtk": 72, "spDef": 58, "speed": 82},
+      "growthRate": "fast",
+      "evolution": null,
+      "catchRate": 60,
+      "expYield": 168,
+      "learnset": [
+        {"level": 1, "skillId": "echo"}, {"level": 1, "skillId": "wing_attack"},
+        {"level": 5, "skillId": "sonic_boom"}, {"level": 9, "skillId": "aerial_ace"},
+        {"level": 13, "skillId": "discord"}, {"level": 17, "skillId": "hyper_voice"},
+        {"level": 21, "skillId": "sky_dive"}, {"level": 25, "skillId": "shatter_note"},
+        {"level": 29, "skillId": "hurricane"}
+      ],
+      "uniqueSkill": {"level": 35, "skillId": "unique_drum_beast"},
+      "description": "날갯짓으로 천둥 같은 울림을 만드는 거대 새 마물. 그 소리에 하늘이 진동하고 적은 방향감각을 잃으며, 반경 수십 리 안의 건물 유리가 모두 산산조각 난다.",
+      "spriteConfig": {"baseColor": "#CC5577", "accentColor": "#88CCAA", "shape": "avian", "features": ["wings", "claws", "aura", "spikes"]}
+    },
+    {
+      "id": 76,
+      "name": "일렉 일",
+      "type": ["electric", "water"],
+      "baseStats": {"hp": 52, "atk": 48, "def": 42, "spAtk": 58, "spDef": 45, "speed": 50},
+      "growthRate": "medium",
+      "evolution": {"to": 77, "level": 24},
+      "catchRate": 140,
+      "expYield": 58,
+      "learnset": [
+        {"level": 1, "skillId": "tackle"}, {"level": 1, "skillId": "thunder_shock"},
+        {"level": 5, "skillId": "water_gun"}, {"level": 9, "skillId": "spark"},
+        {"level": 13, "skillId": "bubble_beam"}, {"level": 17, "skillId": "discharge"},
+        {"level": 21, "skillId": "thunderbolt"}
+      ],
+      "uniqueSkill": {"level": 28, "skillId": "unique_thunder_eel"},
+      "description": "몸에 막대한 전기를 품은 장어 마물. 가까이 다가가면 물속으로 전류가 퍼져 주변 생물이 모두 기절하며, 이 녀석이 사는 강에서는 낚시를 포기한다.",
+      "spriteConfig": {"baseColor": "#BBAA33", "accentColor": "#3388CC", "shape": "serpent", "features": ["fins", "aura"]}
+    },
+    {
+      "id": 77,
+      "name": "스톰 서펜트",
+      "type": ["electric", "water"],
+      "baseStats": {"hp": 78, "atk": 68, "def": 62, "spAtk": 90, "spDef": 68, "speed": 72},
+      "growthRate": "medium",
+      "evolution": null,
+      "catchRate": 55,
+      "expYield": 178,
+      "learnset": [
+        {"level": 1, "skillId": "thunder_shock"}, {"level": 1, "skillId": "water_gun"},
+        {"level": 5, "skillId": "spark"}, {"level": 9, "skillId": "bubble_beam"},
+        {"level": 13, "skillId": "thunderbolt"}, {"level": 17, "skillId": "water_pulse"},
+        {"level": 21, "skillId": "thunder"}, {"level": 25, "skillId": "hydro_pump"},
+        {"level": 29, "skillId": "volt_tackle"}
+      ],
+      "uniqueSkill": {"level": 35, "skillId": "unique_iron_colossus"},
+      "description": "번개와 바다를 동시에 다스리는 전설의 해룡 마물. 물 위로 솟구치는 순간 하늘에서 낙뢰가 쏟아지며, 이 녀석이 나타난 해역의 어선은 돌아오지 못한다.",
+      "spriteConfig": {"baseColor": "#DDCC00", "accentColor": "#2266AA", "shape": "serpent", "features": ["horns", "fins", "aura", "spikes"]}
+    },
+    {
+      "id": 78,
+      "name": "매머스 커브",
+      "type": ["ice", "earth"],
+      "baseStats": {"hp": 58, "atk": 55, "def": 50, "spAtk": 38, "spDef": 42, "speed": 35},
+      "growthRate": "slow",
+      "evolution": {"to": 79, "level": 26},
+      "catchRate": 120,
+      "expYield": 62,
+      "learnset": [
+        {"level": 1, "skillId": "tackle"}, {"level": 1, "skillId": "ice_shard"},
+        {"level": 5, "skillId": "mud_slap"}, {"level": 9, "skillId": "frost_breath"},
+        {"level": 13, "skillId": "ground_slam"}, {"level": 17, "skillId": "ice_fang"},
+        {"level": 21, "skillId": "earthquake"}
+      ],
+      "uniqueSkill": {"level": 28, "skillId": "unique_ice_mammoth"},
+      "description": "빙하 시대에서 깨어난 매머드 새끼 마물. 작은 상아로 눈을 파헤치며 먹이를 찾는 모습이 귀엽지만, 그 상아 끝에서 흘러내리는 냉기로 땅이 곧바로 얼어붙는다.",
+      "spriteConfig": {"baseColor": "#BBCCDD", "accentColor": "#887744", "shape": "quadruped", "features": ["horns", "tail", "fangs"]}
+    },
+    {
+      "id": 79,
+      "name": "글레이셜 매머스",
+      "type": ["ice", "earth"],
+      "baseStats": {"hp": 100, "atk": 95, "def": 82, "spAtk": 55, "spDef": 62, "speed": 42},
+      "growthRate": "slow",
+      "evolution": null,
+      "catchRate": 50,
+      "expYield": 188,
+      "learnset": [
+        {"level": 1, "skillId": "ice_shard"}, {"level": 1, "skillId": "mud_slap"},
+        {"level": 5, "skillId": "ice_fang"}, {"level": 9, "skillId": "earthquake"},
+        {"level": 13, "skillId": "glacial_lance"}, {"level": 17, "skillId": "blizzard"},
+        {"level": 21, "skillId": "fissure"}, {"level": 25, "skillId": "ice_wall"},
+        {"level": 29, "skillId": "earth_power"}
+      ],
+      "uniqueSkill": {"level": 38, "skillId": "unique_mammoth_charge"},
+      "description": "빙하 시대를 살아남은 거대 매머드 마물. 한 번 돌진하면 빙하가 쪼개지고 대지가 얼어붙으며, 이 녀석의 이동 경로는 새로운 빙하가 되어 지형 자체가 바뀐다.",
+      "spriteConfig": {"baseColor": "#99AABB", "accentColor": "#776633", "shape": "quadruped", "features": ["horns", "tail", "spikes", "claws"]}
+    },
+    {
+      "id": 80,
+      "name": "코스믹 젤리",
+      "type": ["water"],
+      "baseStats": {"hp": 48, "atk": 35, "def": 42, "spAtk": 60, "spDef": 55, "speed": 52},
+      "growthRate": "medium",
+      "evolution": {"to": 81, "level": 26},
+      "catchRate": 130,
+      "expYield": 58,
+      "learnset": [
+        {"level": 1, "skillId": "tackle"}, {"level": 1, "skillId": "cosmic_ray"},
+        {"level": 5, "skillId": "water_gun"}, {"level": 9, "skillId": "void_ray"},
+        {"level": 13, "skillId": "bubble_beam"}, {"level": 17, "skillId": "gravity_well"},
+        {"level": 21, "skillId": "star_fall"}
+      ],
+      "uniqueSkill": {"level": 28, "skillId": "unique_cosmic_jelly"},
+      "description": "우주에서 떨어진 신비한 해파리 마물. 촉수에서 별빛이 흘러내리며 닿는 것을 무중력 상태로 만들고, 그 상태에서 헤어나오지 못한 채 허공을 부유하다 사라진 어부들의 이야기가 전해진다.",
+      "spriteConfig": {"baseColor": "#6644CC", "accentColor": "#44BBFF", "shape": "amorphous", "features": ["aura", "crystals", "tail"]}
+    },
+    {
+      "id": 81,
+      "name": "네뷸라 드래곤",
+      "type": ["water"],
+      "baseStats": {"hp": 78, "atk": 52, "def": 65, "spAtk": 95, "spDef": 82, "speed": 68},
+      "growthRate": "medium",
+      "evolution": null,
+      "catchRate": 50,
+      "expYield": 182,
+      "learnset": [
+        {"level": 1, "skillId": "cosmic_ray"}, {"level": 1, "skillId": "water_gun"},
+        {"level": 5, "skillId": "void_ray"}, {"level": 9, "skillId": "gravity_well"},
+        {"level": 13, "skillId": "water_pulse"}, {"level": 17, "skillId": "star_fall"},
+        {"level": 21, "skillId": "nebula_burst"}, {"level": 25, "skillId": "hydro_pump"},
+        {"level": 29, "skillId": "cosmic_armor"}
+      ],
+      "uniqueSkill": {"level": 38, "skillId": "unique_nebula_queen"},
+      "description": "성운의 기운을 머금은 해룡 마물. 헤엄치는 궤적에서 별가루가 흩뿌려져 바다가 은하수처럼 빛나지만, 그 빛에 이끌려 바다에 뛰어든 자는 다시는 육지에 발을 딛지 못한다.",
+      "spriteConfig": {"baseColor": "#4422AA", "accentColor": "#33BBEE", "shape": "aquatic", "features": ["aura", "crystals", "tail", "fins"]}
+    },
+    {
+      "id": 82,
+      "name": "미스틱 아울",
+      "type": ["spirit", "wind"],
+      "baseStats": {"hp": 50, "atk": 38, "def": 45, "spAtk": 62, "spDef": 55, "speed": 48},
+      "growthRate": "medium",
+      "evolution": {"to": 83, "level": 26},
+      "catchRate": 120,
+      "expYield": 62,
+      "learnset": [
+        {"level": 1, "skillId": "gust"}, {"level": 1, "skillId": "spirit_flame"},
+        {"level": 5, "skillId": "ghost_wind"}, {"level": 9, "skillId": "air_slash"},
+        {"level": 13, "skillId": "haunt"}, {"level": 17, "skillId": "soul_drain"},
+        {"level": 21, "skillId": "tornado"}
+      ],
+      "uniqueSkill": {"level": 28, "skillId": "unique_spirit_owl"},
+      "description": "밤의 지혜를 간직한 부엉이 마물. 세 번 울면 미래의 한 장면이 보인다는 전승이 있으나, 보이는 미래는 항상 자신의 죽음 직전 순간이라 전해진다.",
+      "spriteConfig": {"baseColor": "#7755AA", "accentColor": "#AADDCC", "shape": "avian", "features": ["wings", "aura", "crystals"]}
+    },
+    {
+      "id": 83,
+      "name": "오라클",
+      "type": ["spirit", "wind"],
+      "baseStats": {"hp": 78, "atk": 55, "def": 65, "spAtk": 95, "spDef": 82, "speed": 68},
+      "growthRate": "medium",
+      "evolution": null,
+      "catchRate": 50,
+      "expYield": 185,
+      "learnset": [
+        {"level": 1, "skillId": "spirit_flame"}, {"level": 1, "skillId": "ghost_wind"},
+        {"level": 5, "skillId": "air_slash"}, {"level": 9, "skillId": "soul_drain"},
+        {"level": 13, "skillId": "tornado"}, {"level": 17, "skillId": "spectral_chain"},
+        {"level": 21, "skillId": "phantom_force"}, {"level": 25, "skillId": "hurricane"},
+        {"level": 29, "skillId": "ectoplasm"}
+      ],
+      "uniqueSkill": {"level": 38, "skillId": "unique_sage_sight"},
+      "description": "천리를 내다보는 심안을 가진 현자 마물. 한 번 응시하면 상대의 과거와 미래를 읽어내며, 이 녀석에게 신탁을 구한 왕들 중 자신의 운명을 알고 나서 살아남은 자가 없다고 전해진다.",
+      "spriteConfig": {"baseColor": "#5533AA", "accentColor": "#88DDBB", "shape": "avian", "features": ["wings", "aura", "crystals", "horns"]}
+    },
+    {
+      "id": 84,
+      "name": "시드 터틀",
+      "type": ["grass", "rock"],
+      "baseStats": {"hp": 52, "atk": 42, "def": 58, "spAtk": 48, "spDef": 52, "speed": 35},
+      "growthRate": "slow",
+      "evolution": {"to": 85, "level": 24},
+      "catchRate": 130,
+      "expYield": 60,
+      "learnset": [
+        {"level": 1, "skillId": "tackle"}, {"level": 1, "skillId": "vine_whip"},
+        {"level": 5, "skillId": "rock_throw"}, {"level": 9, "skillId": "absorb"},
+        {"level": 13, "skillId": "razor_leaf"}, {"level": 17, "skillId": "rock_slide"},
+        {"level": 21, "skillId": "seed_bomb"}
+      ],
+      "uniqueSkill": {"level": 28, "skillId": "unique_seed_fortress"},
+      "description": "등에서 작은 새싹이 자라는 거북 마물. 걸어간 자리마다 씨앗이 떨어져 풀이 돋아나며, 그 식물에는 약한 마비 성분이 있어 가축이 먹으면 움직임이 둔해진다.",
+      "spriteConfig": {"baseColor": "#669944", "accentColor": "#887744", "shape": "quadruped", "features": ["shell", "spikes"]}
+    },
+    {
+      "id": 85,
+      "name": "가이아 터틀",
+      "type": ["grass", "rock"],
+      "baseStats": {"hp": 82, "atk": 68, "def": 92, "spAtk": 72, "spDef": 78, "speed": 42},
+      "growthRate": "slow",
+      "evolution": null,
+      "catchRate": 50,
+      "expYield": 185,
+      "learnset": [
+        {"level": 1, "skillId": "vine_whip"}, {"level": 1, "skillId": "rock_throw"},
+        {"level": 5, "skillId": "razor_leaf"}, {"level": 9, "skillId": "rock_slide"},
+        {"level": 13, "skillId": "seed_bomb"}, {"level": 17, "skillId": "stone_edge"},
+        {"level": 21, "skillId": "solar_beam"}, {"level": 25, "skillId": "boulder_crush"},
+        {"level": 29, "skillId": "leaf_storm"}
+      ],
+      "uniqueSkill": {"level": 38, "skillId": "unique_forest_guardian"},
+      "description": "등에 숲 하나가 통째로 자란 거대 거북 마물. 걸어 다니는 하나의 숲이자 수많은 생명의 보금자리지만, 분노하면 등의 나무들이 독가시를 쏟아내며 사방을 초토화한다.",
+      "spriteConfig": {"baseColor": "#447722", "accentColor": "#776633", "shape": "quadruped", "features": ["shell", "spikes", "aura"]}
+    },
+    {
+      "id": 86,
+      "name": "포이즌 토드",
+      "type": ["poison", "earth"],
+      "baseStats": {"hp": 55, "atk": 50, "def": 48, "spAtk": 55, "spDef": 45, "speed": 38},
+      "growthRate": "medium",
+      "evolution": {"to": 87, "level": 24},
+      "catchRate": 140,
+      "expYield": 58,
+      "learnset": [
+        {"level": 1, "skillId": "tackle"}, {"level": 1, "skillId": "poison_sting"},
+        {"level": 5, "skillId": "mud_slap"}, {"level": 9, "skillId": "acid_spray"},
+        {"level": 13, "skillId": "dig"}, {"level": 17, "skillId": "toxic"},
+        {"level": 21, "skillId": "sludge_bomb"}
+      ],
+      "uniqueSkill": {"level": 28, "skillId": "unique_toad_rain"},
+      "description": "등의 혹에서 독을 분비하는 두꺼비 마물. 그 독은 희석하면 약이 되어 약사들이 위험을 무릅쓰고 채집하지만, 채집 도중 실수로 원액을 흡입한 약사는 살아남지 못했다.",
+      "spriteConfig": {"baseColor": "#668844", "accentColor": "#AA44BB", "shape": "quadruped", "features": ["spikes", "horns"]}
+    },
+    {
+      "id": 87,
+      "name": "스웜프 로드",
+      "type": ["poison", "earth"],
+      "baseStats": {"hp": 85, "atk": 75, "def": 72, "spAtk": 82, "spDef": 68, "speed": 52},
+      "growthRate": "medium",
+      "evolution": null,
+      "catchRate": 55,
+      "expYield": 178,
+      "learnset": [
+        {"level": 1, "skillId": "poison_sting"}, {"level": 1, "skillId": "mud_slap"},
+        {"level": 5, "skillId": "acid_spray"}, {"level": 9, "skillId": "dig"},
+        {"level": 13, "skillId": "sludge_bomb"}, {"level": 17, "skillId": "earthquake"},
+        {"level": 21, "skillId": "corrosion"}, {"level": 25, "skillId": "earth_power"},
+        {"level": 29, "skillId": "toxic"}
+      ],
+      "uniqueSkill": {"level": 38, "skillId": "unique_poison_toad"},
+      "description": "독늪 한가운데 자리 잡은 거대 두꺼비 마물. 한 번 울면 독안개가 늪 전체를 뒤덮고, 그 늪에 빠진 자는 며칠간 온몸에서 악취가 가시지 않는다.",
+      "spriteConfig": {"baseColor": "#557733", "accentColor": "#882299", "shape": "quadruped", "features": ["spikes", "horns", "aura"]}
+    },
+    {
+      "id": 88,
+      "name": "블러드 배트",
+      "type": ["dark", "wind"],
+      "baseStats": {"hp": 48, "atk": 52, "def": 38, "spAtk": 48, "spDef": 42, "speed": 62},
+      "growthRate": "fast",
+      "evolution": {"to": 89, "level": 22},
+      "catchRate": 170,
+      "expYield": 55,
+      "learnset": [
+        {"level": 1, "skillId": "bite"}, {"level": 1, "skillId": "gust"},
+        {"level": 5, "skillId": "shadow_sneak"}, {"level": 9, "skillId": "wing_attack"},
+        {"level": 13, "skillId": "shadow_claw"}, {"level": 17, "skillId": "air_slash"},
+        {"level": 21, "skillId": "crunch"}
+      ],
+      "uniqueSkill": {"level": 26, "skillId": "unique_shadow_bat"},
+      "description": "어둠 속에서 소리 없이 날아다니는 흡혈 박쥐 마물. 거꾸로 매달려 있으면 바위와 구분하기 어려우며, 목덜미에 이 녀석의 이빨 자국이 발견된 마을 주민들은 이상한 꿈을 꾼다고 증언한다.",
+      "spriteConfig": {"baseColor": "#332244", "accentColor": "#88CCAA", "shape": "avian", "features": ["wings", "fangs", "claws"]}
+    },
+    {
+      "id": 89,
+      "name": "노스페라투",
+      "type": ["dark", "wind"],
+      "baseStats": {"hp": 72, "atk": 78, "def": 55, "spAtk": 72, "spDef": 58, "speed": 90},
+      "growthRate": "fast",
+      "evolution": null,
+      "catchRate": 55,
+      "expYield": 172,
+      "learnset": [
+        {"level": 1, "skillId": "bite"}, {"level": 1, "skillId": "shadow_sneak"},
+        {"level": 5, "skillId": "shadow_claw"}, {"level": 9, "skillId": "air_slash"},
+        {"level": 13, "skillId": "crunch"}, {"level": 17, "skillId": "dark_pulse"},
+        {"level": 21, "skillId": "hurricane"}, {"level": 25, "skillId": "abyss_gaze"},
+        {"level": 29, "skillId": "shadow_ball"}
+      ],
+      "uniqueSkill": {"level": 35, "skillId": "unique_vampire_drain"},
+      "description": "보름달 아래 나타나는 밤의 귀족 마물. 망토 같은 날개를 펼치면 주변의 빛이 모두 사라지며, 이 녀석과 눈을 마주친 자는 다음 날 아침 어떤 것도 기억하지 못한다.",
+      "spriteConfig": {"baseColor": "#221133", "accentColor": "#CC4444", "shape": "avian", "features": ["wings", "fangs", "claws", "aura"]}
+    },
+    {
+      "id": 90,
+      "name": "살라만더",
+      "type": ["fire", "earth"],
+      "baseStats": {"hp": 52, "atk": 55, "def": 50, "spAtk": 55, "spDef": 45, "speed": 38},
+      "growthRate": "medium",
+      "evolution": null,
+      "catchRate": 100,
+      "expYield": 62,
+      "learnset": [
+        {"level": 1, "skillId": "tackle"}, {"level": 1, "skillId": "ember"},
+        {"level": 5, "skillId": "mud_slap"}, {"level": 9, "skillId": "flame_claw"},
+        {"level": 13, "skillId": "dig"}, {"level": 17, "skillId": "fire_breath"},
+        {"level": 21, "skillId": "earthquake"}, {"level": 25, "skillId": "inferno"}
+      ],
+      "uniqueSkill": {"level": 30, "skillId": "unique_lava_salamander"},
+      "description": "화산 용암 속에서 헤엄치는 도롱뇽 마물. 용암에 잠기면 오히려 기운을 회복하며, 피부에서 흘러내리는 녹은 바위가 굳어 발걸음마다 새로운 지형을 만들어낸다.",
+      "spriteConfig": {"baseColor": "#FF4400", "accentColor": "#885522", "shape": "quadruped", "features": ["tail", "claws", "aura"]}
+    },
+    {
+      "id": 91,
+      "name": "피닉스",
+      "type": ["fire", "light"],
+      "baseStats": {"hp": 90, "atk": 100, "def": 80, "spAtk": 110, "spDef": 85, "speed": 105},
+      "growthRate": "slow",
+      "evolution": null,
+      "catchRate": 3,
+      "expYield": 300,
+      "learnset": [
+        {"level": 1, "skillId": "ember"}, {"level": 1, "skillId": "flash"},
+        {"level": 5, "skillId": "fire_breath"}, {"level": 9, "skillId": "holy_beam"},
+        {"level": 13, "skillId": "inferno"}, {"level": 17, "skillId": "solar_flare"},
+        {"level": 21, "skillId": "eruption"}, {"level": 25, "skillId": "radiance"},
+        {"level": 29, "skillId": "hyper_beam"}, {"level": 33, "skillId": "divine_light"},
+        {"level": 37, "skillId": "purify"}
+      ],
+      "uniqueSkill": {"level": 42, "skillId": "unique_legend_phoenix"},
+      "description": "전설의 불사조 마물. 쓰러져도 화염 속에서 되살아나며, 그 불꽃에는 생명을 치유하는 힘이 깃들어 있으나 같은 자를 두 번 치유하지 않는다는 규칙이 있다.",
+      "spriteConfig": {"baseColor": "#FF2200", "accentColor": "#FFDD00", "shape": "avian", "features": ["wings", "tail", "aura", "crystals"]}
+    },
+    {
+      "id": 92,
+      "name": "아비스 드래곤",
+      "type": ["water", "dark"],
+      "baseStats": {"hp": 100, "atk": 105, "def": 90, "spAtk": 95, "spDef": 85, "speed": 95},
+      "growthRate": "slow",
+      "evolution": null,
+      "catchRate": 3,
+      "expYield": 300,
+      "learnset": [
+        {"level": 1, "skillId": "water_gun"}, {"level": 1, "skillId": "shadow_claw"},
+        {"level": 5, "skillId": "water_pulse"}, {"level": 9, "skillId": "dark_pulse"},
+        {"level": 13, "skillId": "hydro_pump"}, {"level": 17, "skillId": "shadow_ball"},
+        {"level": 21, "skillId": "tidal_wave"}, {"level": 25, "skillId": "abyss_gaze"},
+        {"level": 29, "skillId": "hyper_beam"}, {"level": 33, "skillId": "crunch"},
+        {"level": 37, "skillId": "rain_dance"}
+      ],
+      "uniqueSkill": {"level": 42, "skillId": "unique_legend_leviathan"},
+      "description": "바다 가장 깊은 곳에 잠든 태고의 괴물 마물. 눈을 뜨면 해류가 뒤바뀌고 대륙이 삼켜지며, 해도(海圖)에 이 녀석의 이름이 적힌 구역에는 어떤 선박도 항해 기록을 남기지 못했다.",
+      "spriteConfig": {"baseColor": "#112244", "accentColor": "#44CCFF", "shape": "serpent", "features": ["horns", "fins", "fangs", "aura", "spikes"]}
+    },
+    {
+      "id": 93,
+      "name": "유그드라실",
+      "type": ["grass", "light"],
+      "baseStats": {"hp": 110, "atk": 80, "def": 100, "spAtk": 95, "spDef": 110, "speed": 75},
+      "growthRate": "slow",
+      "evolution": null,
+      "catchRate": 3,
+      "expYield": 300,
+      "learnset": [
+        {"level": 1, "skillId": "vine_whip"}, {"level": 1, "skillId": "flash"},
+        {"level": 5, "skillId": "mega_drain"}, {"level": 9, "skillId": "holy_beam"},
+        {"level": 13, "skillId": "solar_beam"}, {"level": 17, "skillId": "radiance"},
+        {"level": 21, "skillId": "leaf_storm"}, {"level": 25, "skillId": "divine_light"},
+        {"level": 29, "skillId": "purify"}, {"level": 33, "skillId": "light_screen"},
+        {"level": 37, "skillId": "growth"}
+      ],
+      "uniqueSkill": {"level": 42, "skillId": "unique_legend_yggdrasil"},
+      "description": "세계를 지탱하는 거대한 신목 마물. 뿌리는 대지 깊이, 가지는 하늘 끝까지 닿아 모든 생명의 근원이 되며, 이 나무가 흔들리면 세계의 어딘가에서 반드시 재앙이 일어난다.",
+      "spriteConfig": {"baseColor": "#228822", "accentColor": "#FFEE88", "shape": "elemental", "features": ["aura", "crystals", "spikes"]}
+    },
+    {
+      "id": 94,
+      "name": "썬더 드래곤",
+      "type": ["dragon", "electric"],
+      "baseStats": {"hp": 88, "atk": 105, "def": 80, "spAtk": 110, "spDef": 80, "speed": 108},
+      "growthRate": "slow",
+      "evolution": null,
+      "catchRate": 3,
+      "expYield": 310,
+      "learnset": [
+        {"level": 1, "skillId": "dragon_breath"}, {"level": 1, "skillId": "thunder_shock"},
+        {"level": 5, "skillId": "dragon_claw"}, {"level": 9, "skillId": "thunderbolt"},
+        {"level": 13, "skillId": "dragon_pulse"}, {"level": 17, "skillId": "thunder"},
+        {"level": 21, "skillId": "dragon_rush"}, {"level": 25, "skillId": "volt_tackle"},
+        {"level": 29, "skillId": "draco_meteor"}, {"level": 33, "skillId": "dragon_dance"},
+        {"level": 37, "skillId": "hyper_beam"}
+      ],
+      "uniqueSkill": {"level": 42, "skillId": "unique_legend_thunder_dragon"},
+      "description": "뇌운을 타고 하늘을 가르는 전설의 용 마물. 비늘 하나하나에 번개가 깃들어 가까이 가면 머리카락이 곤두서며, 이 녀석이 지나간 하늘 아래에는 온 왕국의 쇠붙이가 녹아내린다.",
+      "spriteConfig": {"baseColor": "#4422BB", "accentColor": "#FFDD00", "shape": "serpent", "features": ["horns", "wings", "aura", "tail", "spikes"]}
+    },
+    {
+      "id": 95,
+      "name": "크로노스",
+      "type": ["spirit"],
+      "baseStats": {"hp": 95, "atk": 85, "def": 90, "spAtk": 110, "spDef": 95, "speed": 100},
+      "growthRate": "slow",
+      "evolution": null,
+      "catchRate": 3,
+      "expYield": 320,
+      "learnset": [
+        {"level": 1, "skillId": "cosmic_ray"}, {"level": 1, "skillId": "spirit_flame"},
+        {"level": 5, "skillId": "star_fall"}, {"level": 9, "skillId": "phantom_force"},
+        {"level": 13, "skillId": "nebula_burst"}, {"level": 17, "skillId": "ectoplasm"},
+        {"level": 21, "skillId": "singularity"}, {"level": 25, "skillId": "soul_drain"},
+        {"level": 29, "skillId": "cosmic_armor"}, {"level": 33, "skillId": "warp"},
+        {"level": 37, "skillId": "hyper_beam"}
+      ],
+      "uniqueSkill": {"level": 42, "skillId": "unique_legend_time_lord"},
+      "description": "시간의 흐름을 다스리는 전설의 마물. 뿔의 수정이 흔들릴 때마다 과거와 미래가 뒤섞이며, 이 녀석과 교전한 자는 싸움이 끝난 뒤 자신이 몇 살인지 기억하지 못하게 된다.",
+      "spriteConfig": {"baseColor": "#222255", "accentColor": "#FF88FF", "shape": "mythical", "features": ["aura", "crystals", "horns", "spikes"]}
+    },
+    {
+      "id": 96,
+      "name": "아스트랄 드래곤",
+      "type": ["dragon"],
+      "baseStats": {"hp": 95, "atk": 90, "def": 95, "spAtk": 110, "spDef": 90, "speed": 95},
+      "growthRate": "slow",
+      "evolution": null,
+      "catchRate": 3,
+      "expYield": 320,
+      "learnset": [
+        {"level": 1, "skillId": "cosmic_ray"}, {"level": 1, "skillId": "dragon_breath"},
+        {"level": 5, "skillId": "star_fall"}, {"level": 9, "skillId": "dragon_pulse"},
+        {"level": 13, "skillId": "nebula_burst"}, {"level": 17, "skillId": "dragon_rush"},
+        {"level": 21, "skillId": "singularity"}, {"level": 25, "skillId": "draco_meteor"},
+        {"level": 29, "skillId": "cosmic_armor"}, {"level": 33, "skillId": "warp"},
+        {"level": 37, "skillId": "hyper_beam"}
+      ],
+      "uniqueSkill": {"level": 42, "skillId": "unique_legend_space_lord"},
+      "description": "공간의 경계를 지배하는 용 마물. 날개를 펼치면 차원의 틈이 열리고 시야 너머의 세계가 엿보이며, 이 틈 속으로 빨려 들어간 자는 다른 시대에 모습을 드러낸다.",
+      "spriteConfig": {"baseColor": "#332266", "accentColor": "#44FFCC", "shape": "mythical", "features": ["aura", "crystals", "wings", "horns", "tail"]}
+    },
+    {
+      "id": 97,
+      "name": "래디언트 드래곤",
+      "type": ["light", "dragon"],
+      "baseStats": {"hp": 90, "atk": 95, "def": 85, "spAtk": 115, "spDef": 90, "speed": 100},
+      "growthRate": "slow",
+      "evolution": null,
+      "catchRate": 3,
+      "expYield": 310,
+      "learnset": [
+        {"level": 1, "skillId": "flash"}, {"level": 1, "skillId": "dragon_breath"},
+        {"level": 5, "skillId": "holy_beam"}, {"level": 9, "skillId": "dragon_claw"},
+        {"level": 13, "skillId": "solar_flare"}, {"level": 17, "skillId": "dragon_pulse"},
+        {"level": 21, "skillId": "radiance"}, {"level": 25, "skillId": "draco_meteor"},
+        {"level": 29, "skillId": "divine_light"}, {"level": 33, "skillId": "dragon_dance"},
+        {"level": 37, "skillId": "hyper_beam"}
+      ],
+      "uniqueSkill": {"level": 42, "skillId": "unique_legend_light_dragon"},
+      "description": "빛의 화신인 용 마물. 비늘에서 뿜어져 나오는 빛이 어둠을 소멸시키며, 그 빛줄기는 대륙 끝에서도 보이지만 직접 바라보면 영원히 빛만 보이게 된다.",
+      "spriteConfig": {"baseColor": "#FFEE66", "accentColor": "#FFFFFF", "shape": "serpent", "features": ["wings", "horns", "aura", "tail", "crystals"]}
+    },
+    {
+      "id": 98,
+      "name": "니드호그",
+      "type": ["dark", "dragon"],
+      "baseStats": {"hp": 90, "atk": 115, "def": 90, "spAtk": 95, "spDef": 85, "speed": 100},
+      "growthRate": "slow",
+      "evolution": null,
+      "catchRate": 3,
+      "expYield": 310,
+      "learnset": [
+        {"level": 1, "skillId": "shadow_claw"}, {"level": 1, "skillId": "dragon_breath"},
+        {"level": 5, "skillId": "dark_pulse"}, {"level": 9, "skillId": "dragon_claw"},
+        {"level": 13, "skillId": "night_slash"}, {"level": 17, "skillId": "dragon_pulse"},
+        {"level": 21, "skillId": "abyss_gaze"}, {"level": 25, "skillId": "outrage"},
+        {"level": 29, "skillId": "shadow_ball"}, {"level": 33, "skillId": "dragon_dance"},
+        {"level": 37, "skillId": "hyper_beam"}
+      ],
+      "uniqueSkill": {"level": 42, "skillId": "unique_legend_dark_dragon"},
+      "description": "암흑의 화신인 용 마물. 날개를 펼치면 하늘이 칠흑으로 물들고 빛조차 삼키는 암흑의 브레스를 내뿜으며, 신화에는 이 녀석이 세계수의 뿌리를 갉아먹어 세상의 종말을 앞당긴다고 기록되어 있다.",
+      "spriteConfig": {"baseColor": "#110022", "accentColor": "#CC44FF", "shape": "serpent", "features": ["wings", "horns", "aura", "tail", "spikes", "claws"]}
+    },
+    {
+      "id": 99,
+      "name": "아르케",
+      "type": ["normal"],
+      "baseStats": {"hp": 110, "atk": 100, "def": 100, "spAtk": 100, "spDef": 100, "speed": 100},
+      "growthRate": "slow",
+      "evolution": null,
+      "catchRate": 3,
+      "expYield": 350,
+      "learnset": [
+        {"level": 1, "skillId": "tackle"}, {"level": 1, "skillId": "cosmic_ray"},
+        {"level": 5, "skillId": "hyper_beam"}, {"level": 9, "skillId": "star_fall"},
+        {"level": 13, "skillId": "body_slam"}, {"level": 17, "skillId": "nebula_burst"},
+        {"level": 21, "skillId": "singularity"}, {"level": 25, "skillId": "purify"},
+        {"level": 29, "skillId": "cosmic_armor"}, {"level": 33, "skillId": "warp"},
+        {"level": 37, "skillId": "divine_light"}
+      ],
+      "uniqueSkill": {"level": 50, "skillId": "unique_legend_origin"},
+      "description": "만물의 시작이자 끝인 근원의 마물. 이 세계가 태어나기 전부터 존재했으며, 그것이 눈을 감으면 세계가 시작되고 눈을 뜨면 세계가 끝난다.",
+      "spriteConfig": {"baseColor": "#FFFFFF", "accentColor": "#FFD700", "shape": "mythical", "features": ["aura", "crystals", "wings", "horns"]}
+    },
+    {
+      "id": 100,
+      "name": "하모니아",
+      "type": ["light"],
+      "baseStats": {"hp": 95, "atk": 80, "def": 85, "spAtk": 115, "spDef": 105, "speed": 95},
+      "growthRate": "slow",
+      "evolution": null,
+      "catchRate": 3,
+      "expYield": 310,
+      "learnset": [
+        {"level": 1, "skillId": "echo"}, {"level": 1, "skillId": "flash"},
+        {"level": 5, "skillId": "sonic_boom"}, {"level": 9, "skillId": "holy_beam"},
+        {"level": 13, "skillId": "hyper_voice"}, {"level": 17, "skillId": "solar_flare"},
+        {"level": 21, "skillId": "shatter_note"}, {"level": 25, "skillId": "radiance"},
+        {"level": 29, "skillId": "lullaby"}, {"level": 33, "skillId": "divine_light"},
+        {"level": 37, "skillId": "purify"}
+      ],
+      "uniqueSkill": {"level": 42, "skillId": "unique_legend_harmony"},
+      "description": "세계의 조화를 노래하는 전설의 마물. 그 선율이 울려 퍼지면 다투던 마물들도 평화를 되찾지만, 노래가 끝나는 순간 그 기억은 사라지고 분쟁은 더욱 격렬해진다.",
+      "spriteConfig": {"baseColor": "#FFCCFF", "accentColor": "#FFEE88", "shape": "mythical", "features": ["wings", "aura", "crystals", "horns"]}
+    },
+    {
+      "id": 101,
+      "name": "스트레이",
+      "type": ["normal"],
+      "baseStats": {"hp": 50, "atk": 48, "def": 45, "spAtk": 48, "spDef": 45, "speed": 55},
+      "growthRate": "medium",
+      "evolution": {"to": 102, "level": 20, "condition": "high_bond"},
+      "catchRate": 0,
+      "expYield": 55,
+      "learnset": [
+        {"level": 1, "skillId": "tackle"}, {"level": 1, "skillId": "growl"},
+        {"level": 5, "skillId": "quick_strike"}, {"level": 9, "skillId": "bite"},
+        {"level": 13, "skillId": "quick_guard"}, {"level": 17, "skillId": "fury_swipes"},
+        {"level": 21, "skillId": "body_slam"}, {"level": 25, "skillId": "shadow_strike"},
+        {"level": 30, "skillId": "sword_dance"}, {"level": 35, "skillId": "hyper_beam"}
+      ],
+      "uniqueSkill": null,
+      "description": "어린 시절부터 주인공 곁에 있던 길고양이. 날렵한 몸놀림과 영리한 눈빛이 예사롭지 않으며, 가끔 밤중에 혼자 어딘가를 응시하는 모습이 목격된다.",
+      "spriteConfig": {"shape": "quadruped", "features": ["tail", "claws"], "baseColor": "#AA8866", "accentColor": "#DDBB88"}
+    },
+    {
+      "id": 102,
+      "name": "나이트 스토커",
+      "type": ["normal", "dark"],
+      "baseStats": {"hp": 70, "atk": 78, "def": 65, "spAtk": 68, "spDef": 60, "speed": 85},
+      "growthRate": "medium",
+      "evolution": null,
+      "catchRate": 0,
+      "expYield": 160,
+      "learnset": [
+        {"level": 1, "skillId": "tackle"}, {"level": 1, "skillId": "growl"},
+        {"level": 5, "skillId": "quick_strike"}, {"level": 9, "skillId": "bite"},
+        {"level": 13, "skillId": "quick_guard"}, {"level": 17, "skillId": "fury_swipes"},
+        {"level": 20, "skillId": "night_slash"}, {"level": 24, "skillId": "sucker_punch"},
+        {"level": 28, "skillId": "body_slam"}, {"level": 32, "skillId": "shadow_crit"},
+        {"level": 36, "skillId": "crunch"}, {"level": 40, "skillId": "sword_dance"},
+        {"level": 45, "skillId": "dark_pulse"}, {"level": 50, "skillId": "hyper_beam"}
+      ],
+      "uniqueSkill": {"level": 35, "skillId": "drain_claw"},
+      "description": "어둠 속에서 단련되어 돌아온 충직한 파트너. 주인을 위해서라면 무엇이든 하며, 그 눈빛에는 수많은 밤을 홀로 살아남은 자만이 가질 수 있는 냉혹한 빛이 깃들어 있다.",
+      "spriteConfig": {"shape": "quadruped", "features": ["tail", "claws", "fangs"], "baseColor": "#443322", "accentColor": "#886644"}
+    }
+  ]
+}

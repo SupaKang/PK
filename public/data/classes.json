@@ -85,7 +85,7 @@
       "name": "마법사",
       "description": "강력한 원소 마법을 다루는 신비의 주술사.",
       "type": [
-        "cosmic"
+        "normal"
       ],
       "baseStats": {
         "hp": 50,

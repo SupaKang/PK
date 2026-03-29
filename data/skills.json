@@ -61,7 +61,7 @@
     },
     {
       "id": "body_slam",
-      "name": "몸통박치기",
+      "name": "슬램",
       "type": "normal",
       "category": "physical",
       "power": 85,
@@ -76,7 +76,7 @@
     },
     {
       "id": "fury_swipes",
-      "name": "연속할퀴기",
+      "name": "프렌지",
       "type": "normal",
       "category": "physical",
       "power": 18,
@@ -87,7 +87,7 @@
     },
     {
       "id": "hyper_beam",
-      "name": "초강력빔",
+      "name": "디스인테그레이트",
       "type": "normal",
       "category": "special",
       "power": 150,
@@ -132,7 +132,7 @@
     },
     {
       "id": "ember",
-      "name": "불씨",
+      "name": "이그니션",
       "type": "fire",
       "category": "special",
       "power": 40,
@@ -147,7 +147,7 @@
     },
     {
       "id": "flame_claw",
-      "name": "화염발톱",
+      "name": "플레임 클로",
       "type": "fire",
       "category": "physical",
       "power": 65,
@@ -162,22 +162,24 @@
     },
     {
       "id": "fire_breath",
-      "name": "화염숨결",
+      "name": "파이어 브레스",
       "type": "fire",
       "category": "special",
-      "power": 75,
-      "accuracy": 95,
+      "power": 70,
+      "accuracy": 100,
       "pp": 15,
       "effect": {
-        "type": "burn",
-        "chance": 20,
-        "target": "enemy"
+        "type": "stat_up",
+        "chance": 30,
+        "target": "self",
+        "stat": "def",
+        "amount": 1
       },
-      "description": "뜨거운 숨결을 내뿜는다."
+      "description": "자신을 단련하는 백열의 불꽃. 때릴수록 단단해진다."
     },
     {
       "id": "inferno",
-      "name": "업화",
+      "name": "헬파이어",
       "type": "fire",
       "category": "special",
       "power": 110,
@@ -192,7 +194,7 @@
     },
     {
       "id": "flame_charge",
-      "name": "화염돌진",
+      "name": "블레이즈 러시",
       "type": "fire",
       "category": "physical",
       "power": 50,
@@ -209,7 +211,7 @@
     },
     {
       "id": "fire_wall",
-      "name": "화염벽",
+      "name": "파이어 월",
       "type": "fire",
       "category": "status",
       "power": 0,
@@ -226,7 +228,7 @@
     },
     {
       "id": "eruption",
-      "name": "분화",
+      "name": "볼캐닉 버스트",
       "type": "fire",
       "category": "special",
       "power": 130,
@@ -241,7 +243,7 @@
     },
     {
       "id": "heat_fang",
-      "name": "열기송곳니",
+      "name": "플레임 바이트",
       "type": "fire",
       "category": "physical",
       "power": 80,
@@ -256,7 +258,7 @@
     },
     {
       "id": "fire_spin",
-      "name": "화염소용돌이",
+      "name": "플레임 보텍스",
       "type": "fire",
       "category": "special",
       "power": 55,
@@ -282,7 +284,7 @@
     },
     {
       "id": "water_gun",
-      "name": "물대포",
+      "name": "워터 볼트",
       "type": "water",
       "category": "special",
       "power": 40,
@@ -293,7 +295,7 @@
     },
     {
       "id": "aqua_jet",
-      "name": "아쿠아제트",
+      "name": "타이달 러시",
       "type": "water",
       "category": "physical",
       "power": 40,
@@ -304,7 +306,7 @@
     },
     {
       "id": "bubble_beam",
-      "name": "거품광선",
+      "name": "버블 배러지",
       "type": "water",
       "category": "special",
       "power": 65,
@@ -321,22 +323,22 @@
     },
     {
       "id": "water_pulse",
-      "name": "수류파동",
+      "name": "딥 프레셔",
       "type": "water",
       "category": "special",
-      "power": 75,
-      "accuracy": 95,
-      "pp": 15,
+      "power": 65,
+      "accuracy": 100,
+      "pp": 20,
       "effect": {
-        "type": "confuse",
+        "type": "flinch",
         "chance": 20,
         "target": "enemy"
       },
-      "description": "파동을 일으켜 혼란에 빠뜨릴 수 있다."
+      "description": "심해의 수압을 응축해 적에게 내뿜는다."
     },
     {
       "id": "hydro_pump",
-      "name": "하이드로펌프",
+      "name": "메일스트롬",
       "type": "water",
       "category": "special",
       "power": 120,
@@ -347,7 +349,7 @@
     },
     {
       "id": "waterfall",
-      "name": "폭포오르기",
+      "name": "캐스케이드",
       "type": "water",
       "category": "physical",
       "power": 80,
@@ -362,7 +364,7 @@
     },
     {
       "id": "rain_dance",
-      "name": "비바라기",
+      "name": "레인 콜",
       "type": "water",
       "category": "status",
       "power": 0,
@@ -379,7 +381,7 @@
     },
     {
       "id": "tidal_wave",
-      "name": "해일",
+      "name": "타이달 웨이브",
       "type": "water",
       "category": "special",
       "power": 100,
@@ -390,7 +392,7 @@
     },
     {
       "id": "aqua_shield",
-      "name": "수류방패",
+      "name": "아쿠아 실드",
       "type": "water",
       "category": "status",
       "power": 0,
@@ -407,7 +409,7 @@
     },
     {
       "id": "torrent_bite",
-      "name": "급류이빨",
+      "name": "토런트 바이트",
       "type": "water",
       "category": "physical",
       "power": 70,
@@ -422,7 +424,7 @@
     },
     {
       "id": "vine_whip",
-      "name": "덩굴채찍",
+      "name": "바인 래시",
       "type": "grass",
       "category": "physical",
       "power": 45,
@@ -433,7 +435,7 @@
     },
     {
       "id": "razor_leaf",
-      "name": "잎날가르기",
+      "name": "리프 커터",
       "type": "grass",
       "category": "physical",
       "power": 55,
@@ -444,7 +446,7 @@
     },
     {
       "id": "seed_bomb",
-      "name": "씨앗폭탄",
+      "name": "시드 블래스트",
       "type": "grass",
       "category": "physical",
       "power": 80,
@@ -455,7 +457,7 @@
     },
     {
       "id": "solar_beam",
-      "name": "태양광선",
+      "name": "솔라 레이",
       "type": "grass",
       "category": "special",
       "power": 120,
@@ -466,7 +468,7 @@
     },
     {
       "id": "leaf_storm",
-      "name": "잎사귀폭풍",
+      "name": "포레스트 스톰",
       "type": "grass",
       "category": "special",
       "power": 130,
@@ -483,7 +485,7 @@
     },
     {
       "id": "absorb",
-      "name": "흡수",
+      "name": "드레인",
       "type": "grass",
       "category": "special",
       "power": 40,
@@ -498,7 +500,7 @@
     },
     {
       "id": "mega_drain",
-      "name": "메가흡수",
+      "name": "라이프 드레인",
       "type": "grass",
       "category": "special",
       "power": 75,
@@ -513,7 +515,7 @@
     },
     {
       "id": "sleep_powder",
-      "name": "수면가루",
+      "name": "슬리프 더스트",
       "type": "grass",
       "category": "status",
       "power": 0,
@@ -545,7 +547,7 @@
     },
     {
       "id": "thorn_whip",
-      "name": "가시채찍",
+      "name": "쏜 래시",
       "type": "grass",
       "category": "physical",
       "power": 65,
@@ -556,7 +558,7 @@
     },
     {
       "id": "thunder_shock",
-      "name": "전격충격",
+      "name": "일렉트릭 볼트",
       "type": "electric",
       "category": "special",
       "power": 40,
@@ -571,7 +573,7 @@
     },
     {
       "id": "spark",
-      "name": "전기불꽃",
+      "name": "스파크",
       "type": "electric",
       "category": "physical",
       "power": 65,
@@ -586,7 +588,7 @@
     },
     {
       "id": "thunderbolt",
-      "name": "십만볼트",
+      "name": "썬더스트라이크",
       "type": "electric",
       "category": "special",
       "power": 90,
@@ -601,7 +603,7 @@
     },
     {
       "id": "thunder",
-      "name": "번개",
+      "name": "썬더스톰",
       "type": "electric",
       "category": "special",
       "power": 120,
@@ -616,7 +618,7 @@
     },
     {
       "id": "volt_tackle",
-      "name": "볼트태클",
+      "name": "라이트닝 러시",
       "type": "electric",
       "category": "physical",
       "power": 120,
@@ -631,7 +633,7 @@
     },
     {
       "id": "thunder_wave",
-      "name": "전자파",
+      "name": "스태틱 필드",
       "type": "electric",
       "category": "status",
       "power": 0,
@@ -663,7 +665,7 @@
     },
     {
       "id": "lightning_fang",
-      "name": "번개송곳니",
+      "name": "라이트닝 바이트",
       "type": "electric",
       "category": "physical",
       "power": 80,
@@ -678,7 +680,7 @@
     },
     {
       "id": "discharge",
-      "name": "방전",
+      "name": "일렉트릭 버스트",
       "type": "electric",
       "category": "special",
       "power": 80,
@@ -693,7 +695,7 @@
     },
     {
       "id": "mud_slap",
-      "name": "진흙던지기",
+      "name": "머드 슬링",
       "type": "earth",
       "category": "special",
       "power": 40,
@@ -710,7 +712,7 @@
     },
     {
       "id": "earthquake",
-      "name": "지진",
+      "name": "퀘이크",
       "type": "earth",
       "category": "physical",
       "power": 100,
@@ -721,7 +723,7 @@
     },
     {
       "id": "dig",
-      "name": "땅파기",
+      "name": "버로우",
       "type": "earth",
       "category": "physical",
       "power": 80,
@@ -732,7 +734,7 @@
     },
     {
       "id": "earth_power",
-      "name": "대지의힘",
+      "name": "테라 포스",
       "type": "earth",
       "category": "special",
       "power": 90,
@@ -749,7 +751,7 @@
     },
     {
       "id": "sand_tomb",
-      "name": "모래무덤",
+      "name": "샌드 트랩",
       "type": "earth",
       "category": "physical",
       "power": 55,
@@ -760,18 +762,22 @@
     },
     {
       "id": "mud_bomb",
-      "name": "진흙폭탄",
+      "name": "테라 임팩트",
       "type": "earth",
-      "category": "special",
-      "power": 65,
-      "accuracy": 85,
-      "pp": 10,
-      "effect": null,
-      "description": "진흙 폭탄을 던져 공격한다."
+      "category": "physical",
+      "power": 75,
+      "accuracy": 90,
+      "pp": 15,
+      "effect": {
+        "type": "flinch",
+        "chance": 20,
+        "target": "enemy"
+      },
+      "description": "대지의 지층을 분쇄하며 내려친다."
     },
     {
       "id": "fissure",
-      "name": "균열",
+      "name": "피셔",
       "type": "earth",
       "category": "physical",
       "power": 130,
@@ -782,7 +788,7 @@
     },
     {
       "id": "sand_armor",
-      "name": "모래갑옷",
+      "name": "어스 아머",
       "type": "earth",
       "category": "status",
       "power": 0,
@@ -799,7 +805,7 @@
     },
     {
       "id": "ground_slam",
-      "name": "대지강타",
+      "name": "어스 슬램",
       "type": "earth",
       "category": "physical",
       "power": 75,
@@ -810,7 +816,7 @@
     },
     {
       "id": "ice_shard",
-      "name": "얼음조각",
+      "name": "아이스 샤드",
       "type": "ice",
       "category": "physical",
       "power": 40,
@@ -821,18 +827,24 @@
     },
     {
       "id": "frost_breath",
-      "name": "냉기숨결",
+      "name": "프로스트 필드",
       "type": "ice",
       "category": "special",
-      "power": 60,
-      "accuracy": 90,
-      "pp": 20,
-      "effect": null,
-      "description": "차가운 숨결로 공격한다."
+      "power": 65,
+      "accuracy": 95,
+      "pp": 15,
+      "effect": {
+        "type": "stat_down",
+        "chance": 30,
+        "target": "enemy",
+        "stat": "def",
+        "amount": -1
+      },
+      "description": "극저온 냉기로 적의 갑옷을 부식시킨다."
     },
     {
       "id": "ice_beam",
-      "name": "냉동빔",
+      "name": "프로스트 레이",
       "type": "ice",
       "category": "special",
       "power": 90,
@@ -847,7 +859,7 @@
     },
     {
       "id": "blizzard",
-      "name": "눈보라",
+      "name": "블리자드",
       "type": "ice",
       "category": "special",
       "power": 120,
@@ -862,7 +874,7 @@
     },
     {
       "id": "ice_fang",
-      "name": "얼음송곳니",
+      "name": "프로스트 바이트",
       "type": "ice",
       "category": "physical",
       "power": 75,
@@ -877,7 +889,7 @@
     },
     {
       "id": "hail",
-      "name": "싸락눈",
+      "name": "헤일스톰",
       "type": "ice",
       "category": "status",
       "power": 0,
@@ -894,18 +906,22 @@
     },
     {
       "id": "glacial_lance",
-      "name": "빙하창",
+      "name": "아이스 랜스",
       "type": "ice",
       "category": "physical",
-      "power": 110,
-      "accuracy": 90,
+      "power": 90,
+      "accuracy": 85,
       "pp": 5,
-      "effect": null,
-      "description": "거대한 얼음 창으로 찌른다."
+      "effect": {
+        "type": "freeze",
+        "chance": 20,
+        "target": "enemy"
+      },
+      "description": "절대영도의 창을 만들어 관통시킨다."
     },
     {
       "id": "freeze_ray",
-      "name": "동결광선",
+      "name": "프리즈 레이",
       "type": "ice",
       "category": "special",
       "power": 75,
@@ -920,7 +936,7 @@
     },
     {
       "id": "ice_wall",
-      "name": "빙벽",
+      "name": "아이스 배리어",
       "type": "ice",
       "category": "status",
       "power": 0,
@@ -937,7 +953,7 @@
     },
     {
       "id": "gust",
-      "name": "돌풍",
+      "name": "윈드 블래스트",
       "type": "wind",
       "category": "special",
       "power": 40,
@@ -948,7 +964,7 @@
     },
     {
       "id": "air_slash",
-      "name": "에어슬래시",
+      "name": "윈드 슬래시",
       "type": "wind",
       "category": "special",
       "power": 75,
@@ -963,7 +979,7 @@
     },
     {
       "id": "hurricane",
-      "name": "태풍",
+      "name": "허리케인",
       "type": "wind",
       "category": "special",
       "power": 120,
@@ -978,7 +994,7 @@
     },
     {
       "id": "wing_attack",
-      "name": "날개치기",
+      "name": "윙 스트라이크",
       "type": "wind",
       "category": "physical",
       "power": 60,
@@ -989,7 +1005,7 @@
     },
     {
       "id": "aerial_ace",
-      "name": "공중베기",
+      "name": "에어 스트라이크",
       "type": "wind",
       "category": "physical",
       "power": 60,
@@ -1000,7 +1016,7 @@
     },
     {
       "id": "tailwind",
-      "name": "순풍",
+      "name": "테일윈드",
       "type": "wind",
       "category": "status",
       "power": 0,
@@ -1017,7 +1033,7 @@
     },
     {
       "id": "sky_dive",
-      "name": "급강하",
+      "name": "스카이 다이브",
       "type": "wind",
       "category": "physical",
       "power": 90,
@@ -1028,39 +1044,37 @@
     },
     {
       "id": "tornado",
-      "name": "회오리",
+      "name": "배큐엄 블레이드",
       "type": "wind",
       "category": "special",
-      "power": 95,
-      "accuracy": 85,
-      "pp": 10,
+      "power": 70,
+      "accuracy": 100,
+      "pp": 15,
       "effect": {
-        "type": "confuse",
-        "chance": 20,
-        "target": "enemy"
+        "type": "high_crit"
       },
-      "description": "거대한 회오리를 일으킨다."
+      "description": "공기를 가르는 진공의 칼날. 급소를 노린다."
     },
     {
       "id": "feather_dance",
-      "name": "깃털춤",
+      "name": "윈드 부스트",
       "type": "wind",
       "category": "status",
       "power": 0,
       "accuracy": 100,
-      "pp": 15,
+      "pp": 10,
       "effect": {
-        "type": "stat_down",
+        "type": "stat_up",
         "chance": 100,
-        "target": "enemy",
-        "stat": "atk",
-        "amount": -2
+        "target": "self",
+        "stat": "speed",
+        "amount": 2
       },
-      "description": "깃털을 흩날려 공격력을 크게 낮춘다."
+      "description": "기류를 몸에 감아 속도를 크게 높인다."
     },
     {
       "id": "poison_sting",
-      "name": "독침",
+      "name": "벤 스팅",
       "type": "poison",
       "category": "physical",
       "power": 40,
@@ -1075,24 +1089,22 @@
     },
     {
       "id": "acid_spray",
-      "name": "산성액",
+      "name": "뉴로톡신",
       "type": "poison",
       "category": "special",
-      "power": 55,
+      "power": 50,
       "accuracy": 95,
       "pp": 20,
       "effect": {
-        "type": "stat_down",
-        "chance": 100,
-        "target": "enemy",
-        "stat": "spDef",
-        "amount": -1
+        "type": "paralyze",
+        "chance": 30,
+        "target": "enemy"
       },
-      "description": "산성 액체를 뿌려 특방을 낮춘다."
+      "description": "신경을 마비시키는 특수한 독을 주입한다."
     },
     {
       "id": "sludge_bomb",
-      "name": "오물폭탄",
+      "name": "포이즌 블래스트",
       "type": "poison",
       "category": "special",
       "power": 90,
@@ -1107,7 +1119,7 @@
     },
     {
       "id": "toxic",
-      "name": "맹독",
+      "name": "데들리 포이즌",
       "type": "poison",
       "category": "status",
       "power": 0,
@@ -1122,7 +1134,7 @@
     },
     {
       "id": "venom_fang",
-      "name": "독송곳니",
+      "name": "베놈 바이트",
       "type": "poison",
       "category": "physical",
       "power": 75,
@@ -1137,7 +1149,7 @@
     },
     {
       "id": "poison_gas",
-      "name": "독안개",
+      "name": "포이즌 클라우드",
       "type": "poison",
       "category": "status",
       "power": 0,
@@ -1152,18 +1164,24 @@
     },
     {
       "id": "venoshock",
-      "name": "독충격",
+      "name": "코로시브",
       "type": "poison",
       "category": "special",
-      "power": 65,
-      "accuracy": 100,
-      "pp": 15,
-      "effect": null,
-      "description": "독에 걸린 상대에게 큰 데미지를 준다."
+      "power": 70,
+      "accuracy": 95,
+      "pp": 10,
+      "effect": {
+        "type": "stat_down",
+        "chance": 30,
+        "target": "enemy",
+        "stat": "def",
+        "amount": -1
+      },
+      "description": "방어를 침식시키는 강산성 독을 내뿜는다."
     },
     {
       "id": "plague_claw",
-      "name": "역병발톱",
+      "name": "플레이그 클로",
       "type": "poison",
       "category": "physical",
       "power": 85,
@@ -1178,7 +1196,7 @@
     },
     {
       "id": "corrosion",
-      "name": "부식",
+      "name": "코로전",
       "type": "poison",
       "category": "special",
       "power": 100,
@@ -1195,7 +1213,7 @@
     },
     {
       "id": "metal_claw",
-      "name": "강철발톱",
+      "name": "스틸 클로",
       "type": "metal",
       "category": "physical",
       "power": 50,
@@ -1212,7 +1230,7 @@
     },
     {
       "id": "iron_head",
-      "name": "아이언헤드",
+      "name": "아이언 크래시",
       "type": "metal",
       "category": "physical",
       "power": 80,
@@ -1227,7 +1245,7 @@
     },
     {
       "id": "steel_beam",
-      "name": "강철광선",
+      "name": "스틸 레이",
       "type": "metal",
       "category": "special",
       "power": 110,
@@ -1242,7 +1260,7 @@
     },
     {
       "id": "iron_defense",
-      "name": "철벽",
+      "name": "아이언 가드",
       "type": "metal",
       "category": "status",
       "power": 0,
@@ -1259,24 +1277,22 @@
     },
     {
       "id": "metal_sound",
-      "name": "쇳소리",
+      "name": "레조넌스 웨이브",
       "type": "metal",
-      "category": "status",
-      "power": 0,
-      "accuracy": 85,
-      "pp": 15,
+      "category": "special",
+      "power": 60,
+      "accuracy": 100,
+      "pp": 20,
       "effect": {
-        "type": "stat_down",
-        "chance": 100,
-        "target": "enemy",
-        "stat": "spDef",
-        "amount": -2
+        "type": "confuse",
+        "chance": 20,
+        "target": "enemy"
       },
-      "description": "끔찍한 쇳소리로 특방을 크게 낮춘다."
+      "description": "금속의 공진을 일으켜 적의 정신을 흔든다."
     },
     {
       "id": "bullet_punch",
-      "name": "총알펀치",
+      "name": "래피드 펀치",
       "type": "metal",
       "category": "physical",
       "power": 40,
@@ -1287,7 +1303,7 @@
     },
     {
       "id": "gear_grind",
-      "name": "기어분쇄",
+      "name": "기어 그라인드",
       "type": "metal",
       "category": "physical",
       "power": 90,
@@ -1298,7 +1314,7 @@
     },
     {
       "id": "chrome_shield",
-      "name": "크롬방패",
+      "name": "크롬 실드",
       "type": "metal",
       "category": "status",
       "power": 0,
@@ -1315,7 +1331,7 @@
     },
     {
       "id": "steel_lance",
-      "name": "강철창",
+      "name": "스틸 랜스",
       "type": "metal",
       "category": "physical",
       "power": 85,
@@ -1326,7 +1342,7 @@
     },
     {
       "id": "flash",
-      "name": "섬광",
+      "name": "플래시",
       "type": "light",
       "category": "special",
       "power": 40,
@@ -1343,7 +1359,7 @@
     },
     {
       "id": "holy_beam",
-      "name": "성스러운빔",
+      "name": "홀리 빔",
       "type": "light",
       "category": "special",
       "power": 80,
@@ -1354,7 +1370,7 @@
     },
     {
       "id": "radiance",
-      "name": "찬란한빛",
+      "name": "래디언스",
       "type": "light",
       "category": "special",
       "power": 110,
@@ -1371,7 +1387,7 @@
     },
     {
       "id": "purify",
-      "name": "정화",
+      "name": "퓨리파이",
       "type": "light",
       "category": "status",
       "power": 0,
@@ -1386,7 +1402,7 @@
     },
     {
       "id": "solar_flare",
-      "name": "태양섬광",
+      "name": "솔라 플레어",
       "type": "light",
       "category": "special",
       "power": 95,
@@ -1397,7 +1413,7 @@
     },
     {
       "id": "blessing",
-      "name": "축복",
+      "name": "블레싱",
       "type": "light",
       "category": "status",
       "power": 0,
@@ -1414,7 +1430,7 @@
     },
     {
       "id": "aurora_ray",
-      "name": "오로라광선",
+      "name": "오로라 레이",
       "type": "light",
       "category": "special",
       "power": 70,
@@ -1425,18 +1441,22 @@
     },
     {
       "id": "divine_light",
-      "name": "신성한빛",
+      "name": "홀리 스미트",
       "type": "light",
       "category": "special",
-      "power": 90,
+      "power": 85,
       "accuracy": 100,
       "pp": 10,
-      "effect": null,
-      "description": "신성한 빛으로 내려친다."
+      "effect": {
+        "type": "burn",
+        "chance": 20,
+        "target": "enemy"
+      },
+      "description": "천상의 빛이 적을 심판하여 불태운다."
     },
     {
       "id": "light_screen",
-      "name": "빛의장막",
+      "name": "라이트 실드",
       "type": "light",
       "category": "status",
       "power": 0,
@@ -1453,7 +1473,7 @@
     },
     {
       "id": "shadow_claw",
-      "name": "그림자발톱",
+      "name": "섀도 클로",
       "type": "dark",
       "category": "physical",
       "power": 70,
@@ -1464,7 +1484,7 @@
     },
     {
       "id": "dark_pulse",
-      "name": "암흑파동",
+      "name": "다크 웨이브",
       "type": "dark",
       "category": "special",
       "power": 80,
@@ -1479,7 +1499,7 @@
     },
     {
       "id": "night_slash",
-      "name": "야습",
+      "name": "섀도 슬래시",
       "type": "dark",
       "category": "physical",
       "power": 70,
@@ -1490,7 +1510,7 @@
     },
     {
       "id": "shadow_ball",
-      "name": "암흑구",
+      "name": "섀도 볼트",
       "type": "dark",
       "category": "special",
       "power": 90,
@@ -1507,7 +1527,7 @@
     },
     {
       "id": "dark_void",
-      "name": "암흑공간",
+      "name": "어비스 게이트",
       "type": "dark",
       "category": "status",
       "power": 0,
@@ -1522,7 +1542,7 @@
     },
     {
       "id": "crunch",
-      "name": "깨물기",
+      "name": "크런치",
       "type": "dark",
       "category": "physical",
       "power": 80,
@@ -1539,7 +1559,7 @@
     },
     {
       "id": "shadow_sneak",
-      "name": "그림자숨기",
+      "name": "섀도 스텝",
       "type": "dark",
       "category": "physical",
       "power": 40,
@@ -1550,22 +1570,24 @@
     },
     {
       "id": "abyss_gaze",
-      "name": "심연의시선",
+      "name": "이터널 나이트",
       "type": "dark",
       "category": "special",
-      "power": 100,
-      "accuracy": 85,
-      "pp": 5,
+      "power": 80,
+      "accuracy": 95,
+      "pp": 10,
       "effect": {
-        "type": "flinch",
-        "chance": 30,
-        "target": "enemy"
+        "type": "stat_down",
+        "chance": 100,
+        "target": "enemy",
+        "stat": "spAtk",
+        "amount": -1
       },
-      "description": "심연의 눈빛으로 적을 꿰뚫는다."
+      "description": "끝없는 어둠이 적의 전투 의지를 꺾는다."
     },
     {
       "id": "dark_shroud",
-      "name": "암막",
+      "name": "다크 쉬라우드",
       "type": "dark",
       "category": "status",
       "power": 0,
@@ -1582,7 +1604,7 @@
     },
     {
       "id": "spirit_flame",
-      "name": "혼불",
+      "name": "소울 파이어",
       "type": "spirit",
       "category": "special",
       "power": 45,
@@ -1597,7 +1619,7 @@
     },
     {
       "id": "phantom_force",
-      "name": "유령의힘",
+      "name": "팬텀 포스",
       "type": "spirit",
       "category": "physical",
       "power": 90,
@@ -1608,7 +1630,7 @@
     },
     {
       "id": "soul_drain",
-      "name": "영혼흡수",
+      "name": "소울 드레인",
       "type": "spirit",
       "category": "special",
       "power": 75,
@@ -1623,7 +1645,7 @@
     },
     {
       "id": "curse",
-      "name": "저주",
+      "name": "커스",
       "type": "spirit",
       "category": "status",
       "power": 0,
@@ -1640,33 +1662,41 @@
     },
     {
       "id": "ghost_wind",
-      "name": "유령바람",
+      "name": "소울 체인",
       "type": "spirit",
       "category": "special",
       "power": 60,
-      "accuracy": 95,
+      "accuracy": 100,
       "pp": 20,
       "effect": {
-        "type": "confuse",
-        "chance": 15,
-        "target": "enemy"
+        "type": "stat_down",
+        "chance": 100,
+        "target": "enemy",
+        "stat": "speed",
+        "amount": -1
       },
-      "description": "유령의 바람으로 혼란을 일으킨다."
+      "description": "영혼의 족쇄를 걸어 적의 움직임을 봉쇄한다."
     },
     {
       "id": "spectral_chain",
-      "name": "영쇄",
+      "name": "스펙트럴 체인",
       "type": "spirit",
       "category": "special",
-      "power": 85,
-      "accuracy": 90,
+      "power": 80,
+      "accuracy": 100,
       "pp": 10,
-      "effect": null,
-      "description": "영적 사슬로 속박하여 공격한다."
+      "effect": {
+        "type": "stat_down",
+        "chance": 100,
+        "target": "enemy",
+        "stat": "atk",
+        "amount": -1
+      },
+      "description": "영혼의 사슬로 적을 결박해 힘을 빼앗는다."
     },
     {
       "id": "haunt",
-      "name": "빙의",
+      "name": "헌트",
       "type": "spirit",
       "category": "status",
       "power": 0,
@@ -1681,7 +1711,7 @@
     },
     {
       "id": "ectoplasm",
-      "name": "에테르탄",
+      "name": "에테르 볼트",
       "type": "spirit",
       "category": "special",
       "power": 100,
@@ -1692,7 +1722,7 @@
     },
     {
       "id": "life_steal",
-      "name": "생명탈취",
+      "name": "라이프 스틸",
       "type": "spirit",
       "category": "special",
       "power": 55,
@@ -1707,7 +1737,7 @@
     },
     {
       "id": "dragon_claw",
-      "name": "용의발톱",
+      "name": "드래곤 클로",
       "type": "dragon",
       "category": "physical",
       "power": 80,
@@ -1718,7 +1748,7 @@
     },
     {
       "id": "dragon_breath",
-      "name": "용의숨결",
+      "name": "드래곤 브레스",
       "type": "dragon",
       "category": "special",
       "power": 60,
@@ -1733,7 +1763,7 @@
     },
     {
       "id": "dragon_pulse",
-      "name": "용의파동",
+      "name": "드래곤 버스트",
       "type": "dragon",
       "category": "special",
       "power": 85,
@@ -1744,7 +1774,7 @@
     },
     {
       "id": "outrage",
-      "name": "역린",
+      "name": "드래곤 퓨리",
       "type": "dragon",
       "category": "physical",
       "power": 120,
@@ -1759,7 +1789,7 @@
     },
     {
       "id": "dragon_dance",
-      "name": "용의춤",
+      "name": "드래곤 부스트",
       "type": "dragon",
       "category": "status",
       "power": 0,
@@ -1776,7 +1806,7 @@
     },
     {
       "id": "dragon_rush",
-      "name": "용의돌진",
+      "name": "드래곤 러시",
       "type": "dragon",
       "category": "physical",
       "power": 100,
@@ -1791,7 +1821,7 @@
     },
     {
       "id": "draco_meteor",
-      "name": "유성군",
+      "name": "메테오 스톰",
       "type": "dragon",
       "category": "special",
       "power": 140,
@@ -1808,7 +1838,7 @@
     },
     {
       "id": "scale_armor",
-      "name": "비늘갑옷",
+      "name": "드래곤 스케일",
       "type": "dragon",
       "category": "status",
       "power": 0,
@@ -1825,7 +1855,7 @@
     },
     {
       "id": "twin_fang",
-      "name": "쌍아",
+      "name": "트윈 팽",
       "type": "dragon",
       "category": "physical",
       "power": 70,
@@ -1836,7 +1866,7 @@
     },
     {
       "id": "karate_chop",
-      "name": "태권격파",
+      "name": "마샬 스트라이크",
       "type": "fighting",
       "category": "physical",
       "power": 50,
@@ -1847,7 +1877,7 @@
     },
     {
       "id": "brick_break",
-      "name": "깨트리기",
+      "name": "가드 브레이크",
       "type": "fighting",
       "category": "physical",
       "power": 75,
@@ -1858,7 +1888,7 @@
     },
     {
       "id": "close_combat",
-      "name": "인파이팅",
+      "name": "파이널 블로",
       "type": "fighting",
       "category": "physical",
       "power": 120,
@@ -1875,7 +1905,7 @@
     },
     {
       "id": "focus_punch",
-      "name": "집중펀치",
+      "name": "포커스 스트라이크",
       "type": "fighting",
       "category": "physical",
       "power": 150,
@@ -1886,7 +1916,7 @@
     },
     {
       "id": "bulk_up",
-      "name": "벌크업",
+      "name": "파워 업",
       "type": "fighting",
       "category": "status",
       "power": 0,
@@ -1903,18 +1933,22 @@
     },
     {
       "id": "low_kick",
-      "name": "발차기",
+      "name": "프레셔 포인트",
       "type": "fighting",
       "category": "physical",
-      "power": 60,
-      "accuracy": 95,
+      "power": 65,
+      "accuracy": 100,
       "pp": 20,
-      "effect": null,
-      "description": "낮게 차서 넘어뜨린다."
+      "effect": {
+        "type": "paralyze",
+        "chance": 30,
+        "target": "enemy"
+      },
+      "description": "급소 혈자리를 정확히 찔러 마비시킨다."
     },
     {
       "id": "drain_punch",
-      "name": "흡수펀치",
+      "name": "드레인 스트라이크",
       "type": "fighting",
       "category": "physical",
       "power": 75,
@@ -1929,7 +1963,7 @@
     },
     {
       "id": "counter",
-      "name": "반격",
+      "name": "카운터",
       "type": "fighting",
       "category": "physical",
       "power": 65,
@@ -1940,7 +1974,7 @@
     },
     {
       "id": "dynamic_kick",
-      "name": "질풍각",
+      "name": "래피드 킥",
       "type": "fighting",
       "category": "physical",
       "power": 90,
@@ -1955,7 +1989,7 @@
     },
     {
       "id": "rock_throw",
-      "name": "돌던지기",
+      "name": "록 슬링",
       "type": "rock",
       "category": "physical",
       "power": 50,
@@ -1966,7 +2000,7 @@
     },
     {
       "id": "rock_slide",
-      "name": "암석낙하",
+      "name": "록 슬라이드",
       "type": "rock",
       "category": "physical",
       "power": 75,
@@ -1981,7 +2015,7 @@
     },
     {
       "id": "stone_edge",
-      "name": "스톤에지",
+      "name": "스톤 블레이드",
       "type": "rock",
       "category": "physical",
       "power": 100,
@@ -1992,7 +2026,7 @@
     },
     {
       "id": "sandstorm",
-      "name": "모래폭풍",
+      "name": "샌드스톰",
       "type": "rock",
       "category": "status",
       "power": 0,
@@ -2009,7 +2043,7 @@
     },
     {
       "id": "rock_polish",
-      "name": "돌갈기",
+      "name": "하든",
       "type": "rock",
       "category": "status",
       "power": 0,
@@ -2026,7 +2060,7 @@
     },
     {
       "id": "boulder_crush",
-      "name": "거암분쇄",
+      "name": "볼더 크러시",
       "type": "rock",
       "category": "physical",
       "power": 90,
@@ -2037,7 +2071,7 @@
     },
     {
       "id": "crystal_shot",
-      "name": "수정탄",
+      "name": "크리스탈 샷",
       "type": "rock",
       "category": "special",
       "power": 70,
@@ -2048,7 +2082,7 @@
     },
     {
       "id": "fossil_impact",
-      "name": "화석충격",
+      "name": "포실 임팩트",
       "type": "rock",
       "category": "physical",
       "power": 85,
@@ -2059,7 +2093,7 @@
     },
     {
       "id": "petrify",
-      "name": "석화",
+      "name": "페트리파이",
       "type": "rock",
       "category": "status",
       "power": 0,
@@ -2074,8 +2108,8 @@
     },
     {
       "id": "echo",
-      "name": "메아리",
-      "type": "sound",
+      "name": "에코",
+      "type": "normal",
       "category": "special",
       "power": 40,
       "accuracy": 100,
@@ -2085,8 +2119,8 @@
     },
     {
       "id": "screech",
-      "name": "귀찢는소리",
-      "type": "sound",
+      "name": "하울링",
+      "type": "normal",
       "category": "status",
       "power": 0,
       "accuracy": 85,
@@ -2102,8 +2136,8 @@
     },
     {
       "id": "sonic_boom",
-      "name": "음파폭발",
-      "type": "sound",
+      "name": "소닉 블래스트",
+      "type": "normal",
       "category": "special",
       "power": 75,
       "accuracy": 95,
@@ -2113,8 +2147,8 @@
     },
     {
       "id": "hyper_voice",
-      "name": "하이퍼보이스",
-      "type": "sound",
+      "name": "사운드 웨이브",
+      "type": "normal",
       "category": "special",
       "power": 90,
       "accuracy": 100,
@@ -2124,8 +2158,8 @@
     },
     {
       "id": "discord",
-      "name": "불협화음",
-      "type": "sound",
+      "name": "디스코드",
+      "type": "normal",
       "category": "special",
       "power": 60,
       "accuracy": 100,
@@ -2139,8 +2173,8 @@
     },
     {
       "id": "war_cry",
-      "name": "전투함성",
-      "type": "sound",
+      "name": "워 크라이",
+      "type": "normal",
       "category": "status",
       "power": 0,
       "accuracy": 100,
@@ -2156,8 +2190,8 @@
     },
     {
       "id": "shatter_note",
-      "name": "파쇄음",
-      "type": "sound",
+      "name": "소닉 크래시",
+      "type": "normal",
       "category": "special",
       "power": 100,
       "accuracy": 90,
@@ -2167,8 +2201,8 @@
     },
     {
       "id": "lullaby",
-      "name": "자장가",
-      "type": "sound",
+      "name": "슬럼버 송",
+      "type": "normal",
       "category": "status",
       "power": 0,
       "accuracy": 80,
@@ -2182,8 +2216,8 @@
     },
     {
       "id": "resonance",
-      "name": "공명",
-      "type": "sound",
+      "name": "하모닉스",
+      "type": "normal",
       "category": "special",
       "power": 80,
       "accuracy": 100,
@@ -2193,8 +2227,8 @@
     },
     {
       "id": "cosmic_ray",
-      "name": "우주광선",
-      "type": "cosmic",
+      "name": "코즈믹 레이",
+      "type": "normal",
       "category": "special",
       "power": 50,
       "accuracy": 95,
@@ -2204,8 +2238,8 @@
     },
     {
       "id": "gravity_well",
-      "name": "중력장",
-      "type": "cosmic",
+      "name": "그래비티 웰",
+      "type": "normal",
       "category": "special",
       "power": 80,
       "accuracy": 90,
@@ -2221,8 +2255,8 @@
     },
     {
       "id": "nebula_burst",
-      "name": "성운폭발",
-      "type": "cosmic",
+      "name": "네뷸라 버스트",
+      "type": "normal",
       "category": "special",
       "power": 110,
       "accuracy": 85,
@@ -2233,7 +2267,7 @@
     {
       "id": "warp",
       "name": "워프",
-      "type": "cosmic",
+      "type": "normal",
       "category": "status",
       "power": 0,
       "accuracy": 100,
@@ -2249,8 +2283,8 @@
     },
     {
       "id": "star_fall",
-      "name": "별똥비",
-      "type": "cosmic",
+      "name": "스타폴",
+      "type": "normal",
       "category": "special",
       "power": 90,
       "accuracy": 95,
@@ -2260,8 +2294,8 @@
     },
     {
       "id": "dark_matter",
-      "name": "암흑물질",
-      "type": "cosmic",
+      "name": "다크 매터",
+      "type": "normal",
       "category": "special",
       "power": 95,
       "accuracy": 90,
@@ -2277,8 +2311,8 @@
     },
     {
       "id": "singularity",
-      "name": "특이점",
-      "type": "cosmic",
+      "name": "싱귤래리티",
+      "type": "normal",
       "category": "special",
       "power": 130,
       "accuracy": 80,
@@ -2288,8 +2322,8 @@
     },
     {
       "id": "cosmic_armor",
-      "name": "우주갑옷",
-      "type": "cosmic",
+      "name": "코즈믹 실드",
+      "type": "normal",
       "category": "status",
       "power": 0,
       "accuracy": 100,
@@ -2305,8 +2339,8 @@
     },
     {
       "id": "void_ray",
-      "name": "공허광선",
-      "type": "cosmic",
+      "name": "보이드 레이",
+      "type": "normal",
       "category": "special",
       "power": 70,
       "accuracy": 100,
@@ -2988,7 +3022,7 @@
     {
       "id": "unique_siren_queen",
       "name": "세이렌의 노래",
-      "type": "sound",
+      "type": "normal",
       "category": "special",
       "power": 130,
       "accuracy": 85,
@@ -3003,7 +3037,7 @@
     {
       "id": "unique_drum_beast",
       "name": "천둥북 난타",
-      "type": "sound",
+      "type": "normal",
       "category": "physical",
       "power": 110,
       "accuracy": 90,
@@ -3018,7 +3052,7 @@
     {
       "id": "unique_echo_bat",
       "name": "초음파 파괴",
-      "type": "sound",
+      "type": "normal",
       "category": "special",
       "power": 100,
       "accuracy": 95,
@@ -3033,7 +3067,7 @@
     {
       "id": "unique_nebula_god",
       "name": "성운창조",
-      "type": "cosmic",
+      "type": "normal",
       "category": "special",
       "power": 130,
       "accuracy": 85,
@@ -3050,7 +3084,7 @@
     {
       "id": "unique_star_fox",
       "name": "유성의 꼬리",
-      "type": "cosmic",
+      "type": "normal",
       "category": "special",
       "power": 110,
       "accuracy": 90,
@@ -3061,7 +3095,7 @@
     {
       "id": "unique_moon_rabbit",
       "name": "월광의 도약",
-      "type": "cosmic",
+      "type": "normal",
       "category": "special",
       "power": 100,
       "accuracy": 95,
@@ -3138,7 +3172,7 @@
     {
       "id": "unique_legend_time_lord",
       "name": "시간정지",
-      "type": "cosmic",
+      "type": "normal",
       "category": "special",
       "power": 120,
       "accuracy": 85,
@@ -3153,7 +3187,7 @@
     {
       "id": "unique_legend_space_lord",
       "name": "공간붕괴",
-      "type": "cosmic",
+      "type": "normal",
       "category": "special",
       "power": 120,
       "accuracy": 85,
@@ -3215,7 +3249,7 @@
     {
       "id": "unique_legend_harmony",
       "name": "조화의 선율",
-      "type": "sound",
+      "type": "normal",
       "category": "special",
       "power": 120,
       "accuracy": 90,
@@ -3421,7 +3455,7 @@
     {
       "id": "unique_sound_cricket",
       "name": "귀뚜라미의 합창",
-      "type": "sound",
+      "type": "normal",
       "category": "special",
       "power": 100,
       "accuracy": 100,
@@ -3432,7 +3466,7 @@
     {
       "id": "unique_cosmic_jelly",
       "name": "우주해파리의 촉수",
-      "type": "cosmic",
+      "type": "normal",
       "category": "special",
       "power": 100,
       "accuracy": 90,
@@ -3706,7 +3740,7 @@
     {
       "id": "unique_nebula_queen",
       "name": "성운의 여왕",
-      "type": "cosmic",
+      "type": "normal",
       "category": "special",
       "power": 115,
       "accuracy": 90,
@@ -3834,7 +3868,7 @@
     {
       "id": "unique_sound_woodpecker",
       "name": "천지진동의 드럼",
-      "type": "sound",
+      "type": "normal",
       "category": "physical",
       "power": 105,
       "accuracy": 95,
@@ -3956,7 +3990,7 @@
     {
       "id": "unique_siren_song",
       "name": "바다의 세이렌",
-      "type": "sound",
+      "type": "normal",
       "category": "special",
       "power": 115,
       "accuracy": 85,
@@ -4040,7 +4074,7 @@
     },
     {
       "id": "ice_shard_plus",
-      "name": "얼음침",
+      "name": "아이스 니들",
       "type": "ice",
       "category": "physical",
       "power": 40,
@@ -4052,7 +4086,7 @@
     },
     {
       "id": "shadow_strike",
-      "name": "그림자 일격",
+      "name": "섀도 스트라이크",
       "type": "dark",
       "category": "physical",
       "power": 40,
@@ -4064,7 +4098,7 @@
     },
     {
       "id": "flame_dash",
-      "name": "화염 돌진",
+      "name": "플레임 대시",
       "type": "fire",
       "category": "physical",
       "power": 45,
@@ -4080,7 +4114,7 @@
     },
     {
       "id": "aqua_jet_plus",
-      "name": "급류 돌격",
+      "name": "타이달 블리츠",
       "type": "water",
       "category": "physical",
       "power": 45,
@@ -4092,7 +4126,7 @@
     },
     {
       "id": "mach_punch",
-      "name": "마하 펀치",
+      "name": "플래시 스트라이크",
       "type": "fighting",
       "category": "physical",
       "power": 40,
@@ -4104,7 +4138,7 @@
     },
     {
       "id": "sucker_punch",
-      "name": "기습",
+      "name": "앰부시",
       "type": "dark",
       "category": "physical",
       "power": 70,
@@ -4116,7 +4150,7 @@
     },
     {
       "id": "barrage",
-      "name": "연속 돌팔매",
+      "name": "록 배러지",
       "type": "rock",
       "category": "physical",
       "power": 25,
@@ -4129,7 +4163,7 @@
     },
     {
       "id": "triple_kick",
-      "name": "삼연각",
+      "name": "트리플 킥",
       "type": "fighting",
       "category": "physical",
       "power": 30,
@@ -4143,7 +4177,7 @@
     },
     {
       "id": "bullet_seed",
-      "name": "씨앗 기관총",
+      "name": "시드 배러지",
       "type": "grass",
       "category": "physical",
       "power": 25,
@@ -4156,7 +4190,7 @@
     },
     {
       "id": "icicle_spear",
-      "name": "고드름 창",
+      "name": "아이시클 배러지",
       "type": "ice",
       "category": "physical",
       "power": 25,
@@ -4182,7 +4216,7 @@
     },
     {
       "id": "double_chop",
-      "name": "이중 가르기",
+      "name": "더블 슬래시",
       "type": "dragon",
       "category": "physical",
       "power": 40,
@@ -4196,7 +4230,7 @@
     },
     {
       "id": "twin_bolt",
-      "name": "이중 번개",
+      "name": "트윈 볼트",
       "type": "electric",
       "category": "special",
       "power": 40,
@@ -4210,7 +4244,7 @@
     },
     {
       "id": "iron_wall",
-      "name": "철벽 방어",
+      "name": "포트리스",
       "type": "metal",
       "category": "status",
       "power": 0,
@@ -4224,7 +4258,7 @@
     },
     {
       "id": "light_barrier",
-      "name": "빛의 장벽",
+      "name": "라이트 배리어",
       "type": "light",
       "category": "status",
       "power": 0,
@@ -4238,7 +4272,7 @@
     },
     {
       "id": "revenge",
-      "name": "복수",
+      "name": "리벤지",
       "type": "fighting",
       "category": "physical",
       "power": 60,
@@ -4250,7 +4284,7 @@
     },
     {
       "id": "razor_wind",
-      "name": "칼바람",
+      "name": "레이저 윈드",
       "type": "wind",
       "category": "special",
       "power": 80,
@@ -4263,7 +4297,7 @@
     },
     {
       "id": "cross_chop",
-      "name": "십자 가르기",
+      "name": "크로스 스트라이크",
       "type": "fighting",
       "category": "physical",
       "power": 100,
@@ -4276,7 +4310,7 @@
     },
     {
       "id": "shadow_crit",
-      "name": "급소 찌르기",
+      "name": "데스 스트라이크",
       "type": "spirit",
       "category": "physical",
       "power": 70,
@@ -4289,7 +4323,7 @@
     },
     {
       "id": "leaf_blade",
-      "name": "리프 블레이드",
+      "name": "네이처 블레이드",
       "type": "grass",
       "category": "physical",
       "power": 90,
@@ -4302,8 +4336,8 @@
     },
     {
       "id": "psycho_cut",
-      "name": "염동 베기",
-      "type": "cosmic",
+      "name": "사이킥 블레이드",
+      "type": "normal",
       "category": "physical",
       "power": 70,
       "accuracy": 100,
@@ -4315,7 +4349,7 @@
     },
     {
       "id": "last_stand",
-      "name": "최후의 일격",
+      "name": "라스트 스탠드",
       "type": "fighting",
       "category": "physical",
       "power": 20,
@@ -4328,7 +4362,7 @@
     },
     {
       "id": "eruption_blast",
-      "name": "분화",
+      "name": "이럽션",
       "type": "fire",
       "category": "special",
       "power": 150,
@@ -4341,7 +4375,7 @@
     },
     {
       "id": "water_spout",
-      "name": "해수 분출",
+      "name": "가이저",
       "type": "water",
       "category": "special",
       "power": 150,
@@ -4354,7 +4388,7 @@
     },
     {
       "id": "desperation",
-      "name": "절사",
+      "name": "데스퍼레이션",
       "type": "dark",
       "category": "physical",
       "power": 20,
@@ -4367,7 +4401,7 @@
     },
     {
       "id": "giga_drain",
-      "name": "기가 드레인",
+      "name": "라이프 시폰",
       "type": "grass",
       "category": "special",
       "power": 75,
@@ -4382,7 +4416,7 @@
     },
     {
       "id": "dream_eater",
-      "name": "꿈먹기",
+      "name": "나이트메어",
       "type": "spirit",
       "category": "special",
       "power": 100,
@@ -4397,7 +4431,7 @@
     },
     {
       "id": "drain_claw",
-      "name": "흡혈 할퀴기",
+      "name": "뱀파이어 클로",
       "type": "dark",
       "category": "physical",
       "power": 80,
@@ -4412,7 +4446,7 @@
     },
     {
       "id": "leech_seed",
-      "name": "씨뿌리기",
+      "name": "파라사이트",
       "type": "grass",
       "category": "status",
       "power": 0,
@@ -4426,7 +4460,7 @@
     },
     {
       "id": "horn_leech",
-      "name": "뿔 흡수",
+      "name": "혼 드레인",
       "type": "grass",
       "category": "physical",
       "power": 75,
@@ -4441,7 +4475,7 @@
     },
     {
       "id": "absolute_zero",
-      "name": "절대영도",
+      "name": "앱솔루트 제로",
       "type": "ice",
       "category": "special",
       "power": 1,
@@ -4456,7 +4490,7 @@
     },
     {
       "id": "frost_bite",
-      "name": "동상",
+      "name": "딥 프리즈",
       "type": "ice",
       "category": "special",
       "power": 65,
@@ -4471,7 +4505,7 @@
     },
     {
       "id": "frozen_world",
-      "name": "얼어붙은 세계",
+      "name": "프로즌 월드",
       "type": "ice",
       "category": "special",
       "power": 110,
@@ -4486,8 +4520,8 @@
     },
     {
       "id": "hypnosis",
-      "name": "최면술",
-      "type": "cosmic",
+      "name": "히프노시스",
+      "type": "normal",
       "category": "status",
       "power": 0,
       "accuracy": 60,
@@ -4516,7 +4550,7 @@
     },
     {
       "id": "dark_lullaby",
-      "name": "어둠의 자장가",
+      "name": "다크 슬럼버",
       "type": "dark",
       "category": "status",
       "power": 0,
@@ -4546,7 +4580,7 @@
     },
     {
       "id": "refresh",
-      "name": "재생",
+      "name": "리커버리",
       "type": "normal",
       "category": "status",
       "power": 0,
@@ -4560,7 +4594,7 @@
     },
     {
       "id": "aromatherapy",
-      "name": "아로마 테라피",
+      "name": "힐링 아로마",
       "type": "grass",
       "category": "status",
       "power": 0,
@@ -4574,7 +4608,7 @@
     },
     {
       "id": "sword_dance",
-      "name": "칼춤",
+      "name": "워 댄스",
       "type": "normal",
       "category": "status",
       "power": 0,
@@ -4590,8 +4624,8 @@
     },
     {
       "id": "calm_mind",
-      "name": "명상",
-      "type": "cosmic",
+      "name": "메디테이션",
+      "type": "normal",
       "category": "status",
       "power": 0,
       "accuracy": 999,
@@ -4606,7 +4640,7 @@
     },
     {
       "id": "dragon_dance_plus",
-      "name": "용의 춤",
+      "name": "드래곤 라이즈",
       "type": "dragon",
       "category": "status",
       "power": 0,
@@ -4622,7 +4656,7 @@
     },
     {
       "id": "shell_smash",
-      "name": "껍질 깨기",
+      "name": "쉘 브레이크",
       "type": "normal",
       "category": "status",
       "power": 0,
@@ -4638,7 +4672,7 @@
     },
     {
       "id": "overheat",
-      "name": "오버히트",
+      "name": "오버로드",
       "type": "fire",
       "category": "special",
       "power": 130,
@@ -4654,7 +4688,7 @@
     },
     {
       "id": "close_combat_plus",
-      "name": "인파이트",
+      "name": "풀 어설트",
       "type": "fighting",
       "category": "physical",
       "power": 120,
@@ -4670,7 +4704,7 @@
     },
     {
       "id": "brave_bird",
-      "name": "브레이브 버드",
+      "name": "발키리 다이브",
       "type": "wind",
       "category": "physical",
       "power": 120,
@@ -4684,7 +4718,7 @@
     },
     {
       "id": "head_smash",
-      "name": "박치기",
+      "name": "스컬 크러시",
       "type": "rock",
       "category": "physical",
       "power": 150,
@@ -4698,7 +4732,7 @@
     },
     {
       "id": "wild_charge",
-      "name": "와일드 차지",
+      "name": "라이트닝 차지",
       "type": "electric",
       "category": "physical",
       "power": 90,
@@ -4712,7 +4746,7 @@
     },
     {
       "id": "flare_blitz",
-      "name": "화염 돌격",
+      "name": "피닉스 차지",
       "type": "fire",
       "category": "physical",
       "power": 120,
@@ -4726,8 +4760,8 @@
     },
     {
       "id": "boomburst",
-      "name": "폭음파",
-      "type": "sound",
+      "name": "소닉 웨이브",
+      "type": "normal",
       "category": "special",
       "power": 140,
       "accuracy": 100,
@@ -4737,8 +4771,8 @@
     },
     {
       "id": "perish_song",
-      "name": "멸망의 노래",
-      "type": "sound",
+      "name": "레퀴엠",
+      "type": "normal",
       "category": "status",
       "power": 0,
       "accuracy": 999,
@@ -4752,7 +4786,7 @@
     },
     {
       "id": "moonblast",
-      "name": "문블래스트",
+      "name": "루나 블래스트",
       "type": "light",
       "category": "special",
       "power": 95,
@@ -4769,8 +4803,8 @@
     },
     {
       "id": "photon_geyser",
-      "name": "광자 분출",
-      "type": "cosmic",
+      "name": "포톤 블래스트",
+      "type": "normal",
       "category": "special",
       "power": 100,
       "accuracy": 100,
@@ -4780,8 +4814,8 @@
     },
     {
       "id": "prismatic_laser",
-      "name": "프리즘 레이저",
-      "type": "cosmic",
+      "name": "프리즈매틱 레이",
+      "type": "normal",
       "category": "special",
       "power": 160,
       "accuracy": 100,
@@ -4791,7 +4825,7 @@
     },
     {
       "id": "meteor_mash",
-      "name": "메테오 스매시",
+      "name": "메테오 스트라이크",
       "type": "metal",
       "category": "physical",
       "power": 90,
@@ -4808,7 +4842,7 @@
     },
     {
       "id": "heavy_slam",
-      "name": "헤비 슬램",
+      "name": "크러싱 블로",
       "type": "metal",
       "category": "physical",
       "power": 80,
@@ -4823,7 +4857,7 @@
     },
     {
       "id": "toxic_shield",
-      "name": "독 엄폐",
+      "name": "톡식 실드",
       "type": "poison",
       "category": "status",
       "power": 0,
@@ -4839,7 +4873,7 @@
     },
     {
       "id": "venom_wall",
-      "name": "독 방벽",
+      "name": "베놈 배리어",
       "type": "poison",
       "category": "status",
       "power": 0,
@@ -4853,7 +4887,7 @@
     },
     {
       "id": "scorching_sand",
-      "name": "열사의 모래",
+      "name": "스콜칭 샌드",
       "type": "earth",
       "category": "special",
       "power": 70,
@@ -4868,7 +4902,7 @@
     },
     {
       "id": "land_wrath",
-      "name": "대지의 분노",
+      "name": "어스 래스",
       "type": "earth",
       "category": "physical",
       "power": 100,
@@ -4895,7 +4929,7 @@
     {
       "id": "ult_mage",
       "name": "성좌의 심판",
-      "type": "cosmic",
+      "type": "normal",
       "category": "special",
       "power": 200,
       "accuracy": 80,

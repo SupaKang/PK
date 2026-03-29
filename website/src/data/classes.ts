@@ -1,5 +1,5 @@
 import classesJson from '../../../data/classes.json';
-import type { BaseStats, LearnsetEntry } from './monsters';
+import type { BaseStats, LearnsetEntry } from './creatures';
 
 export interface PlayerClass {
   id: string;

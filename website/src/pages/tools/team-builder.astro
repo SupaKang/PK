@@ -1,0 +1,24 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import TeamBuilder from '../../components/tools/TeamBuilder.tsx';
+import { creatures } from '../../data/creatures';
+import { types, matchups } from '../../data/types';
+import { spriteMap } from '../../data/sprite-map';
+---
+
+<BaseLayout title="팀 빌더 — 포켓 왕국">
+  <section class="relative py-16 px-4 text-center overflow-hidden" aria-label="팀 빌더 헤더">
+    <div class="absolute inset-0 bg-gradient-to-b from-[#1a2020] via-pk-bg to-pk-bg" aria-hidden="true"></div>
+    <div class="relative z-10 max-w-3xl mx-auto">
+      <p class="text-[#66BB88] text-xs tracking-[0.3em] uppercase mb-4 animate-fade-up">TEAM BUILDER</p>
+      <h1 class="text-pk-accent animate-fade-up-delay-1 mb-4">팀 빌더</h1>
+      <p class="text-pk-text-secondary text-sm animate-fade-up-delay-2 text-balance">
+        6마리 크리처로 팀을 구성하고 타입 커버리지를 분석하세요.
+      </p>
+    </div>
+  </section>
+
+  <div class="max-w-5xl mx-auto px-4 py-12">
+    <TeamBuilder creatures={creatures} types={types} matchups={matchups} spriteMap={spriteMap} client:load />
+  </div>
+</BaseLayout>

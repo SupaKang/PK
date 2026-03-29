@@ -1,4 +1,4 @@
-import monstersJson from '../../../data/monsters.json';
+import monstersJson from '../../../data/creature.json';
 
 export interface BaseStats {
   hp: number;
@@ -36,9 +36,9 @@ export interface Monster {
   spriteConfig: SpriteConfig;
 }
 
-const data = monstersJson as { monsters: Monster[] };
+const data = monstersJson as { creatures: Monster[] };
 
-export const monsters = data.monsters;
+export const monsters = data.creatures;
 
 export function getMonster(id: number): Monster | undefined {
   return monsters.find(m => m.id === id);

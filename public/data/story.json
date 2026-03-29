@@ -6,7 +6,7 @@
       "events": [
         {
           "id": "prologue_01",
-          "location": "town_01",
+          "location": "astel",
           "trigger": "game_start",
           "scenes": [
             {
@@ -27,7 +27,7 @@
             {
               "type": "dialog",
               "speaker": "할아버지",
-              "text": "그 시절, 인간과 몬스터는 마석을 통해 계약을 맺고 함께 살았지."
+              "text": "그 시절, 인간과 크리처는 마석을 통해 서로 교감하며 평화롭게 함께 살았지."
             },
             {
               "type": "dialog",
@@ -37,12 +37,12 @@
             {
               "type": "dialog",
               "speaker": "할아버지",
-              "text": "대전쟁이 벌어졌다. 인간과 계약 몬스터들이 힘을 합쳤지만... 마족의 힘은 너무 강했어."
+              "text": "대전쟁이 벌어졌다. 인간과 크리처들이 힘을 합쳤지만... 마족의 힘은 너무 강했어."
             },
             {
               "type": "dialog",
               "speaker": "할아버지",
-              "text": "결국, 인간은 졌다. 마족이 이 세계의 주인이 되었단다."
+              "text": "결국, 인간과 크리처는 패배하였고. 마족이 이 세계의 주인이 되었단다. 그리고는 크리처들도 마족의 기운에 감화되어서 사납게 변해버렸지."
             },
             {
               "type": "dialog",
@@ -57,12 +57,7 @@
             {
               "type": "dialog",
               "speaker": "할아버지",
-              "text": "'어둠이 세상을 삼킨 뒤, 잊혀진 마석의 빛이 다시 깨어나리라. 그 빛을 이끄는 자가 세계를 되찾으리.'"
-            },
-            {
-              "type": "dialog",
-              "speaker": "할아버지",
-              "text": "8명의 수호자가 각 지역에서 결계를 유지하며 인간의 마지막 희망을 지키고 있단다."
+              "text": "'어둠이 세상을 삼킨 뒤, 잊혀진 영웅이 다시 깨어나리라. 그 영웅이 곧 세계의 평화를 되찾으리라.'"
             },
             {
               "type": "dialog",
@@ -83,42 +78,13 @@
         },
         {
           "id": "prologue_02",
-          "location": "town_01",
+          "location": "astel",
           "trigger": "after_class_select",
           "scenes": [
             {
               "type": "dialog",
               "speaker": "할아버지",
-              "text": "...그래, 좋은 선택이다. 그 길을 걸어가거라."
-            },
-            {
-              "type": "dialog",
-              "speaker": "할아버지",
-              "text": "그리고... 이 마석들 중 하나를 골라라. 네 첫 파트너가 될 몬스터란다."
-            },
-            {
-              "type": "choice",
-              "text": "어떤 파트너를 선택하겠는가?",
-              "options": [
-                { "text": "불꽃냥 (화염) — 공격적 성장, 화상 특성", "result": { "give_monster": 1 } },
-                { "text": "물방울이 (해류) — 균형 성장, 빗물받이 특성", "result": { "give_monster": 4 } },
-                { "text": "새싹이 (자연) — 회복 성장, 광합성 특성", "result": { "give_monster": 7 } }
-              ]
-            },
-            {
-              "type": "dialog",
-              "speaker": "할아버지",
-              "text": "수호자들의 인장을 모아라. 그들이 너를 시험할 거다."
-            },
-            {
-              "type": "dialog",
-              "speaker": "할아버지",
-              "text": "인장을 모두 모으면... 마왕성으로의 길이 열린단다."
-            },
-            {
-              "type": "dialog",
-              "speaker": "할아버지",
-              "text": "자, 이제 자거라. 내일도 긴 하루가 될 테니..."
+              "text": "...그래, 좋은 선택이다. 앞으로 네 앞길에 축복이 있기를."
             },
             {
               "type": "dialog",
@@ -153,7 +119,7 @@
             {
               "type": "dialog",
               "speaker": "",
-              "text": "...꿈이었나. 할아버지는 이미 오래전에 돌아가셨는데."
+              "text": "...또 그 꿈이었나. 할아버지는 이미 오래전에 돌아가셨는데."
             },
             {
               "type": "dialog",
@@ -200,18 +166,18 @@
       "events": [
         {
           "id": "ch1_01",
-          "location": "town_01",
+          "location": "astel",
           "trigger": "arrive",
           "scenes": [
             {
               "type": "dialog",
               "speaker": "",
-              "text": "시작의 마을에 도착했다. 작지만 따뜻한 마을이다."
+              "text": "아스텔에 도착했다. 작지만 따뜻한 마을이다."
             },
             {
               "type": "dialog",
               "speaker": "마을 주민",
-              "text": "여행자인가? 여기서 쉬어가렴. 동쪽으로 가면 화염촌이 있어."
+              "text": "여행자인가? 여기서 쉬어가렴. 동쪽 카른 평원을 지나면 칼데라가 있어."
             },
             {
               "type": "dialog",
@@ -233,12 +199,14 @@
               "speaker": "",
               "text": "은하가 승부를 걸어왔다!"
             },
-            { "type": "rival_battle" }
+            {
+              "type": "rival_battle"
+            }
           ]
         },
         {
           "id": "ch1_02",
-          "location": "town_01",
+          "location": "astel",
           "trigger": "after_rival_battle_1",
           "requires": [
             "ch1_01"
@@ -252,7 +220,7 @@
             {
               "type": "dialog",
               "speaker": "은하",
-              "text": "먼저 화염촌으로 갈게. 거기서 기다리고 있어!"
+              "text": "먼저 칼데라로 갈게. 거기서 기다리고 있어!"
             },
             {
               "type": "dialog",
@@ -263,24 +231,24 @@
         },
         {
           "id": "ch1_03",
-          "location": "town_02",
+          "location": "caldera",
           "trigger": "arrive",
           "scenes": [
             {
               "type": "dialog",
               "speaker": "마을 주민",
-              "text": "여기는 화염촌이야. 마족의 감시가 삼엄하니 조심해."
+              "text": "여기는 칼데라야. 마족의 감시가 삼엄하니 조심해."
             },
             {
               "type": "dialog",
               "speaker": "마을 주민",
-              "text": "화염의 전당에 수호자 불꽃이 계시지. 인장을 원한다면 그분을 찾아가 봐."
+              "text": "아그니온에 수호자 불꽃이 계시지. 인장을 원한다면 그분을 찾아가 봐."
             }
           ]
         },
         {
           "id": "ch1_04",
-          "location": "gym_01",
+          "location": "agnion",
           "trigger": "defeat_gym",
           "scenes": [
             {
@@ -308,7 +276,7 @@
       "events": [
         {
           "id": "ch2_01",
-          "location": "cave_01",
+          "location": "grimrock_cave",
           "trigger": "arrive",
           "scenes": [
             {
@@ -321,12 +289,26 @@
               "speaker": "그림자단 졸개",
               "text": "마왕님의 뜻을 이 세상에 펼치는 자들이다! 이 동굴은 우리 차지야!"
             },
-            { "type": "battle", "trainerName": "그림자단 졸개", "team": [{"monsterId": 31, "level": 10}, {"monsterId": 19, "level": 12}], "reward": 500 }
+            {
+              "type": "battle",
+              "trainerName": "그림자단 졸개",
+              "team": [
+                {
+                  "monsterId": 31,
+                  "level": 10
+                },
+                {
+                  "monsterId": 19,
+                  "level": 12
+                }
+              ],
+              "reward": 500
+            }
           ]
         },
         {
           "id": "ch2_02",
-          "location": "gym_02",
+          "location": "lithos",
           "trigger": "defeat_gym",
           "scenes": [
             {
@@ -349,7 +331,7 @@
       "events": [
         {
           "id": "ch3_01",
-          "location": "town_03",
+          "location": "duran",
           "trigger": "arrive",
           "scenes": [
             {
@@ -367,12 +349,14 @@
               "speaker": "",
               "text": "은하가 다시 승부를 걸어왔다!"
             },
-            { "type": "rival_battle" }
+            {
+              "type": "rival_battle"
+            }
           ]
         },
         {
           "id": "ch3_02",
-          "location": "gym_03",
+          "location": "nereid",
           "trigger": "defeat_gym",
           "scenes": [
             {
@@ -395,7 +379,7 @@
       "events": [
         {
           "id": "ch4_01",
-          "location": "route_04",
+          "location": "volta_plateau",
           "trigger": "arrive",
           "scenes": [
             {
@@ -408,12 +392,30 @@
               "speaker": "그림자단 간부 흑사",
               "text": "네 실력을 직접 확인해 보겠다!"
             },
-            { "type": "battle", "trainerName": "그림자단 간부 흑사", "team": [{"monsterId": 64, "level": 22}, {"monsterId": 88, "level": 23}, {"monsterId": 31, "level": 24}], "reward": 2000 }
+            {
+              "type": "battle",
+              "trainerName": "그림자단 간부 흑사",
+              "team": [
+                {
+                  "monsterId": 64,
+                  "level": 22
+                },
+                {
+                  "monsterId": 88,
+                  "level": 23
+                },
+                {
+                  "monsterId": 31,
+                  "level": 24
+                }
+              ],
+              "reward": 2000
+            }
           ]
         },
         {
           "id": "ch4_02",
-          "location": "gym_04",
+          "location": "keranos",
           "trigger": "defeat_gym",
           "scenes": [
             {
@@ -436,7 +438,7 @@
       "events": [
         {
           "id": "ch5_01",
-          "location": "town_05",
+          "location": "raizen",
           "trigger": "arrive",
           "scenes": [
             {
@@ -448,7 +450,7 @@
         },
         {
           "id": "ch5_02",
-          "location": "gym_05",
+          "location": "gaia_temple",
           "trigger": "defeat_gym",
           "scenes": [
             {
@@ -460,7 +462,7 @@
         },
         {
           "id": "ch5_03",
-          "location": "route_06",
+          "location": "balrok_ridge",
           "trigger": "arrive",
           "requires": [
             "ch5_02"
@@ -476,7 +478,9 @@
               "speaker": "",
               "text": "은하가 세 번째 승부를 걸어왔다!"
             },
-            { "type": "rival_battle" }
+            {
+              "type": "rival_battle"
+            }
           ]
         }
       ]
@@ -487,7 +491,7 @@
       "events": [
         {
           "id": "ch6_01",
-          "location": "gym_06",
+          "location": "valhalla",
           "trigger": "defeat_gym",
           "scenes": [
             {
@@ -498,13 +502,13 @@
             {
               "type": "dialog",
               "speaker": "수호자 설화",
-              "text": "용왕은 모든 수호자 중 가장 강해. 각오해라."
+              "text": "드라코니아의 용왕은 모든 수호자 중 가장 강해. 각오해라."
             }
           ]
         },
         {
           "id": "ch6_02",
-          "location": "route_07",
+          "location": "borea_snowfield",
           "trigger": "arrive",
           "scenes": [
             {
@@ -512,12 +516,30 @@
               "speaker": "그림자단 간부 검은달",
               "text": "여기까지 온 건 칭찬해주지. 하지만 마왕님의 명령이다. 여기서 끝내주마!"
             },
-            { "type": "battle", "trainerName": "그림자단 간부 검은달", "team": [{"monsterId": 83, "level": 38}, {"monsterId": 89, "level": 40}, {"monsterId": 64, "level": 42}], "reward": 4000 }
+            {
+              "type": "battle",
+              "trainerName": "그림자단 간부 검은달",
+              "team": [
+                {
+                  "monsterId": 83,
+                  "level": 38
+                },
+                {
+                  "monsterId": 89,
+                  "level": 40
+                },
+                {
+                  "monsterId": 64,
+                  "level": 42
+                }
+              ],
+              "reward": 4000
+            }
           ]
         },
         {
           "id": "ch6_03",
-          "location": "gym_07",
+          "location": "aurora",
           "trigger": "defeat_gym",
           "scenes": [
             {
@@ -528,7 +550,7 @@
             {
               "type": "dialog",
               "speaker": "수호자 용왕",
-              "text": "마지막 수호자 성운은 왕도에 있다. 모든 인장이 모이면 봉인이 풀린다."
+              "text": "마지막 수호자 성운은 루미나르에 있다. 모든 인장이 모이면 봉인이 풀린다."
             }
           ]
         }
@@ -540,13 +562,13 @@
       "events": [
         {
           "id": "ch7_01",
-          "location": "shadow_base",
+          "location": "obsidian_fortress",
           "trigger": "arrive",
           "scenes": [
             {
               "type": "dialog",
               "speaker": "",
-              "text": "그림자단의 비밀 기지를 발견했다. 안에서 으스스한 기운이 흘러나온다."
+              "text": "옵시디언 요새를 발견했다. 안에서 으스스한 기운이 흘러나온다."
             },
             {
               "type": "dialog",
@@ -558,12 +580,38 @@
               "speaker": "",
               "text": "그림자단 보스 흑염과의 배틀!"
             },
-            { "type": "battle", "trainerName": "그림자단 보스 흑염", "team": [{"monsterId": 89, "level": 44}, {"monsterId": 20, "level": 44}, {"monsterId": 64, "level": 45}, {"monsterId": 88, "level": 46}, {"monsterId": 98, "level": 48}], "reward": 8000 }
+            {
+              "type": "battle",
+              "trainerName": "그림자단 보스 흑염",
+              "team": [
+                {
+                  "monsterId": 89,
+                  "level": 44
+                },
+                {
+                  "monsterId": 20,
+                  "level": 44
+                },
+                {
+                  "monsterId": 64,
+                  "level": 45
+                },
+                {
+                  "monsterId": 88,
+                  "level": 46
+                },
+                {
+                  "monsterId": 98,
+                  "level": 48
+                }
+              ],
+              "reward": 8000
+            }
           ]
         },
         {
           "id": "ch7_02",
-          "location": "shadow_base",
+          "location": "obsidian_fortress",
           "trigger": "defeat_shadow_boss",
           "requires": [
             "ch7_01"
@@ -572,12 +620,12 @@
             {
               "type": "dialog",
               "speaker": "그림자단 보스 흑염",
-              "text": "으... 하지만 이미 늦었다. 마왕성의 문은 열렸다..."
+              "text": "으... 하지만 이미 늦었다. 카오스 성채의 문은 열렸다..."
             },
             {
               "type": "dialog",
               "speaker": "",
-              "text": "흑염은 어둠 속으로 사라졌다. 남겨진 문서에서 마왕성의 위치를 확인했다."
+              "text": "흑염은 어둠 속으로 사라졌다. 남겨진 문서에서 카오스 성채의 위치를 확인했다."
             }
           ]
         }
@@ -589,7 +637,7 @@
       "events": [
         {
           "id": "ch8_01",
-          "location": "gym_08",
+          "location": "draconia",
           "trigger": "defeat_gym",
           "scenes": [
             {
@@ -600,7 +648,7 @@
             {
               "type": "dialog",
               "speaker": "수호자 성운",
-              "text": "우주의 인장, 마지막 봉인의 열쇠다. 이것으로 마왕성의 결계를 깰 수 있다."
+              "text": "우주의 인장, 마지막 봉인의 열쇠다. 이것으로 카오스 성채의 결계를 깰 수 있다."
             },
             {
               "type": "dialog",
@@ -619,13 +667,13 @@
         },
         {
           "id": "ch8_02",
-          "location": "elite_four",
+          "location": "chaos_citadel",
           "trigger": "arrive",
           "scenes": [
             {
               "type": "dialog",
               "speaker": "",
-              "text": "거대한 성문이 열린다. 마왕성 안에서 강대한 기운이 느껴진다."
+              "text": "거대한 성문이 열린다. 카오스 성채 안에서 강대한 기운이 느껴진다."
             },
             {
               "type": "dialog",
@@ -637,12 +685,14 @@
               "speaker": "",
               "text": "은하와의 최종 승부!"
             },
-            { "type": "rival_battle" }
+            {
+              "type": "rival_battle"
+            }
           ]
         },
         {
           "id": "ch8_03",
-          "location": "elite_four",
+          "location": "chaos_citadel",
           "trigger": "before_elite_four",
           "requires": [
             "ch8_02"
@@ -656,7 +706,7 @@
             {
               "type": "dialog",
               "speaker": "",
-              "text": "마왕성 깊숙이 발을 들인다. 사천왕과의 연속 배틀이 시작된다."
+              "text": "카오스 성채 깊숙이 발을 들인다. 사천왕과의 연속 배틀이 시작된다."
             }
           ]
         }
@@ -665,10 +715,26 @@
     {
       "id": 9,
       "title": "새벽이 밝아온다",
+      "endings": {
+        "light": {
+          "name": "빛의 결말",
+          "karma_min": 30,
+          "text": "마왕이 쓰러지자, 세계에 빛이 돌아왔다.\n인간과 크리처, 그리고 마족까지... 모두가 공존하는 새 시대가 시작되었다."
+        },
+        "dark": {
+          "name": "어둠의 결말",
+          "karma_max": -30,
+          "text": "마왕을 쓰러뜨렸다. 하지만... 그 어둠의 힘이 계약자에게 스며들었다.\n새로운 마왕이 탄생했다."
+        },
+        "neutral": {
+          "name": "균형의 결말",
+          "text": "마왕이 쓰러졌다. 어둠은 걷혔지만, 완전히 사라진 것은 아니다.\n계약자의 여정은 계속된다."
+        }
+      },
       "events": [
         {
           "id": "epilogue_01",
-          "location": "elite_four",
+          "location": "chaos_citadel",
           "trigger": "defeat_champion",
           "scenes": [
             {
@@ -709,7 +775,7 @@
             {
               "type": "dialog",
               "speaker": "할아버지",
-              "text": "이 세계에는 아직 만나지 못한 몬스터들, 가보지 못한 곳이 많이 있지."
+              "text": "이 세계에는 아직 만나지 못한 크리처들, 가보지 못한 곳이 많이 있지."
             },
             {
               "type": "dialog",
@@ -724,7 +790,7 @@
             {
               "type": "dialog",
               "speaker": "",
-              "text": "전설의 몬스터들이 세계 곳곳에 다시 모습을 드러내기 시작했다..."
+              "text": "전설의 크리처들이 세계 곳곳에 다시 모습을 드러내기 시작했다..."
             }
           ]
         }

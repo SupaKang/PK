@@ -122,7 +122,18 @@
       "Bash(grep -r transitionPhase /c/Users/seank/Downloads/PK/src --include=*.js)",
       "Bash(tasklist)",
       "Bash(mkdir -p \"C:\\\\Users\\\\seank\\\\Downloads\\\\PK\\\\eval\\\\integration\\\\helpers\")",
-      "Bash(mkdir -p \"C:\\\\Users\\\\seank\\\\Downloads\\\\PK\\\\eval\\\\reports\\\\screenshots\")"
+      "Bash(mkdir -p \"C:\\\\Users\\\\seank\\\\Downloads\\\\PK\\\\eval\\\\reports\\\\screenshots\")",
+      "Bash(brew upgrade:*)",
+      "Bash(cp data/story.json public/data/story.json)",
+      "Bash(cp data/items.json public/data/items.json)",
+      "Read(//Users/sean/.claude/skills/**)",
+      "Bash(rm data/monsters.json)",
+      "Bash(cp data/creature.json public/data/creature.json)",
+      "Bash(rm public/data/monsters.json)",
+      "Bash(python3 -c \":*)",
+      "Bash(pip3 install:*)",
+      "Bash(grep -B1 '^\\\\-\\\\-\\\\-\\\\|,\\\\s*$')",
+      "Bash(pkill -f \"generate_creatures.py --phase 0\")"
     ]
   }
 }

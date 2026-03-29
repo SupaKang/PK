@@ -34,33 +34,21 @@ export function getPrologueDialogs(classesData) {
 
   return [
     {
-      speaker: 'PROFESSOR',
-      text: 'Welcome, young one. I am the professor of this kingdom.',
+      speaker: '',
+      text: '......깊은 밤. 따뜻한 방 안에서 화롯불이 타닥거린다.',
     },
     {
-      speaker: 'PROFESSOR',
-      text: 'In this world, humans form contracts with magical creatures called monsters.',
+      speaker: '할아버지',
+      text: '이 혼란한 세상에서, 네가 걸어갈 길을 골라보거라.',
     },
     {
-      speaker: 'PROFESSOR',
-      text: 'Those who form these bonds are known as Contractors.',
-    },
-    {
-      speaker: 'PROFESSOR',
-      text: 'Before we begin your journey, tell me... what path will you follow?',
+      speaker: '',
+      text: '── 어떤 길을 걸을 것인가? ──',
       choices: classChoices,
     },
     {
-      speaker: 'PROFESSOR',
-      text: 'Excellent choice! Now, let me introduce you to your first partner.',
-    },
-    {
-      speaker: 'PROFESSOR',
-      text: 'This creature has been waiting for a contractor like you.',
-    },
-    {
-      speaker: 'PROFESSOR',
-      text: 'Take good care of each other. Your adventure begins now!',
+      speaker: '할아버지',
+      text: '...그래, 좋은 선택이다. 앞으로 네 앞길에 축복이 있기를.',
     },
   ];
 }

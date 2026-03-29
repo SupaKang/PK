@@ -4,25 +4,22 @@ const concepts = [
     icon: '◆',
     title: '계약',
     subtitle: 'CONTRACT',
-    desc: '마석을 통해 야생 몬스터와 계약을 맺고 동료로 삼아라. 4가지 등급의 마석으로 더 강한 몬스터에 도전하라.',
-    color: '#FFCC00',
-    borderColor: 'rgba(255,204,0,0.2)',
+    desc: '마석을 통해 야생 크리처와 계약을 맺고 동료로 삼아라. 4가지 등급의 마석으로 더 강한 크리처에 도전하라.',
+    color: '#f0c040',
   },
   {
     icon: '◈',
     title: '모험',
     subtitle: 'ADVENTURE',
     desc: '31개의 지역을 탐험하며 8개의 배지를 수집하라. 당신의 선택이 세계의 운명을 결정한다.',
-    color: '#3399FF',
-    borderColor: 'rgba(51,153,255,0.2)',
+    color: '#6366f1',
   },
   {
     icon: '⚔',
     title: '전투',
     subtitle: 'BATTLE',
     desc: '18가지 타입의 상성을 이해하고, 346가지 스킬을 전략적으로 활용하여 턴제 전투에서 승리하라.',
-    color: '#FF4422',
-    borderColor: 'rgba(255,68,34,0.2)',
+    color: '#ef5235',
   },
 ];
 ---
@@ -30,20 +27,17 @@ const concepts = [
 <section class="max-w-5xl mx-auto px-4 py-20" aria-label="핵심 컨셉">
   <h2 class="section-title text-center reveal">핵심 컨셉</h2>
 
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-10 reveal-children">
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mt-10 reveal-children">
     {concepts.map(c => (
-      <article
-        class="pixel-card group relative overflow-hidden"
-        style={`border-color: ${c.borderColor}`}
-      >
-        <!-- Accent top line -->
-        <div class="absolute top-0 left-0 right-0 h-[2px]" style={`background: ${c.color}; box-shadow: 0 0 10px ${c.color}`} aria-hidden="true"></div>
+      <article class="glass-card group relative overflow-hidden">
+        <!-- Top accent gradient -->
+        <div class="absolute top-0 left-0 right-0 h-px" style={`background: linear-gradient(90deg, transparent, ${c.color}40, transparent);`} aria-hidden="true"></div>
 
         <div class="pt-2">
-          <div class="text-2xl mb-4 transition-transform group-hover:scale-110" style={`color: ${c.color}; text-shadow: 0 0 12px ${c.color}`} aria-hidden="true">
+          <div class="text-2xl mb-4 transition-transform group-hover:scale-110" style={`color: ${c.color}`} aria-hidden="true">
             {c.icon}
           </div>
-          <h3 class="text-lg mb-0.5" style={`color: ${c.color}`}>{c.title}</h3>
+          <h3 class="text-lg font-semibold mb-0.5 text-pk-text">{c.title}</h3>
           <p class="text-pk-muted text-[10px] tracking-[0.2em] uppercase mb-4">{c.subtitle}</p>
           <p class="text-sm text-pk-text-secondary leading-relaxed">{c.desc}</p>
         </div>

@@ -9,7 +9,7 @@ interface Props {
   description?: string;
 }
 
-const { title, description = '102종 몬스터, 18타입, 10장의 스토리가 펼쳐지는 턴제 몬스터 수집 RPG' } = Astro.props;
+const { title, description = '102종 크리처, 18타입, 10장의 스토리가 펼쳐지는 턴제 크리처 수집 RPG' } = Astro.props;
 const currentPath = Astro.url.pathname;
 ---
 
@@ -19,25 +19,47 @@ const currentPath = Astro.url.pathname;
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content={description} />
-  <meta name="theme-color" content="#0f0f1a" />
+  <meta name="theme-color" content="#0a0a14" />
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
   <meta property="og:type" content="website" />
   <title>{title}</title>
+  <link rel="canonical" href={`https://pocket-kingdom.com${currentPath}`} />
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "VideoGame",
+    "name": "포켓 왕국 (Pocket Kingdom)",
+    "description": description,
+    "genre": "턴제 RPG",
+    "numberOfPlayers": "1",
+    "gamePlatform": "Web Browser",
+    "inLanguage": "ko",
+  })} />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Press+Start+2P&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
   <ClientRouter />
 </head>
-<body class="min-h-screen flex flex-col noise-bg">
+<body class="min-h-screen flex flex-col">
   <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[100] pixel-btn text-xs">
     본문으로 건너뛰기
   </a>
-  <Navigation currentPath={currentPath} />
-  <main id="main-content" class="flex-1" role="main">
+  <Navigation currentPath={currentPath} transition:persist />
+  <main id="main-content" class="flex-1" role="main" transition:animate="fade">
     <slot />
   </main>
-  <Footer />
+  <Footer transition:persist />
+
+  <!-- Back to top button -->
+  <button
+    id="back-to-top"
+    class="fixed bottom-6 right-6 z-40 w-10 h-10 bg-pk-accent/90 text-pk-bg rounded-full flex items-center justify-center cursor-pointer transition-all hover:translate-y-[-2px] hover:bg-pk-accent opacity-0 pointer-events-none"
+    style="box-shadow: 0 2px 12px rgba(240,192,64,0.3);"
+    aria-label="맨 위로 스크롤"
+  >
+    ↑
+  </button>
 
   <!-- Scroll reveal observer -->
   <script>
@@ -60,6 +82,23 @@ const currentPath = Astro.url.pathname;
         observer.observe(el);
       });
     });
+
+    // Back to top button
+    const btn = document.getElementById('back-to-top');
+    if (btn) {
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 400) {
+          btn.style.opacity = '1';
+          btn.style.pointerEvents = 'auto';
+        } else {
+          btn.style.opacity = '0';
+          btn.style.pointerEvents = 'none';
+        }
+      }, { passive: true });
+      btn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    }
   </script>
 </body>
 </html>

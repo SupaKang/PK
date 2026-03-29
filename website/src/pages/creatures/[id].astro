@@ -1,0 +1,198 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import StatBars from '../../components/creatures/StatBars';
+import StatRadar from '../../components/creatures/StatRadar';
+import EvolutionTree from '../../components/creatures/EvolutionTree';
+import { creatures, getEvolutionChain, getStatTotal } from '../../data/creatures';
+import { types } from '../../data/types';
+import { skills } from '../../data/skills';
+import { getSpriteUrl } from '../../data/sprite-map';
+
+export function getStaticPaths() {
+  return creatures.map(c => ({
+    params: { id: String(c.id) },
+    props: { creature: c },
+  }));
+}
+
+const { creature } = Astro.props;
+const chain = getEvolutionChain(creature.id);
+const total = getStatTotal(creature.baseStats);
+const spriteUrl = getSpriteUrl(creature.id);
+
+const typeMap: Record<string, { id: string; name: string; color: string }> = {};
+types.forEach(t => (typeMap[t.id] = t));
+
+const skillMap: Record<string, any> = {};
+skills.forEach(s => (skillMap[s.id] = s));
+
+const primaryColor = typeMap[creature.type[0]]?.color ?? '#888';
+
+const prevCreature = creatures.find(c => c.id === creature.id - 1);
+const nextCreature = creatures.find(c => c.id === creature.id + 1);
+---
+
+<BaseLayout title={`${creature.name} — 크리처 도감 | 포켓 왕국`} description={creature.description}>
+  <!-- Breadcrumb -->
+  <div class="max-w-4xl mx-auto px-4 pt-6">
+    <nav class="text-[10px] text-pk-muted" aria-label="경로">
+      <a href="/creatures" class="hover:text-pk-accent transition-colors">크리처 도감</a>
+      <span class="mx-1.5">/</span>
+      <span class="text-pk-text">#{String(creature.id).padStart(3, '0')} {creature.name}</span>
+    </nav>
+  </div>
+
+  <div class="max-w-4xl mx-auto px-4 py-8">
+    <!-- Header -->
+    <header class="flex flex-col md:flex-row gap-6 mb-10">
+      <!-- Sprite -->
+      <div class="shrink-0 w-40 h-40 mx-auto md:mx-0 bg-pk-surface border-2 border-pk-border/30 flex items-center justify-center relative overflow-hidden"
+           style={`box-shadow: 4px 4px 0 rgba(0,0,0,0.6); background: linear-gradient(135deg, ${primaryColor}08, transparent);`}>
+        {spriteUrl ? (
+          <img
+            src={spriteUrl}
+            alt={creature.name}
+            class="w-28 h-28 object-contain"
+            style="image-rendering: pixelated;"
+          />
+        ) : (
+          <div
+            class="w-24 h-24"
+            style={`background: linear-gradient(145deg, ${creature.spriteConfig.baseColor}, ${creature.spriteConfig.accentColor}); clip-path: polygon(20% 85%, 25% 35%, 40% 15%, 60% 15%, 75% 35%, 80% 85%, 65% 95%, 35% 95%); filter: drop-shadow(0 4px 8px ${creature.spriteConfig.baseColor}40);`}
+          />
+        )}
+        <span class="absolute top-2 left-2 text-[10px] text-pk-muted/50">#{String(creature.id).padStart(3, '0')}</span>
+      </div>
+
+      <!-- Info -->
+      <div class="flex-1 text-center md:text-left">
+        <h1 class="text-2xl md:text-3xl mb-2" style={`color: ${primaryColor}; text-shadow: 0 0 15px ${primaryColor}30;`}>
+          {creature.name}
+        </h1>
+        <div class="flex gap-1.5 justify-center md:justify-start mb-4">
+          {creature.type.map(t => (
+            <span
+              class="px-2.5 py-0.5 text-[11px] text-white"
+              style={`background: ${typeMap[t]?.color ?? '#888'}; text-shadow: 1px 1px 0 rgba(0,0,0,0.5);`}
+            >
+              {typeMap[t]?.name ?? t}
+            </span>
+          ))}
+        </div>
+        <p class="text-sm text-pk-text-secondary leading-relaxed mb-4">{creature.description}</p>
+        <div class="flex flex-wrap gap-3 justify-center md:justify-start text-xs">
+          {[
+            { label: '총 스탯', value: total, color: primaryColor },
+            { label: '포획률', value: creature.catchRate, color: '#9999bb' },
+            { label: '경험치', value: creature.expYield, color: '#9999bb' },
+            { label: '성장률', value: creature.growthRate, color: '#9999bb' },
+          ].map(info => (
+            <div class="bg-pk-surface px-3 py-2 border border-pk-border/20 text-center">
+              <p class="text-pk-muted text-[9px] uppercase tracking-wider">{info.label}</p>
+              <p class="mt-0.5" style={`color: ${info.color}`}>{info.value}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </header>
+
+    <!-- Stats -->
+    <section class="mb-10">
+      <h2 class="text-sm text-pk-accent mb-4">기본 스탯</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <StatBars stats={creature.baseStats} color={primaryColor} client:visible />
+        <div class="flex items-center justify-center">
+          <StatRadar stats={creature.baseStats} color={primaryColor} client:visible />
+        </div>
+      </div>
+    </section>
+
+    <!-- Evolution -->
+    {chain.length > 1 && (
+      <section class="mb-10">
+        <h2 class="text-sm text-pk-accent mb-4">진화 트리</h2>
+        <div class="pixel-card">
+          <EvolutionTree chain={chain} typeMap={typeMap} currentId={creature.id} client:visible />
+        </div>
+      </section>
+    )}
+
+    <!-- Learnset -->
+    <section class="mb-10">
+      <h2 class="text-sm text-pk-accent mb-4">
+        습득 스킬
+        <span class="text-pk-muted text-[10px] ml-2">
+          ({creature.learnset.length + (creature.uniqueSkill ? 1 : 0)})
+        </span>
+      </h2>
+      <div class="pixel-card overflow-x-auto">
+        <table class="w-full text-xs" role="table">
+          <thead>
+            <tr class="border-b border-pk-border/30">
+              <th scope="col" class="text-left py-1.5 px-2 text-[10px] text-pk-muted uppercase">Lv</th>
+              <th scope="col" class="text-left py-1.5 px-2 text-[10px] text-pk-muted uppercase">이름</th>
+              <th scope="col" class="text-left py-1.5 px-2 text-[10px] text-pk-muted uppercase">타입</th>
+              <th scope="col" class="text-left py-1.5 px-2 text-[10px] text-pk-muted uppercase hidden sm:table-cell">분류</th>
+              <th scope="col" class="text-right py-1.5 px-2 text-[10px] text-pk-muted uppercase">위력</th>
+              <th scope="col" class="text-right py-1.5 px-2 text-[10px] text-pk-muted uppercase">명중</th>
+            </tr>
+          </thead>
+          <tbody>
+            {[...creature.learnset, ...(creature.uniqueSkill ? [creature.uniqueSkill] : [])].map(ls => {
+              const s = skillMap[ls.skillId];
+              if (!s) return null;
+              const isUnique = creature.uniqueSkill?.skillId === ls.skillId;
+              return (
+                <tr
+                  class="border-b border-pk-border/10 hover:bg-pk-surface/30 transition-colors"
+                  style={isUnique ? `background: ${primaryColor}08` : ''}
+                >
+                  <td class="py-1.5 px-2 text-pk-muted">{ls.level}</td>
+                  <td class="py-1.5 px-2 text-pk-text">
+                    {s.name}
+                    {isUnique && <span class="ml-1 text-[9px]" style={`color: ${primaryColor}`} aria-label="고유 스킬">★</span>}
+                  </td>
+                  <td class="py-1.5 px-2">
+                    <span class="px-1 py-0 text-[8px] text-white" style={`background: ${typeMap[s.type]?.color ?? '#888'}`}>
+                      {typeMap[s.type]?.name ?? s.type}
+                    </span>
+                  </td>
+                  <td class="py-1.5 px-2 text-pk-muted hidden sm:table-cell">
+                    {s.category === 'physical' ? '물리' : s.category === 'special' ? '특수' : '변화'}
+                  </td>
+                  <td class="py-1.5 px-2 text-right text-pk-text">{s.power || '—'}</td>
+                  <td class="py-1.5 px-2 text-right text-pk-muted">{s.accuracy || '—'}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Prev/Next navigation -->
+    <nav class="flex justify-between items-center pt-6 border-t border-pk-border/20" aria-label="이전/다음 크리처">
+      {prevCreature ? (
+        <a href={`/creatures/${prevCreature.id}`} class="flex items-center gap-2 text-xs text-pk-muted hover:text-pk-accent transition-colors group">
+          <span class="text-lg group-hover:-translate-x-1 transition-transform">←</span>
+          <div>
+            <span class="text-[9px] text-pk-muted/60">#{String(prevCreature.id).padStart(3, '0')}</span>
+            <p class="text-pk-text-secondary group-hover:text-pk-accent transition-colors">{prevCreature.name}</p>
+          </div>
+        </a>
+      ) : <div />}
+      <a href="/creatures" class="text-[10px] text-pk-muted hover:text-pk-accent transition-colors px-3 py-1.5 border border-pk-border/30 hover:border-pk-accent/30">
+        도감으로
+      </a>
+      {nextCreature ? (
+        <a href={`/creatures/${nextCreature.id}`} class="flex items-center gap-2 text-xs text-pk-muted hover:text-pk-accent transition-colors group text-right">
+          <div>
+            <span class="text-[9px] text-pk-muted/60">#{String(nextCreature.id).padStart(3, '0')}</span>
+            <p class="text-pk-text-secondary group-hover:text-pk-accent transition-colors">{nextCreature.name}</p>
+          </div>
+          <span class="text-lg group-hover:translate-x-1 transition-transform">→</span>
+        </a>
+      ) : <div />}
+    </nav>
+  </div>
+</BaseLayout>

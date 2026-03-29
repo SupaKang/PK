@@ -1,0 +1,23 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CaptureCalc from '../../components/tools/CaptureCalc.tsx';
+import { creatures } from '../../data/creatures';
+import { types } from '../../data/types';
+---
+
+<BaseLayout title="포획률 계산기 — 포켓 왕국">
+  <section class="relative py-16 px-4 text-center overflow-hidden" aria-label="포획률 계산기 헤더">
+    <div class="absolute inset-0 bg-gradient-to-b from-[#1a1a20] via-pk-bg to-pk-bg" aria-hidden="true"></div>
+    <div class="relative z-10 max-w-3xl mx-auto">
+      <p class="text-[#AA88CC] text-xs tracking-[0.3em] uppercase mb-4 animate-fade-up">CAPTURE CALCULATOR</p>
+      <h1 class="text-pk-accent animate-fade-up-delay-1 mb-4">포획률 계산기</h1>
+      <p class="text-pk-text-secondary text-sm animate-fade-up-delay-2 text-balance">
+        크리처, HP, 마석 등급, 상태 이상을 설정하여 포획 확률을 계산하세요.
+      </p>
+    </div>
+  </section>
+
+  <div class="max-w-4xl mx-auto px-4 py-12">
+    <CaptureCalc creatures={creatures} types={types} client:load />
+  </div>
+</BaseLayout>

@@ -1,0 +1,71 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CreatureDex from '../../components/creatures/CreatureDex.tsx';
+import { creatures } from '../../data/creatures';
+import { types } from '../../data/types';
+import { skills } from '../../data/skills';
+import { spriteMap } from '../../data/sprite-map';
+---
+
+<BaseLayout title="크리처 도감 — 포켓 왕국">
+  <section class="relative py-20 px-4 text-center overflow-hidden" aria-label="도감 헤더">
+    <div class="absolute inset-0 bg-gradient-to-b from-[#102010] via-[#0e1a0e] to-pk-bg" aria-hidden="true"></div>
+    <!-- Dex frame border effect -->
+    <div class="absolute inset-4 border border-[#44BB44]/8 pointer-events-none" aria-hidden="true">
+      <div class="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-[#44BB44]/20"></div>
+      <div class="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-[#44BB44]/20"></div>
+      <div class="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-[#44BB44]/20"></div>
+      <div class="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-[#44BB44]/20"></div>
+    </div>
+    <div class="relative z-10 max-w-3xl mx-auto">
+      <p class="text-[#66BB66] text-xs tracking-[0.3em] uppercase mb-4 animate-fade-up">CREATURE DEX</p>
+      <h1 class="text-pk-accent animate-fade-up-delay-1 mb-4">
+        크리처 도감
+      </h1>
+      <p class="text-pk-text-secondary text-sm animate-fade-up-delay-2 text-balance">
+        102종의 크리처를 검색하고, 스탯과 진화 정보를 확인하세요.
+      </p>
+      <div class="mt-6 inline-flex items-center gap-2 px-3 py-1 border border-[#44BB44]/20 text-[10px] text-[#44BB44]/60 animate-fade-up-delay-3" aria-hidden="true">
+        <span class="w-1.5 h-1.5 bg-[#44BB44]/40"></span>
+        102 REGISTERED
+      </div>
+    </div>
+  </section>
+
+  <div class="max-w-6xl mx-auto px-4 py-12">
+    <!-- Loading skeleton (shown before hydration) -->
+    <div class="dex-skeleton" id="dex-skeleton">
+      <div class="mb-8">
+        <div class="w-full h-10 bg-pk-surface border-2 border-pk-border/30 mb-4 animate-pulse"></div>
+        <div class="flex flex-wrap gap-1.5 mb-4">
+          {Array.from({length: 12}).map((_, i) => (
+            <div class="w-12 h-6 bg-pk-surface/50 border border-pk-border/20 animate-pulse" style={`animation-delay: ${i * 0.05}s`}></div>
+          ))}
+        </div>
+      </div>
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
+        {Array.from({length: 20}).map((_, i) => (
+          <div class="bg-pk-surface border-2 border-pk-border/20 p-3 animate-pulse" style={`animation-delay: ${i * 0.03}s`}>
+            <div class="w-full aspect-square bg-pk-bg/50 mb-2"></div>
+            <div class="h-3 w-16 bg-pk-bg/50 mb-1.5"></div>
+            <div class="h-2 w-10 bg-pk-bg/30"></div>
+          </div>
+        ))}
+      </div>
+    </div>
+    <CreatureDex creatures={creatures} types={types} skills={skills} spriteMap={spriteMap} client:visible />
+  </div>
+
+  <script>
+    // Hide skeleton once the Dex component renders
+    const observer = new MutationObserver(() => {
+      const skeleton = document.getElementById('dex-skeleton');
+      const dex = document.querySelector('[role="search"]');
+      if (skeleton && dex) {
+        skeleton.style.display = 'none';
+        observer.disconnect();
+      }
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+  </script>
+</BaseLayout>

@@ -1,45 +1,35 @@
 ---
 ---
 <section
-  class="relative min-h-[85vh] flex flex-col items-center justify-center text-center px-4 overflow-hidden scanline-overlay scanline-bar"
+  class="relative min-h-[85vh] flex flex-col items-center justify-center text-center px-4 overflow-hidden"
   aria-label="메인 히어로"
 >
-  <!-- Layered background: gradient + floating particles -->
+  <!-- Background: soft gradient mesh -->
   <div class="absolute inset-0" aria-hidden="true">
-    <!-- Radial depth gradient -->
     <div class="absolute inset-0 bg-gradient-to-b from-pk-bg via-pk-bg-alt to-pk-bg"></div>
-    <!-- Floating pixel particles -->
-    <div class="absolute inset-0 opacity-[0.07]" style="
-      background-image:
-        radial-gradient(circle at 15% 25%, #FF4422 1.5px, transparent 1.5px),
-        radial-gradient(circle at 85% 65%, #3399FF 1.5px, transparent 1.5px),
-        radial-gradient(circle at 50% 50%, #44BB44 1px, transparent 1px),
-        radial-gradient(circle at 25% 75%, #FFCC00 1px, transparent 1px),
-        radial-gradient(circle at 75% 15%, #AA44CC 1px, transparent 1px),
-        radial-gradient(circle at 60% 85%, #66CCEE 1px, transparent 1px);
-      background-size: 200px 200px, 180px 180px, 150px 150px, 170px 170px, 160px 160px, 190px 190px;
-      animation: drift 25s linear infinite;
-    "></div>
-    <!-- Vignette -->
-    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_40%,#0f0f1a_100%)]"></div>
+    <!-- Subtle gradient orbs -->
+    <div class="absolute top-1/4 left-1/4 w-[500px] h-[500px] rounded-full opacity-[0.04]" style="background: radial-gradient(circle, #f0c040, transparent 70%);"></div>
+    <div class="absolute bottom-1/3 right-1/4 w-[400px] h-[400px] rounded-full opacity-[0.03]" style="background: radial-gradient(circle, #6366f1, transparent 70%);"></div>
+    <!-- Top vignette -->
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_50%,#0a0a14_100%)]"></div>
   </div>
 
   <div class="relative z-10 max-w-3xl mx-auto">
     <!-- Subtitle -->
-    <p class="text-pk-text-secondary text-xs tracking-[0.3em] uppercase mb-6 animate-fade-up">
+    <p class="text-pk-text-secondary text-xs tracking-[0.25em] uppercase mb-6 animate-fade-up">
       POCKET KINGDOM
     </p>
 
-    <!-- Title with glow pulse -->
-    <h1 class="text-5xl md:text-7xl lg:text-8xl text-pk-accent animate-fade-up-delay-1 mb-6" style="
-      text-shadow: 0 0 20px rgba(255,204,0,0.4), 0 0 60px rgba(255,204,0,0.15), 4px 4px 0 rgba(0,0,0,0.8);
+    <!-- Title -->
+    <h1 class="text-4xl md:text-6xl lg:text-7xl text-pk-text font-bold animate-fade-up-delay-1 mb-6" style="
+      letter-spacing: -0.03em;
     ">
-      포켓 왕국
+      포켓 <span class="text-pk-accent">왕국</span>
     </h1>
 
     <!-- Prophecy quote -->
-    <blockquote class="pixel-card-glow max-w-xl mx-auto mb-10 animate-fade-up-delay-2 text-left">
-      <p class="text-pk-accent text-sm md:text-base leading-relaxed italic">
+    <blockquote class="glass-card-glow max-w-xl mx-auto mb-10 animate-fade-up-delay-2 text-left">
+      <p class="text-pk-accent/80 text-sm md:text-base leading-relaxed italic">
         "어둠이 세상을 삼킨 뒤,<br/>
         잊혀진 마석의 빛이 다시 깨어나리라.<br/>
         그 빛을 이끄는 자가 세계를 되찾으리."
@@ -48,15 +38,18 @@
     </blockquote>
 
     <!-- Tagline -->
-    <p class="text-pk-text text-sm md:text-base mb-10 max-w-lg mx-auto leading-relaxed animate-fade-up-delay-3 text-balance">
-      102종의 몬스터와 계약하고, 18가지 타입의 상성을 읽어
+    <p class="text-pk-text-secondary text-sm md:text-base mb-10 max-w-lg mx-auto leading-relaxed animate-fade-up-delay-3 text-balance">
+      102종의 크리처와 계약하고, 18가지 타입의 상성을 읽어
       마왕에게 빼앗긴 세계를 되찾아라.
     </p>
 
     <!-- CTA buttons -->
-    <div class="flex flex-col sm:flex-row gap-4 justify-center animate-fade-up-delay-4">
-      <a href="/monsters" class="pixel-btn">
-        몬스터 도감 보기
+    <div class="flex flex-col sm:flex-row gap-3 justify-center animate-fade-up-delay-4">
+      <a href="/" class="pixel-btn">
+        지금 플레이
+      </a>
+      <a href="/creatures" class="pixel-btn-ghost">
+        크리처 도감
       </a>
       <a href="/story" class="pixel-btn-ghost">
         스토리 읽기
@@ -65,16 +58,10 @@
   </div>
 
   <!-- Scroll hint -->
-  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 text-pk-muted text-xs animate-float" aria-hidden="true">
-    <span class="block mb-1 text-center text-[10px] tracking-widest">SCROLL</span>
-    ▼
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 text-pk-muted/40 text-xs animate-float" aria-hidden="true">
+    <span class="block mb-2 text-center text-[10px] tracking-[0.2em]">SCROLL</span>
+    <svg width="16" height="10" viewBox="0 0 16 10" fill="none" class="mx-auto">
+      <path d="M1 1L8 8L15 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+    </svg>
   </div>
 </section>
-
-<style>
-  @keyframes drift {
-    0% { transform: translateY(0) translateX(0); }
-    50% { transform: translateY(-80px) translateX(20px); }
-    100% { transform: translateY(-160px) translateX(0); }
-  }
-</style>

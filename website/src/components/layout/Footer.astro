@@ -1,12 +1,54 @@
 ---
+const links = [
+  { href: '/', label: '게임 소개' },
+  { href: '/story', label: '스토리' },
+  { href: '/guide', label: '시스템 가이드' },
+  { href: '/creatures', label: '크리처 도감' },
+];
 ---
-<footer class="bg-pk-bg-alt border-t border-pk-border/30 mt-16 py-10" role="contentinfo">
-  <div class="max-w-6xl mx-auto px-4 text-center">
-    <p class="text-pk-accent text-sm crt-glow-sm mb-2">포켓 왕국</p>
-    <p class="text-pk-muted text-xs">턴제 몬스터 수집 RPG</p>
-    <div class="pixel-divider max-w-xs mx-auto my-4"></div>
-    <p class="text-pk-muted/60 text-xs">
-      102 몬스터 &bull; 18 타입 &bull; 346 스킬 &bull; 10 챕터
-    </p>
+<footer class="bg-pk-bg-alt border-t border-pk-border/30 mt-16 py-12" role="contentinfo">
+  <div class="max-w-6xl mx-auto px-4">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+      <!-- Branding -->
+      <div class="text-center md:text-left">
+        <p class="text-pk-accent text-lg font-semibold mb-2">포켓 왕국</p>
+        <p class="text-pk-muted text-xs">턴제 크리처 수집 RPG</p>
+        <p class="text-pk-muted/40 text-[10px] mt-2">
+          마석의 빛으로 어둠을 물리쳐라
+        </p>
+      </div>
+
+      <!-- Quick links -->
+      <div class="text-center">
+        <p class="text-pk-text-secondary text-[10px] tracking-wider uppercase mb-3">바로가기</p>
+        <nav class="flex flex-wrap justify-center gap-x-4 gap-y-1.5" aria-label="푸터 네비게이션">
+          {links.map(link => (
+            <a href={link.href} class="text-xs text-pk-muted hover:text-pk-accent transition-colors">
+              {link.label}
+            </a>
+          ))}
+        </nav>
+      </div>
+
+      <!-- Tech credits -->
+      <div class="text-center md:text-right">
+        <p class="text-pk-text-secondary text-[10px] tracking-wider uppercase mb-3">기술 스택</p>
+        <div class="flex flex-wrap justify-center md:justify-end gap-2">
+          {['Astro', 'Preact', 'Tailwind', 'Vite'].map(tech => (
+            <span class="text-[9px] text-pk-muted/60 px-1.5 py-0.5 border border-pk-border/20">
+              {tech}
+            </span>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <div class="pixel-divider max-w-md mx-auto my-6"></div>
+
+    <div class="text-center">
+      <p class="text-pk-muted/40 text-[10px]">
+        102 크리처 &bull; 18 타입 &bull; 346 스킬 &bull; 10 챕터 &bull; 31 지역
+      </p>
+    </div>
   </div>
 </footer>

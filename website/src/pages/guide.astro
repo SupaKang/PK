@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import TableOfContents from '../components/layout/TableOfContents.astro';
 import BattleSystem from '../components/guide/BattleSystem.astro';
 import ClassCards from '../components/guide/ClassCards.astro';
 import ItemTable from '../components/guide/ItemTable.astro';
@@ -8,24 +9,50 @@ import TypeChart from '../components/guide/TypeChart.tsx';
 import SkillBrowser from '../components/guide/SkillBrowser.tsx';
 import { types, matchups } from '../data/types';
 import { skills } from '../data/skills';
+import { creatures } from '../data/creatures';
+
+const tocItems = [
+  { id: 'battle', label: '전투 시스템' },
+  { id: 'type-chart', label: '타입 상성표' },
+  { id: 'classes', label: '클래스' },
+  { id: 'skills', label: '스킬 브라우저' },
+  { id: 'capture', label: '계약 시스템' },
+  { id: 'items', label: '아이템' },
+];
 ---
 
 <BaseLayout title="시스템 가이드 — 포켓 왕국">
-  <section class="relative py-16 px-4 text-center scanline-overlay" aria-label="가이드 헤더">
-    <div class="absolute inset-0 bg-gradient-to-b from-[#1a2030] via-pk-bg to-pk-bg" aria-hidden="true"></div>
+  <section class="relative py-20 px-4 text-center overflow-hidden" aria-label="가이드 헤더">
+    <div class="absolute inset-0 bg-gradient-to-b from-[#1a2030] via-[#151c28] to-pk-bg" aria-hidden="true"></div>
+    <!-- Decorative pixel sword & shield -->
+    <div class="absolute top-8 left-12 text-[#3399FF]/8 text-4xl select-none pointer-events-none" aria-hidden="true">⚔</div>
+    <div class="absolute bottom-6 right-12 text-[#FFCC00]/8 text-4xl select-none pointer-events-none" aria-hidden="true">🛡</div>
+    <!-- Grid pattern overlay -->
+    <div class="absolute inset-0 opacity-[0.02]" style="
+      background-image: linear-gradient(rgba(51,153,255,0.3) 1px, transparent 1px),
+                         linear-gradient(90deg, rgba(51,153,255,0.3) 1px, transparent 1px);
+      background-size: 40px 40px;
+    " aria-hidden="true"></div>
     <div class="relative z-10 max-w-3xl mx-auto">
-      <p class="text-pk-text-secondary text-xs tracking-[0.3em] uppercase mb-4 animate-fade-up">SYSTEM GUIDE</p>
-      <h1 class="text-pk-accent crt-glow animate-fade-up-delay-1 mb-4">
+      <p class="text-[#6699CC] text-xs tracking-[0.3em] uppercase mb-4 animate-fade-up">SYSTEM GUIDE</p>
+      <h1 class="text-pk-accent animate-fade-up-delay-1 mb-4">
         시스템 가이드
       </h1>
       <p class="text-pk-text-secondary text-sm animate-fade-up-delay-2 text-balance">
         전투, 타입 상성, 클래스, 스킬, 아이템 시스템 총정리
       </p>
+      <div class="mt-6 flex justify-center gap-1 animate-fade-up-delay-3" aria-hidden="true">
+        {['#FF4422','#3399FF','#44BB44','#FFCC00','#AA44CC','#66CCEE'].map(c => (
+          <span class="w-3 h-1" style={`background: ${c}; opacity: 0.4`}></span>
+        ))}
+      </div>
     </div>
   </section>
 
   <div class="max-w-5xl mx-auto px-4 py-12">
-    <BattleSystem />
+    <TableOfContents items={tocItems} />
+
+    <div id="battle"><BattleSystem /></div>
     <div class="pixel-divider" aria-hidden="true"></div>
 
     <section class="mb-12 reveal" id="type-chart" aria-label="타입 상성표">
@@ -37,7 +64,7 @@ import { skills } from '../data/skills';
     </section>
     <div class="pixel-divider" aria-hidden="true"></div>
 
-    <ClassCards />
+    <div id="classes"><ClassCards /></div>
     <div class="pixel-divider" aria-hidden="true"></div>
 
     <section class="mb-12 reveal" id="skills" aria-label="스킬 브라우저">
@@ -45,12 +72,12 @@ import { skills } from '../data/skills';
       <p class="text-sm text-pk-text-secondary mb-6">
         346가지 스킬을 타입, 분류, 위력으로 검색하세요.
       </p>
-      <SkillBrowser skills={skills} types={types} client:visible />
+      <SkillBrowser skills={skills} types={types} creatures={creatures} client:visible />
     </section>
     <div class="pixel-divider" aria-hidden="true"></div>
 
-    <CaptureExplainer />
+    <div id="capture"><CaptureExplainer /></div>
     <div class="pixel-divider" aria-hidden="true"></div>
-    <ItemTable />
+    <div id="items"><ItemTable /></div>
   </div>
 </BaseLayout>

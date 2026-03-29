@@ -52,9 +52,9 @@ export function calcDamage(attacker, defender, skill, typeChart) {
   const effectiveness = typeChart.getMultiplier(skill.type, defenderTypes);
   damage = Math.floor(damage * effectiveness);
 
-  // Critical hit (6.25% chance, 1.5x damage)
+  // Critical hit (15% chance, 1.5x damage)
   let critical = false;
-  if (Math.random() < 0.0625) {
+  if (Math.random() < 0.15) {
     critical = true;
     damage = Math.floor(damage * 1.5);
   }
